@@ -1,0 +1,14 @@
+io.micronaut.spring.boot.annotation.ConfigurationPropertiesAnnotationMapper
+io.micronaut.spring.boot.annotation.ConditionalOnMissingBeanAnnotationMapper
+io.micronaut.spring.boot.annotation.ConditionalOnBeanAnnotationMapper
+io.micronaut.spring.boot.annotation.ConditionalOnPropertyAnnotationMapper
+io.micronaut.spring.boot.annotation.ConditionalOnClassAnnotationMapper
+io.micronaut.spring.boot.annotation.ConditionalOnMissingClassAnnotationMapper
+io.micronaut.spring.boot.annotation.ConditionalOnWebApplicationAnnotationMapper
+io.micronaut.spring.boot.annotation.ConditionalOnNotWebApplicationAnnotationMapper
+io.micronaut.spring.boot.annotation.ConditionalOnSingleCandidateAnnotationMapper
+io.micronaut.spring.boot.annotation.EndpointAnnotationMapper
+io.micronaut.spring.boot.annotation.ReadOperationAnnotationMapper
+io.micronaut.spring.boot.annotation.WriteOperationAnnotationMapper
+io.micronaut.spring.boot.annotation.DeleteOperationAnnotationMapper
+io.micronaut.spring.boot.annotation.SelectorAnnotationMapper

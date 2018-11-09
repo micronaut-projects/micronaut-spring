@@ -1,0 +1,10 @@
+plugins {
+    id "net.ltgt.apt" version "0.19"
+}
+dependencies {
+    annotationProcessor "io.micronaut:micronaut-inject-java:$micronautVersion"
+    compile "org.springframework:spring-context:$springVersion"
+    compile "io.micronaut:micronaut-aop:$micronautVersion"
+    compile "io.micronaut:micronaut-spring:$micronautVersion"
+    compile "io.micronaut:micronaut-inject:$micronautVersion"
+}

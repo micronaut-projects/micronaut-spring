@@ -1,0 +1,13 @@
+io.micronaut.spring.annotation.context.BeanAnnotationMapper
+io.micronaut.spring.annotation.context.ComponentAnnotationMapper
+io.micronaut.spring.annotation.context.RepositoryAnnotationMapper
+io.micronaut.spring.annotation.context.ServiceAnnotationMapper
+io.micronaut.spring.annotation.context.ConfigurationAnnotationMapper
+io.micronaut.spring.annotation.context.PrimaryAnnotationMapper
+io.micronaut.spring.annotation.validation.ValidatedAnnotationMapper
+io.micronaut.spring.annotation.scheduling.ScheduledAnnotationMapper
+io.micronaut.spring.annotation.scheduling.AsyncAnnotationMapper
+io.micronaut.spring.annotation.event.EventListenerAnnotationMapper
+io.micronaut.spring.annotation.context.ValueAnnotationMapper
+io.micronaut.spring.annotation.context.AutowiredAnnotationMapper
+io.micronaut.spring.annotation.tx.TransactionalAnnotationMapper

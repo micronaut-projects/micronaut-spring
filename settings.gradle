@@ -1,0 +1,8 @@
+rootProject.name = 'spring'
+
+include 'spring-annotation'
+include "spring-boot-annotation"
+include "spring-boot"
+include 'spring-web-annotation'
+include 'spring-web'
+include "spring-context"

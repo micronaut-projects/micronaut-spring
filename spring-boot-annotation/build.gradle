@@ -1,0 +1,10 @@
+dependencies {
+    compile project(":spring-annotation")
+    compile "io.micronaut:micronaut-inject:$micronautVersion"
+    testCompile project(":spring-boot")
+    testCompile "org.springframework.boot:spring-boot:$springBootVersion"
+    testCompile "org.springframework.boot:spring-boot-autoconfigure:$springBootVersion"
+    testCompile "org.springframework.boot:spring-boot-actuator:$springBootVersion"
+    testCompile "io.micronaut:micronaut-inject-java:$micronautVersion"
+}
+
