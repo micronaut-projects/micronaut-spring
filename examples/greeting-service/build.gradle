@@ -34,7 +34,8 @@ dependencies {
     annotationProcessor "io.micronaut.spring:micronaut-spring-web-annotation:1.0.0.BUILD-SNAPSHOT"
     compile "io.micronaut:micronaut-inject:$micronautVersion"
     compile("org.springframework.boot:spring-boot-starter-web")
-    compile("io.micronaut:micronaut-http-server-netty:$micronautVersion")
+    compile("io.micronaut:micronaut-http-server:$micronautVersion")
+    runtime("io.micronaut:micronaut-http-server-netty:$micronautVersion")
     runtime "ch.qos.logback:logback-classic:1.2.3"
 
     // uncomment the following to restore Spring Boot as the application executor
