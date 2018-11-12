@@ -1,5 +1,6 @@
 package greeting.example;
 
+import io.swagger.v3.oas.annotations.Hidden;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.LinkedMultiValueMap;
@@ -29,6 +30,7 @@ public class GreetingController {
     }
 
     @DeleteMapping("/greeting")
+    @Hidden
     public ResponseEntity<?> deleteGreeting() {
         MultiValueMap<String, String> headers = new LinkedMultiValueMap<>();
         headers.add("Foo", "Bar");
