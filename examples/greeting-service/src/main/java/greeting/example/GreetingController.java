@@ -19,15 +19,6 @@ public class GreetingController {
         this.greetingService = greetingService;
     }
 
-    @GetMapping(path = "/", produces = "text/html")
-    public String home(Model model) {
-        model.addAttribute(
-                "message",
-                "Welcome to Micronaut for Spring");
-
-        return "home";
-    }
-
     @RequestMapping("/greeting")
     public Greeting greeting(@RequestParam(value="name", defaultValue="World") @Pattern(regexp = "\\D+") String name) {
         return greetingService.greeting(name);
@@ -52,4 +43,13 @@ public class GreetingController {
     public Greeting greetingWithStatus(@RequestParam(value="name", defaultValue="World") @Pattern(regexp = "\\D+") String name) {
         return greetingService.greeting(name);
     }
+
+    @GetMapping(path = "/", produces = "text/html")
+    public String home(Model model) {
+        model.addAttribute(
+                "message",
+                "Welcome to Micronaut for Spring");
+
+        return "home";
+    }    
 }
