@@ -1,0 +1,95 @@
+For additional support for Spring Boot you should add the following dependencies:
+
+.Including `spring-boot` processing
+[source,groovy,subs="attributes"]
+----
+dependencies {
+
+    ...
+    // additional Spring Boot dependencies
+    annotationProcessor "io.micronaut.spring:micronaut-spring-boot:{version}"
+    compile("org.springframework.boot:spring-boot-starter-web")
+
+    // additional Spring Boot dependencies for Micronaut
+    runtime("io.micronaut.spring:micronaut-spring-boot:{version}")
+}
+----
+
+With the above dependencies in place the following Spring Boot specific annotations are supported:
+
+
+.Supported Spring Boot Annotations
+|===
+|Spring Boot Annotation|Target Annotation|Notes
+
+|link:{springbootapi}/org/springframework/boot/context/properties/ConfigurationProperties.html[@ConfigurationProperties]
+|link:{micronautapi}/io/micronaut/context/annotation/ConfigurationProperties.html[@ConfigurationProperties]
+| Example `@ConfigurationProperties("foo.bar")`
+
+|link:{springbootapi}/org/springframework/boot/autoconfigure/condition/ConditionalOnBean.html.html[@ConditionalOnBean]
+|link:{micronautapi}/io/micronaut/context/annotation/Requires.html[@Requires]
+| Maps to `@Requires(beans=Foo.class)`
+
+|link:{springbootapi}/org/springframework/boot/autoconfigure/condition/ConditionalOnClass.html.html[@ConditionalOnClass]
+|link:{micronautapi}/io/micronaut/context/annotation/Requires.html[@Requires]
+| Maps to `@Requires(classes=Foo.class)`
+
+|link:{springbootapi}/org/springframework/boot/autoconfigure/condition/ConditionalOnMissingBean.html.html[@ConditionalOnMissingBean]
+|link:{micronautapi}/io/micronaut/context/annotation/Requires.html[@Requires]
+| Maps to `@Requires(missingBeans=Foo.class)`
+
+|link:{springbootapi}/org/springframework/boot/autoconfigure/condition/ConditionalOnMissingClass.html.html[@ConditionalOnMissingClass]
+|link:{micronautapi}/io/micronaut/context/annotation/Requires.html[@Requires]
+| Maps to `@Requires(missing=Foo.class)`
+
+|link:{springbootapi}/org/springframework/boot/autoconfigure/condition/ConditionalOnNotWebApplication.html.html[@ConditionalOnNotWebApplication]
+|link:{micronautapi}/io/micronaut/context/annotation/Requires.html[@Requires]
+| Maps to `@Requires(missingBeans=EmbeddedServer.class)`
+
+|link:{springbootapi}/org/springframework/boot/autoconfigure/condition/ConditionalOnProperty.html.html[@ConditionalOnProperty]
+|link:{micronautapi}/io/micronaut/context/annotation/Requires.html[@Requires]
+| Maps to `@Requires(property="foo.bar")`
+
+|link:{springbootapi}/org/springframework/boot/autoconfigure/condition/ConditionalOnSingleCandidate.html.html[@ConditionalOnSingleCandidate]
+|`@RequiresSingleCandidateCondition`
+| Maps to `@RequiresSingleCandidateCondition(Foo.class)`
+
+|link:{springbootapi}/org/springframework/boot/autoconfigure/condition/ConditionalOnWebApplication.html.html[@ConditionalOnWebApplication]
+|link:{micronautapi}/io/micronaut/context/annotation/Requires.html[@Requires]
+| Maps to `@Requires(beans=EmbeddedServer.class)`
+
+|===
+
+With support for `@Configuration` and the majority of Spring Boot conditions it is possible to build auto configurations that work with both Spring Boot and Micronaut.
+
+In addition the following Spring Boot Actuator annotations are supported:
+
+
+.Supported Spring Boot Actuator Annotations
+|===
+|Spring Actuator Boot Annotation|Target Annotation|Notes
+
+|link:{springbootapi}/org/springframework/boot/actuate/endpoint/annotation/Endpoint.html[@Endpoint]
+|link:{micronautapi}/io/micronaut/management/endpoint/annotation/Endpoint.html[@Endpoint]
+| Example `@Endpoint("features")`
+
+
+|link:{springbootapi}/org/springframework/boot/actuate/endpoint/annotation/ReadOperation.html[@ReadOperation]
+|link:{micronautapi}/io/micronaut/management/endpoint/annotation/Read.html[@Read]
+| Example `@ReadOperation`
+
+|link:{springbootapi}/org/springframework/boot/actuate/endpoint/annotation/WriteOperation.html[@WriteOperation]
+|link:{micronautapi}/io/micronaut/management/endpoint/annotation/Write.html[@Write]
+| Example `@WriteOperation`
+
+|link:{springbootapi}/org/springframework/boot/actuate/endpoint/annotation/DeleteOperation.html[@DeleteOperation]
+|link:{micronautapi}/io/micronaut/management/endpoint/annotation/Delete.html[@Delete]
+| Example `@DeleteOperation`
+
+|link:{springbootapi}/org/springframework/boot/actuate/endpoint/annotation/Selector.html[@Selector]
+|link:{micronautapi}/io/micronaut/management/endpoint/annotation/Selector.html[@Selector]
+| Example `@Selector`
+
+|===
+
+What this enables is the ability to write management endpoints that work with both Spring Boot and Micronaut.

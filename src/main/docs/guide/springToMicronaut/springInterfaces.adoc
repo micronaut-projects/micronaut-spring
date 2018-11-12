@@ -1,0 +1,46 @@
+The following Spring interfaces are supported and can be injected into any bean:
+
+.Supported Injectable Interfaces
+|===
+
+|Spring Interface|Adapted Target|Description
+|link:{springapi}/org/springframework/core/env/Environment.html[Environment]
+|link:{micronautapi}/io/micronaut/context/env/Environment.html[Environment]
+|The Application Environment
+
+|link:{springapi}/org/springframework/core/convert/ConversionService.html[ConversionService]
+|link:{micronautapi}/io/micronaut/core/convert/ConversionService.html[ConversionService]
+|For Converting Types
+
+|link:{springapi}/org/springframework/context/ApplicationEventPublisher.html.html[ApplicationEventPublisher]
+|link:{micronautapi}/io/micronaut/context/event/ApplicationEventPublisher.html[ApplicationEventPublisher]
+|For Publishing Events
+
+
+|link:{springapi}/org/springframework/context/ApplicationContext.html[ApplicationContext]
+|link:{micronautapi}/io/micronaut/context/ApplicationContext.html[ApplicationContext]
+|The application context
+
+|link:{springapi}/org/springframework/bean/factory/BeanFactory.html[BeanFactory]
+|link:{micronautapi}/io/micronaut/context/BeanContext.html[BeanContext]
+|The bean context
+
+|===
+
+For compatibility the following `Aware` interfaces are supported:
+
+.Supported `Aware` Interfaces
+|===
+
+|Spring Interface|Description
+
+|link:{springapi}/org/springframework/context/EnvironmentAware.html.html[EnvironmentAware]
+|For looking up the `Environment` (but prefer `@Autowired`)
+
+|link:{springapi}/org/springframework/context/ApplicationContextAware.html.html[ApplicationContextAware]
+|For looking up the `ApplicationContext` (but prefer `@Autowired`)
+
+|link:{springapi}/org/springframework/bean/factory/BeanFactoryAware.html.html[BeanFactoryAware]
+|For looking up the `BeanFactory` (but prefer `@Autowired`)
+
+|===

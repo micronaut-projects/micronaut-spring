@@ -1,0 +1,61 @@
+
+
+The following table summarizes the annotations that Micronaut for Spring supports and the Micronaut annotation that they map to at compilation time:
+
+.Supported Spring Annotations
+|===
+|Spring Annotation|Target Annotation|Notes
+
+|link:{springapi}/org/springframework/stereotype/Component.html[@Component]
+|link:{micronautapi}/io/micronaut/context/annotation/Bean.html[@Bean]
+| Example `@Component("myBean")`. Requires `micronaut-runtime` dependency.
+
+|link:{springapi}/org/springframework/stereotype/Service.html[@Service]
+|link:{micronautapi}/io/micronaut/context/annotation/Bean.html[@Bean]
+| Example `@Service("myBean")`. Requires `micronaut-runtime` dependency.
+
+|link:{springapi}/org/springframework/stereotype/Repository.html[@Repository]
+|link:{micronautapi}/io/micronaut/context/annotation/Bean.html[@Bean]
+| Example `@Repository("myBean")`. Requires `micronaut-runtime` dependency.
+
+|link:{springapi}/org/springframework/beans/factory/annotation/Autowired.html[@Autowired]
+|`@javax.inject.Inject`
+| Example `@Autowired`. `required=false` adds `@Nullable`
+
+|link:{springapi}/org/springframework/beans/factory/annotation/Value.html[@Value]
+|link:{micronautapi}/io/micronaut/context/annotation/Value.html[@Value]
+| Example `@Value("${foo.bar}")`
+
+|link:{springapi}/org/springframework/beans/factory/annotation/Qualifier.html[@Qualifier]
+|`@javax.inject.Named`
+|Example `@Qualifier("myBean")`
+
+|link:{springapi}/org/springframework/context/annotation/Configuration.html[@Configuration]
+|link:{micronautapi}/io/micronaut/context/annotation/Factory.html[@Factory]
+|Example `@Configuration`
+
+|link:{springapi}/org/springframework/context/annotation/Bean.html[@Bean]
+|link:{micronautapi}/io/micronaut/context/annotation/Bean.html[@Bean]
+|Example `@Bean`. Requires `micronaut-runtime` dependency.
+
+|link:{springapi}/org/springframework/context/annotation/Primary.html[@Primary]
+|link:{micronautapi}/io/micronaut/context/annotation/Primary.html[@Primary]
+|Example `@Primary`. Requires `micronaut-runtime` dependency.
+
+|link:{springapi}/org/springframework/context/event/EventListener.html[@EventListener]
+|link:{micronautapi}/io/micronaut/runtime/event/annotation/EventListener.html[@EventListener]
+|Example `@EventListener`. Requires `micronaut-inject` dependency.
+
+|link:{springapi}/org/springframework/scheduling/annotation/Async.html[@Async]
+|link:{micronautapi}/io/micronaut/scheduling/annotation/Async.html[@Async]
+|Example `@Async`. Requires `micronaut-runtime` dependency.
+
+|link:{springapi}/org/springframework/scheduling/annotation/Scheduled.html[@Scheduled]
+|link:{micronautapi}/io/micronaut/scheduling/annotation/Scheduled.html[@Scheduled]
+|Example `@Scheduled`. Requires `micronaut-runtime` dependency.
+
+|link:{springapi}/org/springframework/transaction/annotation/Transactional.html[@Transactional]
+|link:{micronautapi}/io/micronaut/spring/tx/annotation/Transactional.html[@Transactional]
+|Example `@Transactional`. Requires `micronaut-spring` dependency.
+
+|===

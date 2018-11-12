@@ -1,0 +1,24 @@
+Micronaut 1.0.1 or above is required and the following is a minimal build to get this working for Spring (a non-web application):
+
+[source,groovy,subs="attributes"]
+----
+plugins {
+    id "java"
+    id "org.springframework.boot" version "2.1.0.RELEASE"
+    id "io.spring.dependency-management" version "1.0.6.RELEASE"
+    id "net.ltgt.apt" version "0.19"
+}
+
+dependencies {
+    annotationProcessor "io.micronaut:micronaut-inject-java:{micronautVersion}"
+    annotationProcessor "io.micronaut:micronaut-validation::{micronautVersion}"
+    annotationProcessor "io.micronaut.spring:micronaut-spring-annotation:{version}"
+
+    compile "io.micronaut:micronaut-inject::{micronautVersion}"
+    compile("org.springframework.boot:spring-boot-starter")
+    ...
+
+}
+----
+
+NOTE: If you are only going to references Spring annotations and not Spring classes or interfaces then `org.springframework.boot:spring-boot-starter` can be `compileOnly`

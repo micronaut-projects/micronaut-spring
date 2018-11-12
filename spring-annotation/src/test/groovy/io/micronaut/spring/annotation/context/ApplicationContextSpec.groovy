@@ -12,7 +12,8 @@ class ApplicationContextSpec extends Specification {
 
     void "test spring application context implementation"() {
         when:
-        ManagedApplicationContext context = new MicronautApplicationContext()
+        ManagedApplicationContext context = new MicronautApplicationContext( io.micronaut.context.ApplicationContext.build()
+                .properties("foo.bar":'somevalue'))
 
         then:
         !context.isRunning()
@@ -31,7 +32,7 @@ class ApplicationContextSpec extends Specification {
         context.getBean(names[0]) instanceof MyNamedService
         context.getBean(names[0]) == context.getBean(MyNamedService)
         context.findAnnotationOnBean(names[0], Service)
-        context.getBeansWithAnnotation(Service).size() == 1
+        context.getBeansWithAnnotation(Service).size() == 2 // the event listener is also there
         context.getBeanProvider(MyNamedService).ifAvailable == context.getBean(MyNamedService)
         context.getBeansOfType(MyNamedService).size() == 1
 

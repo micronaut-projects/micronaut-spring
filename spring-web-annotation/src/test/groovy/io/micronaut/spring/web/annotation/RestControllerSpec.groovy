@@ -17,6 +17,7 @@ class RestControllerSpec extends Specification {
     void "test request controller"() {
 
         expect:
+        greetingClient.home().contains("Welcome to Micronaut for Spring")
         greetingClient.greet("Fred").content == 'Hello, Fred!'
         greetingClient.nestedGreet("Fred").content == 'Hello Nested, Fred!'
         greetingClient.greet(null).content == 'Hello, World!'
@@ -41,5 +42,14 @@ class RestControllerSpec extends Specification {
         then:
         def e = thrown(HttpClientResponseException)
         e.message.contains('name: must match "\\D+"')
+    }
+
+    void "test ServerHttpRequest argument"() {
+
+        when:
+        Greeting greeting = greetingClient.requestTest(new Greeting(1, "Fred"))
+
+        then:
+        greeting != null
     }
 }

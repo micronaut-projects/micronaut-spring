@@ -1,0 +1,12 @@
+introduction: Introduction
+springToMicronaut:
+  title: Compile Time Spring Annotation Support
+  springToMicronautStart: Build Configuration
+  springAnnotations: Supported Spring Annotations
+  springInterfaces: Supported Spring Interfaces
+  springEvents: Supported Spring Events
+  springMvc: Writing Spring MVC Controllers
+  springBoot: Supported Spring Boot Annotations
+  micronautClient: Using Micronaut's HTTP Client
+springParentContext:
+  title: Using Micronaut Parent Context

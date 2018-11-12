@@ -47,6 +47,7 @@ class SimpleConfigurationSpec extends Specification {
         applicationContext.getBean(MyComponent).value == "myvalue"
         applicationContext.getBean(MyComponent).myNamedService != null
         applicationContext.getBean(MyNamedService) == applicationContext.getBean(MyComponent).myNamedService
+        applicationContext.getBean(MyNamedService).lastEvent
         applicationContext.getBean(MyNamedService, Qualifiers.byName("myname"))
         applicationContext.getBean(MyTransactionalService.class) instanceof Intercepted
         applicationContext.getBeanDefinition(MyTransactionalService).executableMethods.size() == 1

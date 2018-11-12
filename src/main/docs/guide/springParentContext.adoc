@@ -1,0 +1,20 @@
+You can also use Micronaut for Spring as the parent application context to a regular Spring application.
+
+This has a number of benefits, you can for example define beans using Micronaut and consume any Micronaut beans into a Spring application, resulting in Spring using less memory and having reflection free infrastructure.
+
+You can also use any Micronaut feature from a regular Spring Boot or Spring application including the https://docs.micronaut.io/latest/guide/index.html#clientAnnotation[declaring clients for HTTP] and https://docs.micronaut.io/latest/guide/index.html#kafkaClient[Kafka].
+
+You can also use any compilation time tools from Micronaut with Spring such as Micronaut's support for https://docs.micronaut.io/latest/guide/index.html#openapi[Swagger].
+
+The following example shows how to Configure your Spring Boot application with a Micronaut powered parent application context using `SpringApplicationBuilder`:
+
+.Using the Micronaut Parent Context
+[source,java]
+----
+SpringApplicationBuilder builder = new SpringApplicationBuilder();
+MicronautApplicationContext context = new MicronautApplicationContext();
+context.start();
+builder.parent(context);
+builder.sources(Application);
+builder.build().application.run();
+----

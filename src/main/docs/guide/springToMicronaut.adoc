@@ -1,0 +1,18 @@
+Micronaut for Spring allows you to use traditional Spring annotations which are mapped to Micronaut annotations at compilation time. This allows you to write an application that can be imported to another Spring or Micronaut application without change.
+
+Unlikely traditional runtime reflection based frameworks Micronaut uses Ahead of Time (AOT) compilation, hence there is no runtime overhead to supporting an additional set of annotations (in this case Spring's annotation programming model).
+
+As part of this project an https://github.com/micronaut-projects/micronaut-spring/tree/master/examples/greeting-service[Example Application] is provided that includes no dependencies on Micronaut itself in the source code (only Spring dependencies) but is computed into a Micronaut application at compilation time.
+
+The value in this as follows:
+
+* You can take the compiled application and include it into another Spring or Micronaut application without change, which is a huge win for library authors.
+* If you have an existing team of Spring developers they can be up and running with Micronaut without learning a new annotation DSL.
+* Existing tooling like IntelliJ IDE and STS 4.0 "Just Work" with Micronaut
+
+Note that Spring is huge and only a subset of Spring is supported, but enough to build real applications and libraries that work with either Micronaut or Spring. The following documentation covers the annotations and Spring interfaces that are supported.
+
+NOTE: If an annotation or interface of Spring is not mentioned in this documentation consider it unsupported.
+
+
+
