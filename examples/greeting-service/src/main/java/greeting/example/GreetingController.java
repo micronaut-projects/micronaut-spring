@@ -3,6 +3,7 @@ package greeting.example;
 import io.swagger.v3.oas.annotations.Hidden;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
@@ -12,11 +13,19 @@ import javax.validation.constraints.Pattern;
 @RestController
 public class GreetingController {
 
-
     private final GreetingService greetingService;
 
     public GreetingController(GreetingService greetingService) {
         this.greetingService = greetingService;
+    }
+
+    @GetMapping(path = "/", produces = "text/html")
+    public String home(Model model) {
+        model.addAttribute(
+                "message",
+                "Welcome to Micronaut for Spring");
+
+        return "home";
     }
 
     @RequestMapping("/greeting")

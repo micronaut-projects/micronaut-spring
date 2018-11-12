@@ -30,7 +30,7 @@ public class ModelAndViewServerFilter extends OncePerRequestHttpServerFilter {
 
     @Override
     public int getOrder() {
-        return viewsFilter.getOrder() - 10;
+        return viewsFilter.getOrder() + 10;
     }
 
     @Override
