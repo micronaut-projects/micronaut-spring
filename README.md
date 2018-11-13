@@ -1,5 +1,8 @@
 # Micronaut for Spring
 
+
+[![Build Status](https://travis-ci.org/micronaut-projects/micronaut-spring.svg?branch=master)](https://travis-ci.org/micronaut-projects/micronaut-spring)
+
 Micronaut uses Ahead of Time (AOT) compilation to pre-compute your applications requirements at compile time. The result of this is significantly lower memory requirements, faster startup time, and reflection free framework infrastructure.
 
 This project consists of various components that make it easier to:
