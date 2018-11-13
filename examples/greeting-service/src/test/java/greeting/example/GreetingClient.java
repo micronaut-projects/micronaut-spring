@@ -1,28 +1,29 @@
 package greeting.example;
 
 
-import io.micronaut.http.HttpResponse;
-import io.micronaut.http.annotation.*;
 import io.micronaut.http.client.annotation.Client;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Nullable;
 
 @Client("/")
 public interface GreetingClient {
 
-    @Get("/greeting{?name}")
+    @GetMapping("/greeting{?name}")
     Greeting greet(@Nullable String name);
 
-    @Post("/greeting")
-    Greeting greetByPost(@Body Greeting greeting);
+    @PostMapping("/greeting")
+    Greeting greetByPost(@RequestBody Greeting greeting);
 
-    @Delete("/greeting")
-    HttpResponse<?> deletePost();
+    @DeleteMapping("/greeting")
+    HttpStatus deletePost();
 
-    @Get("/nested/greeting{?name}")
+    @GetMapping("/nested/greeting{?name}")
     Greeting nestedGreet(@Nullable String name);
 
 
-    @Get("/greeting-status{?name}")
-    HttpResponse<Greeting> greetWithStatus(@Nullable String name);
+    @GetMapping("/greeting-status{?name}")
+    ResponseEntity<Greeting> greetWithStatus(@Nullable String name);
 }

@@ -41,6 +41,7 @@ dependencies {
     annotationProcessor "io.micronaut.spring:micronaut-spring-boot-annotation:$micronautSpringVersion"
     annotationProcessor "io.micronaut.spring:micronaut-spring-web-annotation:$micronautSpringVersion"
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
+    testAnnotationProcessor "io.micronaut.spring:micronaut-spring-web-annotation:$micronautSpringVersion"
 
     compile "io.swagger.core.v3:swagger-annotations"
     compile "io.micronaut:micronaut-inject"
