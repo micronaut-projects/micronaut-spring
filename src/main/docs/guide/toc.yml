@@ -7,6 +7,7 @@ springToMicronaut:
   springEvents: Supported Spring Events
   springMvc: Writing Spring MVC Controllers
   springBoot: Supported Spring Boot Annotations
+  springLimitations: Unsupported Spring Features
   micronautClient: Using Micronaut's HTTP Client
 springParentContext:
   title: Using Micronaut Parent Context

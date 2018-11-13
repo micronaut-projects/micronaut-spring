@@ -1,0 +1,7 @@
+As mentioned previously only a subset of Spring is implementated, but enough to build real applications. The question you have to ask yourself coming from Spring is how much Spring do you need?
+
+The following notable features are currently not supported in Micronaut for Spring either and in general if a feature is not documented here consider it unsupported:
+
+* *AspectJ* - Spring's AOP implementation is not supported, you can however use https://docs.micronaut.io/latest/guide/index.html#aop[Micronaut AOP] which is compilation time and reflection free.
+* *Spring Expression Language (SpEL)* - SpEL expressions are not supported, property placeholders are however.
+* *The Servlet API* - Any reference to the Servlet API is not supported

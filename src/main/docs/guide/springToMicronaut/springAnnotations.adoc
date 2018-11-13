@@ -58,4 +58,16 @@ The following table summarizes the annotations that Micronaut for Spring support
 |link:{micronautapi}/io/micronaut/spring/tx/annotation/Transactional.html[@Transactional]
 |Example `@Transactional`. Requires `micronaut-spring` dependency.
 
+|link:{springapi}/org/springframework/cache/annotation/Cacheable.html[@Cacheable]
+|link:{micronautapi}/io/micronaut/cache/annotation/Cacheable.html[@Cacheable]
+|Requires `micronaut-runtime` and configured cache. Only `cacheNames` member supported.
+
+|link:{springapi}/org/springframework/cache/annotation/CacheEvict.html[@CacheEvict]
+|link:{micronautapi}/io/micronaut/cache/annotation/CacheInvalidate.html[@CacheInvalidate]
+|Requires `micronaut-runtime` and configured cache. Only `cacheNames` member supported.
+
+|link:{springapi}/org/springframework/cache/annotation/Cacheable.html[@CachePut]
+|link:{micronautapi}/io/micronaut/cache/annotation/CachePut.html[@CachePut]
+|Requires `micronaut-runtime` and configured cache. Only `cacheNames` member supported.
+
 |===
