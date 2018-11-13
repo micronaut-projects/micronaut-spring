@@ -16,48 +16,50 @@ targetCompatibility = 1.8
 mainClassName = "greeting.example.Application"
 
 ext {
-    micronautVersion = "1.0.1.BUILD-SNAPSHOT"
+    micronautVersion = "1.0.1"
+    micronautSpringVersion = "1.0.0.M1"
 }
 
 repositories {
     mavenLocal()
+    maven { url "https://dl.bintray.com/micronaut/core-releases-local" }
     jcenter()
-    maven { url "http://oss.sonatype.org/content/repositories/snapshots/" }
 }
 
 
 
 dependencyManagement {
     imports {
+        mavenBom "io.micronaut:micronaut-bom:$micronautVersion"
         mavenBom(org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES)
     }
 }
 
 dependencies {
-    annotationProcessor "io.micronaut:micronaut-inject-java:$micronautVersion"
-    annotationProcessor "io.micronaut:micronaut-validation:$micronautVersion"
-    annotationProcessor "io.micronaut.configuration:micronaut-openapi:$micronautVersion"
-    annotationProcessor "io.micronaut.spring:micronaut-spring-boot-annotation:1.0.0.BUILD-SNAPSHOT"
-    annotationProcessor "io.micronaut.spring:micronaut-spring-web-annotation:1.0.0.BUILD-SNAPSHOT"
+    annotationProcessor "io.micronaut:micronaut-inject-java"
+    annotationProcessor "io.micronaut:micronaut-validation"
+    annotationProcessor "io.micronaut.configuration:micronaut-openapi"
+    annotationProcessor "io.micronaut.spring:micronaut-spring-boot-annotation:$micronautSpringVersion"
+    annotationProcessor "io.micronaut.spring:micronaut-spring-web-annotation:$micronautSpringVersion"
     compileOnly 'com.oracle.substratevm:svm:1.0.0-rc8'
     compile "io.swagger.core.v3:swagger-annotations:2.0.4"
-    compile "io.micronaut:micronaut-inject:$micronautVersion"
+    compile "io.micronaut:micronaut-inject"
     compile("org.springframework.boot:spring-boot-starter-web")
-    compile("io.micronaut:micronaut-http-server:$micronautVersion")
-    compile("io.micronaut:micronaut-http-server-netty:$micronautVersion")
+    compile("io.micronaut:micronaut-http-server")
+    compile("io.micronaut:micronaut-http-server-netty")
     runtime "ch.qos.logback:logback-classic:1.2.3"
-    runtime "io.micronaut:micronaut-graal:$micronautVersion"
+    runtime "io.micronaut:micronaut-graal"
 
     // uncomment the following to restore Spring Boot as the application executor
 //    runtime("org.springframework.boot:spring-boot-starter-tomcat")
 //    runtime 'javax.servlet:javax.servlet-api:4.0.0'
 
-    testCompile("io.micronaut:micronaut-http-client:$micronautVersion")
+    testCompile("io.micronaut:micronaut-http-client")
     testCompile("io.micronaut.test:micronaut-test-junit5:1.0.0.RC2")
-    testCompile "io.micronaut:micronaut-inject-java:$micronautVersion"
+    testCompile "io.micronaut:micronaut-inject-java"
     testCompile "org.mockito:mockito-junit-jupiter:2.22.0"
     testRuntime "org.junit.jupiter:junit-jupiter-engine:5.1.0"
-    testAnnotationProcessor "io.micronaut:micronaut-inject-java:$micronautVersion"
+    testAnnotationProcessor "io.micronaut:micronaut-inject-java"
 }
 
 shadowJar {
