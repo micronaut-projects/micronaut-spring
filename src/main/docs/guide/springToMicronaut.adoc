@@ -8,7 +8,7 @@ The value in this as follows:
 
 * You can take the compiled application and include it into another Spring or Micronaut application without change, which is a huge win for library authors.
 * If you have an existing team of Spring developers they can be up and running with Micronaut without learning a new annotation DSL.
-* Existing tooling like IntelliJ IDE and STS 4.0 "Just Work" with Micronaut
+* Existing tooling like IntelliJ IDEA and STS 4.0 "Just Work" with Micronaut
 
 Note that Spring is huge and only a subset of Spring is supported, but enough to build real applications and libraries that work with either Micronaut or Spring. The following documentation covers the annotations and Spring interfaces that are supported.
 

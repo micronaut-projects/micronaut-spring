@@ -13,24 +13,3 @@ For compatibility the following `ApplicationEvent` instances are supported:
 |===
 
 You can write methods annotated with link:{springapi}/org/springframework/context/event/EventListener.html[@EventListener] to receive the events in either framework.
-
-If you are writing a Web Application then you should modify your dependencies as following:
-
-.Including `spring-web` processing
-[source,groovy,subs="attributes"]
-----
-dependencies {
-
-    ...
-    // additional Spring web dependencies
-    annotationProcessor "io.micronaut.spring:micronaut-spring-web-annotation:{version}"
-    compile("org.springframework.boot:spring-boot-starter-web")
-
-
-    // additional web dependencies for Micronaut
-    compile("io.micronaut:micronaut-http-server:{micronautVersion}")
-    runtime("io.micronaut.spring:micronaut-spring-web:{version}")
-    runtime("io.micronaut:micronaut-http-server-netty:{micronautVersion}")
-
-}
-----
