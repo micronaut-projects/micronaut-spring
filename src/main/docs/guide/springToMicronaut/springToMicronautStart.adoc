@@ -21,4 +21,4 @@ dependencies {
 }
 ----
 
-NOTE: If you are only going to references Spring annotations and not Spring classes or interfaces then `org.springframework.boot:spring-boot-starter` can be `compileOnly`
+NOTE: If you are only going to reference Spring annotations and not Spring classes or interfaces then `org.springframework.boot:spring-boot-starter` can be `compileOnly`
