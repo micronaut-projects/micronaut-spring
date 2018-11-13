@@ -1,0 +1,322 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+    <title>2.5 Writing Spring MVC Controllers 1.0.0.BUILD-SNAPSHOT</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
+    <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
+    <script type="text/javascript">
+function addJsClass() {
+    var classes = document.body.className.split(" ");
+    classes.push("js");
+    document.body.className = classes.join(" ");
+}
+    </script>
+</head>
+
+<body class="body" onload="addJsClass();">
+<div id="navigation">
+    <div class="navTitle">
+        
+        Micronaut for Spring
+    </div>
+    <div class="navLinks">
+        <ul>
+            <li>
+                <div id="nav-summary" onmouseover="toggleNavSummary(false)" onmouseout="toggleNavSummary(true)">
+                    <a href="../../guide/index.html" class="button">Table of contents</a>
+
+                    <div id="nav-summary-childs" style="display:none;">
+                        
+                        <div class="toc-item" style="margin-left:0"><a href="../../guide/introduction.html"><strong>1</strong><span>Introduction</span></a>
+                        </div>
+                        
+                        <div class="toc-item" style="margin-left:0"><a href="../../guide/springToMicronaut.html"><strong>2</strong><span>Compile Time Spring Annotation Support</span></a>
+                        </div>
+                        
+                        <div class="toc-item" style="margin-left:0"><a href="../../guide/springParentContext.html"><strong>3</strong><span>Using Micronaut Parent Context</span></a>
+                        </div>
+                        
+                    </div>
+                </div>
+            </li>
+            <li class="separator selected">
+                <a id="ref-button" onclick="localToggle(); return false;" href="#">Quick Reference</a>
+            </li>
+        </ul>
+    </div>
+
+
+</div>
+
+<table id="colset" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+        <td id="col1">
+            <div id="main" class="corner-all">
+
+                
+                    <div class="toc-item prev-left"><a href="../../guide/introduction.html">&lt;&lt; <strong>1</strong><span>Introduction</span></a></div>
+                
+
+                <span id='toggle-col1' class="toggle">(<a href="#" onclick="localToggle(); return false;">Quick Reference</a>)</span>
+
+                
+                    <div class="toc-item next-right"><a href="../../guide/springParentContext.html"><strong>3</strong><span>Using Micronaut Parent Context</span> >></a></div>
+                
+
+
+                <div class="project">
+                    <h1>2.5 Writing Spring MVC Controllers</h1>
+
+                    <p><strong>Version:</strong> 1.0.0.BUILD-SNAPSHOT</p>
+                </div>
+
+                
+
+                
+
+<h2 id="springMvc">2.5 Writing Spring MVC Controllers</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-spring/edit/master/src/main/docs/guide/springToMicronaut/springMvc.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>You can write Spring MVC controllers that are computed into Micronaut controllers at compilation time. The programming model is largely compatible with Spring Web Reactive.</p>
+</div>
+<div class="paragraph">
+<p>To get started you should modify your dependencies as following:</p>
+</div>
+<div class="listingblock">
+<div class="title">Including <code>spring-web</code> processing</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy" data-lang="groovy">dependencies {
+
+    ...
+    // additional Spring web dependencies
+    annotationProcessor "io.micronaut.spring:micronaut-spring-web-annotation:1.0.0.BUILD-SNAPSHOT"
+    compile("org.springframework.boot:spring-boot-starter-web")
+
+
+    // additional web dependencies for Micronaut
+    compile("io.micronaut:micronaut-http-server:1.0.1")
+    runtime("io.micronaut.spring:micronaut-spring-web:1.0.0.BUILD-SNAPSHOT")
+    runtime("io.micronaut:micronaut-http-server-netty:1.0.1")
+
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Only <code>@RestController</code> semantics are supported, which is fine for most Microservice use cases. Special support is provided by the <code>micronaut-spring-web</code> dependency to allowing returning a <a href="https://docs.spring.io/spring/docs/current/javadoc-api//org/springframework/http/ResponseEntity.html">ResponseEntity</a>.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+See the <a href="https://github.com/micronaut-projects/micronaut-spring/tree/master/examples/greeting-service">Example application</a> for a demonstration on how to build a Spring MVC application computable to Micronaut.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The binding semantics as described in the <a href="https://docs.micronaut.io/latest/guide/index.html#binding">Micronaut documentation</a> and are generally equivalent to how Spring MVC behaves.</p>
+</div>
+<div class="paragraph">
+<p>The following additional, Spring specific, method argument types are supported:</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 1. Supported Method Argument Types</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.spring.io/spring/docs/current/javadoc-api//org/springframework/http/server/reactive/ServerHttpRequest.html.html">ServerHttpRequest</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">For receiving the whole reactive request</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>java.security.Principal</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Requires the <code>micronaut-security</code> module</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.spring.io/spring/docs/current/javadoc-api//org/springframework/http/HttpMethod.html">HttpMethod</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The HTTP method</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.spring.io/spring/docs/current/javadoc-api//org/springframework/ui/ModelMap.html">ModelMap</a>, <a href="https://docs.spring.io/spring/docs/current/javadoc-api//org/springframework/ui/Model.html">Model</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">With <code>micronaut-views</code> module. See <a href="https://docs.micronaut.io/latest/guide/index.html#views">Server Side View Rendering</a>.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>The following return types are supported:</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 2. Supported Return Types</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.spring.io/spring/docs/current/javadoc-api//org/springframework/http/HttpEntity.html">HttpEntity</a>, <a href="https://docs.spring.io/spring/docs/current/javadoc-api//org/springframework/http/ResponseEntity.html">ResponseEntity</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">For customizing the response</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.spring.io/spring/docs/current/javadoc-api//org/springframework/http/HttpHeaders.html">HttpHeaders</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">For sending back only headers</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>java.lang.String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A view name when combined with <code>Model</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Any reactive or POJO return type</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Computed to appropriate JSON response</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>The following Spring MVC annotations are supported:</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 3. Supported Spring MVC Annotations</caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Spring Annotation</th>
+<th class="tableblock halign-left valign-top">Target Annotation</th>
+<th class="tableblock halign-left valign-top">Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.spring.io/spring/docs/current/javadoc-api//org/springframework/web/bind/annotation/RestController.html">@RestController</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.micronaut.io/latest/api/io/micronaut/http/annotation/Controller.html">@Controller</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Example <code>@RestController</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.spring.io/spring/docs/current/javadoc-api//org/springframework/web/bind/annotation/RequestMapping.html">@RequestMapping</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.micronaut.io/latest/api/io/micronaut/http/annotation/UriMapping.html">@UriMapping</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Example: <code>@RequestMapping("/foo/bar")</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.spring.io/spring/docs/current/javadoc-api//org/springframework/web/bind/annotation/GetMapping.html">@GetMapping</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.micronaut.io/latest/api/io/micronaut/http/annotation/Get.html">@Get</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Example: <code>@GetMapping("/foo/bar")</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.spring.io/spring/docs/current/javadoc-api//org/springframework/web/bind/annotation/PostMapping.html">@PostMapping</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.micronaut.io/latest/api/io/micronaut/http/annotation/Post.html">@Post</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Example: <code>@PostMapping("/foo/bar")</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.spring.io/spring/docs/current/javadoc-api//org/springframework/web/bind/annotation/DeleteMapping.html">@DeleteMapping</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.micronaut.io/latest/api/io/micronaut/http/annotation/Delete.html">@Delete</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Example: <code>@DeleteMapping("/foo/bar")</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.spring.io/spring/docs/current/javadoc-api//org/springframework/web/bind/annotation/PatchMapping.html">@PatchMapping</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.micronaut.io/latest/api/io/micronaut/http/annotation/Patch.html">@Patch</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Example: <code>@PatchMapping("/foo/bar")</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.spring.io/spring/docs/current/javadoc-api//org/springframework/web/bind/annotation/PutMapping.html">@PutMapping</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.micronaut.io/latest/api/io/micronaut/http/annotation/Put.html">@Put</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Example: <code>@PutMapping("/foo/bar")</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.spring.io/spring/docs/current/javadoc-api//org/springframework/web/bind/annotation/RequestHeader.html">@RequestHeader</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.micronaut.io/latest/api/io/micronaut/http/annotation/Header.html">@Header</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Example: <code>@RequestHeader("Accept")</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.spring.io/spring/docs/current/javadoc-api//org/springframework/web/bind/annotation/RequestAttribute.html">@RequestAttribute</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">No equivalent</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Example: <code>@RequestAttribute("Accept")</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.spring.io/spring/docs/current/javadoc-api//org/springframework/web/bind/annotation/RequestBody.html">@RequestBody</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.micronaut.io/latest/api/io/micronaut/http/annotation/Body.html">@Body</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Example: <code>@RequestBody</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.spring.io/spring/docs/current/javadoc-api//org/springframework/web/bind/annotation/RequestParam.html">@RequestParam</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.micronaut.io/latest/api/io/micronaut/http/annotation/QueryValue.html">@QueryValue</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Example: <code>@RequestParam("myParam")</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.spring.io/spring/docs/current/javadoc-api//org/springframework/web/bind/annotation/ResponseStatus.html">@ResponseStatus</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.micronaut.io/latest/api/io/micronaut/http/annotation/Status.html">@Status</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Example: <code>@ResponseStatus(value=HttpStatus.NOT_FOUND)</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.spring.io/spring/docs/current/javadoc-api//org/springframework/web/bind/annotation/ExceptionHandler.html">@ExceptionHandler</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.micronaut.io/latest/api/io/micronaut/http/annotation/Error.html">@Error</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Example: <code>@ExceptionHandler</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.spring.io/spring/docs/current/javadoc-api//org/springframework/web/bind/annotation/CookieValue.html">@CookieValue</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.micronaut.io/latest/api/io/micronaut/http/annotation/CookieValue.html">@CookieValue</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Example: <code>@CookieValue("myCookie")</code></p></td>
+</tr>
+</tbody>
+</table>
+
+
+                <div style="clear:both;margin-top:15px;"></div>
+                
+                    <div class="toc-item prev-left"><a href="../../guide/introduction.html">&lt;&lt; <strong>1</strong><span>Introduction</span></a></div>
+                
+                    <div class="toc-item next-right"><a href="../../guide/springParentContext.html"><strong>3</strong><span>Using Micronaut Parent Context</span> >></a></div>
+                
+                <div style="clear:both"></div>
+            </div>
+        </td>
+        <td id="col2">
+            <div class="local clearfix">
+                <div class="local-title">
+                    <a href="../../guide/index.html" target="mainFrame">Quick Reference</a>
+                    <span class="toggle">(<a href="#" onclick="localToggle(); return false;">hide</a>)</span>
+                </div>
+                <div class="menu">
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+</table>
+
+<div id="footer">
+    
+    
+</div>
+
+<script type="text/javascript" src="../js/docs.js"></script>
+
+</body>
+</html>

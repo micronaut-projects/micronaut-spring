@@ -1,0 +1,221 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+    <title>2.2 Supported Spring Annotations 1.0.0.BUILD-SNAPSHOT</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
+    <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
+    <script type="text/javascript">
+function addJsClass() {
+    var classes = document.body.className.split(" ");
+    classes.push("js");
+    document.body.className = classes.join(" ");
+}
+    </script>
+</head>
+
+<body class="body" onload="addJsClass();">
+<div id="navigation">
+    <div class="navTitle">
+        
+        Micronaut for Spring
+    </div>
+    <div class="navLinks">
+        <ul>
+            <li>
+                <div id="nav-summary" onmouseover="toggleNavSummary(false)" onmouseout="toggleNavSummary(true)">
+                    <a href="../../guide/index.html" class="button">Table of contents</a>
+
+                    <div id="nav-summary-childs" style="display:none;">
+                        
+                        <div class="toc-item" style="margin-left:0"><a href="../../guide/introduction.html"><strong>1</strong><span>Introduction</span></a>
+                        </div>
+                        
+                        <div class="toc-item" style="margin-left:0"><a href="../../guide/springToMicronaut.html"><strong>2</strong><span>Compile Time Spring Annotation Support</span></a>
+                        </div>
+                        
+                        <div class="toc-item" style="margin-left:0"><a href="../../guide/springParentContext.html"><strong>3</strong><span>Using Micronaut Parent Context</span></a>
+                        </div>
+                        
+                    </div>
+                </div>
+            </li>
+            <li class="separator selected">
+                <a id="ref-button" onclick="localToggle(); return false;" href="#">Quick Reference</a>
+            </li>
+        </ul>
+    </div>
+
+
+</div>
+
+<table id="colset" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+        <td id="col1">
+            <div id="main" class="corner-all">
+
+                
+                    <div class="toc-item prev-left"><a href="../../guide/introduction.html">&lt;&lt; <strong>1</strong><span>Introduction</span></a></div>
+                
+
+                <span id='toggle-col1' class="toggle">(<a href="#" onclick="localToggle(); return false;">Quick Reference</a>)</span>
+
+                
+                    <div class="toc-item next-right"><a href="../../guide/springParentContext.html"><strong>3</strong><span>Using Micronaut Parent Context</span> >></a></div>
+                
+
+
+                <div class="project">
+                    <h1>2.2 Supported Spring Annotations</h1>
+
+                    <p><strong>Version:</strong> 1.0.0.BUILD-SNAPSHOT</p>
+                </div>
+
+                
+
+                
+
+<h2 id="springAnnotations">2.2 Supported Spring Annotations</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-spring/edit/master/src/main/docs/guide/springToMicronaut/springAnnotations.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>The following table summarizes the annotations that Micronaut for Spring supports and the Micronaut annotation that they map to at compilation time:</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 1. Supported Spring Annotations</caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Spring Annotation</th>
+<th class="tableblock halign-left valign-top">Target Annotation</th>
+<th class="tableblock halign-left valign-top">Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.spring.io/spring/docs/current/javadoc-api//org/springframework/stereotype/Component.html">@Component</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.micronaut.io/latest/api/io/micronaut/context/annotation/Bean.html">@Bean</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Example <code>@Component("myBean")</code>. Requires <code>micronaut-runtime</code> dependency.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.spring.io/spring/docs/current/javadoc-api//org/springframework/stereotype/Service.html">@Service</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.micronaut.io/latest/api/io/micronaut/context/annotation/Bean.html">@Bean</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Example <code>@Service("myBean")</code>. Requires <code>micronaut-runtime</code> dependency.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.spring.io/spring/docs/current/javadoc-api//org/springframework/stereotype/Repository.html">@Repository</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.micronaut.io/latest/api/io/micronaut/context/annotation/Bean.html">@Bean</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Example <code>@Repository("myBean")</code>. Requires <code>micronaut-runtime</code> dependency.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.spring.io/spring/docs/current/javadoc-api//org/springframework/beans/factory/annotation/Autowired.html">@Autowired</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>@javax.inject.Inject</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Example <code>@Autowired</code>. <code>required=false</code> adds <code>@Nullable</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.spring.io/spring/docs/current/javadoc-api//org/springframework/beans/factory/annotation/Value.html">@Value</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.micronaut.io/latest/api/io/micronaut/context/annotation/Value.html">@Value</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Example <code>@Value("${foo.bar}")</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.spring.io/spring/docs/current/javadoc-api//org/springframework/beans/factory/annotation/Qualifier.html">@Qualifier</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>@javax.inject.Named</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Example <code>@Qualifier("myBean")</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.spring.io/spring/docs/current/javadoc-api//org/springframework/context/annotation/Configuration.html">@Configuration</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.micronaut.io/latest/api/io/micronaut/context/annotation/Factory.html">@Factory</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Example <code>@Configuration</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.spring.io/spring/docs/current/javadoc-api//org/springframework/context/annotation/Bean.html">@Bean</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.micronaut.io/latest/api/io/micronaut/context/annotation/Bean.html">@Bean</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Example <code>@Bean</code>. Requires <code>micronaut-runtime</code> dependency.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.spring.io/spring/docs/current/javadoc-api//org/springframework/context/annotation/Primary.html">@Primary</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.micronaut.io/latest/api/io/micronaut/context/annotation/Primary.html">@Primary</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Example <code>@Primary</code>. Requires <code>micronaut-runtime</code> dependency.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.spring.io/spring/docs/current/javadoc-api//org/springframework/context/event/EventListener.html">@EventListener</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.micronaut.io/latest/api/io/micronaut/runtime/event/annotation/EventListener.html">@EventListener</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Example <code>@EventListener</code>. Requires <code>micronaut-inject</code> dependency.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.spring.io/spring/docs/current/javadoc-api//org/springframework/scheduling/annotation/Async.html">@Async</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.micronaut.io/latest/api/io/micronaut/scheduling/annotation/Async.html">@Async</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Example <code>@Async</code>. Requires <code>micronaut-runtime</code> dependency.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.spring.io/spring/docs/current/javadoc-api//org/springframework/scheduling/annotation/Scheduled.html">@Scheduled</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.micronaut.io/latest/api/io/micronaut/scheduling/annotation/Scheduled.html">@Scheduled</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Example <code>@Scheduled</code>. Requires <code>micronaut-runtime</code> dependency.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.spring.io/spring/docs/current/javadoc-api//org/springframework/transaction/annotation/Transactional.html">@Transactional</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.micronaut.io/latest/api/io/micronaut/spring/tx/annotation/Transactional.html">@Transactional</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Example <code>@Transactional</code>. Requires <code>micronaut-spring</code> dependency.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.spring.io/spring/docs/current/javadoc-api//org/springframework/cache/annotation/Cacheable.html">@Cacheable</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.micronaut.io/latest/api/io/micronaut/cache/annotation/Cacheable.html">@Cacheable</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Requires <code>micronaut-runtime</code> and configured cache. Only <code>cacheNames</code> member supported.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.spring.io/spring/docs/current/javadoc-api//org/springframework/cache/annotation/CacheEvict.html">@CacheEvict</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.micronaut.io/latest/api/io/micronaut/cache/annotation/CacheInvalidate.html">@CacheInvalidate</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Requires <code>micronaut-runtime</code> and configured cache. Only <code>cacheNames</code> member supported.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.spring.io/spring/docs/current/javadoc-api//org/springframework/cache/annotation/Cacheable.html">@CachePut</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.micronaut.io/latest/api/io/micronaut/cache/annotation/CachePut.html">@CachePut</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Requires <code>micronaut-runtime</code> and configured cache. Only <code>cacheNames</code> member supported.</p></td>
+</tr>
+</tbody>
+</table>
+
+
+                <div style="clear:both;margin-top:15px;"></div>
+                
+                    <div class="toc-item prev-left"><a href="../../guide/introduction.html">&lt;&lt; <strong>1</strong><span>Introduction</span></a></div>
+                
+                    <div class="toc-item next-right"><a href="../../guide/springParentContext.html"><strong>3</strong><span>Using Micronaut Parent Context</span> >></a></div>
+                
+                <div style="clear:both"></div>
+            </div>
+        </td>
+        <td id="col2">
+            <div class="local clearfix">
+                <div class="local-title">
+                    <a href="../../guide/index.html" target="mainFrame">Quick Reference</a>
+                    <span class="toggle">(<a href="#" onclick="localToggle(); return false;">hide</a>)</span>
+                </div>
+                <div class="menu">
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+</table>
+
+<div id="footer">
+    
+    
+</div>
+
+<script type="text/javascript" src="../js/docs.js"></script>
+
+</body>
+</html>
