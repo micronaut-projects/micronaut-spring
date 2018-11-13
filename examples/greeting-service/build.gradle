@@ -19,13 +19,13 @@ targetCompatibility = 1.8
 
 ext {
     micronautVersion = "1.0.1"
-    micronautSpringVersion = "1.0.0.BUILD-SNAPSHOT"
+    micronautSpringVersion = "1.0.0.M1"
 }
 
 repositories {
     mavenLocal()
+    maven { url "https://dl.bintray.com/micronaut/core-releases-local" }
     jcenter()
-    maven { url "http://oss.sonatype.org/content/repositories/snapshots/" }
 }
 
 dependencyManagement {
