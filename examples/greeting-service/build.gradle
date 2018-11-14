@@ -4,6 +4,8 @@ plugins {
     id "org.springframework.boot" version "2.1.0.RELEASE"
     id "io.spring.dependency-management" version "1.0.6.RELEASE"
     id "net.ltgt.apt" version "0.19"
+    id "net.ltgt.apt-idea" version "0.19"
+    id "net.ltgt.apt-eclipse" version "0.19"
 }
 
 bootJar {

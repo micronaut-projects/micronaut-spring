@@ -1,8 +1,11 @@
 .gradle/
 .idea/
 .vscode/
+.settings/
 .classpath
 .project
+.factorypath
+bin/
 build/
 out/
 target/
