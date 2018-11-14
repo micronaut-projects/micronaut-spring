@@ -19,7 +19,7 @@ public class GreetingController {
         this.greetingService = greetingService;
     }
 
-    @RequestMapping("/greeting")
+    @GetMapping("/greeting")
     public Greeting greeting(@RequestParam(value="name", defaultValue="World") @Pattern(regexp = "\\D+") String name) {
         return greetingService.greeting(name);
     }
@@ -38,7 +38,7 @@ public class GreetingController {
     }
 
 
-    @RequestMapping("/greeting-status")
+    @GetMapping("/greeting-status")
     @ResponseStatus(code = HttpStatus.CREATED)
     public Greeting greetingWithStatus(@RequestParam(value="name", defaultValue="World") @Pattern(regexp = "\\D+") String name) {
         return greetingService.greeting(name);
