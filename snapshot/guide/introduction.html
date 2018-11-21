@@ -19,7 +19,7 @@ function addJsClass() {
 <div id="navigation">
     <div class="navTitle">
         
-        Liquibase configuration
+        Micronaut for Spring
     </div>
     <div class="navLinks">
         <ul>
@@ -32,10 +32,10 @@ function addJsClass() {
                         <div class="toc-item" style="margin-left:0"><a href="../guide/introduction.html"><strong>1</strong><span>Introduction</span></a>
                         </div>
                         
-                        <div class="toc-item" style="margin-left:0"><a href="../guide/configuration.html"><strong>2</strong><span>Configuration</span></a>
+                        <div class="toc-item" style="margin-left:0"><a href="../guide/springToMicronaut.html"><strong>2</strong><span>Compile Time Spring Annotation Support</span></a>
                         </div>
                         
-                        <div class="toc-item" style="margin-left:0"><a href="../guide/endpoint.html"><strong>3</strong><span>Endpoint</span></a>
+                        <div class="toc-item" style="margin-left:0"><a href="../guide/springParentContext.html"><strong>3</strong><span>Using Micronaut Parent Context</span></a>
                         </div>
                         
                     </div>
@@ -60,7 +60,7 @@ function addJsClass() {
                 <span id='toggle-col1' class="toggle">(<a href="#" onclick="localToggle(); return false;">Quick Reference</a>)</span>
 
                 
-                    <div class="toc-item next-right"><a href="../guide/configuration.html"><strong>2</strong><span>Configuration</span> >></a></div>
+                    <div class="toc-item next-right"><a href="../guide/springToMicronaut.html"><strong>2</strong><span>Compile Time Spring Annotation Support</span> >></a></div>
                 
 
 
@@ -77,37 +77,39 @@ function addJsClass() {
 <h1 id="introduction">1 Introduction</h1>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-configuration-liquibase/edit/master/src/main/docs/guide/introduction.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-spring/edit/master/src/main/docs/guide/introduction.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
 
 
 <div class="paragraph">
-<p>To use the Micronaut&#8217;s integration with <a href="http://www.liquibase.org">Liquibase</a> you must have the <code>micronaut-liquibase</code>
-dependency on your classpath:</p>
+<p>Micronaut uses Ahead of Time (AOT) compilation to pre-compute your applications requirements at compile time. The result of this is significantly lower memory requirements, faster startup time, and reflection free framework infrastructure.</p>
 </div>
-<div class="listingblock">
-<div class="title">build.gradle</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy" data-lang="groovy">compile "io.micronaut.configuration:micronaut-liquibase:1.0.0.BUILD-SNAPSHOT"</code></pre>
+<div class="paragraph">
+<p>This project consists of various components that make it easier to:</p>
 </div>
+<div class="ulist">
+<ul>
+<li>
+<p>Integrate Spring components into a Micronaut application</p>
+</li>
+<li>
+<p>Run Spring applications as Micronaut applications</p>
+</li>
+<li>
+<p>Expose Micronaut Beans to a Spring Application</p>
+</li>
+</ul>
 </div>
-<div class="listingblock">
-<div class="title">pom.xml</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-xml" data-lang="xml">&lt;dependency&gt;
-    &lt;groupId&gt;io.micronaut.configuration&lt;/groupId&gt;
-    &lt;artifactId&gt;micronaut-liquibase&lt;/artifactId&gt;
-    &lt;version&gt;{version}&lt;/version&gt;
-&lt;/dependency&gt;</code></pre>
-</div>
+<div class="paragraph">
+<p>To achieve this the project provides the ability to use a subset of the Spring Annotation-Based programming model to build Micronaut applications. The goal is not necessarily to provide an alternative runtime for Spring, but instead to enable the ability to build libraries that work with both Spring and Micronaut.</p>
 </div>
 
 
                 <div style="clear:both;margin-top:15px;"></div>
                 
-                    <div class="toc-item next-right"><a href="../guide/configuration.html"><strong>2</strong><span>Configuration</span> >></a></div>
+                    <div class="toc-item next-right"><a href="../guide/springToMicronaut.html"><strong>2</strong><span>Compile Time Spring Annotation Support</span> >></a></div>
                 
                 <div style="clear:both"></div>
             </div>

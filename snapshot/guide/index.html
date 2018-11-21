@@ -2,7 +2,7 @@
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>Liquibase configuration</title>
+    <title>Micronaut for Spring</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8" />
     <link rel="stylesheet" href="../css/custom.css" type="text/css" media="screen, print" title="Style" charset="utf-8" />
@@ -43,9 +43,9 @@
                                 
                                 <div class="toc-item" style="margin-left:0"><a href="#introduction"><strong>1</strong><span>Introduction</span></a></div>
                                 
-                                <div class="toc-item" style="margin-left:0"><a href="#configuration"><strong>2</strong><span>Configuration</span></a></div>
+                                <div class="toc-item" style="margin-left:0"><a href="#springToMicronaut"><strong>2</strong><span>Compile Time Spring Annotation Support</span></a></div>
                                 
-                                <div class="toc-item" style="margin-left:0"><a href="#endpoint"><strong>3</strong><span>Endpoint</span></a></div>
+                                <div class="toc-item" style="margin-left:0"><a href="#springParentContext"><strong>3</strong><span>Using Micronaut Parent Context</span></a></div>
                                 
                             </div>
                         </div>
@@ -72,18 +72,34 @@
         
         <div class="toc-item" style="margin-left:0px" id="toc-item-introduction"><a href="#introduction"><strong>1</strong><span>Introduction</span></a></div>
         
-        <div class="toc-item" style="margin-left:0px" id="toc-item-configuration"><a href="#configuration"><strong>2</strong><span>Configuration</span></a></div>
+        <div class="toc-item" style="margin-left:0px" id="toc-item-springToMicronaut"><a href="#springToMicronaut"><strong>2</strong><span>Compile Time Spring Annotation Support</span></a></div>
         
-        <div class="toc-item" style="margin-left:0px" id="toc-item-endpoint"><a href="#endpoint"><strong>3</strong><span>Endpoint</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-springToMicronautStart"><a href="#springToMicronautStart"><strong>2.1</strong><span>Build Configuration</span></a></div>
+        
+        <div class="toc-item" style="margin-left:10px" id="toc-item-springAnnotations"><a href="#springAnnotations"><strong>2.2</strong><span>Supported Spring Annotations</span></a></div>
+        
+        <div class="toc-item" style="margin-left:10px" id="toc-item-springInterfaces"><a href="#springInterfaces"><strong>2.3</strong><span>Supported Spring Interfaces</span></a></div>
+        
+        <div class="toc-item" style="margin-left:10px" id="toc-item-springEvents"><a href="#springEvents"><strong>2.4</strong><span>Supported Spring Events</span></a></div>
+        
+        <div class="toc-item" style="margin-left:10px" id="toc-item-springMvc"><a href="#springMvc"><strong>2.5</strong><span>Writing Spring MVC Controllers</span></a></div>
+        
+        <div class="toc-item" style="margin-left:10px" id="toc-item-springBoot"><a href="#springBoot"><strong>2.6</strong><span>Supported Spring Boot Annotations</span></a></div>
+        
+        <div class="toc-item" style="margin-left:10px" id="toc-item-springLimitations"><a href="#springLimitations"><strong>2.7</strong><span>Unsupported Spring Features</span></a></div>
+        
+        <div class="toc-item" style="margin-left:10px" id="toc-item-micronautClient"><a href="#micronautClient"><strong>2.8</strong><span>Using Micronaut's HTTP Client</span></a></div>
+        
+        <div class="toc-item" style="margin-left:0px" id="toc-item-springParentContext"><a href="#springParentContext"><strong>3</strong><span>Using Micronaut Parent Context</span></a></div>
         
         </div>
     </div>
     
     <div class="docs-content">
     <div class="project">
-        <h1>Liquibase configuration</h1>
+        <h1>Micronaut for Spring</h1>
         <p></p>
-        <p>Configuration to integrate Micronaut and Liquibase</p>
+        <p>Extensions to integrate Micronaut and Spring </p>
         <p><strong>Version:</strong> 1.0.0.BUILD-SNAPSHOT</p>
     </div>
     
@@ -91,309 +107,118 @@
 <h1 id="introduction">1 Introduction</h1>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-configuration-liquibase/edit/master/src/main/docs/guide/introduction.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-spring/edit/master/src/main/docs/guide/introduction.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
 
 
 <div class="paragraph">
-<p>To use the Micronaut&#8217;s integration with <a href="http://www.liquibase.org">Liquibase</a> you must have the <code>micronaut-liquibase</code>
-dependency on your classpath:</p>
+<p>Micronaut uses Ahead of Time (AOT) compilation to pre-compute your applications requirements at compile time. The result of this is significantly lower memory requirements, faster startup time, and reflection free framework infrastructure.</p>
 </div>
-<div class="listingblock">
-<div class="title">build.gradle</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy" data-lang="groovy">compile "io.micronaut.configuration:micronaut-liquibase:1.0.0.BUILD-SNAPSHOT"</code></pre>
+<div class="paragraph">
+<p>This project consists of various components that make it easier to:</p>
 </div>
+<div class="ulist">
+<ul>
+<li>
+<p>Integrate Spring components into a Micronaut application</p>
+</li>
+<li>
+<p>Run Spring applications as Micronaut applications</p>
+</li>
+<li>
+<p>Expose Micronaut Beans to a Spring Application</p>
+</li>
+</ul>
 </div>
-<div class="listingblock">
-<div class="title">pom.xml</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-xml" data-lang="xml">&lt;dependency&gt;
-    &lt;groupId&gt;io.micronaut.configuration&lt;/groupId&gt;
-    &lt;artifactId&gt;micronaut-liquibase&lt;/artifactId&gt;
-    &lt;version&gt;{version}&lt;/version&gt;
-&lt;/dependency&gt;</code></pre>
-</div>
+<div class="paragraph">
+<p>To achieve this the project provides the ability to use a subset of the Spring Annotation-Based programming model to build Micronaut applications. The goal is not necessarily to provide an alternative runtime for Spring, but instead to enable the ability to build libraries that work with both Spring and Micronaut.</p>
 </div>
 
 
-<h1 id="configuration">2 Configuration</h1>
+<h1 id="springToMicronaut">2 Compile Time Spring Annotation Support</h1>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-configuration-liquibase/edit/master/src/main/docs/guide/configuration.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-spring/edit/master/src/main/docs/guide/springToMicronaut.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
 
 
 <div class="paragraph">
-<p>You can define liquibase configuration for each datasource. The following example demonstrates using it:</p>
+<p>Micronaut for Spring allows you to use traditional Spring annotations which are mapped to Micronaut annotations at compilation time. This allows you to write an application that can be imported to another Spring or Micronaut application without change.</p>
 </div>
-<div class="listingblock">
-<div class="title">src/main/resources/application.yml</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-yaml" data-lang="yaml">datasources:
-    default: <i class="conum" data-value="3"></i><b>(3)</b>
-        url: 'jdbc:h2:mem:liquibaseDisabledDb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE'
-        username: 'sa'
-        password: ''
-        driverClassName: 'org.h2.Driver'
-jpa:
-    default: <i class="conum" data-value="3"></i><b>(3)</b>
-        packages-to-scan:
-            - 'example.micronaut'
-        properties:
-            hibernate:
-                hbm2ddl:
-                    auto: none <i class="conum" data-value="1"></i><b>(1)</b>
-                show_sql: true
-liquibase:
-    datasources: <i class="conum" data-value="2"></i><b>(2)</b>
-        default: <i class="conum" data-value="3"></i><b>(3)</b>
-            change-log: 'classpath:db/liquibase-changelog.xml' <i class="conum" data-value="4"></i><b>(4)</b></code></pre>
+<div class="paragraph">
+<p>Unlike traditional runtime reflection based frameworks Micronaut uses Ahead of Time (AOT) compilation, hence there is no runtime overhead to supporting an additional set of annotations (in this case Spring&#8217;s annotation programming model).</p>
 </div>
+<div class="paragraph">
+<p>As part of this project an <a href="https://github.com/micronaut-projects/micronaut-spring/tree/master/examples/greeting-service">Example Application</a> is provided that includes no dependencies on Micronaut itself in the source code (only Spring dependencies) but is computed into a Micronaut application at compilation time.</p>
 </div>
-<div class="colist arabic">
+<div class="paragraph">
+<p>The value in this as follows:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>You can take the compiled application and include it into another Spring or Micronaut application without change, which is a huge win for library authors.</p>
+</li>
+<li>
+<p>If you have an existing team of Spring developers they can be up and running with Micronaut without learning a new annotation DSL.</p>
+</li>
+<li>
+<p>Existing tooling like IntelliJ IDEA and STS 4.0 "Just Work" with Micronaut</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Note that Spring is huge and only a subset of Spring is supported, but enough to build real applications and libraries that work with either Micronaut or Spring. The following documentation covers the annotations and Spring interfaces that are supported.</p>
+</div>
+<div class="admonitionblock note">
 <table>
 <tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>Disable schema DDL creation.</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>Define all liquibase configuration under key <code>liquibase.datasources</code>.</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>Configure liquibase configuration for <code>default</code> data source.</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="4"></i><b>4</b></td>
-<td>Root changelog under <code>src/main/resources/db/liquibase-changelog.xml</code>.</td>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+If an annotation or interface of Spring is not mentioned in this documentation consider it unsupported.
+</td>
 </tr>
 </table>
 </div>
-<div class="paragraph">
-<p>Often, you will have a root changelog:</p>
-</div>
-<div class="listingblock">
-<div class="title">resources/db/liquibase-changelog.xml</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-xml" data-lang="xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
-&lt;databaseChangeLog
-  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
-         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd"&gt;
-  &lt;include file="changelog/01-create-books-schema.xml" relativeToChangelogFile="true"/&gt;
-  &lt;include file="changelog/02-insert-data-books.xml" relativeToChangelogFile="true"/&gt;
-&lt;/databaseChangeLog&gt;</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>which imports changelogs which you keep generating as your app evolves:</p>
-</div>
-<div class="listingblock">
-<div class="title">resources/db/changelog/01-create-books-schema.xml</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-xml" data-lang="xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
-
-&lt;databaseChangeLog
-  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
-         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd"&gt;
-  &lt;changeSet id="01" author="sdelamo"&gt;
-    &lt;createTable tableName="books"
-      remarks="A table to contain all books"&gt;
-      &lt;column name="id" type="int"&gt;
-        &lt;constraints nullable="false" unique="true" primaryKey="true"/&gt;
-      &lt;/column&gt;
-      &lt;column name="name" type="varchar(255)"&gt;
-        &lt;constraints nullable="false" unique="true"/&gt;
-      &lt;/column&gt;
-    &lt;/createTable&gt;
-  &lt;/changeSet&gt;
-&lt;/databaseChangeLog&gt;</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>There are several options available for configuration:</p>
-</div>
-<a id="io.micronaut.configuration.dbmigration.liquibase.LiquibaseConfigurationProperties" href="#io.micronaut.configuration.dbmigration.liquibase.LiquibaseConfigurationProperties">&#128279;</a>
-<table class="tableblock frame-all grid-all spread">
-<caption class="title">Table 1. Configuration Properties for LiquibaseConfigurationProperties</caption>
-<colgroup>
-<col style="width: 33.3333%;">
-<col style="width: 33.3333%;">
-<col style="width: 33.3334%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Property</th>
-<th class="tableblock halign-left valign-top">Type</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>liquibase.datasources.*.async</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Whether liquibase operations should be run asynchronously.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>liquibase.datasources.*.enabled</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Sets whether this liquibase configuration is enabled. Default value (true).</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>liquibase.datasources.*.change-log</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Change log configuration path.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>liquibase.datasources.*.default-schema</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Default database schema.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>liquibase.datasources.*.liquibase-schema</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Schema to use for Liquibase objects.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>liquibase.datasources.*.drop-first</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Whether to first drop the database schema. Default value (false).</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>liquibase.datasources.*.liquibase-tablespace</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Tablespace to use for Liquibase objects.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>liquibase.datasources.*.database-change-log-table</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Name of table to use for tracking change history.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>liquibase.datasources.*.database-change-log-lock-table</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Name of table to use for tracking concurrent Liquibase usage.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>liquibase.datasources.*.tag</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">a tag.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>liquibase.datasources.*.contexts</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Comma-separated list of runtime contexts to use.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>liquibase.datasources.*.labels</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Comma-separated list of runtime labels to use.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>liquibase.datasources.*.test-rollback-on-update</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Whether rollback should be tested before update is performed. Default value (false).</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>liquibase.datasources.*.ignore-classpath-prefix</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Ignores classpath prefix during changeset comparison. Default value (true).</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>liquibase.datasources.*.rollback-file-path</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Path to file to which rollback SQL is written when an update is performed.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>liquibase.datasources.*.parameters</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.util.Map</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Change log parameters.</p></td>
-</tr>
-</tbody>
-</table>
 
 
-<h1 id="endpoint">3 Endpoint</h1>
+<h2 id="springToMicronautStart">2.1 Build Configuration</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-configuration-liquibase/edit/master/src/main/docs/guide/endpoint.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-spring/edit/master/src/main/docs/guide/springToMicronaut/springToMicronautStart.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
 
 
 <div class="paragraph">
-<p>Micronaut also provides a built-in endpoint to expose all the applied migrations in <code>/liquibase</code>.</p>
-</div>
-<div class="paragraph">
-<p>To enable the endpoint add the following to the configuration:</p>
-</div>
-<div class="listingblock">
-<div class="title">resources/application.yml</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-yaml" data-lang="yaml">endpoints:
-    liquibase:
-        enabled: true <i class="conum" data-value="1"></i><b>(1)</b>
-        sensitive: false <i class="conum" data-value="2"></i><b>(2)</b></code></pre>
-</div>
-</div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td><code>/liquibase</code> endpoint is enabled.</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="2"></i><b>2</b></td>
-<td><code>/liquibase</code> endpoint is open for unauthenticated access.</td>
-</tr>
-</table>
+<p>Micronaut 1.0.1 or above is required and the following is a minimal build to get this working for Spring (a non-web application):</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json" data-lang="json">$ curl http://localhost:8080/liquibase
+<pre class="highlightjs highlight"><code class="language-groovy" data-lang="groovy">plugins {
+    id "java"
+    id "org.springframework.boot" version "2.1.0.RELEASE"
+    id "io.spring.dependency-management" version "1.0.6.RELEASE"
+    id "net.ltgt.apt" version "0.19"
+}
 
-[{
-    "name": "default",
-    "changeSets": [{
-        "author": "sdelamo",
-        "changeLog": "classpath:db/changelog/01-create-books-and-author-schema.xml",
-        "comments": "",
-        "contexts": [],
-        "dateExecuted": "2018-10-29T16:33:05Z",
-        "deploymentId": "0830784929",
-        "description": "createTable tableName=books; createTable tableName=authors; addForeignKeyConstraint baseTableName=books, constraintName=author_fk, referencedTableName=authors",
-        "execType": "EXECUTED",
-        "id": "01",
-        "labels": [],
-        "checksum": "8:140eb966bb6a14bccade2c2d9133b7d3",
-        "orderExecuted": 1,
-        "tag": "tag1"
-    }, {
-        "author": "sdelamo",
-        "changeLog": "classpath:db/changelog/02-insert-data-authors.xml",
-        "comments": "Inserting Authors",
-        "contexts": [],
-        "dateExecuted": "2018-10-29T16:33:05Z",
-        "deploymentId": "0830784929",
-        "description": "insert tableName=authors; insert tableName=authors; insert tableName=authors; insert tableName=authors; insert tableName=authors",
-        "execType": "EXECUTED",
-        "id": "02",
-        "labels": [],
-        "checksum": "8:6204c525ce5c1c55f064888d078b8f05",
-        "orderExecuted": 2,
-        "tag": null
-    }]
-}]</code></pre>
+dependencies {
+    annotationProcessor "io.micronaut:micronaut-inject-java:1.0.1"
+    annotationProcessor "io.micronaut:micronaut-validation::1.0.1"
+    annotationProcessor "io.micronaut.spring:micronaut-spring-annotation:1.0.0.BUILD-SNAPSHOT"
+
+    compile "io.micronaut:micronaut-inject::1.0.1"
+    compile("org.springframework.boot:spring-boot-starter")
+    ...
+
+}</code></pre>
 </div>
 </div>
 <div class="admonitionblock note">
@@ -403,10 +228,725 @@ liquibase:
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-See the section on <a href="https://docs.micronaut.io/latest/guide/index.html#providedEndpoints">Built-in endpoints</a> in the user guide for more information.
+If you are only going to reference Spring annotations and not Spring classes or interfaces then <code>org.springframework.boot:spring-boot-starter</code> can be <code>compileOnly</code>
 </td>
 </tr>
 </table>
+</div>
+
+
+<h2 id="springAnnotations">2.2 Supported Spring Annotations</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-spring/edit/master/src/main/docs/guide/springToMicronaut/springAnnotations.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>The following table summarizes the annotations that Micronaut for Spring supports and the Micronaut annotation that they map to at compilation time:</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 1. Supported Spring Annotations</caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Spring Annotation</th>
+<th class="tableblock halign-left valign-top">Target Annotation</th>
+<th class="tableblock halign-left valign-top">Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.spring.io/spring/docs/current/javadoc-api//org/springframework/stereotype/Component.html">@Component</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.micronaut.io/latest/api/io/micronaut/context/annotation/Bean.html">@Bean</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Example <code>@Component("myBean")</code>. Requires <code>micronaut-runtime</code> dependency.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.spring.io/spring/docs/current/javadoc-api//org/springframework/stereotype/Service.html">@Service</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.micronaut.io/latest/api/io/micronaut/context/annotation/Bean.html">@Bean</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Example <code>@Service("myBean")</code>. Requires <code>micronaut-runtime</code> dependency.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.spring.io/spring/docs/current/javadoc-api//org/springframework/stereotype/Repository.html">@Repository</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.micronaut.io/latest/api/io/micronaut/context/annotation/Bean.html">@Bean</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Example <code>@Repository("myBean")</code>. Requires <code>micronaut-runtime</code> dependency.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.spring.io/spring/docs/current/javadoc-api//org/springframework/beans/factory/annotation/Autowired.html">@Autowired</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>@javax.inject.Inject</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Example <code>@Autowired</code>. <code>required=false</code> adds <code>@Nullable</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.spring.io/spring/docs/current/javadoc-api//org/springframework/beans/factory/annotation/Value.html">@Value</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.micronaut.io/latest/api/io/micronaut/context/annotation/Value.html">@Value</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Example <code>@Value("${foo.bar}")</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.spring.io/spring/docs/current/javadoc-api//org/springframework/beans/factory/annotation/Qualifier.html">@Qualifier</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>@javax.inject.Named</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Example <code>@Qualifier("myBean")</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.spring.io/spring/docs/current/javadoc-api//org/springframework/context/annotation/Configuration.html">@Configuration</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.micronaut.io/latest/api/io/micronaut/context/annotation/Factory.html">@Factory</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Example <code>@Configuration</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.spring.io/spring/docs/current/javadoc-api//org/springframework/context/annotation/Bean.html">@Bean</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.micronaut.io/latest/api/io/micronaut/context/annotation/Bean.html">@Bean</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Example <code>@Bean</code>. Requires <code>micronaut-runtime</code> dependency.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.spring.io/spring/docs/current/javadoc-api//org/springframework/context/annotation/Primary.html">@Primary</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.micronaut.io/latest/api/io/micronaut/context/annotation/Primary.html">@Primary</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Example <code>@Primary</code>. Requires <code>micronaut-runtime</code> dependency.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.spring.io/spring/docs/current/javadoc-api//org/springframework/context/event/EventListener.html">@EventListener</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.micronaut.io/latest/api/io/micronaut/runtime/event/annotation/EventListener.html">@EventListener</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Example <code>@EventListener</code>. Requires <code>micronaut-inject</code> dependency.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.spring.io/spring/docs/current/javadoc-api//org/springframework/scheduling/annotation/Async.html">@Async</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.micronaut.io/latest/api/io/micronaut/scheduling/annotation/Async.html">@Async</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Example <code>@Async</code>. Requires <code>micronaut-runtime</code> dependency.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.spring.io/spring/docs/current/javadoc-api//org/springframework/scheduling/annotation/Scheduled.html">@Scheduled</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.micronaut.io/latest/api/io/micronaut/scheduling/annotation/Scheduled.html">@Scheduled</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Example <code>@Scheduled</code>. Requires <code>micronaut-runtime</code> dependency.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.spring.io/spring/docs/current/javadoc-api//org/springframework/transaction/annotation/Transactional.html">@Transactional</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.micronaut.io/latest/api/io/micronaut/spring/tx/annotation/Transactional.html">@Transactional</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Example <code>@Transactional</code>. Requires <code>micronaut-spring</code> dependency.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.spring.io/spring/docs/current/javadoc-api//org/springframework/cache/annotation/Cacheable.html">@Cacheable</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.micronaut.io/latest/api/io/micronaut/cache/annotation/Cacheable.html">@Cacheable</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Requires <code>micronaut-runtime</code> and configured cache. Only <code>cacheNames</code> member supported.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.spring.io/spring/docs/current/javadoc-api//org/springframework/cache/annotation/CacheEvict.html">@CacheEvict</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.micronaut.io/latest/api/io/micronaut/cache/annotation/CacheInvalidate.html">@CacheInvalidate</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Requires <code>micronaut-runtime</code> and configured cache. Only <code>cacheNames</code> member supported.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.spring.io/spring/docs/current/javadoc-api//org/springframework/cache/annotation/Cacheable.html">@CachePut</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.micronaut.io/latest/api/io/micronaut/cache/annotation/CachePut.html">@CachePut</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Requires <code>micronaut-runtime</code> and configured cache. Only <code>cacheNames</code> member supported.</p></td>
+</tr>
+</tbody>
+</table>
+
+
+<h2 id="springInterfaces">2.3 Supported Spring Interfaces</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-spring/edit/master/src/main/docs/guide/springToMicronaut/springInterfaces.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>The following Spring interfaces are supported and can be injected into any bean:</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 1. Supported Injectable Interfaces</caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Spring Interface</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Adapted Target</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.spring.io/spring/docs/current/javadoc-api//org/springframework/core/env/Environment.html">Environment</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.micronaut.io/latest/api/io/micronaut/context/env/Environment.html">Environment</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The Application Environment</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.spring.io/spring/docs/current/javadoc-api//org/springframework/core/convert/ConversionService.html">ConversionService</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.micronaut.io/latest/api/io/micronaut/core/convert/ConversionService.html">ConversionService</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">For Converting Types</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.spring.io/spring/docs/current/javadoc-api//org/springframework/context/ApplicationEventPublisher.html.html">ApplicationEventPublisher</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.micronaut.io/latest/api/io/micronaut/context/event/ApplicationEventPublisher.html">ApplicationEventPublisher</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">For Publishing Events</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.spring.io/spring/docs/current/javadoc-api//org/springframework/context/ApplicationContext.html">ApplicationContext</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.micronaut.io/latest/api/io/micronaut/context/ApplicationContext.html">ApplicationContext</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The application context</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.spring.io/spring/docs/current/javadoc-api//org/springframework/bean/factory/BeanFactory.html">BeanFactory</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.micronaut.io/latest/api/io/micronaut/context/BeanContext.html">BeanContext</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The bean context</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>For compatibility the following <code>Aware</code> interfaces are supported:</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 2. Supported <code>Aware</code> Interfaces</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Spring Interface</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.spring.io/spring/docs/current/javadoc-api//org/springframework/context/EnvironmentAware.html.html">EnvironmentAware</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">For looking up the <code>Environment</code> (but prefer <code>@Autowired</code>)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.spring.io/spring/docs/current/javadoc-api//org/springframework/context/ApplicationContextAware.html.html">ApplicationContextAware</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">For looking up the <code>ApplicationContext</code> (but prefer <code>@Autowired</code>)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.spring.io/spring/docs/current/javadoc-api//org/springframework/bean/factory/BeanFactoryAware.html.html">BeanFactoryAware</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">For looking up the <code>BeanFactory</code> (but prefer <code>@Autowired</code>)</p></td>
+</tr>
+</tbody>
+</table>
+
+
+<h2 id="springEvents">2.4 Supported Spring Events</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-spring/edit/master/src/main/docs/guide/springToMicronaut/springEvents.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>For compatibility the following <code>ApplicationEvent</code> instances are supported:</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 1. Supported Spring Events</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Spring Event</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.spring.io/spring/docs/current/javadoc-api//org/springframework/context/event/ContextStartedEvent.html.html">ContextStartedEvent</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Fired when the application context is started</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.spring.io/spring/docs/current/javadoc-api//org/springframework/context/event/ContextClosedEvent.html.html">ContextClosedEvent</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Fired when the application context is shut down</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>You can write methods annotated with <a href="https://docs.spring.io/spring/docs/current/javadoc-api//org/springframework/context/event/EventListener.html">@EventListener</a> to receive the events in either framework.</p>
+</div>
+
+
+<h2 id="springMvc">2.5 Writing Spring MVC Controllers</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-spring/edit/master/src/main/docs/guide/springToMicronaut/springMvc.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>You can write Spring MVC controllers that are computed into Micronaut controllers at compilation time. The programming model is largely compatible with Spring Web Reactive.</p>
+</div>
+<div class="paragraph">
+<p>To get started you should modify your dependencies as following:</p>
+</div>
+<div class="listingblock">
+<div class="title">Including <code>spring-web</code> processing</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy" data-lang="groovy">dependencies {
+
+    ...
+    // additional Spring web dependencies
+    annotationProcessor "io.micronaut.spring:micronaut-spring-web-annotation:1.0.0.BUILD-SNAPSHOT"
+    compile("org.springframework.boot:spring-boot-starter-web")
+
+
+    // additional web dependencies for Micronaut
+    compile("io.micronaut:micronaut-http-server:1.0.1")
+    runtime("io.micronaut.spring:micronaut-spring-web:1.0.0.BUILD-SNAPSHOT")
+    runtime("io.micronaut:micronaut-http-server-netty:1.0.1")
+
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Only <code>@RestController</code> semantics are supported, which is fine for most Microservice use cases. Special support is provided by the <code>micronaut-spring-web</code> dependency to allowing returning a <a href="https://docs.spring.io/spring/docs/current/javadoc-api//org/springframework/http/ResponseEntity.html">ResponseEntity</a>.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+See the <a href="https://github.com/micronaut-projects/micronaut-spring/tree/master/examples/greeting-service">Example application</a> for a demonstration on how to build a Spring MVC application computable to Micronaut.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The binding semantics as described in the <a href="https://docs.micronaut.io/latest/guide/index.html#binding">Micronaut documentation</a> and are generally equivalent to how Spring MVC behaves.</p>
+</div>
+<div class="paragraph">
+<p>The following additional, Spring specific, method argument types are supported:</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 1. Supported Method Argument Types</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.spring.io/spring/docs/current/javadoc-api//org/springframework/http/server/reactive/ServerHttpRequest.html.html">ServerHttpRequest</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">For receiving the whole reactive request</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>java.security.Principal</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Requires the <code>micronaut-security</code> module</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.spring.io/spring/docs/current/javadoc-api//org/springframework/http/HttpMethod.html">HttpMethod</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The HTTP method</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.spring.io/spring/docs/current/javadoc-api//org/springframework/ui/ModelMap.html">ModelMap</a>, <a href="https://docs.spring.io/spring/docs/current/javadoc-api//org/springframework/ui/Model.html">Model</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">With <code>micronaut-views</code> module. See <a href="https://docs.micronaut.io/latest/guide/index.html#views">Server Side View Rendering</a>.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>The following return types are supported:</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 2. Supported Return Types</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.spring.io/spring/docs/current/javadoc-api//org/springframework/http/HttpEntity.html">HttpEntity</a>, <a href="https://docs.spring.io/spring/docs/current/javadoc-api//org/springframework/http/ResponseEntity.html">ResponseEntity</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">For customizing the response</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.spring.io/spring/docs/current/javadoc-api//org/springframework/http/HttpHeaders.html">HttpHeaders</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">For sending back only headers</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>java.lang.String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A view name when combined with <code>Model</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Any reactive or POJO return type</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Computed to appropriate JSON response</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>The following Spring MVC annotations are supported:</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 3. Supported Spring MVC Annotations</caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Spring Annotation</th>
+<th class="tableblock halign-left valign-top">Target Annotation</th>
+<th class="tableblock halign-left valign-top">Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.spring.io/spring/docs/current/javadoc-api//org/springframework/web/bind/annotation/RestController.html">@RestController</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.micronaut.io/latest/api/io/micronaut/http/annotation/Controller.html">@Controller</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Example <code>@RestController</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.spring.io/spring/docs/current/javadoc-api//org/springframework/web/bind/annotation/RequestMapping.html">@RequestMapping</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.micronaut.io/latest/api/io/micronaut/http/annotation/UriMapping.html">@UriMapping</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Example: <code>@RequestMapping("/foo/bar")</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.spring.io/spring/docs/current/javadoc-api//org/springframework/web/bind/annotation/GetMapping.html">@GetMapping</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.micronaut.io/latest/api/io/micronaut/http/annotation/Get.html">@Get</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Example: <code>@GetMapping("/foo/bar")</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.spring.io/spring/docs/current/javadoc-api//org/springframework/web/bind/annotation/PostMapping.html">@PostMapping</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.micronaut.io/latest/api/io/micronaut/http/annotation/Post.html">@Post</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Example: <code>@PostMapping("/foo/bar")</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.spring.io/spring/docs/current/javadoc-api//org/springframework/web/bind/annotation/DeleteMapping.html">@DeleteMapping</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.micronaut.io/latest/api/io/micronaut/http/annotation/Delete.html">@Delete</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Example: <code>@DeleteMapping("/foo/bar")</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.spring.io/spring/docs/current/javadoc-api//org/springframework/web/bind/annotation/PatchMapping.html">@PatchMapping</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.micronaut.io/latest/api/io/micronaut/http/annotation/Patch.html">@Patch</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Example: <code>@PatchMapping("/foo/bar")</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.spring.io/spring/docs/current/javadoc-api//org/springframework/web/bind/annotation/PutMapping.html">@PutMapping</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.micronaut.io/latest/api/io/micronaut/http/annotation/Put.html">@Put</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Example: <code>@PutMapping("/foo/bar")</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.spring.io/spring/docs/current/javadoc-api//org/springframework/web/bind/annotation/RequestHeader.html">@RequestHeader</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.micronaut.io/latest/api/io/micronaut/http/annotation/Header.html">@Header</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Example: <code>@RequestHeader("Accept")</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.spring.io/spring/docs/current/javadoc-api//org/springframework/web/bind/annotation/RequestAttribute.html">@RequestAttribute</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">No equivalent</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Example: <code>@RequestAttribute("Accept")</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.spring.io/spring/docs/current/javadoc-api//org/springframework/web/bind/annotation/RequestBody.html">@RequestBody</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.micronaut.io/latest/api/io/micronaut/http/annotation/Body.html">@Body</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Example: <code>@RequestBody</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.spring.io/spring/docs/current/javadoc-api//org/springframework/web/bind/annotation/RequestParam.html">@RequestParam</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.micronaut.io/latest/api/io/micronaut/http/annotation/QueryValue.html">@QueryValue</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Example: <code>@RequestParam("myParam")</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.spring.io/spring/docs/current/javadoc-api//org/springframework/web/bind/annotation/ResponseStatus.html">@ResponseStatus</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.micronaut.io/latest/api/io/micronaut/http/annotation/Status.html">@Status</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Example: <code>@ResponseStatus(value=HttpStatus.NOT_FOUND)</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.spring.io/spring/docs/current/javadoc-api//org/springframework/web/bind/annotation/ExceptionHandler.html">@ExceptionHandler</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.micronaut.io/latest/api/io/micronaut/http/annotation/Error.html">@Error</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Example: <code>@ExceptionHandler</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.spring.io/spring/docs/current/javadoc-api//org/springframework/web/bind/annotation/CookieValue.html">@CookieValue</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.micronaut.io/latest/api/io/micronaut/http/annotation/CookieValue.html">@CookieValue</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Example: <code>@CookieValue("myCookie")</code></p></td>
+</tr>
+</tbody>
+</table>
+
+
+<h2 id="springBoot">2.6 Supported Spring Boot Annotations</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-spring/edit/master/src/main/docs/guide/springToMicronaut/springBoot.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>For additional support for Spring Boot you should add the following dependencies:</p>
+</div>
+<div class="listingblock">
+<div class="title">Including <code>spring-boot</code> processing</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy" data-lang="groovy">dependencies {
+
+    ...
+    // additional Spring Boot dependencies
+    annotationProcessor "io.micronaut.spring:micronaut-spring-boot:1.0.0.BUILD-SNAPSHOT"
+    compile("org.springframework.boot:spring-boot-starter-web")
+
+    // additional Spring Boot dependencies for Micronaut
+    runtime("io.micronaut.spring:micronaut-spring-boot:1.0.0.BUILD-SNAPSHOT")
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>With the above dependencies in place the following Spring Boot specific annotations are supported:</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 1. Supported Spring Boot Annotations</caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Spring Boot Annotation</th>
+<th class="tableblock halign-left valign-top">Target Annotation</th>
+<th class="tableblock halign-left valign-top">Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.spring.io/spring-boot/docs/current/api/org/springframework/boot/context/properties/ConfigurationProperties.html">@ConfigurationProperties</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.micronaut.io/latest/api/io/micronaut/context/annotation/ConfigurationProperties.html">@ConfigurationProperties</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Example <code>@ConfigurationProperties("foo.bar")</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.spring.io/spring-boot/docs/current/api/org/springframework/boot/autoconfigure/condition/ConditionalOnBean.html.html">@ConditionalOnBean</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.micronaut.io/latest/api/io/micronaut/context/annotation/Requires.html">@Requires</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Maps to <code>@Requires(beans=Foo.class)</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.spring.io/spring-boot/docs/current/api/org/springframework/boot/autoconfigure/condition/ConditionalOnClass.html.html">@ConditionalOnClass</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.micronaut.io/latest/api/io/micronaut/context/annotation/Requires.html">@Requires</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Maps to <code>@Requires(classes=Foo.class)</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.spring.io/spring-boot/docs/current/api/org/springframework/boot/autoconfigure/condition/ConditionalOnMissingBean.html.html">@ConditionalOnMissingBean</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.micronaut.io/latest/api/io/micronaut/context/annotation/Requires.html">@Requires</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Maps to <code>@Requires(missingBeans=Foo.class)</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.spring.io/spring-boot/docs/current/api/org/springframework/boot/autoconfigure/condition/ConditionalOnMissingClass.html.html">@ConditionalOnMissingClass</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.micronaut.io/latest/api/io/micronaut/context/annotation/Requires.html">@Requires</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Maps to <code>@Requires(missing=Foo.class)</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.spring.io/spring-boot/docs/current/api/org/springframework/boot/autoconfigure/condition/ConditionalOnNotWebApplication.html.html">@ConditionalOnNotWebApplication</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.micronaut.io/latest/api/io/micronaut/context/annotation/Requires.html">@Requires</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Maps to <code>@Requires(missingBeans=EmbeddedServer.class)</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.spring.io/spring-boot/docs/current/api/org/springframework/boot/autoconfigure/condition/ConditionalOnProperty.html.html">@ConditionalOnProperty</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.micronaut.io/latest/api/io/micronaut/context/annotation/Requires.html">@Requires</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Maps to <code>@Requires(property="foo.bar")</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.spring.io/spring-boot/docs/current/api/org/springframework/boot/autoconfigure/condition/ConditionalOnSingleCandidate.html.html">@ConditionalOnSingleCandidate</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>@RequiresSingleCandidateCondition</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Maps to <code>@RequiresSingleCandidateCondition(Foo.class)</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.spring.io/spring-boot/docs/current/api/org/springframework/boot/autoconfigure/condition/ConditionalOnWebApplication.html.html">@ConditionalOnWebApplication</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.micronaut.io/latest/api/io/micronaut/context/annotation/Requires.html">@Requires</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Maps to <code>@Requires(beans=EmbeddedServer.class)</code></p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>With support for <code>@Configuration</code> and the majority of Spring Boot conditions it is possible to build auto configurations that work with both Spring Boot and Micronaut.</p>
+</div>
+<div class="paragraph">
+<p>In addition the following Spring Boot Actuator annotations are supported:</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 2. Supported Spring Boot Actuator Annotations</caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Spring Actuator Boot Annotation</th>
+<th class="tableblock halign-left valign-top">Target Annotation</th>
+<th class="tableblock halign-left valign-top">Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.spring.io/spring-boot/docs/current/api/org/springframework/boot/actuate/endpoint/annotation/Endpoint.html">@Endpoint</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.micronaut.io/latest/api/io/micronaut/management/endpoint/annotation/Endpoint.html">@Endpoint</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Example <code>@Endpoint("features")</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.spring.io/spring-boot/docs/current/api/org/springframework/boot/actuate/endpoint/annotation/ReadOperation.html">@ReadOperation</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.micronaut.io/latest/api/io/micronaut/management/endpoint/annotation/Read.html">@Read</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Example <code>@ReadOperation</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.spring.io/spring-boot/docs/current/api/org/springframework/boot/actuate/endpoint/annotation/WriteOperation.html">@WriteOperation</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.micronaut.io/latest/api/io/micronaut/management/endpoint/annotation/Write.html">@Write</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Example <code>@WriteOperation</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.spring.io/spring-boot/docs/current/api/org/springframework/boot/actuate/endpoint/annotation/DeleteOperation.html">@DeleteOperation</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.micronaut.io/latest/api/io/micronaut/management/endpoint/annotation/Delete.html">@Delete</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Example <code>@DeleteOperation</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.spring.io/spring-boot/docs/current/api/org/springframework/boot/actuate/endpoint/annotation/Selector.html">@Selector</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.micronaut.io/latest/api/io/micronaut/management/endpoint/annotation/Selector.html">@Selector</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Example <code>@Selector</code></p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>What this enables is the ability to write management endpoints that work with both Spring Boot and Micronaut.</p>
+</div>
+
+
+<h2 id="springLimitations">2.7 Unsupported Spring Features</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-spring/edit/master/src/main/docs/guide/springToMicronaut/springLimitations.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>As mentioned previously only a subset of Spring is implementated, but enough to build real applications. The question you have to ask yourself coming from Spring is how much Spring do you need?</p>
+</div>
+<div class="paragraph">
+<p>The following notable features are currently not supported in Micronaut for Spring either and in general if a feature is not documented here consider it unsupported:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>AspectJ</strong> - Spring&#8217;s AOP implementation is not supported, you can however use <a href="https://docs.micronaut.io/latest/guide/index.html#aop">Micronaut AOP</a> which is compilation time and reflection free.</p>
+</li>
+<li>
+<p><strong>Spring Expression Language (SpEL)</strong> - SpEL expressions are not supported, property placeholders are however.</p>
+</li>
+<li>
+<p><strong>The Servlet API</strong> - Any reference to the Servlet API is not supported</p>
+</li>
+</ul>
+</div>
+
+
+<h2 id="micronautClient">2.8 Using Micronaut's HTTP Client</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-spring/edit/master/src/main/docs/guide/springToMicronaut/micronautClient.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>Since annotations values are mapped at compilation time, this also impacts the authoring of Micronaut&#8217;s compile-time declarative HTTP client.</p>
+</div>
+<div class="paragraph">
+<p>You can essentially use Spring annotations to a define a compilation-time HTTP client:</p>
+</div>
+<div class="listingblock">
+<div class="title">Spring <code>@Client</code> Implementation</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java" data-lang="java">package io.micronaut.spring.web.annotation;
+
+import io.micronaut.http.HttpResponse;
+import io.micronaut.http.annotation.Header;
+import io.micronaut.http.client.annotation.Client;
+import org.springframework.web.bind.annotation.*;
+
+import javax.annotation.Nullable;
+
+@Client("/")
+public interface GreetingClient {
+
+    @GetMapping("/")
+    String home();
+
+    @PostMapping("/request")
+    @Header(name = "Foo", value = "Bar")
+    Greeting requestTest(@RequestBody Greeting greeting);
+
+    @GetMapping("/greeting{?name}")
+    Greeting greet(@Nullable String name);
+
+    @PostMapping("/greeting")
+    Greeting greetByPost(@RequestBody Greeting greeting);
+
+    @DeleteMapping("/greeting")
+    HttpResponse&lt;?&gt; deletePost();
+
+    @GetMapping("/nested/greeting{?name}")
+    Greeting nestedGreet(@Nullable String name);
+
+
+    @GetMapping("/greeting-status{?name}")
+    HttpResponse&lt;Greeting&gt; greetWithStatus(@Nullable String name);
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This also means you can define a common interface between client and server of a Spring application and compute the client at compilation name.</p>
+</div>
+
+
+<h1 id="springParentContext">3 Using Micronaut Parent Context</h1>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-spring/edit/master/src/main/docs/guide/springParentContext.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>You can also use Micronaut for Spring as the parent application context to a regular Spring application.</p>
+</div>
+<div class="paragraph">
+<p>This has a number of benefits, you can for example define beans using Micronaut and consume any Micronaut beans into a Spring application, resulting in Spring using less memory and having reflection free infrastructure.</p>
+</div>
+<div class="paragraph">
+<p>You can also use any Micronaut feature from a regular Spring Boot or Spring application including the <a href="https://docs.micronaut.io/latest/guide/index.html#clientAnnotation">declaring clients for HTTP</a> and <a href="https://docs.micronaut.io/latest/guide/index.html#kafkaClient">Kafka</a>.</p>
+</div>
+<div class="paragraph">
+<p>You can also use any compilation time tools from Micronaut with Spring such as Micronaut&#8217;s support for <a href="https://docs.micronaut.io/latest/guide/index.html#openapi">Swagger</a>.</p>
+</div>
+<div class="paragraph">
+<p>The following example shows how to Configure your Spring Boot application with a Micronaut powered parent application context using <code>SpringApplicationBuilder</code>:</p>
+</div>
+<div class="listingblock">
+<div class="title">Using the Micronaut Parent Context</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java" data-lang="java">SpringApplicationBuilder builder = new SpringApplicationBuilder();
+MicronautApplicationContext context = new MicronautApplicationContext();
+context.start();
+builder.parent(context);
+builder.sources(Application);
+builder.build().application.run();</code></pre>
+</div>
 </div>
 
     </div>
