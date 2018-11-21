@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>1 Introduction 1.0.0.BUILD-SNAPSHOT</title>
+    <title>3 Endpoint 1.0.0.BUILD-SNAPSHOT</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -56,16 +56,16 @@ function addJsClass() {
             <div id="main" class="corner-all">
 
                 
+                    <div class="toc-item prev-left"><a href="../guide/configuration.html">&lt;&lt; <strong>2</strong><span>Configuration</span></a></div>
+                
 
                 <span id='toggle-col1' class="toggle">(<a href="#" onclick="localToggle(); return false;">Quick Reference</a>)</span>
 
                 
-                    <div class="toc-item next-right"><a href="../guide/configuration.html"><strong>2</strong><span>Configuration</span> >></a></div>
-                
 
 
                 <div class="project">
-                    <h1>1 Introduction</h1>
+                    <h1>3 Endpoint</h1>
 
                     <p><strong>Version:</strong> 1.0.0.BUILD-SNAPSHOT</p>
                 </div>
@@ -74,40 +74,97 @@ function addJsClass() {
 
                 
 
-<h1 id="introduction">1 Introduction</h1>
+<h1 id="endpoint">3 Endpoint</h1>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-configuration-liquibase/edit/master/src/main/docs/guide/introduction.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-configuration-liquibase/edit/master/src/main/docs/guide/endpoint.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
 
 
 <div class="paragraph">
-<p>To use the Micronaut&#8217;s integration with <a href="http://www.liquibase.org">Liquibase</a> you must have the <code>micronaut-liquibase</code>
-dependency on your classpath:</p>
+<p>Micronaut also provides a built-in endpoint to expose all the applied migrations in <code>/liquibase</code>.</p>
+</div>
+<div class="paragraph">
+<p>To enable the endpoint add the following to the configuration:</p>
 </div>
 <div class="listingblock">
-<div class="title">build.gradle</div>
+<div class="title">resources/application.yml</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy" data-lang="groovy">compile "io.micronaut.configuration:micronaut-liquibase:1.0.0.BUILD-SNAPSHOT"</code></pre>
+<pre class="highlightjs highlight"><code class="language-yaml" data-lang="yaml">endpoints:
+    liquibase:
+        enabled: true <i class="conum" data-value="1"></i><b>(1)</b>
+        sensitive: false <i class="conum" data-value="2"></i><b>(2)</b></code></pre>
 </div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td><code>/liquibase</code> endpoint is enabled.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td><code>/liquibase</code> endpoint is open for unauthenticated access.</td>
+</tr>
+</table>
 </div>
 <div class="listingblock">
-<div class="title">pom.xml</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-xml" data-lang="xml">&lt;dependency&gt;
-    &lt;groupId&gt;io.micronaut.configuration&lt;/groupId&gt;
-    &lt;artifactId&gt;micronaut-liquibase&lt;/artifactId&gt;
-    &lt;version&gt;{version}&lt;/version&gt;
-&lt;/dependency&gt;</code></pre>
+<pre class="highlightjs highlight"><code class="language-json" data-lang="json">$ curl http://localhost:8080/liquibase
+
+[{
+    "name": "default",
+    "changeSets": [{
+        "author": "sdelamo",
+        "changeLog": "classpath:db/changelog/01-create-books-and-author-schema.xml",
+        "comments": "",
+        "contexts": [],
+        "dateExecuted": "2018-10-29T16:33:05Z",
+        "deploymentId": "0830784929",
+        "description": "createTable tableName=books; createTable tableName=authors; addForeignKeyConstraint baseTableName=books, constraintName=author_fk, referencedTableName=authors",
+        "execType": "EXECUTED",
+        "id": "01",
+        "labels": [],
+        "checksum": "8:140eb966bb6a14bccade2c2d9133b7d3",
+        "orderExecuted": 1,
+        "tag": "tag1"
+    }, {
+        "author": "sdelamo",
+        "changeLog": "classpath:db/changelog/02-insert-data-authors.xml",
+        "comments": "Inserting Authors",
+        "contexts": [],
+        "dateExecuted": "2018-10-29T16:33:05Z",
+        "deploymentId": "0830784929",
+        "description": "insert tableName=authors; insert tableName=authors; insert tableName=authors; insert tableName=authors; insert tableName=authors",
+        "execType": "EXECUTED",
+        "id": "02",
+        "labels": [],
+        "checksum": "8:6204c525ce5c1c55f064888d078b8f05",
+        "orderExecuted": 2,
+        "tag": null
+    }]
+}]</code></pre>
 </div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+See the section on <a href="https://docs.micronaut.io/latest/guide/index.html#providedEndpoints">Built-in endpoints</a> in the user guide for more information.
+</td>
+</tr>
+</table>
 </div>
 
 
                 <div style="clear:both;margin-top:15px;"></div>
                 
-                    <div class="toc-item next-right"><a href="../guide/configuration.html"><strong>2</strong><span>Configuration</span> >></a></div>
+                    <div class="toc-item prev-left"><a href="../guide/configuration.html">&lt;&lt; <strong>2</strong><span>Configuration</span></a></div>
                 
                 <div style="clear:both"></div>
             </div>
