@@ -2,6 +2,7 @@
 java -cp build/libs/greeting-service-all.jar io.micronaut.graal.reflect.GraalClassLoadingAnalyzer
 native-image --no-server \
              --class-path build/libs/greeting-service-all.jar \
+	     --allow-incomplete-classpath \
              -H:ReflectionConfigurationFiles=build/reflect.json \
              -H:EnableURLProtocols=http \
              -H:IncludeResources="logback.xml|application.yml|META-INF/services/*.*" \
