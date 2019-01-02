@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class MyComponent implements BeanFactoryAware, EnvironmentAware, InitializingBean {
 
-    @Value("${foo.bar}")
+    @Value("${foo.bar:default}")
     String value;
 
     @Autowired

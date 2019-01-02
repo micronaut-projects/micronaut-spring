@@ -1,3 +1,4 @@
+io.micronaut.spring.annotation.context.QualifierAnnotationMapper
 io.micronaut.spring.annotation.context.BeanAnnotationMapper
 io.micronaut.spring.annotation.context.ComponentAnnotationMapper
 io.micronaut.spring.annotation.context.RepositoryAnnotationMapper

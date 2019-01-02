@@ -6,6 +6,7 @@ dependencies {
     compile "io.micronaut:micronaut-validation:$micronautVersion"
     compile "io.micronaut:micronaut-runtime:$micronautVersion"
     testCompile "io.micronaut:micronaut-inject-java:$micronautVersion"
+    testCompile "io.micronaut:micronaut-inject-groovy:$micronautVersion"
     testCompile "io.micronaut:micronaut-inject-java-test:$micronautVersion"
     testCompile files(org.gradle.internal.jvm.Jvm.current().toolsJar)
     testCompile project(":spring-context")

@@ -3,9 +3,7 @@ package io.micronaut.spring.context.factory;
 import io.micronaut.context.ApplicationContext;
 import io.micronaut.context.BeanContext;
 import io.micronaut.context.BeanRegistration;
-import io.micronaut.context.annotation.DefaultScope;
-import io.micronaut.context.annotation.Primary;
-import io.micronaut.context.annotation.Prototype;
+import io.micronaut.context.annotation.*;
 import io.micronaut.context.exceptions.NoSuchBeanException;
 import io.micronaut.core.annotation.AnnotationMetadata;
 import io.micronaut.core.annotation.Internal;
@@ -66,13 +64,24 @@ public class MicronautBeanFactory extends DefaultListableBeanFactory implements 
         for (BeanDefinitionReference<?> reference : references) {
             final BeanDefinition<?> definition = reference.load(beanContext);
             if (definition.isEnabled(beanContext)) {
-                String beanName = computeBeanName(definition);
-                beanDefinitionMap.put(beanName, reference);
+                if (definition.isIterable()) {
+                    Collection<? extends BeanDefinition<?>> beanDefinitions = beanContext.getBeanDefinitions(definition.getBeanType());
+                    for (BeanDefinition<?> beanDefinition : beanDefinitions) {
+                        String beanName = computeBeanName(beanDefinition);
+                        beanDefinitionMap.put(beanName, reference);
+                    }
+                } else {
+                    String beanName = computeBeanName(definition);
+                    beanDefinitionMap.put(beanName, reference);
+                }
             }
         }
     }
 
     public static boolean isSingleton(AnnotationMetadata annotationMetadata) {
+        if (annotationMetadata.isAnnotationPresent(EachProperty.class) || annotationMetadata.isAnnotationPresent(EachBean.class)) {
+            return true;
+        }
         final Optional<Class<? extends Annotation>> scope = annotationMetadata.getDeclaredAnnotationTypeByStereotype(Scope.class);
         // is singleton logic
         return (scope.isPresent() && scope.get() == Singleton.class) || annotationMetadata.getValue(DefaultScope.class, Singleton.class).isPresent();
