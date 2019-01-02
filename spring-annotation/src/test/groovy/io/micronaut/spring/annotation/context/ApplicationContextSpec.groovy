@@ -10,6 +10,25 @@ import spock.lang.Specification
 
 class ApplicationContextSpec extends Specification {
 
+    void "test register singleton"() {
+        given:
+        MicronautApplicationContext applicationContext = new MicronautApplicationContext()
+        applicationContext.start()
+
+        def singleton = new MySingleton()
+        when:
+        applicationContext.beanFactory.registerSingleton(
+                "foo", singleton
+        )
+
+
+        then:
+        applicationContext.getBean("foo").is(singleton)
+        applicationContext.getType("foo") == MySingleton
+        applicationContext.containsBean("foo")
+        applicationContext.beanFactory.containsLocalBean("foo")
+    }
+
     void "test spring application context implementation"() {
         when:
         ManagedApplicationContext context = new MicronautApplicationContext( io.micronaut.context.ApplicationContext.build()
@@ -60,4 +79,6 @@ class ApplicationContextSpec extends Specification {
         BeanFactoryUtils.beanNamesForTypeIncludingAncestors(context, MyNamedService).size() == 1
 
     }
+
+    static class MySingleton {}
 }

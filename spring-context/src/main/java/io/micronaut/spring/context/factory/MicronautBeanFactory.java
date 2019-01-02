@@ -36,6 +36,7 @@ import java.beans.PropertyEditor;
 import java.lang.annotation.Annotation;
 import java.security.AccessControlContext;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 
@@ -53,6 +54,7 @@ public class MicronautBeanFactory extends DefaultListableBeanFactory implements 
     private final BeanContext beanContext;
     private final Map<String, BeanDefinitionReference<?>> beanDefinitionMap = new LinkedHashMap<>(200);
     private final SpringAwareListener springAwareListener;
+    private final ConcurrentHashMap<String, Object> namedSingletons = new ConcurrentHashMap<>();
     private ClassLoader tempClassLoader;
     private ClassLoader beanClassLoader;
     private TypeConverter typeConverter;
@@ -106,25 +108,29 @@ public class MicronautBeanFactory extends DefaultListableBeanFactory implements 
 
     @Override
     public @Nonnull Object getBean(@Nonnull String name) throws BeansException {
-        final Class<?> type = getType(name);
-        if (type != null) {
-            BeanDefinitionReference<?> reference = beanDefinitionMap.get(name);
-            AnnotationMetadata annotationMetadata = reference.getAnnotationMetadata();
-            Optional<Class<? extends Annotation>> q = annotationMetadata.getAnnotationTypeByStereotype(Qualifier.class);
-            if (q.isPresent()) {
-                try {
-                    return beanContext.getBean(type, Qualifiers.byAnnotation(annotationMetadata, q.get()));
-                } catch (NoSuchBeanException e) {
-                    throw new NoSuchBeanDefinitionException(type, e.getMessage());
-                } catch (Exception e) {
-                    throw new BeanCreationException(name,e.getMessage(), e);
+        if (namedSingletons.containsKey(name)) {
+            return namedSingletons.get(name);
+        } else {
+            final Class<?> type = getType(name);
+            if (type != null) {
+                BeanDefinitionReference<?> reference = beanDefinitionMap.get(name);
+                AnnotationMetadata annotationMetadata = reference.getAnnotationMetadata();
+                Optional<Class<? extends Annotation>> q = annotationMetadata.getAnnotationTypeByStereotype(Qualifier.class);
+                if (q.isPresent()) {
+                    try {
+                        return beanContext.getBean(type, Qualifiers.byAnnotation(annotationMetadata, q.get()));
+                    } catch (NoSuchBeanException e) {
+                        throw new NoSuchBeanDefinitionException(type, e.getMessage());
+                    } catch (Exception e) {
+                        throw new BeanCreationException(name,e.getMessage(), e);
+                    }
+                } else {
+                    return getBean(type);
                 }
-            } else {
-                return getBean(type);
-            }
 
+            }
+            throw new NoSuchBeanDefinitionException(name);
         }
-        throw new NoSuchBeanDefinitionException(name);
     }
 
     @Override
@@ -149,12 +155,21 @@ public class MicronautBeanFactory extends DefaultListableBeanFactory implements 
 
     @Override
     public @Nonnull <T> T getBean(@Nonnull Class<T> requiredType) throws BeansException {
-        return beanContext.getBean(requiredType);
+        // unfortunate hack
+        try {
+            return beanContext.getBean(requiredType);
+        } catch (NoSuchBeanException e) {
+            throw new NoSuchBeanDefinitionException(requiredType, e.getMessage());
+        }
     }
 
     @Override
     public @Nonnull <T> T getBean(@Nonnull Class<T> requiredType, @Nonnull Object... args) throws BeansException {
-        return beanContext.createBean(requiredType, args);
+        try {
+            return beanContext.createBean(requiredType, args);
+        } catch (NoSuchBeanException e) {
+            throw new NoSuchBeanDefinitionException(requiredType, e.getMessage());
+        }
     }
 
     @Override
@@ -197,16 +212,20 @@ public class MicronautBeanFactory extends DefaultListableBeanFactory implements 
 
     @Override
     public boolean containsBean(@Nonnull String name) {
-        return beanDefinitionMap.containsKey(name);
+        return namedSingletons.containsKey(name) || beanDefinitionMap.containsKey(name);
     }
 
     @Override
     public boolean isSingleton(@Nonnull String name) throws NoSuchBeanDefinitionException {
-        final BeanDefinitionReference<?> definition = beanDefinitionMap.get(name);
-        if (definition != null) {
-            return isSingleton(definition);
+        if (namedSingletons.containsKey(name)) {
+            return true;
+        } else {
+            final BeanDefinitionReference<?> definition = beanDefinitionMap.get(name);
+            if (definition != null) {
+                return isSingleton(definition);
+            }
+            return false;
         }
-        return false;
     }
 
     protected boolean isSingleton(BeanDefinitionReference<?> definition) {
@@ -216,6 +235,10 @@ public class MicronautBeanFactory extends DefaultListableBeanFactory implements 
 
     @Override
     public boolean isPrototype(@Nonnull String name) throws NoSuchBeanDefinitionException {
+        if (namedSingletons.containsKey(name)) {
+            return false;
+        }
+
         final BeanDefinitionReference<?> definition = beanDefinitionMap.get(name);
         if (definition != null) {
             final AnnotationMetadata annotationMetadata = definition.getAnnotationMetadata();
@@ -249,6 +272,11 @@ public class MicronautBeanFactory extends DefaultListableBeanFactory implements 
 
     @Override
     public Class<?> getType(@Nonnull String name) throws NoSuchBeanDefinitionException {
+        Object o = namedSingletons.get(name);
+        if (o != null) {
+            return o.getClass();
+        }
+
         final BeanDefinitionReference<?> definition = beanDefinitionMap.get(name);
         if (definition != null) {
             return definition.getBeanType();
@@ -430,7 +458,7 @@ public class MicronautBeanFactory extends DefaultListableBeanFactory implements 
 
     @Override
     public boolean containsLocalBean(String name) {
-        return containsBean(name);
+        return namedSingletons.containsKey(name) || containsBean(name);
     }
 
     public BeanContext getBeanContext() {
@@ -751,7 +779,12 @@ public class MicronautBeanFactory extends DefaultListableBeanFactory implements 
     @Override
     public void registerSingleton(String beanName, Object singletonObject) {
         final Class type = singletonObject.getClass();
-        beanContext.registerSingleton(type, singletonObject, Qualifiers.byName(beanName));
+        beanContext.registerSingleton(
+                type,
+                singletonObject,
+                Qualifiers.byName(beanName)
+        );
+        namedSingletons.put(beanName, singletonObject);
     }
 
     @Override
