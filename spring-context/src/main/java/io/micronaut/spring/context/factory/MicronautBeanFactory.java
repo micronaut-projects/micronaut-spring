@@ -108,7 +108,21 @@ public class MicronautBeanFactory extends DefaultListableBeanFactory implements 
     public @Nonnull Object getBean(@Nonnull String name) throws BeansException {
         final Class<?> type = getType(name);
         if (type != null) {
-            return getBean(type);
+            BeanDefinitionReference<?> reference = beanDefinitionMap.get(name);
+            AnnotationMetadata annotationMetadata = reference.getAnnotationMetadata();
+            Optional<Class<? extends Annotation>> q = annotationMetadata.getAnnotationTypeByStereotype(Qualifier.class);
+            if (q.isPresent()) {
+                try {
+                    return beanContext.getBean(type, Qualifiers.byAnnotation(annotationMetadata, q.get()));
+                } catch (NoSuchBeanException e) {
+                    throw new NoSuchBeanDefinitionException(type, e.getMessage());
+                } catch (Exception e) {
+                    throw new BeanCreationException(name,e.getMessage(), e);
+                }
+            } else {
+                return getBean(type);
+            }
+
         }
         throw new NoSuchBeanDefinitionException(name);
     }

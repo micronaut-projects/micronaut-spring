@@ -1,6 +1,7 @@
 package io.micronaut.spring.annotation.context
 
 import io.micronaut.context.annotation.EachProperty
+import io.micronaut.scheduling.executor.ExecutorConfiguration
 import io.micronaut.spring.context.MicronautApplicationContext
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Qualifier
@@ -28,8 +29,9 @@ class QualifierSpec extends Specification {
         ctx.getBeanNamesForType(Foo).size() == 2
         ctx.beanFactory.getSingleton(ctx.getBeanNamesForType(Foo).first())
         ctx.getBeanNamesForType(FooBarProperties).size() == 2
-//        ctx.getBean(ctx.getBeanNamesForType(FooBarProperties).first(), FooBarProperties)
         ctx.beanFactory.getSingleton(ctx.getBeanNamesForType(FooBarProperties).first())
+        ctx.beanFactory.getBeanNamesForType(ExecutorConfiguration).size() == 2
+        ctx.beanFactory.getSingleton(ctx.beanFactory.getBeanNamesForType(ExecutorConfiguration).first())
 
         cleanup:
         ctx.close()
