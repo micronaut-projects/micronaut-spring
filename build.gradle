@@ -63,7 +63,7 @@ subprojects { Project subproject ->
         manifest {
             attributes('Automatic-Module-Name': "${subproject.group}.${subproject.name}".replaceAll('[^\\w\\.\\$_]', "_"))
             attributes('Implementation-Version': projectVersion)
-            attributes('Implementation-Title': 'Micronaut Test')
+            attributes('Implementation-Title': title)
         }
     }
 

@@ -23,7 +23,6 @@ public interface GreetingClient {
     @GetMapping("/nested/greeting{?name}")
     Greeting nestedGreet(@Nullable String name);
 
-
     @GetMapping("/greeting-status{?name}")
     ResponseEntity<Greeting> greetWithStatus(@Nullable String name);
 }
