@@ -12,6 +12,7 @@ import io.micronaut.core.util.StringUtils;
 import io.micronaut.inject.BeanDefinition;
 import io.micronaut.inject.BeanDefinitionReference;
 import io.micronaut.inject.DisposableBeanDefinition;
+import io.micronaut.inject.ParametrizedBeanFactory;
 import io.micronaut.inject.qualifiers.Qualifiers;
 import io.micronaut.spring.context.aware.SpringAwareListener;
 import org.springframework.beans.BeansException;
@@ -63,6 +64,10 @@ public class MicronautBeanFactory extends DefaultListableBeanFactory implements 
 
         for (BeanDefinitionReference<?> reference : references) {
             final BeanDefinition<?> definition = reference.load(beanContext);
+            if (definition instanceof ParametrizedBeanFactory) {
+                // Spring doesn't have a similar concept. Consider these internal / non-public beans.
+                continue;
+            }
             if (definition.isEnabled(beanContext)) {
                 if (definition.isIterable()) {
                     Collection<? extends BeanDefinition<?>> beanDefinitions = beanContext.getBeanDefinitions(definition.getBeanType());
@@ -325,7 +330,9 @@ public class MicronautBeanFactory extends DefaultListableBeanFactory implements 
     }
 
     private String[] beansToNames(Collection<? extends BeanDefinition<?>> beanDefinitions) {
-        return beanDefinitions.stream().map(this::computeBeanName).toArray(String[]::new);
+        return beanDefinitions.stream()
+                .filter(bd -> !(bd instanceof ParametrizedBeanFactory))
+                .map(this::computeBeanName).toArray(String[]::new);
     }
 
     @Override
