@@ -10,6 +10,12 @@ To run the application simply do:
 ./gradlew bootRun
 ```
 
+Or via Maven:
+
+```bash
+./mvnw compile spring-boot:run
+```
+
 To build the application into a native image for GraalVM you can checkout the `graal-native-image` branch:
 
 ```
