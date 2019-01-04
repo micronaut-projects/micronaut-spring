@@ -26,6 +26,6 @@ Then if you have Graal installed you can use the `./build-native-image.sh` scrip
 
 ```
 $ docker build . -t greeting-service
-$ docker run --network=host greeting-service
+$ docker run -p 8080:8080 greeting-service
 ```
 
