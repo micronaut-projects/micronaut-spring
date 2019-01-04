@@ -8,8 +8,8 @@
         <version>2.1.1.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>mv.test</groupId>
-    <artifactId>mv-test</artifactId>
+    <groupId>example</groupId>
+    <artifactId>greeting-service</artifactId>
     <version>0.1</version>
     <properties>
         <micronaut.version>1.0.2</micronaut.version>
