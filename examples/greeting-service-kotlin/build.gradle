@@ -58,7 +58,7 @@ dependencies {
     runtime "ch.qos.logback:logback-classic:1.2.3"
     runtime "com.fasterxml.jackson.module:jackson-module-kotlin:2.9.4.1"
     runtime "ognl:ognl:3.1.12"
-    
+
     kaptTest "io.micronaut.spring:micronaut-spring-web-annotation:$micronautSpringVersion"
     kaptTest "io.micronaut:micronaut-inject-java"
 
