@@ -1,16 +1,12 @@
 plugins {
     id "java"
     id "idea"
-    id "org.springframework.boot" version "2.1.0.RELEASE"
+    id "application"
+    id "com.github.johnrengelman.shadow" version "4.0.2"
     id "io.spring.dependency-management" version "1.0.6.RELEASE"
     id "net.ltgt.apt" version "0.19"
     id "net.ltgt.apt-idea" version "0.19"
     id "net.ltgt.apt-eclipse" version "0.19"
-}
-
-bootJar {
-    baseName = 'greeting-service'
-    version =  '0.1.0'
 }
 
 repositories {
@@ -19,6 +15,7 @@ repositories {
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
+mainClassName = "greeting.example.Application"
 
 ext {
     micronautVersion = "1.0.2"
@@ -33,6 +30,7 @@ repositories {
 
 dependencyManagement {
     imports {
+        mavenBom "org.springframework.boot:spring-boot-dependencies:2.1.1.RELEASE"
         mavenBom "io.micronaut:micronaut-bom:$micronautVersion"
     }
 }
@@ -49,14 +47,16 @@ dependencies {
     compileOnly 'com.oracle.substratevm:svm:1.0.0-rc8'
     compile "io.swagger.core.v3:swagger-annotations"
     compile "io.micronaut:micronaut-inject"
-    compile("org.springframework.boot:spring-boot-starter-web")
+    compile("org.springframework.boot:spring-boot")
+    compile("org.springframework.boot:spring-boot-autoconfigure")
+    compile("org.springframework:spring-web")
     
     compile("io.micronaut:micronaut-http-server")    
     compile("io.micronaut:micronaut-http-server-netty")
 
-    runtime("io.micronaut:micronaut-views")
-    runtime "io.micronaut.configuration:micronaut-hibernate-validator"
-    runtime("org.springframework.boot:spring-boot-starter-thymeleaf")
+    runtime("io.micronaut:micronaut-graal")
+    // runtime "io.micronaut.configuration:micronaut-hibernate-validator"
+    // runtime("org.springframework.boot:spring-boot-starter-thymeleaf")
     runtime("io.micronaut.spring:micronaut-spring-web:$micronautSpringVersion")
     runtime "ch.qos.logback:logback-classic:1.2.3"
     runtime "ognl:ognl:3.1.12"
@@ -80,7 +80,11 @@ test {
     useJUnitPlatform()
 }
 
-bootRun.jvmArgs('-noverify', '-XX:TieredStopAtLevel=1')
+shadowJar {
+    mergeServiceFiles()
+}
+
+run.jvmArgs('-noverify', '-XX:TieredStopAtLevel=1')
 
 idea.module.scopes.PROVIDED.plus += [configurations.annotationProcessor]
 idea.module.scopes.TEST.plus += [configurations.testAnnotationProcessor]
