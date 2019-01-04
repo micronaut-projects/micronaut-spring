@@ -57,7 +57,8 @@ dependencies {
     runtime("io.micronaut.spring:micronaut-spring-web:$micronautSpringVersion")
     runtime "ch.qos.logback:logback-classic:1.2.3"
     runtime "com.fasterxml.jackson.module:jackson-module-kotlin:2.9.4.1"
-
+    runtime "ognl:ognl:3.1.12"
+    
     kaptTest "io.micronaut.spring:micronaut-spring-web-annotation:$micronautSpringVersion"
     kaptTest "io.micronaut:micronaut-inject-java"
 
@@ -70,7 +71,7 @@ dependencies {
 
 bootRun.jvmArgs('-noverify', '-XX:TieredStopAtLevel=1')
 
-mainClassName = "kot.grad.Application"
+mainClassName = "greeting.example.Application"
 
 test {
     useJUnitPlatform()
