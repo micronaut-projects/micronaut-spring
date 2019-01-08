@@ -14,7 +14,7 @@ dependencies {
     annotationProcessor "io.micronaut:micronaut-validation::{micronautVersion}"
     annotationProcessor "io.micronaut.spring:micronaut-spring-annotation:{version}"
 
-    compile "io.micronaut:micronaut-inject::{micronautVersion}"
+    compile "io.micronaut:micronaut-inject:{micronautVersion}"
     compile("org.springframework.boot:spring-boot-starter")
     ...
 
