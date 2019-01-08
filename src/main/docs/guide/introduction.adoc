@@ -7,3 +7,11 @@ This project consists of various components that make it easier to:
 * Expose Micronaut Beans to a Spring Application
 
 To achieve this the project provides the ability to use a subset of the Spring Annotation-Based programming model to build Micronaut applications. The goal is not necessarily to provide an alternative runtime for Spring, but instead to enable the ability to build libraries that work with both Spring and Micronaut.
+
+=== Release Notes
+
+==== 1.0.0.M2
+
+* Examples for Maven and Kotlin to `examples` directory
+* `@Profile("test")` now mapped to `@Requires(env="test")`
+* Better support for `registerSingleton`
