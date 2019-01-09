@@ -46,6 +46,7 @@ public class MicronautApplicationContext implements ManagedApplicationContext, C
     private ApplicationEventPublisher eventPublisher;
     private long startupDate;
     private String id = ObjectUtils.identityToString(this);
+    private ApplicationContext parent;
 
     @Inject
     public MicronautApplicationContext(
@@ -92,7 +93,7 @@ public class MicronautApplicationContext implements ManagedApplicationContext, C
 
     @Override
     public ApplicationContext getParent() {
-        return null;
+        return parent;
     }
 
     @Override
@@ -272,7 +273,7 @@ public class MicronautApplicationContext implements ManagedApplicationContext, C
 
     @Override
     public void setParent(ApplicationContext parent) {
-
+        this.parent = parent;
     }
 
     @Override

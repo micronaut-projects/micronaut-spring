@@ -107,7 +107,7 @@ subprojects { Project subproject ->
         testCompile "org.objenesis:objenesis:1.4"
 
         testCompile "io.micronaut:micronaut-inject-groovy:$micronautVersion"
-        testCompile "io.micronaut.test:micronaut-test-spock:1.0.0.RC2"
+        testCompile "io.micronaut.test:micronaut-test-spock:1.0.1"
         testRuntime "ch.qos.logback:logback-classic:1.2.3"
         testCompile "org.codehaus.groovy:groovy-test:$groovyVersion"
     }
