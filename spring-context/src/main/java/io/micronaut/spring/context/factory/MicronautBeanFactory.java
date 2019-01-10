@@ -264,7 +264,10 @@ public class MicronautBeanFactory extends DefaultListableBeanFactory implements 
 
     @Override
     public boolean containsBean(@Nonnull String name) {
-        return super.containsSingleton(name) || beanDefinitionMap.containsKey(name) || isAlias(name);
+        return super.containsSingleton(name) ||
+                beanDefinitionMap.containsKey(name) ||
+                beanDefinitionsByName.containsKey(name) ||
+                isAlias(name);
     }
 
     @Override
