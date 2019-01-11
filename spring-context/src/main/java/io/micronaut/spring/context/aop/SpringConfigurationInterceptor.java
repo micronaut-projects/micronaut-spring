@@ -6,6 +6,7 @@ import io.micronaut.core.annotation.AnnotationMetadata;
 import io.micronaut.core.annotation.Internal;
 import io.micronaut.inject.ExecutableMethod;
 import io.micronaut.spring.context.factory.MicronautBeanFactory;
+import org.springframework.beans.factory.BeanCreationException;
 
 import javax.inject.Singleton;
 import java.util.Map;
@@ -28,8 +29,18 @@ public class SpringConfigurationInterceptor implements MethodInterceptor<Object,
         final AnnotationMetadata annotationMetadata = context.getAnnotationMetadata();
         final boolean isSingleton = MicronautBeanFactory.isSingleton(annotationMetadata);
         if (isSingleton) {
-            return computedSingletons.computeIfAbsent(context.getExecutableMethod(), executableMethod -> context.proceed());
-
+            final ExecutableMethod<Object, Object> method = context.getExecutableMethod();
+            synchronized (computedSingletons) {
+                Object o = computedSingletons.get(method);
+                if (o == null) {
+                    o = context.proceed();
+                    if (o == null) {
+                        throw new BeanCreationException("Bean factor method [" + method + "] returned null");
+                    }
+                    computedSingletons.put(method, o);
+                }
+                return o;
+            }
         }
         return context.proceed();
     }

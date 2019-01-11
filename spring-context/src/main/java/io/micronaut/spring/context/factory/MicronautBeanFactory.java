@@ -356,13 +356,19 @@ public class MicronautBeanFactory extends DefaultListableBeanFactory implements 
 
     @Override
     public Class<?> getType(@Nonnull String name) throws NoSuchBeanDefinitionException {
-        return beanTypeCache.computeIfAbsent(name, s -> {
+        Optional<Class<?>> opt = beanTypeCache.get(name);
+        //noinspection OptionalAssignedToNull
+        if (opt == null) {
             final BeanDefinitionReference<?> definition = beanDefinitionMap.get(name);
             if (definition != null) {
-                return Optional.of(definition.getBeanType());
+                opt = Optional.of(definition.getBeanType());
+            } else {
+                opt = Optional.ofNullable(MicronautBeanFactory.super.getType(name));
             }
-            return Optional.ofNullable(MicronautBeanFactory.super.getType(name));
-        }).orElse(null);
+            beanTypeCache.put(name, opt);
+        }
+
+        return opt.orElse(null);
     }
 
     @Override
@@ -404,15 +410,18 @@ public class MicronautBeanFactory extends DefaultListableBeanFactory implements 
         if (type == null || Object.class == type || List.class == type || beanExcludes.contains(type)) {
             return StringUtils.EMPTY_STRING_ARRAY;
         }
-        return beanNamesForTypeCache.computeIfAbsent(type, aClass -> {
+        String[] names = beanNamesForTypeCache.get(type);
+        if (names == null) {
             final String[] superResult = MicronautBeanFactory.super.getBeanNamesForType(type, includeNonSingletons, allowEagerInit);
             if (ArrayUtils.isNotEmpty(superResult)) {
-                return superResult;
+                names = superResult;
             } else {
                 final Collection<? extends BeanDefinition<?>> beanDefinitions = beanContext.getBeanDefinitions(type);
-                return beansToNames(beanDefinitions);
+                names = beansToNames(beanDefinitions);
             }
-        });
+            beanNamesForTypeCache.put(type, names);
+        }
+        return names;
     }
 
     @Override
