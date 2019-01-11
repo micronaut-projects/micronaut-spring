@@ -362,6 +362,10 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/spring/context/MicronautApplicationContext.html#getBeanDefinitionNames--">getBeanDefinitionNames()</a></span> - Method in class io.micronaut.spring.context.<a href="io/micronaut/spring/context/MicronautApplicationContext.html" title="class in io.micronaut.spring.context">MicronautApplicationContext</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="io/micronaut/spring/context/factory/MicronautBeanFactoryConfiguration.html#getBeanExcludes--">getBeanExcludes()</a></span> - Method in class io.micronaut.spring.context.factory.<a href="io/micronaut/spring/context/factory/MicronautBeanFactoryConfiguration.html" title="class in io.micronaut.spring.context.factory">MicronautBeanFactoryConfiguration</a></dt>
+<dd>
+<div class="block">The bean types to exclude from being exposed by Spring's <a href="https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/beans/factory/BeanFactory.html?is-external=true" title="class or interface in org.springframework.beans.factory"><code>BeanFactory</code></a> interface</div>
+</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/spring/context/MicronautApplicationContext.html#getBeanFactory--">getBeanFactory()</a></span> - Method in class io.micronaut.spring.context.<a href="io/micronaut/spring/context/MicronautApplicationContext.html" title="class in io.micronaut.spring.context">MicronautApplicationContext</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/spring/context/factory/MicronautBeanFactory.html#getBeanNamesForAnnotation-java.lang.Class-">getBeanNamesForAnnotation(Class&lt;? extends Annotation&gt;)</a></span> - Method in class io.micronaut.spring.context.factory.<a href="io/micronaut/spring/context/factory/MicronautBeanFactory.html" title="class in io.micronaut.spring.context.factory">MicronautBeanFactory</a></dt>
@@ -769,7 +773,13 @@
 <dd>
 <div class="block">Implementation of the <a href="https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/beans/factory/ListableBeanFactory.html?is-external=true" title="class or interface in org.springframework.beans.factory"><code>ListableBeanFactory</code></a> interface for Micronaut.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="io/micronaut/spring/context/factory/MicronautBeanFactory.html#MicronautBeanFactory-io.micronaut.context.BeanContext-io.micronaut.spring.context.aware.SpringAwareListener-">MicronautBeanFactory(BeanContext, SpringAwareListener)</a></span> - Constructor for class io.micronaut.spring.context.factory.<a href="io/micronaut/spring/context/factory/MicronautBeanFactory.html" title="class in io.micronaut.spring.context.factory">MicronautBeanFactory</a></dt>
+<dt><span class="memberNameLink"><a href="io/micronaut/spring/context/factory/MicronautBeanFactory.html#MicronautBeanFactory-io.micronaut.context.BeanContext-io.micronaut.spring.context.aware.SpringAwareListener-io.micronaut.spring.context.factory.MicronautBeanFactoryConfiguration-">MicronautBeanFactory(BeanContext, SpringAwareListener, MicronautBeanFactoryConfiguration)</a></span> - Constructor for class io.micronaut.spring.context.factory.<a href="io/micronaut/spring/context/factory/MicronautBeanFactory.html" title="class in io.micronaut.spring.context.factory">MicronautBeanFactory</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="io/micronaut/spring/context/factory/MicronautBeanFactoryConfiguration.html" title="class in io.micronaut.spring.context.factory"><span class="typeNameLink">MicronautBeanFactoryConfiguration</span></a> - Class in <a href="io/micronaut/spring/context/factory/package-summary.html">io.micronaut.spring.context.factory</a></dt>
+<dd>
+<div class="block">Configuration for the Micronaut bean factory.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="io/micronaut/spring/context/factory/MicronautBeanFactoryConfiguration.html#MicronautBeanFactoryConfiguration--">MicronautBeanFactoryConfiguration()</a></span> - Constructor for class io.micronaut.spring.context.factory.<a href="io/micronaut/spring/context/factory/MicronautBeanFactoryConfiguration.html" title="class in io.micronaut.spring.context.factory">MicronautBeanFactoryConfiguration</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="io/micronaut/spring/context/convert/MicronautConversionService.html" title="class in io.micronaut.spring.context.convert"><span class="typeNameLink">MicronautConversionService</span></a> - Class in <a href="io/micronaut/spring/context/convert/package-summary.html">io.micronaut.spring.context.convert</a></dt>
 <dd>&nbsp;</dd>
@@ -854,6 +864,8 @@
 <dt><a href="io/micronaut/spring/web/annotation/PostMappingAnnotationMapper.html" title="class in io.micronaut.spring.web.annotation"><span class="typeNameLink">PostMappingAnnotationMapper</span></a> - Class in <a href="io/micronaut/spring/web/annotation/package-summary.html">io.micronaut.spring.web.annotation</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/spring/web/annotation/PostMappingAnnotationMapper.html#PostMappingAnnotationMapper--">PostMappingAnnotationMapper()</a></span> - Constructor for class io.micronaut.spring.web.annotation.<a href="io/micronaut/spring/web/annotation/PostMappingAnnotationMapper.html" title="class in io.micronaut.spring.web.annotation">PostMappingAnnotationMapper</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="io/micronaut/spring/context/factory/MicronautBeanFactoryConfiguration.html#PREFIX">PREFIX</a></span> - Static variable in class io.micronaut.spring.context.factory.<a href="io/micronaut/spring/context/factory/MicronautBeanFactoryConfiguration.html" title="class in io.micronaut.spring.context.factory">MicronautBeanFactoryConfiguration</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="io/micronaut/spring/annotation/context/PrimaryAnnotationMapper.html" title="class in io.micronaut.spring.annotation.context"><span class="typeNameLink">PrimaryAnnotationMapper</span></a> - Class in <a href="io/micronaut/spring/annotation/context/package-summary.html">io.micronaut.spring.annotation.context</a></dt>
 <dd>
@@ -1003,6 +1015,10 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/spring/context/env/MicronautEnvironment.html#setActiveProfiles-java.lang.String...-">setActiveProfiles(String...)</a></span> - Method in class io.micronaut.spring.context.env.<a href="io/micronaut/spring/context/env/MicronautEnvironment.html" title="class in io.micronaut.spring.context.env">MicronautEnvironment</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="io/micronaut/spring/context/factory/MicronautBeanFactoryConfiguration.html#setBeanExcludes-java.util.List-">setBeanExcludes(List&lt;Class&lt;?&gt;&gt;)</a></span> - Method in class io.micronaut.spring.context.factory.<a href="io/micronaut/spring/context/factory/MicronautBeanFactoryConfiguration.html" title="class in io.micronaut.spring.context.factory">MicronautBeanFactoryConfiguration</a></dt>
+<dd>
+<div class="block">The bean types to exclude from being exposed by Spring's <a href="https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/beans/factory/BeanFactory.html?is-external=true" title="class or interface in org.springframework.beans.factory"><code>BeanFactory</code></a> interface</div>
+</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/spring/context/env/MicronautEnvironment.html#setConversionService-org.springframework.core.convert.support.ConfigurableConversionService-">setConversionService(ConfigurableConversionService)</a></span> - Method in class io.micronaut.spring.context.env.<a href="io/micronaut/spring/context/env/MicronautEnvironment.html" title="class in io.micronaut.spring.context.env">MicronautEnvironment</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/spring/context/env/MicronautEnvironment.html#setDefaultProfiles-java.lang.String...-">setDefaultProfiles(String...)</a></span> - Method in class io.micronaut.spring.context.env.<a href="io/micronaut/spring/context/env/MicronautEnvironment.html" title="class in io.micronaut.spring.context.env">MicronautEnvironment</a></dt>
