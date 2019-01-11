@@ -7,6 +7,7 @@ import io.micronaut.context.exceptions.NoSuchBeanException;
 import io.micronaut.core.annotation.AnnotationMetadata;
 import io.micronaut.core.annotation.Internal;
 import io.micronaut.core.naming.NameResolver;
+import io.micronaut.core.util.ArgumentUtils;
 import io.micronaut.core.util.ArrayUtils;
 import io.micronaut.core.util.StringUtils;
 import io.micronaut.inject.BeanDefinition;
@@ -25,6 +26,7 @@ import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.beans.factory.support.GenericBeanDefinition;
 import org.springframework.core.ResolvableType;
 import org.springframework.stereotype.Component;
+import org.springframework.util.ConcurrentReferenceHashMap;
 
 import javax.annotation.Nonnull;
 import javax.inject.Named;
@@ -34,6 +36,7 @@ import javax.inject.Singleton;
 import java.io.Closeable;
 import java.lang.annotation.Annotation;
 import java.util.*;
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 /**
@@ -52,10 +55,19 @@ public class MicronautBeanFactory extends DefaultListableBeanFactory implements 
     // only used for by name lookups
     private final Map<String, BeanDefinitionReference<?>> beanDefinitionsByName = new LinkedHashMap<>(200);
     private final SpringAwareListener springAwareListener;
+    private final Map<String, Optional<Class<?>>> beanTypeCache = new ConcurrentReferenceHashMap<>();
+    private final Map<Class, String[]> beanNamesForTypeCache = new ConcurrentReferenceHashMap<>();
+    private final MicronautBeanFactoryConfiguration configuration;
+    private final List<Class<?>> beanExcludes;
 
-    public MicronautBeanFactory(BeanContext beanContext, SpringAwareListener awareListener) {
+    public MicronautBeanFactory(
+            BeanContext beanContext,
+            SpringAwareListener awareListener,
+            MicronautBeanFactoryConfiguration configuration) {
         this.beanContext = beanContext;
         this.springAwareListener = awareListener;
+        this.configuration = configuration;
+        this.beanExcludes = configuration.getBeanExcludes();
         final Collection<BeanDefinitionReference<?>> references = beanContext.getBeanDefinitionReferences();
 
         for (BeanDefinitionReference<?> reference : references) {
@@ -64,6 +76,11 @@ public class MicronautBeanFactory extends DefaultListableBeanFactory implements 
                 // Spring doesn't have a similar concept. Consider these internal / non-public beans.
                 continue;
             }
+
+            if (beanExcludes.contains(definition.getBeanType())) {
+                continue;
+            }
+
             if (definition.isEnabled(beanContext)) {
                 if (definition.isIterable()) {
                     Collection<? extends BeanDefinition<?>> beanDefinitions = beanContext.getBeanDefinitions(definition.getBeanType());
@@ -132,15 +149,18 @@ public class MicronautBeanFactory extends DefaultListableBeanFactory implements 
             }
             return singleton;
         } else {
-            final Class<?> type = getType(name);
-            BeanDefinitionReference<?> reference = null;
+            Class<?> type = getType(name);
+            BeanDefinitionReference<?> reference;
             if (type != null) {
                 reference = beanDefinitionMap.get(name);
             } else {
                 reference = beanDefinitionsByName.get(name);
+                if (reference != null) {
+                    type = reference.getBeanType();
+                }
             }
 
-            if (reference != null) {
+            if (reference != null && type != null) {
 
                 AnnotationMetadata annotationMetadata = reference.getAnnotationMetadata();
                 Optional<Class<? extends Annotation>> q = annotationMetadata.getAnnotationTypeByStereotype(Qualifier.class);
@@ -163,6 +183,11 @@ public class MicronautBeanFactory extends DefaultListableBeanFactory implements 
     @Override
     public @Nonnull
     <T> T getBean(@Nonnull String name, @Nonnull Class<T> requiredType) throws BeansException {
+        ArgumentUtils.requireNonNull("requiredType", requiredType);
+        if (beanExcludes.contains(requiredType)) {
+            throw new NoSuchBeanDefinitionException(requiredType);
+        }
+
         try {
             if (isAlias(name)) {
                 final String[] aliases = getAliases(name);
@@ -199,6 +224,10 @@ public class MicronautBeanFactory extends DefaultListableBeanFactory implements 
     @Override
     public @Nonnull
     <T> T getBean(@Nonnull Class<T> requiredType) throws BeansException {
+        ArgumentUtils.requireNonNull("requiredType", requiredType);
+        if (beanExcludes.contains(requiredType)) {
+            throw new NoSuchBeanDefinitionException(requiredType);
+        }
         // unfortunate hack
         try {
             final String[] beanNamesForType = super.getBeanNamesForType(requiredType, false, false);
@@ -327,16 +356,13 @@ public class MicronautBeanFactory extends DefaultListableBeanFactory implements 
 
     @Override
     public Class<?> getType(@Nonnull String name) throws NoSuchBeanDefinitionException {
-        final BeanDefinitionReference<?> definition = beanDefinitionMap.get(name);
-        if (definition != null) {
-            return definition.getBeanType();
-        }
-        final Class<?> t = super.getType(name);
-        if (t != null) {
-            return t;
-        }
-
-        return null;
+        return beanTypeCache.computeIfAbsent(name, s -> {
+            final BeanDefinitionReference<?> definition = beanDefinitionMap.get(name);
+            if (definition != null) {
+                return Optional.of(definition.getBeanType());
+            }
+            return Optional.ofNullable(MicronautBeanFactory.super.getType(name));
+        }).orElse(null);
     }
 
     @Override
@@ -374,19 +400,25 @@ public class MicronautBeanFactory extends DefaultListableBeanFactory implements 
     @Override
     public @Nonnull
     String[] getBeanNamesForType(Class<?> type, boolean includeNonSingletons, boolean allowEagerInit) {
-        final String[] superResult = super.getBeanNamesForType(type, includeNonSingletons, allowEagerInit);
-        if (ArrayUtils.isNotEmpty(superResult)) {
-            return superResult;
-        } else {
-            final Collection<? extends BeanDefinition<?>> beanDefinitions = beanContext.getBeanDefinitions(type);
-            return beansToNames(beanDefinitions);
+        // ignore certain common cases
+        if (type == null || Object.class == type || List.class == type || beanExcludes.contains(type)) {
+            return StringUtils.EMPTY_STRING_ARRAY;
         }
+        return beanNamesForTypeCache.computeIfAbsent(type, aClass -> {
+            final String[] superResult = MicronautBeanFactory.super.getBeanNamesForType(type, includeNonSingletons, allowEagerInit);
+            if (ArrayUtils.isNotEmpty(superResult)) {
+                return superResult;
+            } else {
+                final Collection<? extends BeanDefinition<?>> beanDefinitions = beanContext.getBeanDefinitions(type);
+                return beansToNames(beanDefinitions);
+            }
+        });
     }
 
     @Override
     public @Nonnull
     <T> Map<String, T> getBeansOfType(Class<T> type, boolean includeNonSingletons, boolean allowEagerInit) throws BeansException {
-        if (type == null) {
+        if (type == null || beanExcludes.contains(type)) {
             return Collections.emptyMap();
         }
         final Map<String, T> springSingletons = super.getBeansOfType(type, false, false);
@@ -535,6 +567,10 @@ public class MicronautBeanFactory extends DefaultListableBeanFactory implements 
     @SuppressWarnings("unchecked")
     @Override
     protected <T> T doGetBean(String name, Class<T> requiredType, Object[] args, boolean typeCheckOnly) throws BeansException {
+
+        if (beanExcludes.contains(requiredType)) {
+            throw new NoSuchBeanDefinitionException(name);
+        }
 
         if (super.containsSingleton(name)) {
             final Object o = super.getSingleton(name);
