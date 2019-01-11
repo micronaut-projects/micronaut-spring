@@ -34,6 +34,10 @@ The following table summarizes the annotations that Micronaut for Spring support
 |link:{micronautapi}/io/micronaut/context/annotation/Factory.html[@Factory]
 |Example `@Configuration`
 
+|link:{springapi}/org/springframework/context/annotation/Profile.html[@Profile]
+|link:{micronautapi}/io/micronaut/context/annotation/Requires.html[@Requires(env="test")]
+|Example `@Profile("test")`
+
 |link:{springapi}/org/springframework/context/annotation/Bean.html[@Bean]
 |link:{micronautapi}/io/micronaut/context/annotation/Bean.html[@Bean]
 |Example `@Bean`. Requires `micronaut-runtime` dependency.
