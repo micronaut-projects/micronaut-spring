@@ -544,9 +544,18 @@ public class MicronautBeanFactory extends DefaultListableBeanFactory implements 
         }
 
         BeanDefinitionReference<?> reference = beanDefinitionMap.get(name);
-        if (reference == null && requiredType == null) {
+        if (reference == null) {
             // by name, with no type lookups
-            reference = beanDefinitionsByName.get(name);
+            final BeanDefinitionReference<?> ref = beanDefinitionsByName.get(name);
+            if (ref != null) {
+                if (requiredType != null) {
+                    if (requiredType.isAssignableFrom(ref.getBeanType())) {
+                        reference = ref;
+                    }
+                } else {
+                    reference = ref;
+                }
+            }
         }
 
         if (reference != null) {
@@ -582,7 +591,11 @@ public class MicronautBeanFactory extends DefaultListableBeanFactory implements 
                 }
             }
         }
-        throw new NoSuchBeanDefinitionException(name);
+        try {
+            return beanContext.getBean(requiredType, Qualifiers.byName(name));
+        } catch (NoSuchBeanException e) {
+            throw new NoSuchBeanDefinitionException(name);
+        }
     }
 
     @Override
