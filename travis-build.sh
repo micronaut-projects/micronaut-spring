@@ -2,6 +2,27 @@
 set -e
 EXIT_STATUS=0
 
+if [ "${TRAVIS_JDK_VERSION}" == "openjdk11" ] ; then
+    echo "Check for branch $TRAVIS_BRANCH JDK: $TRAVIS_JDK_VERSION"
+    ./gradlew testClasses --no-daemon || EXIT_STATUS=$?
+
+    if [ $EXIT_STATUS -ne 0 ]; then
+       exit $EXIT_STATUS
+    fi
+
+    ./gradlew --stop
+    ./gradlew check --no-daemon || EXIT_STATUS=$?
+
+    if [ $EXIT_STATUS -ne 0 ]; then
+       exit $EXIT_STATUS
+    fi
+
+    ./gradlew --stop
+    ./gradlew assemble --no-daemon || EXIT_STATUS=$?
+
+    exit $EXIT_STATUS
+fi
+
 git config --global user.name "$GIT_NAME"
 git config --global user.email "$GIT_EMAIL"
 git config --global credential.helper "store --file=~/.git-credentials"
