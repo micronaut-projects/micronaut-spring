@@ -3,7 +3,8 @@ addons:
   chrome: stable
 language: java
 jdk:
-- oraclejdk8
+  - openjdk8
+  - openjdk11
 sudo: required
 services:
 - docker
