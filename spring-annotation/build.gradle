@@ -8,7 +8,10 @@ dependencies {
     testCompile "io.micronaut:micronaut-inject-java:$micronautVersion"
     testCompile "io.micronaut:micronaut-inject-groovy:$micronautVersion"
     testCompile "io.micronaut:micronaut-inject-java-test:$micronautVersion"
-    testCompile files(org.gradle.internal.jvm.Jvm.current().toolsJar)
+    if(!JavaVersion.current().isJava9Compatible()) {
+        testCompile files(org.gradle.internal.jvm.Jvm.current().toolsJar)
+    }
+    
     testCompile project(":spring-context")
     testCompile "io.micronaut:micronaut-spring:$micronautVersion"
     testCompile "org.springframework:spring-tx:$springVersion"
