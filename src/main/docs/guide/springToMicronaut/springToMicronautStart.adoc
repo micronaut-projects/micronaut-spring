@@ -29,7 +29,6 @@ dependencies {
     compile "io.micronaut:micronaut-inject:{micronautVersion}"
     compile("org.springframework.boot:spring-boot-starter")
     ...
-
 }
 ----
 
