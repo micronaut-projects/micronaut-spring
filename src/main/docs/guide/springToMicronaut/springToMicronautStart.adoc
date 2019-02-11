@@ -6,18 +6,29 @@ plugins {
     id "java"
     id "org.springframework.boot" version "2.1.0.RELEASE"
     id "io.spring.dependency-management" version "1.0.6.RELEASE"
-    id "net.ltgt.apt" version "0.19"
+    id "net.ltgt.apt" version "0.19"                    // for Java and Groovy applications
+    id "org.jetbrains.kotlin:kapt" version "1.2.61"     // for Kotlin applications
 }
 
 dependencies {
+    // for Java applications
     annotationProcessor "io.micronaut:micronaut-inject-java:{micronautVersion}"
-    annotationProcessor "io.micronaut:micronaut-validation::{micronautVersion}"
+    annotationProcessor "io.micronaut:micronaut-validation:{micronautVersion}"
     annotationProcessor "io.micronaut.spring:micronaut-spring-annotation:{version}"
+
+    // for Kotlin applications
+    kapt "io.micronaut:micronaut-inject-java:{micronautVersion}"
+    kapt "io.micronaut:micronaut-validation:{micronautVersion}"
+    kapt "io.micronaut.spring:micronaut-spring-annotation:{version}"
+    
+    // for Groovy applications
+    compileOnly "io.micronaut:micronaut-inject-groovy:$micronautVersion"
+    compileOnly "io.micronaut:micronaut-validation:$micronautVersion"
+    compileOnly "io.micronaut.spring:micronaut-spring-annotation:$micronautSpringVersion"
 
     compile "io.micronaut:micronaut-inject:{micronautVersion}"
     compile("org.springframework.boot:spring-boot-starter")
     ...
-
 }
 ----
 
