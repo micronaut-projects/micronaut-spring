@@ -20,10 +20,12 @@ import io.micronaut.spring.context.aware.SpringAwareListener;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.*;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
+import org.springframework.beans.factory.config.BeanDefinitionHolder;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.config.DependencyDescriptor;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.beans.factory.support.GenericBeanDefinition;
+import org.springframework.beans.factory.support.RootBeanDefinition;
 import org.springframework.core.ResolvableType;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ConcurrentReferenceHashMap;
@@ -36,7 +38,6 @@ import javax.inject.Singleton;
 import java.io.Closeable;
 import java.lang.annotation.Annotation;
 import java.util.*;
-import java.util.function.Function;
 import java.util.function.Supplier;
 
 /**
@@ -355,17 +356,61 @@ public class MicronautBeanFactory extends DefaultListableBeanFactory implements 
     }
 
     @Override
-    public Class<?> getType(@Nonnull String name) throws NoSuchBeanDefinitionException {
-        Optional<Class<?>> opt = beanTypeCache.get(name);
+    public Class<?> getType(@Nonnull String beanName) throws NoSuchBeanDefinitionException {
+        Optional<Class<?>> opt = beanTypeCache.get(beanName);
         //noinspection OptionalAssignedToNull
         if (opt == null) {
-            final BeanDefinitionReference<?> definition = beanDefinitionMap.get(name);
+            final BeanDefinitionReference<?> definition = beanDefinitionMap.get(beanName);
             if (definition != null) {
                 opt = Optional.of(definition.getBeanType());
             } else {
-                opt = Optional.ofNullable(MicronautBeanFactory.super.getType(name));
+
+                beanName = transformedBeanName(beanName);
+                // Check manually registered singletons.
+                Object beanInstance = super.getSingleton(beanName, false);
+                if (beanInstance != null && !beanInstance.getClass().getSimpleName().equals("NullBean")) {
+                    if (beanInstance instanceof FactoryBean && !BeanFactoryUtils.isFactoryDereference(beanName)) {
+                        return getTypeForFactoryBean((FactoryBean<?>) beanInstance);
+                    }
+                    else {
+                        return beanInstance.getClass();
+                    }
+                }
+                // No singleton instance found -> check bean definition.
+                org.springframework.beans.factory.BeanFactory parentBeanFactory = getParentBeanFactory();
+                if (parentBeanFactory != null && !containsBeanDefinition(beanName)) {
+                    // No bean definition found in this factory -> delegate to parent.
+                    return parentBeanFactory.getType(originalBeanName(beanName));
+                }
+
+                RootBeanDefinition mbd = getMergedLocalBeanDefinition(beanName);
+
+                // Check decorated bean definition, if any: We assume it'll be easier
+                // to determine the decorated bean's type than the proxy's type.
+                BeanDefinitionHolder dbd = mbd.getDecoratedDefinition();
+                if (dbd != null && !BeanFactoryUtils.isFactoryDereference(beanName)) {
+                    RootBeanDefinition tbd = getMergedBeanDefinition(dbd.getBeanName(), dbd.getBeanDefinition(), mbd);
+                    Class<?> targetClass = predictBeanType(dbd.getBeanName(), tbd);
+                    if (targetClass != null && !FactoryBean.class.isAssignableFrom(targetClass)) {
+                        return targetClass;
+                    }
+                }
+
+                Class<?> beanClass = predictBeanType(beanName, mbd);
+
+                // Check bean class whether we're dealing with a FactoryBean.
+                if (beanClass != null && FactoryBean.class.isAssignableFrom(beanClass)) {
+                    if (!BeanFactoryUtils.isFactoryDereference(beanName)) {
+                        // If it's a FactoryBean, we want to look at what it creates, not at the factory class.
+                        return getTypeForFactoryBean(beanName, mbd);
+                    } else {
+                        return beanClass;
+                    }
+                } else {
+                    return (!BeanFactoryUtils.isFactoryDereference(beanName) ? beanClass : null);
+                }
             }
-            beanTypeCache.put(name, opt);
+            beanTypeCache.put(beanName, opt);
         }
 
         return opt.orElse(null);

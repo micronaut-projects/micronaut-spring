@@ -33,13 +33,19 @@ class ParentApplicationContextSpec extends Specification {
         child.getBean("child", ChildBean).myParentBean
         child.getBean("child").myParentBean
 
-        when:
+        when:"Accessing a bean that is not there"
         child.getBean("notthere")
 
-        then:
+        then:"A no such bean definition exception is thrown"
         def e = thrown(NoSuchBeanDefinitionException)
         e.message == 'No bean named \'notthere\' available'
 
+        when:"Access via the parent"
+        child.parent.getBean("notthere")
+
+        then:"A no such bean definition exception is thrown"
+        e = thrown(NoSuchBeanDefinitionException)
+        e.message == 'No bean named \'notthere\' available'
     }
 
     void "test autowire by type beans are able to find beans in parent"() {
