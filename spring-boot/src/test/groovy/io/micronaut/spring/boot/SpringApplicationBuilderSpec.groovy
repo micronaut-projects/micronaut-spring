@@ -4,11 +4,14 @@ import io.micronaut.context.ApplicationContext
 import io.micronaut.context.ApplicationContextBuilder
 import io.micronaut.core.io.socket.SocketUtils
 import io.micronaut.spring.context.MicronautApplicationContext
+import org.springframework.boot.ApplicationArguments
+import org.springframework.boot.ApplicationRunner
 import org.springframework.boot.WebApplicationType
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.builder.SpringApplicationBuilder
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 import org.springframework.context.ConfigurableApplicationContext
+import org.springframework.stereotype.Component
 import some.other.pkg.FeaturesClient
 import some.other.pkg.MyOtherComponent
 import some.other.pkg.TestClient
@@ -41,12 +44,21 @@ class SpringApplicationBuilderSpec extends Specification{
         springContext.getBean(MyComponent).myOtherComponent == springContext.getBean(MyOtherComponent)
         springContext.getBean(FeaturesClient)
         springContext.getBean(TestClient).hello() == 'good'
-
+        springContext.getBean(MyRunner).executed
+        
         cleanup:
         springContext.close()
 
     }
 
+    @Component
+    static class MyRunner implements ApplicationRunner {
+        boolean executed = false
+        @Override
+        void run(ApplicationArguments args) throws Exception {
+            executed = args != null
+        }
+    }
     @SpringBootApplication
     static class Application extends SpringBootServletInitializer{}
 }
