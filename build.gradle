@@ -8,6 +8,8 @@ buildscript {
         classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.4'
         classpath 'com.bmuschko:gradle-nexus-plugin:2.3.1'
         classpath 'io.github.groovylang.groovydoc:groovydoc-gradle-plugin:1.0.1'
+        classpath "io.micronaut.docs:micronaut-docs-asciidoc-extensions:$micronautDocsVersion"
+        classpath "io.micronaut.docs:micronaut-docs-gradle-plugins:$micronautDocsVersion"        
     }
 }
 
@@ -117,7 +119,32 @@ subprojects { Project subproject ->
     }
 
     task allDeps(type: DependencyReportTask) {}
+    apply plugin: 'checkstyle'
+    
+    checkstyle {
+        toolVersion = 8.10
+        configFile = rootProject.file('config/checkstyle/checkstyle.xml')
+
+        // Per submodule
+        maxErrors = 1
+        maxWarnings = 10
+
+        showViolations = true
+    }
+
+    checkstyleTest.enabled = false
 }
 
-apply from:"https://raw.githubusercontent.com/micronaut-projects/micronaut-core/ae8c52a65b4315d0f36edf362295d645559f496e/gradle/docs.gradle"
+apply from:"https://raw.githubusercontent.com/micronaut-projects/micronaut-docs/v${micronautDocsVersion}/gradle/docs.gradle"
 
+allprojects {
+    apply plugin: 'idea'
+
+    idea {
+        module {
+            outputDir file('build/classes/java/main')
+            testOutputDir file('build/classes/groovy/test')
+        }
+    }
+    apply from: rootProject.file('gradle/license.gradle')
+}
