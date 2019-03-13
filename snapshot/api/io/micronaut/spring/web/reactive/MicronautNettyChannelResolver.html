@@ -118,6 +118,13 @@ var activeTableTab = "activeTableTab";
 public class <span class="typeNameLabel">MicronautNettyChannelResolver</span>
 extends java.lang.Object
 implements <a href="../../../../../io/micronaut/spring/web/reactive/ChannelResolver.html" title="interface in io.micronaut.spring.web.reactive">ChannelResolver</a></pre>
+<div class="block">Micronaut specific <a href="../../../../../io/micronaut/spring/web/reactive/ChannelResolver.html" title="interface in io.micronaut.spring.web.reactive"><code>ChannelResolver</code></a> implementation.</div>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>1.0</dd>
+<dt><span class="simpleTagLabel">Author:</span></dt>
+<dd>graemerocher</dd>
+</dl>
 </li>
 </ul>
 </div>
@@ -136,7 +143,9 @@ implements <a href="../../../../../io/micronaut/spring/web/reactive/ChannelResol
 <th class="colOne" scope="col">Constructor and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/spring/web/reactive/MicronautNettyChannelResolver.html#MicronautNettyChannelResolver-io.micronaut.http.server.HttpServerConfiguration-">MicronautNettyChannelResolver</a></span>(<a href="https://docs.micronaut.io/latest/api/io/micronaut/http/server/HttpServerConfiguration.html?is-external=true" title="class or interface in io.micronaut.http.server">HttpServerConfiguration</a>&nbsp;serverConfiguration)</code>&nbsp;</td>
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/spring/web/reactive/MicronautNettyChannelResolver.html#MicronautNettyChannelResolver-io.micronaut.http.server.HttpServerConfiguration-">MicronautNettyChannelResolver</a></span>(<a href="https://docs.micronaut.io/latest/api/io/micronaut/http/server/HttpServerConfiguration.html?is-external=true" title="class or interface in io.micronaut.http.server">HttpServerConfiguration</a>&nbsp;serverConfiguration)</code>
+<div class="block">Default constructor.</div>
+</td>
 </tr>
 </table>
 </li>
@@ -155,11 +164,15 @@ implements <a href="../../../../../io/micronaut/spring/web/reactive/ChannelResol
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>java.util.Optional&lt;io.netty.channel.Channel&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/spring/web/reactive/MicronautNettyChannelResolver.html#resolveChannel-io.micronaut.http.HttpRequest-">resolveChannel</a></span>(<a href="https://docs.micronaut.io/latest/api/io/micronaut/http/HttpRequest.html?is-external=true" title="class or interface in io.micronaut.http">HttpRequest</a>&lt;?&gt;&nbsp;request)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/spring/web/reactive/MicronautNettyChannelResolver.html#resolveChannel-io.micronaut.http.HttpRequest-">resolveChannel</a></span>(<a href="https://docs.micronaut.io/latest/api/io/micronaut/http/HttpRequest.html?is-external=true" title="class or interface in io.micronaut.http">HttpRequest</a>&lt;?&gt;&nbsp;request)</code>
+<div class="block">Resolve the backing netty channel.</div>
+</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>java.util.Optional&lt;<a href="https://docs.micronaut.io/latest/api/io/micronaut/http/server/netty/HttpContentProcessor.html?is-external=true" title="class or interface in io.micronaut.http.server.netty">HttpContentProcessor</a>&lt;io.netty.buffer.ByteBufHolder&gt;&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/spring/web/reactive/MicronautNettyChannelResolver.html#resolveContentProcessor-io.micronaut.http.HttpRequest-">resolveContentProcessor</a></span>(<a href="https://docs.micronaut.io/latest/api/io/micronaut/http/HttpRequest.html?is-external=true" title="class or interface in io.micronaut.http">HttpRequest</a>&lt;?&gt;&nbsp;request)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/spring/web/reactive/MicronautNettyChannelResolver.html#resolveContentProcessor-io.micronaut.http.HttpRequest-">resolveContentProcessor</a></span>(<a href="https://docs.micronaut.io/latest/api/io/micronaut/http/HttpRequest.html?is-external=true" title="class or interface in io.micronaut.http">HttpRequest</a>&lt;?&gt;&nbsp;request)</code>
+<div class="block">Resolve the content processor.</div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -190,6 +203,11 @@ implements <a href="../../../../../io/micronaut/spring/web/reactive/ChannelResol
 <li class="blockList">
 <h4>MicronautNettyChannelResolver</h4>
 <pre>public&nbsp;MicronautNettyChannelResolver(<a href="https://docs.micronaut.io/latest/api/io/micronaut/http/server/HttpServerConfiguration.html?is-external=true" title="class or interface in io.micronaut.http.server">HttpServerConfiguration</a>&nbsp;serverConfiguration)</pre>
+<div class="block">Default constructor.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>serverConfiguration</code> - The server config</dd>
+</dl>
 </li>
 </ul>
 </li>
@@ -207,9 +225,15 @@ implements <a href="../../../../../io/micronaut/spring/web/reactive/ChannelResol
 <li class="blockList">
 <h4>resolveChannel</h4>
 <pre>public&nbsp;java.util.Optional&lt;io.netty.channel.Channel&gt;&nbsp;resolveChannel(<a href="https://docs.micronaut.io/latest/api/io/micronaut/http/HttpRequest.html?is-external=true" title="class or interface in io.micronaut.http">HttpRequest</a>&lt;?&gt;&nbsp;request)</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../../io/micronaut/spring/web/reactive/ChannelResolver.html#resolveChannel-io.micronaut.http.HttpRequest-">ChannelResolver</a></code></span></div>
+<div class="block">Resolve the backing netty channel.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../../../io/micronaut/spring/web/reactive/ChannelResolver.html#resolveChannel-io.micronaut.http.HttpRequest-">resolveChannel</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../io/micronaut/spring/web/reactive/ChannelResolver.html" title="interface in io.micronaut.spring.web.reactive">ChannelResolver</a></code></dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>request</code> - The request</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>The channel</dd>
 </dl>
 </li>
 </ul>
@@ -220,9 +244,15 @@ implements <a href="../../../../../io/micronaut/spring/web/reactive/ChannelResol
 <li class="blockList">
 <h4>resolveContentProcessor</h4>
 <pre>public&nbsp;java.util.Optional&lt;<a href="https://docs.micronaut.io/latest/api/io/micronaut/http/server/netty/HttpContentProcessor.html?is-external=true" title="class or interface in io.micronaut.http.server.netty">HttpContentProcessor</a>&lt;io.netty.buffer.ByteBufHolder&gt;&gt;&nbsp;resolveContentProcessor(<a href="https://docs.micronaut.io/latest/api/io/micronaut/http/HttpRequest.html?is-external=true" title="class or interface in io.micronaut.http">HttpRequest</a>&lt;?&gt;&nbsp;request)</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../../io/micronaut/spring/web/reactive/ChannelResolver.html#resolveContentProcessor-io.micronaut.http.HttpRequest-">ChannelResolver</a></code></span></div>
+<div class="block">Resolve the content processor.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../../../io/micronaut/spring/web/reactive/ChannelResolver.html#resolveContentProcessor-io.micronaut.http.HttpRequest-">resolveContentProcessor</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../io/micronaut/spring/web/reactive/ChannelResolver.html" title="interface in io.micronaut.spring.web.reactive">ChannelResolver</a></code></dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>request</code> - The request</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>The processor</dd>
 </dl>
 </li>
 </ul>

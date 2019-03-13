@@ -122,6 +122,13 @@ var activeTableTab = "activeTableTab";
 <br>
 <pre>public class <span class="typeNameLabel">ConditionalOnBeanAnnotationMapper</span>
 extends <a href="../../../../../io/micronaut/spring/annotation/AbstractSpringAnnotationMapper.html" title="class in io.micronaut.spring.annotation">AbstractSpringAnnotationMapper</a></pre>
+<div class="block">Maps ConditionalOnBean to Micronaut Requires.</div>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>1.0</dd>
+<dt><span class="simpleTagLabel">Author:</span></dt>
+<dd>graemerocher</dd>
+</dl>
 </li>
 </ul>
 </div>
@@ -164,15 +171,21 @@ extends <a href="../../../../../io/micronaut/spring/annotation/AbstractSpringAnn
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>protected java.util.List&lt;<a href="https://docs.micronaut.io/latest/api/io/micronaut/core/annotation/AnnotationValue.html?is-external=true" title="class or interface in io.micronaut.core.annotation">AnnotationValue</a>&lt;?&gt;&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/spring/boot/annotation/ConditionalOnBeanAnnotationMapper.html#mapInternal-io.micronaut.core.annotation.AnnotationValue-io.micronaut.inject.visitor.VisitorContext-">mapInternal</a></span>(<a href="https://docs.micronaut.io/latest/api/io/micronaut/core/annotation/AnnotationValue.html?is-external=true" title="class or interface in io.micronaut.core.annotation">AnnotationValue</a>&lt;java.lang.annotation.Annotation&gt;&nbsp;annotation,
-           <a href="https://docs.micronaut.io/latest/api/io/micronaut/inject/visitor/VisitorContext.html?is-external=true" title="class or interface in io.micronaut.inject.visitor">VisitorContext</a>&nbsp;visitorContext)</code>&nbsp;</td>
+           <a href="https://docs.micronaut.io/latest/api/io/micronaut/inject/visitor/VisitorContext.html?is-external=true" title="class or interface in io.micronaut.inject.visitor">VisitorContext</a>&nbsp;visitorContext)</code>
+<div class="block">Internal map implemenation that subclasses should implement.</div>
+</td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>protected java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/spring/boot/annotation/ConditionalOnBeanAnnotationMapper.html#requiresMethodName--">requiresMethodName</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/spring/boot/annotation/ConditionalOnBeanAnnotationMapper.html#requiresMethodName--">requiresMethodName</a></span>()</code>
+<div class="block">The annotation member name for requires.</div>
+</td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>protected java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/spring/boot/annotation/ConditionalOnBeanAnnotationMapper.html#typesMemberName--">typesMemberName</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/spring/boot/annotation/ConditionalOnBeanAnnotationMapper.html#typesMemberName--">typesMemberName</a></span>()</code>
+<div class="block">The annotation member name that specifies the types.</div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -237,9 +250,16 @@ extends <a href="../../../../../io/micronaut/spring/annotation/AbstractSpringAnn
 <h4>mapInternal</h4>
 <pre>protected&nbsp;java.util.List&lt;<a href="https://docs.micronaut.io/latest/api/io/micronaut/core/annotation/AnnotationValue.html?is-external=true" title="class or interface in io.micronaut.core.annotation">AnnotationValue</a>&lt;?&gt;&gt;&nbsp;mapInternal(<a href="https://docs.micronaut.io/latest/api/io/micronaut/core/annotation/AnnotationValue.html?is-external=true" title="class or interface in io.micronaut.core.annotation">AnnotationValue</a>&lt;java.lang.annotation.Annotation&gt;&nbsp;annotation,
                                                          <a href="https://docs.micronaut.io/latest/api/io/micronaut/inject/visitor/VisitorContext.html?is-external=true" title="class or interface in io.micronaut.inject.visitor">VisitorContext</a>&nbsp;visitorContext)</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from class:&nbsp;<code><a href="../../../../../io/micronaut/spring/annotation/AbstractSpringAnnotationMapper.html#mapInternal-io.micronaut.core.annotation.AnnotationValue-io.micronaut.inject.visitor.VisitorContext-">AbstractSpringAnnotationMapper</a></code></span></div>
+<div class="block">Internal map implemenation that subclasses should implement.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../../../io/micronaut/spring/annotation/AbstractSpringAnnotationMapper.html#mapInternal-io.micronaut.core.annotation.AnnotationValue-io.micronaut.inject.visitor.VisitorContext-">mapInternal</a></code>&nbsp;in class&nbsp;<code><a href="../../../../../io/micronaut/spring/annotation/AbstractSpringAnnotationMapper.html" title="class in io.micronaut.spring.annotation">AbstractSpringAnnotationMapper</a></code></dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>annotation</code> - The annotation</dd>
+<dd><code>visitorContext</code> - The visitor context</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>A list of annotations</dd>
 </dl>
 </li>
 </ul>
@@ -249,7 +269,13 @@ extends <a href="../../../../../io/micronaut/spring/annotation/AbstractSpringAnn
 <ul class="blockList">
 <li class="blockList">
 <h4>typesMemberName</h4>
-<pre>protected&nbsp;java.lang.String&nbsp;typesMemberName()</pre>
+<pre>@Nonnull
+protected&nbsp;java.lang.String&nbsp;typesMemberName()</pre>
+<div class="block">The annotation member name that specifies the types.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>The name</dd>
+</dl>
 </li>
 </ul>
 <a name="requiresMethodName--">
@@ -258,7 +284,13 @@ extends <a href="../../../../../io/micronaut/spring/annotation/AbstractSpringAnn
 <ul class="blockListLast">
 <li class="blockList">
 <h4>requiresMethodName</h4>
-<pre>protected&nbsp;java.lang.String&nbsp;requiresMethodName()</pre>
+<pre>@Nonnull
+protected&nbsp;java.lang.String&nbsp;requiresMethodName()</pre>
+<div class="block">The annotation member name for requires.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>The member name</dd>
+</dl>
 </li>
 </ul>
 </li>

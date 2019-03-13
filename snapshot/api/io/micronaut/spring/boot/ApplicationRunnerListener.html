@@ -110,6 +110,13 @@ var activeTableTab = "activeTableTab";
 <pre>@Singleton
 public class <span class="typeNameLabel">ApplicationRunnerListener</span>
 extends java.lang.Object</pre>
+<div class="block">Runs <a href="https://docs.spring.io/spring-boot/docs/current/api/org/springframework/boot/ApplicationRunner.html?is-external=true" title="class or interface in org.springframework.boot"><code>ApplicationRunner</code></a> and <a href="https://docs.spring.io/spring-boot/docs/current/api/org/springframework/boot/CommandLineRunner.html?is-external=true" title="class or interface in org.springframework.boot"><code>CommandLineRunner</code></a> instances on startup.</div>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>1.0</dd>
+<dt><span class="simpleTagLabel">Author:</span></dt>
+<dd>graemerocher</dd>
+</dl>
 </li>
 </ul>
 </div>
@@ -125,12 +132,16 @@ extends java.lang.Object</pre>
 <table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Constructor Summary table, listing constructors, and an explanation">
 <caption><span>Constructors</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
-<th class="colOne" scope="col">Constructor and Description</th>
+<th class="colFirst" scope="col">Modifier</th>
+<th class="colLast" scope="col">Constructor and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../io/micronaut/spring/boot/ApplicationRunnerListener.html#ApplicationRunnerListener-io.micronaut.core.cli.CommandLine-java.util.List-java.util.List-">ApplicationRunnerListener</a></span>(<a href="https://docs.micronaut.io/latest/api/io/micronaut/core/cli/CommandLine.html?is-external=true" title="class or interface in io.micronaut.core.cli">CommandLine</a>&nbsp;commandLine,
+<td class="colFirst"><code>protected </code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/spring/boot/ApplicationRunnerListener.html#ApplicationRunnerListener-io.micronaut.core.cli.CommandLine-java.util.List-java.util.List-">ApplicationRunnerListener</a></span>(<a href="https://docs.micronaut.io/latest/api/io/micronaut/core/cli/CommandLine.html?is-external=true" title="class or interface in io.micronaut.core.cli">CommandLine</a>&nbsp;commandLine,
                          java.util.List&lt;<a href="https://docs.spring.io/spring-boot/docs/current/api/org/springframework/boot/CommandLineRunner.html?is-external=true" title="class or interface in org.springframework.boot">CommandLineRunner</a>&gt;&nbsp;commandLineRunnerList,
-                         java.util.List&lt;<a href="https://docs.spring.io/spring-boot/docs/current/api/org/springframework/boot/ApplicationRunner.html?is-external=true" title="class or interface in org.springframework.boot">ApplicationRunner</a>&gt;&nbsp;applicationRunnerList)</code>&nbsp;</td>
+                         java.util.List&lt;<a href="https://docs.spring.io/spring-boot/docs/current/api/org/springframework/boot/ApplicationRunner.html?is-external=true" title="class or interface in org.springframework.boot">ApplicationRunner</a>&gt;&nbsp;applicationRunnerList)</code>
+<div class="block">Default constructor.</div>
+</td>
 </tr>
 </table>
 </li>
@@ -148,8 +159,10 @@ extends java.lang.Object</pre>
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/spring/boot/ApplicationRunnerListener.html#onStartup-io.micronaut.context.event.StartupEvent-">onStartup</a></span>(<a href="https://docs.micronaut.io/latest/api/io/micronaut/context/event/StartupEvent.html?is-external=true" title="class or interface in io.micronaut.context.event">StartupEvent</a>&nbsp;startupEvent)</code>&nbsp;</td>
+<td class="colFirst"><code>protected void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/spring/boot/ApplicationRunnerListener.html#onStartup-io.micronaut.context.event.StartupEvent-">onStartup</a></span>(<a href="https://docs.micronaut.io/latest/api/io/micronaut/context/event/StartupEvent.html?is-external=true" title="class or interface in io.micronaut.context.event">StartupEvent</a>&nbsp;startupEvent)</code>
+<div class="block">Invokes on startup and executes the listeners.</div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -179,9 +192,16 @@ extends java.lang.Object</pre>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>ApplicationRunnerListener</h4>
-<pre>public&nbsp;ApplicationRunnerListener(<a href="https://docs.micronaut.io/latest/api/io/micronaut/core/cli/CommandLine.html?is-external=true" title="class or interface in io.micronaut.core.cli">CommandLine</a>&nbsp;commandLine,
-                                 java.util.List&lt;<a href="https://docs.spring.io/spring-boot/docs/current/api/org/springframework/boot/CommandLineRunner.html?is-external=true" title="class or interface in org.springframework.boot">CommandLineRunner</a>&gt;&nbsp;commandLineRunnerList,
-                                 java.util.List&lt;<a href="https://docs.spring.io/spring-boot/docs/current/api/org/springframework/boot/ApplicationRunner.html?is-external=true" title="class or interface in org.springframework.boot">ApplicationRunner</a>&gt;&nbsp;applicationRunnerList)</pre>
+<pre>protected&nbsp;ApplicationRunnerListener(<a href="https://docs.micronaut.io/latest/api/io/micronaut/core/cli/CommandLine.html?is-external=true" title="class or interface in io.micronaut.core.cli">CommandLine</a>&nbsp;commandLine,
+                                    java.util.List&lt;<a href="https://docs.spring.io/spring-boot/docs/current/api/org/springframework/boot/CommandLineRunner.html?is-external=true" title="class or interface in org.springframework.boot">CommandLineRunner</a>&gt;&nbsp;commandLineRunnerList,
+                                    java.util.List&lt;<a href="https://docs.spring.io/spring-boot/docs/current/api/org/springframework/boot/ApplicationRunner.html?is-external=true" title="class or interface in org.springframework.boot">ApplicationRunner</a>&gt;&nbsp;applicationRunnerList)</pre>
+<div class="block">Default constructor.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>commandLine</code> - The command line</dd>
+<dd><code>commandLineRunnerList</code> - The command runner list</dd>
+<dd><code>applicationRunnerList</code> - The application runner list</dd>
+</dl>
 </li>
 </ul>
 </li>
@@ -199,7 +219,12 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>onStartup</h4>
 <pre><a href="https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/context/event/EventListener.html?is-external=true" title="class or interface in org.springframework.context.event">@EventListener</a>
-public&nbsp;void&nbsp;onStartup(<a href="https://docs.micronaut.io/latest/api/io/micronaut/context/event/StartupEvent.html?is-external=true" title="class or interface in io.micronaut.context.event">StartupEvent</a>&nbsp;startupEvent)</pre>
+protected&nbsp;void&nbsp;onStartup(<a href="https://docs.micronaut.io/latest/api/io/micronaut/context/event/StartupEvent.html?is-external=true" title="class or interface in io.micronaut.context.event">StartupEvent</a>&nbsp;startupEvent)</pre>
+<div class="block">Invokes on startup and executes the listeners.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>startupEvent</code> - The startup event</dd>
+</dl>
 </li>
 </ul>
 </li>

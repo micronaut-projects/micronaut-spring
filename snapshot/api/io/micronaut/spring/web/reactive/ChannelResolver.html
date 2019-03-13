@@ -104,6 +104,13 @@ var activeTableTab = "activeTableTab";
 <hr>
 <br>
 <pre>public interface <span class="typeNameLabel">ChannelResolver</span></pre>
+<div class="block">Channel resolver interface.</div>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>1.0</dd>
+<dt><span class="simpleTagLabel">Author:</span></dt>
+<dd>graemerocher</dd>
+</dl>
 </li>
 </ul>
 </div>
@@ -124,11 +131,15 @@ var activeTableTab = "activeTableTab";
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>java.util.Optional&lt;io.netty.channel.Channel&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/spring/web/reactive/ChannelResolver.html#resolveChannel-io.micronaut.http.HttpRequest-">resolveChannel</a></span>(<a href="https://docs.micronaut.io/latest/api/io/micronaut/http/HttpRequest.html?is-external=true" title="class or interface in io.micronaut.http">HttpRequest</a>&lt;?&gt;&nbsp;request)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/spring/web/reactive/ChannelResolver.html#resolveChannel-io.micronaut.http.HttpRequest-">resolveChannel</a></span>(<a href="https://docs.micronaut.io/latest/api/io/micronaut/http/HttpRequest.html?is-external=true" title="class or interface in io.micronaut.http">HttpRequest</a>&lt;?&gt;&nbsp;request)</code>
+<div class="block">Resolve the backing netty channel.</div>
+</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>java.util.Optional&lt;<a href="https://docs.micronaut.io/latest/api/io/micronaut/http/server/netty/HttpContentProcessor.html?is-external=true" title="class or interface in io.micronaut.http.server.netty">HttpContentProcessor</a>&lt;io.netty.buffer.ByteBufHolder&gt;&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/spring/web/reactive/ChannelResolver.html#resolveContentProcessor-io.micronaut.http.HttpRequest-">resolveContentProcessor</a></span>(<a href="https://docs.micronaut.io/latest/api/io/micronaut/http/HttpRequest.html?is-external=true" title="class or interface in io.micronaut.http">HttpRequest</a>&lt;?&gt;&nbsp;request)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/spring/web/reactive/ChannelResolver.html#resolveContentProcessor-io.micronaut.http.HttpRequest-">resolveContentProcessor</a></span>(<a href="https://docs.micronaut.io/latest/api/io/micronaut/http/HttpRequest.html?is-external=true" title="class or interface in io.micronaut.http">HttpRequest</a>&lt;?&gt;&nbsp;request)</code>
+<div class="block">Resolve the content processor.</div>
+</td>
 </tr>
 </table>
 </li>
@@ -152,6 +163,13 @@ var activeTableTab = "activeTableTab";
 <li class="blockList">
 <h4>resolveChannel</h4>
 <pre>java.util.Optional&lt;io.netty.channel.Channel&gt;&nbsp;resolveChannel(<a href="https://docs.micronaut.io/latest/api/io/micronaut/http/HttpRequest.html?is-external=true" title="class or interface in io.micronaut.http">HttpRequest</a>&lt;?&gt;&nbsp;request)</pre>
+<div class="block">Resolve the backing netty channel.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>request</code> - The request</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>The channel</dd>
+</dl>
 </li>
 </ul>
 <a name="resolveContentProcessor-io.micronaut.http.HttpRequest-">
@@ -161,6 +179,13 @@ var activeTableTab = "activeTableTab";
 <li class="blockList">
 <h4>resolveContentProcessor</h4>
 <pre>java.util.Optional&lt;<a href="https://docs.micronaut.io/latest/api/io/micronaut/http/server/netty/HttpContentProcessor.html?is-external=true" title="class or interface in io.micronaut.http.server.netty">HttpContentProcessor</a>&lt;io.netty.buffer.ByteBufHolder&gt;&gt;&nbsp;resolveContentProcessor(<a href="https://docs.micronaut.io/latest/api/io/micronaut/http/HttpRequest.html?is-external=true" title="class or interface in io.micronaut.http">HttpRequest</a>&lt;?&gt;&nbsp;request)</pre>
+<div class="block">Resolve the content processor.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>request</code> - The request</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>The processor</dd>
+</dl>
 </li>
 </ul>
 </li>

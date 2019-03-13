@@ -141,7 +141,9 @@ implements <a href="https://docs.micronaut.io/latest/api/io/micronaut/context/ev
 <tr class="altColor">
 <td class="colOne"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/spring/context/aware/SpringAwareListener.html#SpringAwareListener-javax.inject.Provider-javax.inject.Provider-javax.inject.Provider-">SpringAwareListener</a></span>(javax.inject.Provider&lt;<a href="../../../../../io/micronaut/spring/context/factory/MicronautBeanFactory.html" title="class in io.micronaut.spring.context.factory">MicronautBeanFactory</a>&gt;&nbsp;beanFactoryProvider,
                    javax.inject.Provider&lt;<a href="../../../../../io/micronaut/spring/context/env/MicronautEnvironment.html" title="class in io.micronaut.spring.context.env">MicronautEnvironment</a>&gt;&nbsp;environmentProvider,
-                   javax.inject.Provider&lt;<a href="../../../../../io/micronaut/spring/context/MicronautApplicationContext.html" title="class in io.micronaut.spring.context">MicronautApplicationContext</a>&gt;&nbsp;applicationContextProvider)</code>&nbsp;</td>
+                   javax.inject.Provider&lt;<a href="../../../../../io/micronaut/spring/context/MicronautApplicationContext.html" title="class in io.micronaut.spring.context">MicronautApplicationContext</a>&gt;&nbsp;applicationContextProvider)</code>
+<div class="block">Default constructor.</div>
+</td>
 </tr>
 </table>
 </li>
@@ -160,7 +162,9 @@ implements <a href="https://docs.micronaut.io/latest/api/io/micronaut/context/ev
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>java.lang.Object</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/spring/context/aware/SpringAwareListener.html#onBeanCreated-java.lang.Object-">onBeanCreated</a></span>(java.lang.Object&nbsp;bean)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/spring/context/aware/SpringAwareListener.html#onBeanCreated-java.lang.Object-">onBeanCreated</a></span>(java.lang.Object&nbsp;bean)</code>
+<div class="block">Execute when a bean is created.</div>
+</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>java.lang.Object</code></td>
@@ -201,6 +205,13 @@ implements <a href="https://docs.micronaut.io/latest/api/io/micronaut/context/ev
 <pre>public&nbsp;SpringAwareListener(javax.inject.Provider&lt;<a href="../../../../../io/micronaut/spring/context/factory/MicronautBeanFactory.html" title="class in io.micronaut.spring.context.factory">MicronautBeanFactory</a>&gt;&nbsp;beanFactoryProvider,
                            javax.inject.Provider&lt;<a href="../../../../../io/micronaut/spring/context/env/MicronautEnvironment.html" title="class in io.micronaut.spring.context.env">MicronautEnvironment</a>&gt;&nbsp;environmentProvider,
                            javax.inject.Provider&lt;<a href="../../../../../io/micronaut/spring/context/MicronautApplicationContext.html" title="class in io.micronaut.spring.context">MicronautApplicationContext</a>&gt;&nbsp;applicationContextProvider)</pre>
+<div class="block">Default constructor.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>beanFactoryProvider</code> - The bean factory provider</dd>
+<dd><code>environmentProvider</code> - The env provider</dd>
+<dd><code>applicationContextProvider</code> - The context provider</dd>
+</dl>
 </li>
 </ul>
 </li>
@@ -244,6 +255,13 @@ implements <a href="https://docs.micronaut.io/latest/api/io/micronaut/context/ev
 <li class="blockList">
 <h4>onBeanCreated</h4>
 <pre>public&nbsp;java.lang.Object&nbsp;onBeanCreated(java.lang.Object&nbsp;bean)</pre>
+<div class="block">Execute when a bean is created.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>bean</code> - The bean.</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>The result</dd>
+</dl>
 </li>
 </ul>
 </li>

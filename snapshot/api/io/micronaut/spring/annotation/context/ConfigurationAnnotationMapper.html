@@ -167,7 +167,9 @@ extends <a href="../../../../../io/micronaut/spring/annotation/AbstractSpringAnn
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>protected java.util.List&lt;<a href="https://docs.micronaut.io/latest/api/io/micronaut/core/annotation/AnnotationValue.html?is-external=true" title="class or interface in io.micronaut.core.annotation">AnnotationValue</a>&lt;?&gt;&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/spring/annotation/context/ConfigurationAnnotationMapper.html#mapInternal-io.micronaut.core.annotation.AnnotationValue-io.micronaut.inject.visitor.VisitorContext-">mapInternal</a></span>(<a href="https://docs.micronaut.io/latest/api/io/micronaut/core/annotation/AnnotationValue.html?is-external=true" title="class or interface in io.micronaut.core.annotation">AnnotationValue</a>&lt;java.lang.annotation.Annotation&gt;&nbsp;annotation,
-           <a href="https://docs.micronaut.io/latest/api/io/micronaut/inject/visitor/VisitorContext.html?is-external=true" title="class or interface in io.micronaut.inject.visitor">VisitorContext</a>&nbsp;visitorContext)</code>&nbsp;</td>
+           <a href="https://docs.micronaut.io/latest/api/io/micronaut/inject/visitor/VisitorContext.html?is-external=true" title="class or interface in io.micronaut.inject.visitor">VisitorContext</a>&nbsp;visitorContext)</code>
+<div class="block">Internal map implemenation that subclasses should implement.</div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -232,9 +234,16 @@ extends <a href="../../../../../io/micronaut/spring/annotation/AbstractSpringAnn
 <h4>mapInternal</h4>
 <pre>protected&nbsp;java.util.List&lt;<a href="https://docs.micronaut.io/latest/api/io/micronaut/core/annotation/AnnotationValue.html?is-external=true" title="class or interface in io.micronaut.core.annotation">AnnotationValue</a>&lt;?&gt;&gt;&nbsp;mapInternal(<a href="https://docs.micronaut.io/latest/api/io/micronaut/core/annotation/AnnotationValue.html?is-external=true" title="class or interface in io.micronaut.core.annotation">AnnotationValue</a>&lt;java.lang.annotation.Annotation&gt;&nbsp;annotation,
                                                          <a href="https://docs.micronaut.io/latest/api/io/micronaut/inject/visitor/VisitorContext.html?is-external=true" title="class or interface in io.micronaut.inject.visitor">VisitorContext</a>&nbsp;visitorContext)</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from class:&nbsp;<code><a href="../../../../../io/micronaut/spring/annotation/AbstractSpringAnnotationMapper.html#mapInternal-io.micronaut.core.annotation.AnnotationValue-io.micronaut.inject.visitor.VisitorContext-">AbstractSpringAnnotationMapper</a></code></span></div>
+<div class="block">Internal map implemenation that subclasses should implement.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../../../io/micronaut/spring/annotation/AbstractSpringAnnotationMapper.html#mapInternal-io.micronaut.core.annotation.AnnotationValue-io.micronaut.inject.visitor.VisitorContext-">mapInternal</a></code>&nbsp;in class&nbsp;<code><a href="../../../../../io/micronaut/spring/annotation/AbstractSpringAnnotationMapper.html" title="class in io.micronaut.spring.annotation">AbstractSpringAnnotationMapper</a></code></dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>annotation</code> - The annotation</dd>
+<dd><code>visitorContext</code> - The visitor context</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>A list of annotations</dd>
 </dl>
 </li>
 </ul>
