@@ -12,8 +12,8 @@
     <artifactId>greeting-service</artifactId>
     <version>0.1</version>
     <properties>
-        <micronaut.version>1.0.2</micronaut.version>
-        <micronaut.spring.version>1.0.0.M1</micronaut.spring.version>
+        <micronaut.version>1.0.4</micronaut.version>
+        <micronaut.spring.version>1.0.0.RC1</micronaut.spring.version>
         <jdk.version>1.8</jdk.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <exec.mainClass>greeting.example.Application</exec.mainClass>

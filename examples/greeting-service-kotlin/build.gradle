@@ -18,8 +18,8 @@ repositories {
 }
 
 ext {
-    micronautVersion = "1.0.2"
-    micronautSpringVersion = "1.0.0.M1"
+    micronautVersion = "1.0.4"
+    micronautSpringVersion = "1.0.0.RC1"
 }
 
 dependencyManagement {
@@ -39,7 +39,6 @@ dependencies {
     kapt "io.micronaut.configuration:micronaut-openapi"
     kapt "io.micronaut.spring:micronaut-spring-boot-annotation:$micronautSpringVersion"
     kapt "io.micronaut.spring:micronaut-spring-web-annotation:$micronautSpringVersion"
-    kapt "org.springframework.boot:spring-boot-configuration-processor"
 
     compile "io.swagger.core.v3:swagger-annotations"
     compile "io.micronaut:micronaut-inject"
