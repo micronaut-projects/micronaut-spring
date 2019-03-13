@@ -10,6 +10,11 @@ To achieve this the project provides the ability to use a subset of the Spring A
 
 === Release Notes
 
+==== 1.0.0.RC1
+
+* Bug fixes
+* Support for `ApplicationRunner` interface in Spring Boot
+
 ==== 1.0.0.M2
 
 * Examples for Maven and Kotlin to `examples` directory
