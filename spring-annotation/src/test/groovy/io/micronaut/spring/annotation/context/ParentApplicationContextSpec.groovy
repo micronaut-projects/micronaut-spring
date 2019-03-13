@@ -2,6 +2,7 @@ package io.micronaut.spring.annotation.context
 
 import io.micronaut.context.annotation.Factory
 import io.micronaut.spring.context.MicronautApplicationContext
+import org.springframework.beans.factory.NoSuchBeanDefinitionException
 import org.springframework.beans.factory.support.AbstractBeanDefinition
 import org.springframework.beans.factory.support.RootBeanDefinition
 import org.springframework.context.annotation.AnnotationConfigApplicationContext
@@ -13,6 +14,8 @@ class ParentApplicationContextSpec extends Specification {
     void "test autowire by name beans are able to find beans in parent"() {
         given:
         def parent = new MicronautApplicationContext()
+
+        when:
         parent.start()
         def child = new AnnotationConfigApplicationContext()
         child.setParent(parent)
@@ -26,9 +29,16 @@ class ParentApplicationContextSpec extends Specification {
         )
         child.refresh()
 
-        expect:
+        then:
         child.getBean("child", ChildBean).myParentBean
         child.getBean("child").myParentBean
+
+        when:
+        child.getBean("notthere")
+
+        then:
+        def e = thrown(NoSuchBeanDefinitionException)
+        e.message == 'No bean named \'notthere\' available'
 
     }
 

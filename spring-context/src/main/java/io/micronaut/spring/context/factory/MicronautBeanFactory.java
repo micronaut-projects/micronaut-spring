@@ -636,9 +636,14 @@ public class MicronautBeanFactory extends DefaultListableBeanFactory implements 
                 }
             }
         }
-        try {
-            return beanContext.getBean(requiredType, Qualifiers.byName(name));
-        } catch (NoSuchBeanException e) {
+
+        if (requiredType != null) {
+            try {
+                return beanContext.getBean(requiredType, Qualifiers.byName(name));
+            } catch (NoSuchBeanException e) {
+                throw new NoSuchBeanDefinitionException(name);
+            }
+        } else {
             throw new NoSuchBeanDefinitionException(name);
         }
     }
