@@ -100,7 +100,7 @@
         <h1>Micronaut for Spring</h1>
         <p></p>
         <p>Extensions to integrate Micronaut and Spring </p>
-        <p><strong>Version:</strong> 1.0.0.M3</p>
+        <p><strong>Version:</strong> 1.0.0.RC1</p>
     </div>
     
 
@@ -137,6 +137,19 @@
 </div>
 <div class="sect2">
 <h3 id="_release_notes">Release Notes</h3>
+<div class="sect3">
+<h4 id="_1_0_0_rc1">1.0.0.RC1</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Bug fixes</p>
+</li>
+<li>
+<p>Support for <code>ApplicationRunner</code> interface in Spring Boot</p>
+</li>
+</ul>
+</div>
+</div>
 <div class="sect3">
 <h4 id="_1_0_0_m2">1.0.0.M2</h4>
 <div class="ulist">
@@ -221,22 +234,33 @@ If an annotation or interface of Spring is not mentioned in this documentation c
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy" data-lang="groovy">plugins {
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">plugins {
     id "java"
     id "org.springframework.boot" version "2.1.0.RELEASE"
     id "io.spring.dependency-management" version "1.0.6.RELEASE"
-    id "net.ltgt.apt" version "0.19"
+    id "net.ltgt.apt" version "0.19"                    // for Java and Groovy applications
+    id "org.jetbrains.kotlin:kapt" version "1.2.61"     // for Kotlin applications
 }
 
 dependencies {
-    annotationProcessor "io.micronaut:micronaut-inject-java:1.0.3"
-    annotationProcessor "io.micronaut:micronaut-validation::1.0.3"
-    annotationProcessor "io.micronaut.spring:micronaut-spring-annotation:1.0.0.M3"
+    // for Java applications
+    annotationProcessor "io.micronaut:micronaut-inject-java:1.0.4"
+    annotationProcessor "io.micronaut:micronaut-validation:1.0.4"
+    annotationProcessor "io.micronaut.spring:micronaut-spring-annotation:1.0.0.RC1"
 
-    compile "io.micronaut:micronaut-inject:1.0.3"
+    // for Kotlin applications
+    kapt "io.micronaut:micronaut-inject-java:1.0.4"
+    kapt "io.micronaut:micronaut-validation:1.0.4"
+    kapt "io.micronaut.spring:micronaut-spring-annotation:1.0.0.RC1"
+
+    // for Groovy applications
+    compileOnly "io.micronaut:micronaut-inject-groovy:$micronautVersion"
+    compileOnly "io.micronaut:micronaut-validation:$micronautVersion"
+    compileOnly "io.micronaut.spring:micronaut-spring-annotation:$micronautSpringVersion"
+
+    compile "io.micronaut:micronaut-inject:1.0.4"
     compile("org.springframework.boot:spring-boot-starter")
     ...
-
 }</code></pre>
 </div>
 </div>
@@ -508,18 +532,18 @@ If you are only going to reference Spring annotations and not Spring classes or 
 <div class="listingblock">
 <div class="title">Including <code>spring-web</code> processing</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy" data-lang="groovy">dependencies {
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">dependencies {
 
     ...
     // additional Spring web dependencies
-    annotationProcessor "io.micronaut.spring:micronaut-spring-web-annotation:1.0.0.M3"
+    annotationProcessor "io.micronaut.spring:micronaut-spring-web-annotation:1.0.0.RC1"
     compile("org.springframework.boot:spring-boot-starter-web")
 
 
     // additional web dependencies for Micronaut
-    compile("io.micronaut:micronaut-http-server:1.0.3")
-    runtime("io.micronaut.spring:micronaut-spring-web:1.0.0.M3")
-    runtime("io.micronaut:micronaut-http-server-netty:1.0.3")
+    compile("io.micronaut:micronaut-http-server:1.0.4")
+    runtime("io.micronaut.spring:micronaut-spring-web:1.0.0.RC1")
+    runtime("io.micronaut:micronaut-http-server-netty:1.0.4")
 
 }</code></pre>
 </div>
@@ -717,15 +741,15 @@ See the <a href="https://github.com/micronaut-projects/micronaut-spring/tree/mas
 <div class="listingblock">
 <div class="title">Including <code>spring-boot</code> processing</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy" data-lang="groovy">dependencies {
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">dependencies {
 
     ...
     // additional Spring Boot dependencies
-    annotationProcessor "io.micronaut.spring:micronaut-spring-boot:1.0.0.M3"
+    annotationProcessor "io.micronaut.spring:micronaut-spring-boot:1.0.0.RC1"
     compile("org.springframework.boot:spring-boot-starter-web")
 
     // additional Spring Boot dependencies for Micronaut
-    runtime("io.micronaut.spring:micronaut-spring-boot:1.0.0.M3")
+    runtime("io.micronaut.spring:micronaut-spring-boot:1.0.0.RC1")
 }</code></pre>
 </div>
 </div>
@@ -895,7 +919,22 @@ See the <a href="https://github.com/micronaut-projects/micronaut-spring/tree/mas
 <div class="listingblock">
 <div class="title">Spring <code>@Client</code> Implementation</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java" data-lang="java">package io.micronaut.spring.web.annotation;
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">/*
+ * Copyright 2017-2019 original authors
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package io.micronaut.spring.web.annotation;
 
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.annotation.Header;
@@ -964,7 +1003,7 @@ public interface GreetingClient {
 <div class="listingblock">
 <div class="title">Using the Micronaut Parent Context</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java" data-lang="java">SpringApplicationBuilder builder = new SpringApplicationBuilder();
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">SpringApplicationBuilder builder = new SpringApplicationBuilder();
 MicronautApplicationContext context = new MicronautApplicationContext();
 context.start();
 builder.parent(context);

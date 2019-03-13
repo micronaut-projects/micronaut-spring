@@ -5,6 +5,7 @@ io.micronaut.spring.annotation.event
 io.micronaut.spring.annotation.scheduling
 io.micronaut.spring.annotation.tx
 io.micronaut.spring.annotation.validation
+io.micronaut.spring.boot
 io.micronaut.spring.boot.annotation
 io.micronaut.spring.boot.condition
 io.micronaut.spring.context
