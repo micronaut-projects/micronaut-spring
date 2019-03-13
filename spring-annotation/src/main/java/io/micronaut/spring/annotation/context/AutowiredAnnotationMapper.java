@@ -16,7 +16,6 @@
 package io.micronaut.spring.annotation.context;
 
 import io.micronaut.core.annotation.AnnotationValue;
-import io.micronaut.inject.annotation.NamedAnnotationMapper;
 import io.micronaut.inject.visitor.VisitorContext;
 import io.micronaut.spring.annotation.AbstractSpringAnnotationMapper;
 
@@ -27,7 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Maps {@code @Autowired} to {@link Inject}
+ * Maps {@code @Autowired} to {@link Inject}.
  *
  * @author graemerocher
  * @since 1.0

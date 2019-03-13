@@ -18,7 +18,6 @@ package io.micronaut.spring.annotation.context;
 import io.micronaut.context.annotation.Bean;
 import io.micronaut.context.annotation.DefaultScope;
 import io.micronaut.core.annotation.AnnotationValue;
-import io.micronaut.inject.annotation.NamedAnnotationMapper;
 import io.micronaut.inject.visitor.VisitorContext;
 import io.micronaut.spring.annotation.AbstractSpringAnnotationMapper;
 
@@ -30,7 +29,7 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * Maps {@code @Component} to {@link Bean} with a {@link DefaultScope} of {@link Singleton}
+ * Maps {@code @Component} to {@link Bean} with a {@link DefaultScope} of {@link Singleton}.
  *
  * @author graemerocher
  * @since 1.0

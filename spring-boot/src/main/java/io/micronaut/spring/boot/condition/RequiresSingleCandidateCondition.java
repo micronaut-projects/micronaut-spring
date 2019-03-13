@@ -19,6 +19,12 @@ import io.micronaut.context.BeanContext;
 import io.micronaut.context.condition.Condition;
 import io.micronaut.context.condition.ConditionContext;
 
+/**
+ * Implementation of {@link RequiresSingleCandidate}.
+ *
+ * @author graemerocher
+ * @since 1.0
+ */
 public class RequiresSingleCandidateCondition implements Condition {
     @Override
     public boolean matches(ConditionContext context) {

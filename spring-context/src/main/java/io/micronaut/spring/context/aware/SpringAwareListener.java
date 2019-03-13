@@ -45,6 +45,12 @@ public class SpringAwareListener implements BeanInitializedEventListener<Object>
     private final Provider<MicronautEnvironment> environmentProvider;
     private final Provider<MicronautApplicationContext> applicationContextProvider;
 
+    /**
+     * Default constructor.
+     * @param beanFactoryProvider The bean factory provider
+     * @param environmentProvider The env provider
+     * @param applicationContextProvider The context provider
+     */
     public SpringAwareListener(Provider<MicronautBeanFactory> beanFactoryProvider, Provider<MicronautEnvironment> environmentProvider, Provider<MicronautApplicationContext> applicationContextProvider) {
         this.beanFactoryProvider = beanFactoryProvider;
         this.environmentProvider = environmentProvider;
@@ -76,6 +82,11 @@ public class SpringAwareListener implements BeanInitializedEventListener<Object>
         return onBeanCreated(bean);
     }
 
+    /**
+     * Execute when a bean is created.
+     * @param bean The bean.
+     * @return The result
+     */
     public Object onBeanCreated(Object bean) {
         wireAwareObjects(bean);
         if (bean instanceof InitializingBean) {

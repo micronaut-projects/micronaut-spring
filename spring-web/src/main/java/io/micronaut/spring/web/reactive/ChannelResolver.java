@@ -17,14 +17,30 @@ package io.micronaut.spring.web.reactive;
 
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.server.netty.HttpContentProcessor;
-import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufHolder;
 import io.netty.channel.Channel;
 
 import java.util.Optional;
 
+/**
+ * Channel resolver interface.
+ *
+ * @author graemerocher
+ * @since 1.0
+ */
 public interface ChannelResolver {
+
+    /**
+     * Resolve the backing netty channel.
+     * @param request The request
+     * @return The channel
+     */
     Optional<Channel> resolveChannel(HttpRequest<?> request);
 
+    /**
+     * Resolve the content processor.
+     * @param request The request
+     * @return The processor
+     */
     Optional<HttpContentProcessor<ByteBufHolder>> resolveContentProcessor(HttpRequest<?> request);
 }

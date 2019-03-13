@@ -32,6 +32,12 @@ import org.springframework.ui.ModelMap;
 
 import java.util.Optional;
 
+/**
+ * Makes it possible to use Spring MVC views API.
+ *
+ * @author graemerocher
+ * @since 1.0
+ */
 @Filter("/**")
 @Requires(classes = {ModelAndView.class, Model.class})
 @Requires(beans = ViewsRenderer.class)
@@ -39,6 +45,10 @@ public class ModelAndViewServerFilter extends OncePerRequestHttpServerFilter {
 
     private final ViewsFilter viewsFilter;
 
+    /**
+     * Default constructor.
+     * @param viewsFilter The views filter
+     */
     public ModelAndViewServerFilter(ViewsFilter viewsFilter) {
         this.viewsFilter = viewsFilter;
     }

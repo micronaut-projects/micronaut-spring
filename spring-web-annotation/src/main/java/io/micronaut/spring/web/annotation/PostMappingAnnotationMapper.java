@@ -22,8 +22,13 @@ import io.micronaut.http.annotation.Post;
 
 import java.lang.annotation.Annotation;
 
+/**
+ * Maps Spring PostMapping to Micronaut.
+ *
+ * @author graemerocher
+ * @since 1.0
+ */
 public class PostMappingAnnotationMapper extends RequestMappingAnnotationMapper {
-
 
     @Override
     public String getName() {

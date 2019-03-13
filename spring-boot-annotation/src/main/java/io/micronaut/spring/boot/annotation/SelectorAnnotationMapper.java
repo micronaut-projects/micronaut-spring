@@ -23,6 +23,12 @@ import java.lang.annotation.Annotation;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Maps Actuator Selector to Micronaut Selector.
+ *
+ * @author graemerocher
+ * @since 1.0
+ */
 public class SelectorAnnotationMapper implements NamedAnnotationMapper {
     @Override
     public String getName() {

@@ -26,6 +26,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Maps ConditionalOnProperty to Micronaut Requires.
+ *
+ * @author graemerocher
+ * @since 1.0
+ */
 public class ConditionalOnPropertyAnnotationMapper extends AbstractSpringAnnotationMapper {
     @Override
     public String getName() {

@@ -25,6 +25,12 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Maps the Spring Profile annotation to {@link Requires}.
+ *
+ * @author graemerocher
+ * @since 1.0
+ */
 public class ProfileAnnotationMapper extends AbstractSpringAnnotationMapper {
     @Override
     protected List<AnnotationValue<?>> mapInternal(AnnotationValue<Annotation> annotation, VisitorContext visitorContext) {

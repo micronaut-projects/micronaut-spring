@@ -23,6 +23,12 @@ import org.springframework.ui.ModelMap;
 
 import java.util.Optional;
 
+/**
+ * Binds the {@link ModelMap} type.
+ *
+ * @author graemerocher
+ * @since 1.0
+ */
 public class ModelMapRequestArgumentBinder implements TypedRequestArgumentBinder<ModelMap> {
 
     /**

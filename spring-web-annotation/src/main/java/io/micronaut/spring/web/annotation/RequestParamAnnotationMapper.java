@@ -17,6 +17,12 @@ package io.micronaut.spring.web.annotation;
 
 import io.micronaut.http.annotation.QueryValue;
 
+/**
+ * Maps Spring RequestParam to Micronaut.
+ *
+ * @author graemerocher
+ * @since 1.0
+ */
 public class RequestParamAnnotationMapper extends WebBindAnnotationMapper<QueryValue> {
     @Override
     public String getName() {

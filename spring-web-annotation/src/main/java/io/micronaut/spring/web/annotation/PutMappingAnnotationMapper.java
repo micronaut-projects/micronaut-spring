@@ -22,6 +22,12 @@ import io.micronaut.http.annotation.Put;
 
 import java.lang.annotation.Annotation;
 
+/**
+ * Maps Spring PutMapping to Micronaut.
+ *
+ * @author graemerocher
+ * @since 1.0
+ */
 public class PutMappingAnnotationMapper extends RequestMappingAnnotationMapper {
     @Override
     public String getName() {

@@ -17,6 +17,12 @@ package io.micronaut.spring.web.annotation;
 
 import io.micronaut.http.annotation.Header;
 
+/**
+ * Maps Spring RequestHeader to Micronaut.
+ *
+ * @author graemerocher
+ * @since 1.0
+ */
 public class RequestHeaderAnnotationMapper extends WebBindAnnotationMapper<Header> {
     @Override
     Class<Header> annotationType() {

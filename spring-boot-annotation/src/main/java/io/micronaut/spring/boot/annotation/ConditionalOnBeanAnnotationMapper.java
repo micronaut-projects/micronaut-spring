@@ -18,16 +18,22 @@ package io.micronaut.spring.boot.annotation;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.AnnotationClassValue;
 import io.micronaut.core.annotation.AnnotationValue;
-import io.micronaut.inject.annotation.NamedAnnotationMapper;
 import io.micronaut.inject.visitor.VisitorContext;
 import io.micronaut.spring.annotation.AbstractSpringAnnotationMapper;
 
+import javax.annotation.Nonnull;
 import java.lang.annotation.Annotation;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Maps ConditionalOnBean to Micronaut Requires.
+ *
+ * @author graemerocher
+ * @since 1.0
+ */
 public class ConditionalOnBeanAnnotationMapper extends AbstractSpringAnnotationMapper {
 
     @Override
@@ -58,11 +64,19 @@ public class ConditionalOnBeanAnnotationMapper extends AbstractSpringAnnotationM
         return Collections.emptyList();
     }
 
-    protected String typesMemberName() {
+    /**
+     * The annotation member name that specifies the types.
+     * @return The name
+     */
+    protected @Nonnull String typesMemberName() {
         return "types";
     }
 
-    protected String requiresMethodName() {
+    /**
+     * The annotation member name for requires.
+     * @return The member name
+     */
+    protected @Nonnull String requiresMethodName() {
         return "beans";
     }
 }

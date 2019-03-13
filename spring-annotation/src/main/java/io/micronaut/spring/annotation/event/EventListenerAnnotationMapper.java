@@ -16,7 +16,6 @@
 package io.micronaut.spring.annotation.event;
 
 import io.micronaut.core.annotation.AnnotationValue;
-import io.micronaut.inject.annotation.NamedAnnotationMapper;
 import io.micronaut.inject.visitor.VisitorContext;
 import io.micronaut.spring.annotation.AbstractSpringAnnotationMapper;
 
@@ -25,7 +24,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * Maps {@code @EventListener} to {@link io.micronaut.runtime.event.annotation.EventListener}
+ * Maps {@code @EventListener} to {@link io.micronaut.runtime.event.annotation.EventListener}.
  *
  * @author graemerocher
  * @since 1.0

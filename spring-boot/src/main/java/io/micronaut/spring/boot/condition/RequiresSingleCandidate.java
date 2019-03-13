@@ -19,11 +19,20 @@ import io.micronaut.context.annotation.Requires;
 
 import java.lang.annotation.*;
 
+/**
+ * A condition class that requires a single candidate.
+ *
+ * @author graemerocher
+ * @since 1.0
+ */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.PACKAGE, ElementType.TYPE, ElementType.ANNOTATION_TYPE, ElementType.METHOD})
 @Requires
 public @interface RequiresSingleCandidate {
-
+    /**
+     * The candidate type.
+     * @return The canditate type
+     */
     Class<?> value();
 }

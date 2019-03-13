@@ -25,6 +25,12 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Maps Actuator Endpoint to Micronaut Endpoint.
+ *
+ * @author graemerocher
+ * @since 1.0
+ */
 public class EndpointAnnotationMapper extends AbstractSpringAnnotationMapper {
     @Override
     protected List<AnnotationValue<?>> mapInternal(AnnotationValue<Annotation> annotation, VisitorContext visitorContext) {
@@ -33,7 +39,7 @@ public class EndpointAnnotationMapper extends AbstractSpringAnnotationMapper {
             final AnnotationValueBuilder<?> builder = AnnotationValue.builder("io.micronaut.management.endpoint.annotation.Endpoint");
             final Boolean enableByDefault = annotation.get("enableByDefault", boolean.class).orElse(true);
             builder.value(id.get());
-            builder.member("id",id.get());
+            builder.member("id", id.get());
             builder.member("defaultEnabled", enableByDefault);
             return Collections.singletonList(builder.build());
         }

@@ -20,7 +20,6 @@ import io.micronaut.context.annotation.DefaultScope;
 import io.micronaut.core.annotation.AnnotationValue;
 import io.micronaut.core.annotation.AnnotationValueBuilder;
 import io.micronaut.core.util.StringUtils;
-import io.micronaut.inject.annotation.NamedAnnotationMapper;
 import io.micronaut.inject.visitor.VisitorContext;
 import io.micronaut.spring.annotation.AbstractSpringAnnotationMapper;
 
@@ -32,7 +31,7 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * Maps {@code @Bean} to {@link Bean}
+ * Maps {@code @Bean} to {@link Bean}.
  *
  * @author graemerocher
  * @since 1.0

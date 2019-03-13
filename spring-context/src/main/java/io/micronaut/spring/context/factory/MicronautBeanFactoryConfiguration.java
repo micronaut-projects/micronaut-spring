@@ -35,7 +35,7 @@ public class MicronautBeanFactoryConfiguration {
     private List<Class<?>> beanExcludes = Collections.emptyList();
 
     /**
-     * The bean types to exclude from being exposed by Spring's {@link org.springframework.beans.factory.BeanFactory} interface
+     * The bean types to exclude from being exposed by Spring's {@link org.springframework.beans.factory.BeanFactory} interface.
      * @return The bean types
      */
     public @Nonnull List<Class<?>> getBeanExcludes() {
@@ -43,7 +43,7 @@ public class MicronautBeanFactoryConfiguration {
     }
 
     /**
-     * The bean types to exclude from being exposed by Spring's {@link org.springframework.beans.factory.BeanFactory} interface
+     * The bean types to exclude from being exposed by Spring's {@link org.springframework.beans.factory.BeanFactory} interface.
      * @param beanExcludes The bean types
      */
     public void setBeanExcludes(@Nonnull List<Class<?>> beanExcludes) {

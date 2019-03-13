@@ -34,6 +34,10 @@ public class MicronautApplicationEventPublisher implements ApplicationEventPubli
 
     private final io.micronaut.context.event.ApplicationEventPublisher eventPublisher;
 
+    /**
+     * Default constructor.
+     * @param eventPublisher The event publisher to adapt
+     */
     public MicronautApplicationEventPublisher(io.micronaut.context.event.ApplicationEventPublisher eventPublisher) {
         this.eventPublisher = eventPublisher;
     }

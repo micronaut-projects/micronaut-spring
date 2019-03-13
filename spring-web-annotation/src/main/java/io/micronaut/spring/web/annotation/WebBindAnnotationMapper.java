@@ -19,19 +19,29 @@ import io.micronaut.core.annotation.AnnotationValue;
 import io.micronaut.core.annotation.AnnotationValueBuilder;
 import io.micronaut.core.bind.annotation.Bindable;
 import io.micronaut.core.util.StringUtils;
-import io.micronaut.http.annotation.QueryValue;
-import io.micronaut.inject.annotation.NamedAnnotationMapper;
 import io.micronaut.inject.visitor.VisitorContext;
 import io.micronaut.spring.annotation.AbstractSpringAnnotationMapper;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Abstract web binding impl.
+ *
+ * @author graemerocher
+ * @since 1.0
+ * @param <T> The target annotation type
+ */
 public abstract class WebBindAnnotationMapper<T extends Annotation> extends AbstractSpringAnnotationMapper {
 
-    abstract Class<T> annotationType();
+    /**
+     * The annotation type.
+     * @return The type
+     */
+    abstract @Nonnull Class<T> annotationType();
 
     @Override
     protected List<AnnotationValue<?>> mapInternal(AnnotationValue<Annotation> annotation, VisitorContext visitorContext) {

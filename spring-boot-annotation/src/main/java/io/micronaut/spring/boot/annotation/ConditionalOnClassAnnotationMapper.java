@@ -15,6 +15,12 @@
  */
 package io.micronaut.spring.boot.annotation;
 
+/**
+ * Maps ConditionalOnClass to Micronaut Requires.
+ *
+ * @author graemerocher
+ * @since 1.0
+ */
 public class ConditionalOnClassAnnotationMapper extends ConditionalOnBeanAnnotationMapper {
 
     @Override

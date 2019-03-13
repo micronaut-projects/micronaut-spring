@@ -76,6 +76,12 @@ public class MicronautBeanFactory extends DefaultListableBeanFactory implements 
     private final MicronautBeanFactoryConfiguration configuration;
     private final List<Class<?>> beanExcludes;
 
+    /**
+     * The default constructor.
+     * @param beanContext The target Micronaut context
+     * @param awareListener The spring aware listener
+     * @param configuration Configuration
+     */
     public MicronautBeanFactory(
             BeanContext beanContext,
             SpringAwareListener awareListener,
@@ -126,6 +132,11 @@ public class MicronautBeanFactory extends DefaultListableBeanFactory implements 
         }
     }
 
+    /**
+     * Shared logic for Micronaut singleton rules.
+     * @param annotationMetadata The metadata
+     * @return True if is singleton
+     */
     public static boolean isSingleton(AnnotationMetadata annotationMetadata) {
         if (annotationMetadata.isAnnotationPresent(EachProperty.class) || annotationMetadata.isAnnotationPresent(EachBean.class)) {
             return true;
@@ -328,7 +339,12 @@ public class MicronautBeanFactory extends DefaultListableBeanFactory implements 
         }
     }
 
-    protected boolean isSingleton(BeanDefinitionReference<?> definition) {
+    /**
+     * Is the definition singleton.
+     * @param definition The definition
+     * @return True if it is
+     */
+    protected boolean isSingleton(@Nonnull BeanDefinitionReference<?> definition) {
         final AnnotationMetadata annotationMetadata = definition.getAnnotationMetadata();
         return isSingleton(annotationMetadata);
     }
@@ -386,8 +402,7 @@ public class MicronautBeanFactory extends DefaultListableBeanFactory implements 
                 if (beanInstance != null && !beanInstance.getClass().getSimpleName().equals("NullBean")) {
                     if (beanInstance instanceof FactoryBean && !BeanFactoryUtils.isFactoryDereference(beanName)) {
                         return getTypeForFactoryBean((FactoryBean<?>) beanInstance);
-                    }
-                    else {
+                    } else {
                         return beanInstance.getClass();
                     }
                 }
@@ -610,6 +625,9 @@ public class MicronautBeanFactory extends DefaultListableBeanFactory implements 
         return super.containsLocalBean(name) || beanDefinitionMap.containsKey(name) || beanDefinitionsByName.containsKey(name);
     }
 
+    /**
+     * @return The backing Micronaut bean context.
+     */
     public BeanContext getBeanContext() {
         return beanContext;
     }
@@ -677,8 +695,7 @@ public class MicronautBeanFactory extends DefaultListableBeanFactory implements 
                             }
                             return Qualifiers.byName(n);
                         })
-                        .orElseGet(() ->
-                                {
+                        .orElseGet(() -> {
                                     if (definition.hasDeclaredStereotype(Primary.class)) {
                                         return null;
                                     }

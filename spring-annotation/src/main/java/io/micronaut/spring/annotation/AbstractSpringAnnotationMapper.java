@@ -20,10 +20,17 @@ import io.micronaut.core.version.VersionUtils;
 import io.micronaut.inject.annotation.NamedAnnotationMapper;
 import io.micronaut.inject.visitor.VisitorContext;
 
+import javax.annotation.Nonnull;
 import java.lang.annotation.Annotation;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Abstract mapper for Spring annotations.
+ *
+ * @author graemerocher
+ * @since 1.0
+ */
 public abstract class AbstractSpringAnnotationMapper implements NamedAnnotationMapper {
     @Override
     public final List<AnnotationValue<?>> map(AnnotationValue<Annotation> annotation, VisitorContext visitorContext) {
@@ -39,5 +46,13 @@ public abstract class AbstractSpringAnnotationMapper implements NamedAnnotationM
         }
     }
 
-    protected abstract List<AnnotationValue<?>> mapInternal(AnnotationValue<Annotation> annotation, VisitorContext visitorContext);
+    /**
+     * Internal map implemenation that subclasses should implement.
+     * @param annotation The annotation
+     * @param visitorContext The visitor context
+     * @return A list of annotations
+     */
+    protected abstract @Nonnull List<AnnotationValue<?>> mapInternal(
+            @Nonnull AnnotationValue<Annotation> annotation,
+            @Nonnull VisitorContext visitorContext);
 }

@@ -15,6 +15,12 @@
  */
 package io.micronaut.spring.boot.annotation;
 
+/**
+ * Maps Actuator WriteOperation to Micronaut Write.
+ *
+ * @author graemerocher
+ * @since 1.0
+ */
 public class WriteOperationAnnotationMapper extends ReadOperationAnnotationMapper {
     @Override
     protected String operationName() {

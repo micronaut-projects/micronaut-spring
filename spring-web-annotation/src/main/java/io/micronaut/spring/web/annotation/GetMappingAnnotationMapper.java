@@ -22,6 +22,12 @@ import io.micronaut.http.annotation.Get;
 
 import java.lang.annotation.Annotation;
 
+/**
+ * Maps Spring GetMapping to Micronaut.
+ *
+ * @author graemerocher
+ * @since 1.0
+ */
 public class GetMappingAnnotationMapper extends RequestMappingAnnotationMapper {
 
     @Override

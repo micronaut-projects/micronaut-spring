@@ -63,6 +63,14 @@ public class MicronautApplicationContext implements ManagedApplicationContext, C
     private String id = ObjectUtils.identityToString(this);
     private ApplicationContext parent;
 
+    /**
+     * Default constructor.
+     * @param micronautContext The micronaut context to delegate to
+     * @param environment The environment
+     * @param beanFactory The bean factory
+     * @param eventPublisher The event publisher
+     * @param messageSource The message source
+     */
     @Inject
     public MicronautApplicationContext(
             io.micronaut.context.ApplicationContext micronautContext,
@@ -78,10 +86,17 @@ public class MicronautApplicationContext implements ManagedApplicationContext, C
         this.startupDate = System.currentTimeMillis();
     }
 
+    /**
+     * Default constructor.
+     */
     public MicronautApplicationContext() {
         this(io.micronaut.context.ApplicationContext.build());
     }
 
+    /**
+     * Customization constructor.
+     * @param contextBuilder The context builder
+     */
     public MicronautApplicationContext(ApplicationContextBuilder contextBuilder) {
         this.micronautContext = contextBuilder.build();
     }

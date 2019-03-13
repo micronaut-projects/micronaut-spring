@@ -37,6 +37,11 @@ class ContextEventAdapter implements ApplicationEventListener<Object> {
     private final ApplicationEventPublisher eventPublisher;
     private final MicronautApplicationContext applicationContext;
 
+    /**
+     * Default constructor.
+     * @param applicationContext The app context
+     * @param eventPublisher The event publisher
+     */
     ContextEventAdapter(MicronautApplicationContext applicationContext, ApplicationEventPublisher eventPublisher) {
         this.eventPublisher = eventPublisher;
         this.applicationContext = applicationContext;

@@ -20,16 +20,22 @@ import io.micronaut.core.annotation.AnnotationValueBuilder;
 import io.micronaut.core.util.ArrayUtils;
 import io.micronaut.http.HttpMethod;
 import io.micronaut.http.annotation.*;
-import io.micronaut.inject.annotation.NamedAnnotationMapper;
 import io.micronaut.inject.visitor.VisitorContext;
 import io.micronaut.spring.annotation.AbstractSpringAnnotationMapper;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Maps Spring RequestMapping to Micronaut.
+ *
+ * @author graemerocher
+ * @since 1.0
+ */
 public class RequestMappingAnnotationMapper extends AbstractSpringAnnotationMapper {
     @Override
     public String getName() {
@@ -61,11 +67,24 @@ public class RequestMappingAnnotationMapper extends AbstractSpringAnnotationMapp
         return annotations;
     }
 
+    /**
+     * Whether the given method is an HTTP method mapping.
+     * @param method The method, can be null
+     * @return True if it is
+     */
     protected boolean isHttpMethodMapping(@Nullable HttpMethod method) {
         return method != null;
     }
 
-    protected AnnotationValueBuilder<?> newBuilder(@Nullable HttpMethod httpMethod, AnnotationValue<Annotation> annotation) {
+    /**
+     * Construct a new builder for the given http method.
+     * @param httpMethod The method
+     * @param annotation The annotation
+     * @return The builder
+     */
+    protected @Nonnull AnnotationValueBuilder<?> newBuilder(
+            @Nullable HttpMethod httpMethod,
+            AnnotationValue<Annotation> annotation) {
 
         if (httpMethod != null) {
             switch (httpMethod) {

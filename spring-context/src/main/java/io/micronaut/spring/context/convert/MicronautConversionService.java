@@ -21,12 +21,22 @@ import org.springframework.core.convert.TypeDescriptor;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
+/**
+ * ConversionService adapter.
+ *
+ * @author graemerocher
+ * @since 1.0
+ */
 @Singleton
 @Named("conversionService")
 public class MicronautConversionService implements ConversionService {
 
     private final io.micronaut.core.convert.ConversionService<?> conversionService;
 
+    /**
+     * Default constructor.
+     * @param conversionService The target service
+     */
     public MicronautConversionService(io.micronaut.core.convert.ConversionService<?> conversionService) {
         this.conversionService = conversionService;
     }

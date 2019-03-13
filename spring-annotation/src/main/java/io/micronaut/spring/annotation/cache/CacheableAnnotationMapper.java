@@ -21,10 +21,17 @@ import io.micronaut.core.annotation.AnnotationValueBuilder;
 import io.micronaut.inject.visitor.VisitorContext;
 import io.micronaut.spring.annotation.AbstractSpringAnnotationMapper;
 
+import javax.annotation.Nonnull;
 import java.lang.annotation.Annotation;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Maps the Spring cache annotations.
+ *
+ * @since 1.0
+ * @author graemerocher
+ */
 public class CacheableAnnotationMapper extends AbstractSpringAnnotationMapper {
     @Override
     protected List<AnnotationValue<?>> mapInternal(AnnotationValue<Annotation> annotation, VisitorContext visitorContext) {
@@ -47,7 +54,11 @@ public class CacheableAnnotationMapper extends AbstractSpringAnnotationMapper {
         return "org.springframework.cache.annotation.Cacheable";
     }
 
-    protected AnnotationValueBuilder<? extends Annotation> buildAnnotation() {
+    /**
+     * Builds the target annotation.
+     * @return The annotation builder
+     */
+    protected @Nonnull AnnotationValueBuilder<? extends Annotation> buildAnnotation() {
         return AnnotationValue.builder(Cacheable.class);
     }
 }

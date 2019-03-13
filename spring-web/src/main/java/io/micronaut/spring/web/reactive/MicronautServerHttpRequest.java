@@ -52,6 +52,11 @@ public class MicronautServerHttpRequest extends AbstractServerHttpRequest {
     private final HttpRequest<?> request;
     private final ChannelResolver channelResolver;
 
+    /**
+     * Default constructor.
+     * @param request The request to adapt
+     * @param channelResolver The channel resolver
+     */
     public MicronautServerHttpRequest(
             HttpRequest<?> request,
             ChannelResolver channelResolver) {
@@ -161,13 +166,15 @@ public class MicronautServerHttpRequest extends AbstractServerHttpRequest {
         @Nullable
         private final X509Certificate[] peerCertificates;
 
-
+        /**
+         * Default constructor.
+         * @param session The SSLSession
+         */
         DefaultSslInfo(SSLSession session) {
             Assert.notNull(session, "SSLSession is required");
             this.sessionId = initSessionId(session);
             this.peerCertificates = initCertificates(session);
         }
-
 
         @Override
         @Nullable
@@ -180,7 +187,6 @@ public class MicronautServerHttpRequest extends AbstractServerHttpRequest {
         public X509Certificate[] getPeerCertificates() {
             return this.peerCertificates;
         }
-
 
         @Nullable
         private String initSessionId(SSLSession session) {
@@ -208,8 +214,7 @@ public class MicronautServerHttpRequest extends AbstractServerHttpRequest {
             Certificate[] certificates;
             try {
                 certificates = session.getPeerCertificates();
-            }
-            catch (Throwable ex) {
+            } catch (Throwable ex) {
                 return null;
             }
 

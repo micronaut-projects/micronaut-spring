@@ -24,6 +24,12 @@ import org.springframework.http.HttpMethod;
 import javax.inject.Singleton;
 import java.util.Optional;
 
+/**
+ * Adds ability to bind {@link HttpMethod}.
+ *
+ * @author graemerocher
+ * @since 1.0
+ */
 @Singleton
 public class HttpMethodArgumentBinder implements TypedRequestArgumentBinder<HttpMethod> {
     @Override

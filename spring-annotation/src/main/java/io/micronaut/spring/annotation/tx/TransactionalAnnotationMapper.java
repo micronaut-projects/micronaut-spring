@@ -18,9 +18,7 @@ package io.micronaut.spring.annotation.tx;
 import io.micronaut.core.annotation.AnnotationClassValue;
 import io.micronaut.core.annotation.AnnotationValue;
 import io.micronaut.core.annotation.AnnotationValueBuilder;
-import io.micronaut.inject.annotation.NamedAnnotationMapper;
 import io.micronaut.inject.visitor.VisitorContext;
-import io.micronaut.scheduling.annotation.Async;
 import io.micronaut.spring.annotation.AbstractSpringAnnotationMapper;
 
 import java.lang.annotation.Annotation;

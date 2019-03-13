@@ -25,6 +25,12 @@ import org.springframework.web.bind.annotation.RequestAttribute;
 import javax.inject.Singleton;
 import java.util.Optional;
 
+/**
+ * Binds request attributes.
+ *
+ * @author graemerocher
+ * @since 1.0
+ */
 @Singleton
 @Requires(classes = RequestAttribute.class)
 public class RequestAttributeArgumentBinder implements AnnotatedRequestArgumentBinder<RequestAttribute, Object> {

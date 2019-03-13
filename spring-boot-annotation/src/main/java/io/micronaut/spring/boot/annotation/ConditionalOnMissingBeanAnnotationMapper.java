@@ -15,6 +15,12 @@
  */
 package io.micronaut.spring.boot.annotation;
 
+/**
+ * Maps ConditionalOnMissingBean to Micronaut Requires.
+ *
+ * @author graemerocher
+ * @since 1.0
+ */
 public class ConditionalOnMissingBeanAnnotationMapper extends ConditionalOnBeanAnnotationMapper {
     @Override
     public String getName() {

@@ -17,6 +17,12 @@ package io.micronaut.spring.web.annotation;
 
 import io.micronaut.http.annotation.CookieValue;
 
+/**
+ * Maps Spring CookieValue to Micronaut.
+ *
+ * @author graemerocher
+ * @since 1.0
+ */
 public class CookieValueAnnotationMapper extends WebBindAnnotationMapper<CookieValue> {
     @Override
     public String getName() {

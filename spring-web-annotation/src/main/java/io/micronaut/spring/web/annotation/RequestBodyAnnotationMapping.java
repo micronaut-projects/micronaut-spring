@@ -18,9 +18,7 @@ package io.micronaut.spring.web.annotation;
 import io.micronaut.core.annotation.AnnotationValue;
 import io.micronaut.core.annotation.AnnotationValueBuilder;
 import io.micronaut.core.bind.annotation.Bindable;
-import io.micronaut.core.util.StringUtils;
 import io.micronaut.http.annotation.Body;
-import io.micronaut.inject.annotation.NamedAnnotationMapper;
 import io.micronaut.inject.visitor.VisitorContext;
 import io.micronaut.spring.annotation.AbstractSpringAnnotationMapper;
 
@@ -29,6 +27,12 @@ import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Maps Spring RequestBody to Micronaut.
+ *
+ * @author graemerocher
+ * @since 1.0
+ */
 public class RequestBodyAnnotationMapping extends AbstractSpringAnnotationMapper {
     @Override
     public String getName() {

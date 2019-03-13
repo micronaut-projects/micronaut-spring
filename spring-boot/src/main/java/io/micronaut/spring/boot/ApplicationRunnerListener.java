@@ -25,6 +25,12 @@ import org.springframework.context.event.EventListener;
 import javax.inject.Singleton;
 import java.util.List;
 
+/**
+ * Runs {@link ApplicationRunner} and {@link CommandLineRunner} instances on startup.
+ *
+ * @author graemerocher
+ * @since 1.0
+ */
 @Singleton
 public class ApplicationRunnerListener {
 
@@ -32,7 +38,13 @@ public class ApplicationRunnerListener {
     private final List<CommandLineRunner> commandLineRunnerList;
     private final List<ApplicationRunner> applicationRunnerList;
 
-    public ApplicationRunnerListener(
+    /**
+     * Default constructor.
+     * @param commandLine The command line
+     * @param commandLineRunnerList The command runner list
+     * @param applicationRunnerList The application runner list
+     */
+    protected ApplicationRunnerListener(
             CommandLine commandLine,
             List<CommandLineRunner> commandLineRunnerList,
             List<ApplicationRunner> applicationRunnerList) {
@@ -41,8 +53,12 @@ public class ApplicationRunnerListener {
         this.applicationRunnerList = applicationRunnerList;
     }
 
+    /**
+     * Invokes on startup and executes the listeners.
+     * @param startupEvent The startup event
+     */
     @EventListener
-    public void onStartup(StartupEvent startupEvent) {
+    protected void onStartup(StartupEvent startupEvent) {
         for (CommandLineRunner runner : commandLineRunnerList) {
             try {
                 runner.run(commandLine.getRawArguments());

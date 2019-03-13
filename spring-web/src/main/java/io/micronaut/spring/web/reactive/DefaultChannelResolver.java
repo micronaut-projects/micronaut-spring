@@ -17,13 +17,18 @@ package io.micronaut.spring.web.reactive;
 
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.server.netty.HttpContentProcessor;
-import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufHolder;
 import io.netty.channel.Channel;
 
 import javax.inject.Singleton;
 import java.util.Optional;
 
+/**
+ * Default implementation of {@link ChannelResolver}.
+ *
+ * @author graemerocher
+ * @since 1.0
+ */
 @Singleton
 public class DefaultChannelResolver implements ChannelResolver {
     @Override

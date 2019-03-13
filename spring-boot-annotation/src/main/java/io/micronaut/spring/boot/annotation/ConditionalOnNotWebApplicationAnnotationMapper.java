@@ -26,6 +26,12 @@ import java.lang.annotation.Annotation;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Maps ConditionalOnNotWebApplication to Micronaut Requires.
+ *
+ * @author graemerocher
+ * @since 1.0
+ */
 public class ConditionalOnNotWebApplicationAnnotationMapper extends AbstractSpringAnnotationMapper {
     @Override
     protected List<AnnotationValue<?>> mapInternal(AnnotationValue<Annotation> annotation, VisitorContext visitorContext) {

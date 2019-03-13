@@ -22,6 +22,12 @@ import io.micronaut.http.annotation.Patch;
 
 import java.lang.annotation.Annotation;
 
+/**
+ * Maps Spring PatchMapping to Micronaut.
+ *
+ * @author graemerocher
+ * @since 1.0
+ */
 public class PatchMappingAnnotationMapper extends RequestMappingAnnotationMapper {
     @Override
     public String getName() {

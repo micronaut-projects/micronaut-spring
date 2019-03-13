@@ -18,7 +18,6 @@ package io.micronaut.spring.web.annotation;
 import io.micronaut.core.annotation.AnnotationValue;
 import io.micronaut.http.HttpStatus;
 import io.micronaut.http.annotation.Status;
-import io.micronaut.inject.annotation.NamedAnnotationMapper;
 import io.micronaut.inject.visitor.VisitorContext;
 import io.micronaut.spring.annotation.AbstractSpringAnnotationMapper;
 
@@ -26,6 +25,12 @@ import java.lang.annotation.Annotation;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Maps Spring ResponseStatus to Micronaut.
+ *
+ * @author graemerocher
+ * @since 1.0
+ */
 public class ResponseStatusAnnotationMapper extends AbstractSpringAnnotationMapper {
     @Override
     public String getName() {

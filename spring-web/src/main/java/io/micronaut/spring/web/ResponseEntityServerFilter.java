@@ -29,7 +29,6 @@ import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 import java.util.Map;
-import java.util.function.BiConsumer;
 
 /**
  * A filter that adds support for {@link ResponseEntity} as a return type.
@@ -60,10 +59,9 @@ public class ResponseEntityServerFilter extends OncePerRequestHttpServerFilter {
                 }
                 final Object b = entity.getBody();
                 if (b != null) {
-                    ((MutableHttpResponse<Object>)mutableHttpResponse).body(b);
+                    ((MutableHttpResponse<Object>) mutableHttpResponse).body(b);
                 }
-            }
-            else if (body instanceof HttpHeaders) {
+            } else if (body instanceof HttpHeaders) {
                 HttpHeaders httpHeaders = (HttpHeaders) body;
                 mutableHttpResponse.body(null);
                 httpHeaders.forEach((s, strings) -> {

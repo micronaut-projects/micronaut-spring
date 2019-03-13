@@ -26,11 +26,21 @@ import org.springframework.http.server.reactive.ServerHttpRequest;
 import javax.inject.Singleton;
 import java.util.Optional;
 
+/**
+ * Binds the {@link ServerHttpRequest} object.
+ *
+ * @author graemerocher
+ * @since 1.0
+ */
 @Singleton
 public class ServerHttpRequestBinder implements TypedRequestArgumentBinder<ServerHttpRequest> {
 
     private final ChannelResolver channelResolver;
 
+    /**
+     * The channel resolver.
+     * @param channelResolver The channel resolver
+     */
     public ServerHttpRequestBinder(ChannelResolver channelResolver) {
         this.channelResolver = channelResolver;
     }

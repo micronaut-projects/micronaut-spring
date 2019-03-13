@@ -19,7 +19,6 @@ import io.micronaut.context.annotation.ConfigurationProperties;
 import io.micronaut.context.annotation.ConfigurationReader;
 import io.micronaut.core.annotation.AnnotationValue;
 import io.micronaut.core.naming.NameUtils;
-import io.micronaut.inject.annotation.NamedAnnotationMapper;
 import io.micronaut.inject.visitor.VisitorContext;
 import io.micronaut.spring.annotation.AbstractSpringAnnotationMapper;
 
@@ -28,6 +27,12 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Maps ConfigurationProperties to Micronaut ConfigurationProperties.
+ *
+ * @author graemerocher
+ * @since 1.0
+ */
 public class ConfigurationPropertiesAnnotationMapper extends AbstractSpringAnnotationMapper {
     @Override
     public String getName() {

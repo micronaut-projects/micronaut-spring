@@ -16,7 +16,7 @@
 package io.micronaut.spring.annotation.context;
 
 /**
- * Maps {@code @Repository} the same was as {@link ComponentAnnotationMapper}
+ * Maps {@code @Repository} the same was as {@link ComponentAnnotationMapper}.
  *
  * @author graemerocher
  * @since 1.0

@@ -17,7 +17,6 @@ package io.micronaut.spring.annotation.context;
 
 import io.micronaut.context.annotation.Primary;
 import io.micronaut.core.annotation.AnnotationValue;
-import io.micronaut.inject.annotation.NamedAnnotationMapper;
 import io.micronaut.inject.visitor.VisitorContext;
 import io.micronaut.spring.annotation.AbstractSpringAnnotationMapper;
 

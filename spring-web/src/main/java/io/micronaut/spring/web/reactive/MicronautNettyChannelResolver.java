@@ -23,13 +23,18 @@ import io.micronaut.http.server.HttpServerConfiguration;
 import io.micronaut.http.server.netty.DefaultHttpContentProcessor;
 import io.micronaut.http.server.netty.HttpContentProcessor;
 import io.micronaut.http.server.netty.NettyHttpRequest;
-import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufHolder;
 import io.netty.channel.Channel;
 
 import javax.inject.Singleton;
 import java.util.Optional;
 
+/**
+ * Micronaut specific {@link ChannelResolver} implementation.
+ *
+ * @author graemerocher
+ * @since 1.0
+ */
 @Singleton
 @Requires(classes = NettyHttpRequest.class)
 @Requires(beans = HttpServerConfiguration.class)
@@ -39,6 +44,10 @@ public class MicronautNettyChannelResolver implements ChannelResolver {
 
     private final HttpServerConfiguration serverConfiguration;
 
+    /**
+     * Default constructor.
+     * @param serverConfiguration The server config
+     */
     public MicronautNettyChannelResolver(HttpServerConfiguration serverConfiguration) {
         this.serverConfiguration = serverConfiguration;
     }

@@ -22,6 +22,12 @@ import io.micronaut.http.annotation.Delete;
 
 import java.lang.annotation.Annotation;
 
+/**
+ * Maps Spring DeleteMapping to Micronaut.
+ *
+ * @author graemerocher
+ * @since 1.0
+ */
 public class DeleteMappingAnnotationMapper extends RequestMappingAnnotationMapper {
     @Override
     public String getName() {

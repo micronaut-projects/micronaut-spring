@@ -44,6 +44,10 @@ public class MicronautEnvironment implements ConfigurableEnvironment {
     private String[] requiredProperties;
     private ConfigurableConversionService conversionService;
 
+    /**
+     * Default constructor.
+     * @param environment The target environment
+     */
     public MicronautEnvironment(io.micronaut.context.env.Environment environment) {
         this.environment = environment;
     }
@@ -74,7 +78,6 @@ public class MicronautEnvironment implements ConfigurableEnvironment {
         Set<String> currentActiveProfiles = environment.getActiveNames();
         return currentActiveProfiles.contains(profile);
     }
-
 
     @Override
     public boolean containsProperty(String key) {
@@ -112,7 +115,7 @@ public class MicronautEnvironment implements ConfigurableEnvironment {
     public String getRequiredProperty(@Nonnull String key) throws IllegalStateException {
         Assert.notNull(key, "Key must not be null");
 
-        return environment.getProperty(key, String.class).orElseThrow(() -> new IllegalStateException("Property with key [" +key + "] not present"));
+        return environment.getProperty(key, String.class).orElseThrow(() -> new IllegalStateException("Property with key [" + key + "] not present"));
     }
 
     @Override
@@ -120,7 +123,7 @@ public class MicronautEnvironment implements ConfigurableEnvironment {
         Assert.notNull(key, "Key must not be null");
         Assert.notNull(targetType, "Target type must not be null");
 
-        return environment.getProperty(key, targetType).orElseThrow(() -> new IllegalStateException("Property with key [" +key + "] not present"));
+        return environment.getProperty(key, targetType).orElseThrow(() -> new IllegalStateException("Property with key [" + key + "] not present"));
     }
 
     @Override
@@ -133,7 +136,11 @@ public class MicronautEnvironment implements ConfigurableEnvironment {
         return environment.getPlaceholderResolver().resolveRequiredPlaceholders(text);
     }
 
-    public io.micronaut.context.env.Environment getEnvironment() {
+    /**
+     * The target environment.
+     * @return The environment
+     */
+    public @Nonnull io.micronaut.context.env.Environment getEnvironment() {
         return environment;
     }
 

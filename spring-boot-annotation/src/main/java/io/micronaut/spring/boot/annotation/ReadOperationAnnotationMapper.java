@@ -20,10 +20,17 @@ import io.micronaut.http.annotation.Produces;
 import io.micronaut.inject.visitor.VisitorContext;
 import io.micronaut.spring.annotation.AbstractSpringAnnotationMapper;
 
+import javax.annotation.Nonnull;
 import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Maps Actuator ReadOperation to Micronaut Read.
+ *
+ * @author graemerocher
+ * @since 1.0
+ */
 public class ReadOperationAnnotationMapper extends AbstractSpringAnnotationMapper {
     @Override
     protected List<AnnotationValue<?>> mapInternal(AnnotationValue<Annotation> annotation, VisitorContext visitorContext) {
@@ -44,7 +51,11 @@ public class ReadOperationAnnotationMapper extends AbstractSpringAnnotationMappe
         return "org.springframework.boot.actuate.endpoint.annotation." + operationName() + "Operation";
     }
 
-    protected String operationName() {
+    /**
+     * The operation name.
+     * @return The operation name
+     */
+    protected @Nonnull String operationName() {
         return "Read";
     }
 }

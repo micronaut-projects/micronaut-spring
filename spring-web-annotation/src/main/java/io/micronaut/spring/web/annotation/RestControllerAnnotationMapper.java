@@ -24,6 +24,12 @@ import io.micronaut.validation.Validated;
 import java.lang.annotation.Annotation;
 import java.util.List;
 
+/**
+ * Maps Spring RestController to Micronaut.
+ *
+ * @author graemerocher
+ * @since 1.0
+ */
 public class RestControllerAnnotationMapper extends ComponentAnnotationMapper {
     @Override
     public String getName() {
