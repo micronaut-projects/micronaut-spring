@@ -7,7 +7,7 @@ dependencies {
 
     ...
     // additional Spring Boot dependencies
-    annotationProcessor "io.micronaut.spring:micronaut-spring-boot:{version}"
+    annotationProcessor "io.micronaut.spring:micronaut-spring-boot-annotation:{version}"
     compile("org.springframework.boot:spring-boot-starter-web")
 
     // additional Spring Boot dependencies for Micronaut
