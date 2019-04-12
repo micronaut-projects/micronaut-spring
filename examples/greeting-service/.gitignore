@@ -9,5 +9,5 @@ bin/
 build/
 out/
 target/
-greeting-service
+./greeting-service
 greeting-service.iml

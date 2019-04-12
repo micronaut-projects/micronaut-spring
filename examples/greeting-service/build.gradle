@@ -1,16 +1,11 @@
 plugins {
-    id "java"
     id "idea"
-    id "org.springframework.boot" version "2.1.0.RELEASE"
+    id "com.github.johnrengelman.shadow" version "4.0.2"
     id "io.spring.dependency-management" version "1.0.6.RELEASE"
+    id "application"
     id "net.ltgt.apt" version "0.19"
     id "net.ltgt.apt-idea" version "0.19"
     id "net.ltgt.apt-eclipse" version "0.19"
-}
-
-bootJar {
-    baseName = 'greeting-service'
-    version =  '0.1.0'
 }
 
 repositories {
@@ -26,20 +21,26 @@ ext {
 }
 
 repositories {
-    mavenLocal()
-    maven { url "https://dl.bintray.com/micronaut/core-releases-local" }
     jcenter()
 }
 
 dependencyManagement {
     imports {
         mavenBom "io.micronaut:micronaut-bom:$micronautVersion"
+        mavenBom "org.springframework.boot:spring-boot-dependencies:2.1.4.RELEASE"
     }
 }
+
+shadowJar {
+    mergeServiceFiles()
+}
+
+mainClassName = "greeting.example.Application"
 
 dependencies {
     annotationProcessor "io.micronaut:micronaut-inject-java"
     annotationProcessor "io.micronaut:micronaut-validation"
+    annotationProcessor "io.micronaut:micronaut-graal"
     annotationProcessor "io.micronaut.configuration:micronaut-openapi"
     annotationProcessor "io.micronaut.spring:micronaut-spring-boot-annotation"
     annotationProcessor "io.micronaut.spring:micronaut-spring-web-annotation"
@@ -78,7 +79,7 @@ test {
     useJUnitPlatform()
 }
 
-bootRun.jvmArgs('-noverify', '-XX:TieredStopAtLevel=1')
+run.jvmArgs('-noverify', '-XX:TieredStopAtLevel=1')
 
 idea.module.scopes.PROVIDED.plus += [configurations.annotationProcessor]
 idea.module.scopes.TEST.plus += [configurations.testAnnotationProcessor]
