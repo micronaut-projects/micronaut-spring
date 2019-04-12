@@ -1,6 +1,7 @@
 plugins {
     id "io.spring.dependency-management" version "1.0.6.RELEASE"
-    id "org.springframework.boot" version "2.1.4.RELEASE"
+    id "com.github.johnrengelman.shadow" version "4.0.2"
+    id "application"
     id "org.jetbrains.kotlin.jvm" version "1.3.30"
     id "org.jetbrains.kotlin.kapt" version "1.3.30"
     id "org.jetbrains.kotlin.plugin.allopen" version "1.3.30"	
@@ -25,16 +26,18 @@ ext {
 dependencyManagement {
     imports {
         mavenBom "io.micronaut:micronaut-bom:$micronautVersion"
+        mavenBom "org.springframework.boot:spring-boot-dependencies:2.1.4.RELEASE"
     }
 }
 
-bootJar {
-    baseName = 'greeting-service'
-    version =  project.version
+shadowJar {
+    mergeServiceFiles()
 }
 
+ext['kotlin.version'] = kotlinVersion
 dependencies {
     kapt "io.micronaut:micronaut-inject-java"
+    kapt "io.micronaut:micronaut-graal"
     kapt "io.micronaut:micronaut-validation"
     kapt "io.micronaut.configuration:micronaut-openapi"
     kapt "io.micronaut.spring:micronaut-spring-boot-annotation"
@@ -68,7 +71,7 @@ dependencies {
 }
 
 
-bootRun.jvmArgs('-noverify', '-XX:TieredStopAtLevel=1')
+run.jvmArgs('-noverify', '-XX:TieredStopAtLevel=1')
 
 mainClassName = "greeting.example.Application"
 

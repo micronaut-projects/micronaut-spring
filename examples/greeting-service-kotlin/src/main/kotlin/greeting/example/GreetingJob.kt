@@ -12,7 +12,8 @@ class GreetingJob(val greetingService: GreetingService) {
     fun printLastGreeting() {
         val lastGreeting = greetingService.getLastGreeting()
         lastGreeting.ifPresent {
-            println("Last Greeting was = $it.content")
+            var content = it.content
+            println("Last Greeting was = $content")
         }
     }
 }
