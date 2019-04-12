@@ -78,7 +78,6 @@
             <groupId>io.micronaut.spring</groupId>
             <artifactId>micronaut-spring-web</artifactId>
             <scope>runtime</scope>
-            <version>${micronaut.spring.version}</version>
         </dependency>
         <dependency>
             <groupId>ch.qos.logback</groupId>

@@ -21,8 +21,8 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 ext {
-    micronautVersion = "1.0.4"
-    micronautSpringVersion = "1.0.0.RC1"
+    micronautVersion = "1.1.0"
+    micronautSpringVersion = "1.0.0"
 }
 
 repositories {
@@ -41,9 +41,9 @@ dependencies {
     annotationProcessor "io.micronaut:micronaut-inject-java"
     annotationProcessor "io.micronaut:micronaut-validation"
     annotationProcessor "io.micronaut.configuration:micronaut-openapi"
-    annotationProcessor "io.micronaut.spring:micronaut-spring-boot-annotation:$micronautSpringVersion"
-    annotationProcessor "io.micronaut.spring:micronaut-spring-web-annotation:$micronautSpringVersion"
-    testAnnotationProcessor "io.micronaut.spring:micronaut-spring-web-annotation:$micronautSpringVersion"
+    annotationProcessor "io.micronaut.spring:micronaut-spring-boot-annotation"
+    annotationProcessor "io.micronaut.spring:micronaut-spring-web-annotation"
+    testAnnotationProcessor "io.micronaut.spring:micronaut-spring-web-annotation"
 
     compile "io.swagger.core.v3:swagger-annotations"
     compile "io.micronaut:micronaut-inject"
@@ -55,7 +55,7 @@ dependencies {
     runtime("io.micronaut:micronaut-views")
     runtime "io.micronaut.configuration:micronaut-hibernate-validator"
     runtime("org.springframework.boot:spring-boot-starter-thymeleaf")
-    runtime("io.micronaut.spring:micronaut-spring-web:$micronautSpringVersion")
+    runtime("io.micronaut.spring:micronaut-spring-web")
     runtime "ch.qos.logback:logback-classic:1.2.3"
     runtime "ognl:ognl:3.1.12"
 
@@ -64,10 +64,10 @@ dependencies {
 //    runtime 'javax.servlet:javax.servlet-api:4.0.0'
 
     testCompile("io.micronaut:micronaut-http-client")
-    testCompile("io.micronaut.test:micronaut-test-junit5:1.0.1")
+    testCompile("io.micronaut.test:micronaut-test-junit5:1.0.2")
     testCompile "io.micronaut:micronaut-inject-java"
     testCompile "org.mockito:mockito-junit-jupiter:2.22.0"
-    testRuntime "org.junit.jupiter:junit-jupiter-engine:5.1.0"
+    testRuntime "org.junit.jupiter:junit-jupiter-engine:5.3.0"
     testAnnotationProcessor "io.micronaut:micronaut-inject-java"
 }
 
