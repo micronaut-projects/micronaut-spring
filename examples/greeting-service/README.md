@@ -22,10 +22,12 @@ To build the application into a native image for GraalVM you can checkout the `g
 $ git checkout graal-native-image
 ```
 
-Then if you have Graal installed you can use the `./build-native-image.sh` script, alternatively you can build the application into a native image with Docker:
+Then you can build the application and create the native image:
 
 ```
-$ docker build . -t greeting-service
-$ docker run --network=host greeting-service
+$ ./gradlew assemble
+$ native-image --no-server -cp build/libs/greeting-service-all.jar
 ```
+
+
 
