@@ -413,31 +413,41 @@ public class MicronautBeanFactory extends DefaultListableBeanFactory implements 
                     return parentBeanFactory.getType(originalBeanName(beanName));
                 }
 
-                RootBeanDefinition mbd = getMergedLocalBeanDefinition(beanName);
-
-                // Check decorated bean definition, if any: We assume it'll be easier
-                // to determine the decorated bean's type than the proxy's type.
-                BeanDefinitionHolder dbd = mbd.getDecoratedDefinition();
-                if (dbd != null && !BeanFactoryUtils.isFactoryDereference(beanName)) {
-                    RootBeanDefinition tbd = getMergedBeanDefinition(dbd.getBeanName(), dbd.getBeanDefinition(), mbd);
-                    Class<?> targetClass = predictBeanType(dbd.getBeanName(), tbd);
-                    if (targetClass != null && !FactoryBean.class.isAssignableFrom(targetClass)) {
-                        return targetClass;
-                    }
+                final org.springframework.beans.factory.config.BeanDefinition parentDef;
+                try {
+                    parentDef = super.getBeanDefinition(beanName);
+                } catch (NoSuchBeanDefinitionException e) {
+                    beanTypeCache.put(beanName, Optional.empty());
+                    return null;
                 }
+                if (parentDef instanceof RootBeanDefinition) {
 
-                Class<?> beanClass = predictBeanType(beanName, mbd);
+                    RootBeanDefinition mbd = (RootBeanDefinition) parentDef;
 
-                // Check bean class whether we're dealing with a FactoryBean.
-                if (beanClass != null && FactoryBean.class.isAssignableFrom(beanClass)) {
-                    if (!BeanFactoryUtils.isFactoryDereference(beanName)) {
-                        // If it's a FactoryBean, we want to look at what it creates, not at the factory class.
-                        return getTypeForFactoryBean(beanName, mbd);
-                    } else {
-                        return beanClass;
+                    // Check decorated bean definition, if any: We assume it'll be easier
+                    // to determine the decorated bean's type than the proxy's type.
+                    BeanDefinitionHolder dbd = mbd.getDecoratedDefinition();
+                    if (dbd != null && !BeanFactoryUtils.isFactoryDereference(beanName)) {
+                        RootBeanDefinition tbd = super.getMergedBeanDefinition(dbd.getBeanName(), dbd.getBeanDefinition(), mbd);
+                        Class<?> targetClass = predictBeanType(dbd.getBeanName(), tbd);
+                        if (targetClass != null && !FactoryBean.class.isAssignableFrom(targetClass)) {
+                            return targetClass;
+                        }
                     }
-                } else {
-                    return (!BeanFactoryUtils.isFactoryDereference(beanName) ? beanClass : null);
+
+                    Class<?> beanClass = predictBeanType(beanName, mbd);
+
+                    // Check bean class whether we're dealing with a FactoryBean.
+                    if (beanClass != null && FactoryBean.class.isAssignableFrom(beanClass)) {
+                        if (!BeanFactoryUtils.isFactoryDereference(beanName)) {
+                            // If it's a FactoryBean, we want to look at what it creates, not at the factory class.
+                            return super.getTypeForFactoryBean(beanName, mbd);
+                        } else {
+                            return beanClass;
+                        }
+                    } else {
+                        return (!BeanFactoryUtils.isFactoryDereference(beanName) ? beanClass : null);
+                    }
                 }
             }
             beanTypeCache.put(beanName, opt);
