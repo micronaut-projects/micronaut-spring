@@ -117,7 +117,7 @@ var activeTableTab = "activeTableTab";
 <hr>
 <br>
 <pre><a href="https://docs.micronaut.io/latest/api/io/micronaut/http/annotation/Filter.html?is-external=true" title="class or interface in io.micronaut.http.annotation">@Filter</a>(<a href="https://docs.micronaut.io/latest/api/io/micronaut/http/annotation/Filter.html?is-external=true#value--" title="class or interface in io.micronaut.http.annotation">value</a>="/**")
- <a href="https://docs.micronaut.io/latest/api/io/micronaut/context/annotation/Requires.html?is-external=true" title="class or interface in io.micronaut.context.annotation">@Requires</a>(<a href="https://docs.micronaut.io/latest/api/io/micronaut/context/annotation/Requires.html?is-external=true#classes--" title="class or interface in io.micronaut.context.annotation">classes</a>={<a href="https://docs.micronaut.io/latest/api/io/micronaut/views/ModelAndView.html?is-external=true" title="class or interface in io.micronaut.views">io.micronaut.views.ModelAndView.class</a>,<a href="https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/ui/Model.html?is-external=true" title="class or interface in org.springframework.ui">org.springframework.ui.Model.class</a>}) <a href="https://docs.micronaut.io/latest/api/io/micronaut/context/annotation/Requires.html?is-external=true" title="class or interface in io.micronaut.context.annotation">@Requires</a>(<a href="https://docs.micronaut.io/latest/api/io/micronaut/context/annotation/Requires.html?is-external=true#beans--" title="class or interface in io.micronaut.context.annotation">beans</a>=<a href="https://docs.micronaut.io/latest/api/io/micronaut/views/ViewsRenderer.html?is-external=true" title="class or interface in io.micronaut.views">io.micronaut.views.ViewsRenderer.class</a>)
+ <a href="https://docs.micronaut.io/latest/api/io/micronaut/context/annotation/Requires.html?is-external=true" title="class or interface in io.micronaut.context.annotation">@Requires</a>(<a href="https://docs.micronaut.io/latest/api/io/micronaut/context/annotation/Requires.html?is-external=true#classes--" title="class or interface in io.micronaut.context.annotation">classes</a>={io.micronaut.views.ModelAndView.class,<a href="https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/ui/Model.html?is-external=true" title="class or interface in org.springframework.ui">org.springframework.ui.Model.class</a>}) <a href="https://docs.micronaut.io/latest/api/io/micronaut/context/annotation/Requires.html?is-external=true" title="class or interface in io.micronaut.context.annotation">@Requires</a>(<a href="https://docs.micronaut.io/latest/api/io/micronaut/context/annotation/Requires.html?is-external=true#beans--" title="class or interface in io.micronaut.context.annotation">beans</a>=io.micronaut.views.ViewsRenderer.class)
 public class <span class="typeNameLabel">ModelAndViewServerFilter</span>
 extends <a href="https://docs.micronaut.io/latest/api/io/micronaut/http/filter/OncePerRequestHttpServerFilter.html?is-external=true" title="class or interface in io.micronaut.http.filter">OncePerRequestHttpServerFilter</a></pre>
 <div class="block">Makes it possible to use Spring MVC views API.</div>
@@ -160,7 +160,7 @@ extends <a href="https://docs.micronaut.io/latest/api/io/micronaut/http/filter/O
 <th class="colOne" scope="col">Constructor and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../io/micronaut/spring/web/ModelAndViewServerFilter.html#ModelAndViewServerFilter-io.micronaut.views.ViewsFilter-">ModelAndViewServerFilter</a></span>(<a href="https://docs.micronaut.io/latest/api/io/micronaut/views/ViewsFilter.html?is-external=true" title="class or interface in io.micronaut.views">ViewsFilter</a>&nbsp;viewsFilter)</code>
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../../io/micronaut/spring/web/ModelAndViewServerFilter.html#ModelAndViewServerFilter-io.micronaut.views.ViewsFilter-">ModelAndViewServerFilter</a></span>(io.micronaut.views.ViewsFilter&nbsp;viewsFilter)</code>
 <div class="block">Default constructor.</div>
 </td>
 </tr>
@@ -230,7 +230,7 @@ extends <a href="https://docs.micronaut.io/latest/api/io/micronaut/http/filter/O
 <ul class="blockListLast">
 <li class="blockList">
 <h4>ModelAndViewServerFilter</h4>
-<pre>public&nbsp;ModelAndViewServerFilter(<a href="https://docs.micronaut.io/latest/api/io/micronaut/views/ViewsFilter.html?is-external=true" title="class or interface in io.micronaut.views">ViewsFilter</a>&nbsp;viewsFilter)</pre>
+<pre>public&nbsp;ModelAndViewServerFilter(io.micronaut.views.ViewsFilter&nbsp;viewsFilter)</pre>
 <div class="block">Default constructor.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
