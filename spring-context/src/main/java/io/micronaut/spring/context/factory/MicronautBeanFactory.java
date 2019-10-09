@@ -800,4 +800,10 @@ public class MicronautBeanFactory extends DefaultListableBeanFactory implements 
             }
         }
     }
+
+    @Override
+    protected boolean isPrimary(String beanName, Object beanInstance) {
+        return beanName.endsWith("(Primary)");
+    }
+
 }
