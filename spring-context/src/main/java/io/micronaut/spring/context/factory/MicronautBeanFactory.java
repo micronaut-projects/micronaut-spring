@@ -709,9 +709,9 @@ public class MicronautBeanFactory extends DefaultListableBeanFactory implements 
                                     if (definition.hasDeclaredStereotype(Primary.class)) {
                                         return null;
                                     }
-                                    final String annotationName = definition.getAnnotationNameByStereotype(Qualifier.class).orElse(null);
-                                    if (annotationName != null) {
-                                        return Qualifiers.byAnnotation(definition, annotationName);
+                                    final Class annotationType = definition.getAnnotationTypeByStereotype(Qualifier.class).orElse(null);
+                                    if (annotationType != null) {
+                                        return Qualifiers.byAnnotation(definition, annotationType);
                                     }
                                     return null;
                                 }
