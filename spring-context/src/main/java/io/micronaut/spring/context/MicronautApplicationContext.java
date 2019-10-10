@@ -16,6 +16,7 @@
 package io.micronaut.spring.context;
 
 import io.micronaut.context.ApplicationContextBuilder;
+import io.micronaut.context.annotation.Secondary;
 import io.micronaut.spring.context.env.MicronautEnvironment;
 import io.micronaut.spring.context.event.MicronautApplicationEventPublisher;
 import io.micronaut.spring.context.factory.MicronautBeanFactory;
@@ -52,6 +53,7 @@ import java.util.Map;
  * @since 1.0
  */
 @Singleton
+@Secondary
 public class MicronautApplicationContext implements ManagedApplicationContext, ConfigurableApplicationContext {
 
     private final io.micronaut.context.ApplicationContext micronautContext;

@@ -62,7 +62,6 @@ import java.util.function.Supplier;
  * @since 1.0
  */
 @Singleton
-@Primary
 @Internal
 public class MicronautBeanFactory extends DefaultListableBeanFactory implements ListableBeanFactory, AutowireCapableBeanFactory, HierarchicalBeanFactory, ConfigurableListableBeanFactory {
 
@@ -803,7 +802,17 @@ public class MicronautBeanFactory extends DefaultListableBeanFactory implements 
 
     @Override
     protected boolean isPrimary(String beanName, Object beanInstance) {
-        return beanName.endsWith("(Primary)");
+        BeanDefinitionReference<?> reference = beanDefinitionMap.get(beanName);
+        if (reference == null) {
+            reference = beanDefinitionsByName.get(beanName);
+        }
+
+        if (reference != null) {
+            final BeanDefinition<?> definition = reference.load(beanContext);
+            return definition.hasDeclaredStereotype(Primary.class) || definition.getValue(Named.class, String.class).map((String n) -> Primary.class.getName().equals(n)).orElse(false);
+        } else {
+            return false;
+        }
     }
 
 }
