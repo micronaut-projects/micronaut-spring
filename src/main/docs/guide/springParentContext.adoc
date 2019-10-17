@@ -16,5 +16,5 @@ MicronautApplicationContext context = new MicronautApplicationContext();
 context.start();
 builder.parent(context);
 builder.sources(Application);
-builder.build().application.run();
+builder.build().run();
 ----
