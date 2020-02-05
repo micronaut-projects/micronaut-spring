@@ -16,3 +16,18 @@ To achieve this the project provides the ability to use a subset of the Spring A
 [![Micronaut for Spring](https://img.youtube.com/vi/JvzD2SEw0-E/0.jpg)](https://www.youtube.com/watch?v=JvzD2SEw0-E)
 
 See the [User Guide](https://micronaut-projects.github.io/micronaut-spring/latest/guide/index.html) and [Example Project](https://github.com/micronaut-projects/micronaut-spring/tree/master/examples/greeting-service) for more information on how to use this project.
+
+## Snapshots and Releases
+
+Snaphots are automatically published to [JFrog OSS](https://oss.jfrog.org/artifactory/oss-snapshot-local/) using [Github Actions](https://github.com/micronaut-projects/micronaut-spring/actions).
+
+See the documentation in the [Micronaut Docs](https://docs.micronaut.io/latest/guide/index.html#usingsnapshots) for how to configure your build to use snapshots.
+
+Releases are published to JCenter and Maven Central via [Github Actions](https://github.com/micronaut-projects/micronaut-spring/actions).
+
+A release is performed with the following steps:
+
+* [Edit the version](https://github.com/micronaut-projects/micronaut-spring/edit/master/gradle.properties) specified by `projectVersion` in `gradle.properties` to a semantic, unreleased version. Example `1.0.0`
+* [Create a new release](https://github.com/micronaut-projects/micronaut-spring/releases/new). The Git Tag should start with `v`. For example `v1.0.0`.
+* [Monitor the Workflow](https://github.com/micronaut-projects/micronaut-spring/actions?query=workflow%3ARelease) to check it passed successfully.
+* Celebrate!
