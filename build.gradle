@@ -106,7 +106,7 @@ subprojects { Project subproject ->
         documentation "org.codehaus.groovy:groovy-templates:$groovyVersion"
         documentation "org.codehaus.groovy:groovy-dateutil:$groovyVersion"
 
-        testImplementation "cglib:cglib-nodep:2.2.2"
+        testImplementation "cglib:cglib-nodep:3.3.0"
         testImplementation "org.objenesis:objenesis:3.1"
 
         testImplementation "io.micronaut:micronaut-inject-groovy:$micronautVersion"
