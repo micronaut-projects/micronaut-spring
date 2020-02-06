@@ -1,5 +1,5 @@
 plugins {
-    id "net.ltgt.apt" version "0.19"
+    id "net.ltgt.apt" version "0.21"
 }
 
 dependencies {
