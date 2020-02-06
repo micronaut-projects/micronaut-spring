@@ -168,6 +168,11 @@ public class MicronautApplicationContext implements ManagedApplicationContext, C
     }
 
     @Override
+    public String[] getBeanNamesForType(ResolvableType type, boolean includeNonSingletons, boolean allowEagerInit) {
+        return beanFactory.getBeanNamesForType(type, includeNonSingletons, allowEagerInit);
+    }
+
+    @Override
     public String[] getBeanNamesForType(Class<?> type) {
         return beanFactory.getBeanNamesForType(type);
     }
@@ -265,6 +270,11 @@ public class MicronautApplicationContext implements ManagedApplicationContext, C
     @Override
     public Class<?> getType(String name) throws NoSuchBeanDefinitionException {
         return beanFactory.getType(name);
+    }
+
+    @Override
+    public Class<?> getType(String name, boolean allowFactoryBeanInit) throws NoSuchBeanDefinitionException {
+        return beanFactory.getType(name, allowFactoryBeanInit);
     }
 
     @Override

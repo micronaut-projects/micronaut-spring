@@ -2,11 +2,23 @@ plugins {
     id "net.ltgt.apt" version "0.19"
 }
 dependencies {
-    annotationProcessor "io.micronaut:micronaut-inject-java:$micronautVersion"
-    compile project(":spring-context")
-    compile "org.springframework:spring-web:$springVersion"
-    compile 'io.projectreactor:reactor-core:3.2.2.RELEASE'
-    compile "io.micronaut:micronaut-http:$micronautVersion"
-    compileOnly "io.micronaut:micronaut-http-server-netty:$micronautVersion"
-    compileOnly "io.micronaut:micronaut-views:$micronautVersion"
+    annotationProcessor "io.micronaut:micronaut-inject-java"
+    api project(":spring-context")
+    api "org.springframework:spring-web:$springVersion"
+    api 'io.projectreactor:reactor-core:3.2.2.RELEASE'
+    implementation "io.micronaut:micronaut-http:$micronautVersion"
+    compileOnly "io.micronaut:micronaut-http-server-netty"
+    compileOnly "io.micronaut:micronaut-views"
+
+    testAnnotationProcessor "io.micronaut:micronaut-inject-java"
+    testAnnotationProcessor project(":spring-annotation")
+    testAnnotationProcessor project(":spring-web-annotation")
+    testImplementation "org.springframework:spring-web:$springVersion"
+    testImplementation "io.micronaut:micronaut-inject-java"
+    testImplementation "io.micronaut:micronaut-validation"
+    testImplementation "io.micronaut:micronaut-http-client"
+    testImplementation "io.micronaut:micronaut-http-server-netty"
+    testRuntimeOnly "io.micronaut:micronaut-views-thymeleaf"
+    testRuntimeOnly("org.springframework.boot:spring-boot-starter-thymeleaf:$springBootVersion")
+
 }

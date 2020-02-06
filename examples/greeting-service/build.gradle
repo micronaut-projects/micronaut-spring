@@ -53,7 +53,6 @@ dependencies {
     compile("io.micronaut:micronaut-http-server-netty")
 
     runtime("io.micronaut:micronaut-views")
-    runtime "io.micronaut.configuration:micronaut-hibernate-validator"
     runtime("org.springframework.boot:spring-boot-starter-thymeleaf")
     runtime("io.micronaut.spring:micronaut-spring-web")
     runtime "ch.qos.logback:logback-classic:1.2.3"

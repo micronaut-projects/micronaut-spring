@@ -19,6 +19,7 @@ import io.micronaut.context.annotation.Factory;
 import io.micronaut.core.annotation.AnnotationValue;
 import io.micronaut.inject.visitor.VisitorContext;
 import io.micronaut.spring.annotation.AbstractSpringAnnotationMapper;
+import io.micronaut.spring.context.aop.SpringConfigurationAdvice;
 
 import java.lang.annotation.Annotation;
 import java.util.ArrayList;
@@ -42,9 +43,7 @@ public class ConfigurationAnnotationMapper extends AbstractSpringAnnotationMappe
         mappedAnnotations.add(AnnotationValue.builder(Factory.class)
                 .build());
 
-        mappedAnnotations.add(AnnotationValue.builder(
-                "io.micronaut.spring.context.aop.SpringConfigurationAdvice"
-        ).build());
+        mappedAnnotations.add(AnnotationValue.builder(SpringConfigurationAdvice.class).build());
         return mappedAnnotations;
     }
 }
