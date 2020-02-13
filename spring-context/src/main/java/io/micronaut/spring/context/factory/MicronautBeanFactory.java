@@ -137,6 +137,10 @@ public class MicronautBeanFactory extends DefaultListableBeanFactory implements 
      * @return True if is singleton
      */
     public static boolean isSingleton(AnnotationMetadata annotationMetadata) {
+        if (annotationMetadata.hasDeclaredStereotype(org.springframework.context.annotation.Bean.class)) {
+            final String scope = annotationMetadata.stringValue(org.springframework.context.annotation.Scope.class).orElse(null);
+            return scope == null || "singleton".equalsIgnoreCase(scope);
+        }
         if (annotationMetadata.isAnnotationPresent(EachProperty.class) || annotationMetadata.isAnnotationPresent(EachBean.class)) {
             return true;
         }
