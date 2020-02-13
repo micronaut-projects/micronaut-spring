@@ -2,7 +2,16 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>2.8 Using Micronaut's HTTP Client 1.0.3.BUILD-SNAPSHOT</title>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script src="/cdn-cgi/apps/head/3cOPSgo5Omz84ycX7CvigfX4cpw.js"></script><script async src="https://www.googletagmanager.com/gtag/js?id=UA-82213539-2"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-82213539-2');
+    </script>
+    <title>2.8 Using Micronaut's HTTP Client 1.1.0.BUILD-SNAPSHOT</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -69,14 +78,13 @@ function addJsClass() {
                 <div class="project">
                     <h1>2.8 Using Micronaut's HTTP Client</h1>
 
-                    <p><strong>Version:</strong> 1.0.3.BUILD-SNAPSHOT</p>
+                    <p><strong>Version:</strong> 1.1.0.BUILD-SNAPSHOT</p>
                 </div>
 
                 
 
                 
-
-<h2 id="micronautClient">2.8 Using Micronaut's HTTP Client</h2>
+<h2 id="micronautClient"><a class="anchor" href="#micronautClient"></a>2.8 Using Micronaut's HTTP Client</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-spring/edit/master/src/main/docs/guide/springToMicronaut/micronautClient.adoc"'>
@@ -94,56 +102,7 @@ function addJsClass() {
 <div class="listingblock">
 <div class="title">Spring <code>@Client</code> Implementation</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">/*
- * Copyright 2017-2019 original authors
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-package io.micronaut.spring.web.annotation;
-
-import io.micronaut.http.HttpResponse;
-import io.micronaut.http.annotation.Header;
-import io.micronaut.http.client.annotation.Client;
-import org.springframework.web.bind.annotation.*;
-
-import javax.annotation.Nullable;
-
-@Client("/")
-public interface GreetingClient {
-
-    @GetMapping("/")
-    String home();
-
-    @PostMapping("/request")
-    @Header(name = "Foo", value = "Bar")
-    Greeting requestTest(@RequestBody Greeting greeting);
-
-    @GetMapping("/greeting{?name}")
-    Greeting greet(@Nullable String name);
-
-    @PostMapping("/greeting")
-    Greeting greetByPost(@RequestBody Greeting greeting);
-
-    @DeleteMapping("/greeting")
-    HttpResponse&lt;?&gt; deletePost();
-
-    @GetMapping("/nested/greeting{?name}")
-    Greeting nestedGreet(@Nullable String name);
-
-
-    @GetMapping("/greeting-status{?name}")
-    HttpResponse&lt;Greeting&gt; greetWithStatus(@Nullable String name);
-}</code></pre>
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">Unresolved directive in &lt;stdin&gt; - include::spring-web-annotation/src/test/groovy/io/micronaut/spring/web/annotation/GreetingClient.java[]</code></pre>
 </div>
 </div>
 <div class="paragraph">
