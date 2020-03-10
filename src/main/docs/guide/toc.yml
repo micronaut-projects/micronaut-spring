@@ -11,3 +11,4 @@ springToMicronaut:
   micronautClient: Using Micronaut's HTTP Client
 springParentContext:
   title: Using Micronaut Parent Context
+repository: Repository
