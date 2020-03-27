@@ -1,0 +1,19 @@
+group "io.micronaut"
+dependencies {
+    annotationProcessor "io.micronaut:micronaut-inject-java"
+    
+    api "org.springframework:spring-core:$springVersion"
+    api "org.springframework:spring-tx:$springVersion"
+    api "org.springframework:spring-context:$springVersion"
+    api "io.micronaut:micronaut-inject:$micronautVersion"
+    api "io.micronaut:micronaut-aop:$micronautVersion"
+
+    compileOnly "org.springframework:spring-jdbc"
+    
+    testAnnotationProcessor "io.micronaut:micronaut-inject-java"
+    testImplementation "io.micronaut:micronaut-runtime"
+    testImplementation "io.micronaut:micronaut-inject-groovy"
+    
+    testImplementation "org.spockframework:spock-spring:$spockVersion"
+    testImplementation "org.springframework:spring-test:$springVersion"
+}

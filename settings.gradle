@@ -1,5 +1,6 @@
 rootProject.name = 'spring'
 
+include 'spring'
 include 'spring-annotation'
 include "spring-boot-annotation"
 include "spring-boot"
