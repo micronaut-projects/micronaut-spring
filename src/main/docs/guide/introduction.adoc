@@ -10,6 +10,10 @@ To achieve this the project provides the ability to use a subset of the Spring A
 
 === Release Notes
 
+==== 2.0.0
+
+* Micronaut 1.3.3 minimum version
+
 ==== 1.0.0.RC1
 
 * Bug fixes
