@@ -197,7 +197,7 @@ public class MicronautEnvironment implements ConfigurableEnvironment {
 
     @Override
     public ConfigurableConversionService getConversionService() {
-        return null;
+        return conversionService;
     }
 
     @Override
