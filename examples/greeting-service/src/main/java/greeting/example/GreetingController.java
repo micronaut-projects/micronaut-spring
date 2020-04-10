@@ -40,7 +40,8 @@ public class GreetingController {
 
     @GetMapping("/greeting-status")
     @ResponseStatus(code = HttpStatus.CREATED)
-    public Greeting greetingWithStatus(@RequestParam(value="name", defaultValue="World") @Pattern(regexp = "\\D+") String name) {
+    public Greeting greetingWithStatus(
+            @RequestParam(value="name", defaultValue="World") @Pattern(regexp = "\\D+") String name) {
         return greetingService.greeting(name);
     }
 
