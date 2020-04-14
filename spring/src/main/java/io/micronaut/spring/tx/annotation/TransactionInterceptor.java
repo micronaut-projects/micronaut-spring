@@ -20,12 +20,11 @@ import io.micronaut.aop.MethodInvocationContext;
 import io.micronaut.context.BeanLocator;
 import io.micronaut.context.exceptions.NoSuchBeanException;
 import io.micronaut.core.annotation.AnnotationMetadata;
-import io.micronaut.core.annotation.AnnotationValue;
-import io.micronaut.core.reflect.ReflectionUtils;
 import io.micronaut.core.util.StringUtils;
 import io.micronaut.inject.ExecutableMethod;
 import io.micronaut.inject.qualifiers.Qualifiers;
 import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionSystemException;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
@@ -59,7 +58,7 @@ public class TransactionInterceptor extends TransactionAspectSupport implements 
     @Override
     public final Object intercept(MethodInvocationContext<Object, Object> context) {
         if (context.hasStereotype(Transactional.class)) {
-            String transactionManagerName = context.findAnnotation(Transactional.class).flatMap(AnnotationValue::stringValue).orElse(null);
+            String transactionManagerName = context.stringValue(Transactional.class).orElse(null);
             if (StringUtils.isEmpty(transactionManagerName)) {
                 transactionManagerName = null;
             }
@@ -108,21 +107,22 @@ public class TransactionInterceptor extends TransactionAspectSupport implements 
             AnnotationMetadata annotationMetadata,
             String transactionManagerName) {
         return transactionDefinitionMap.computeIfAbsent(targetMethod, method -> {
-            AnnotationValue<Transactional> annotation = annotationMetadata.getAnnotation(Transactional.class);
-
-            if (annotation == null) {
-                throw new IllegalStateException("No declared @Transactional annotation present");
-            }
 
             BindableRuleBasedTransactionAttribute attribute = new BindableRuleBasedTransactionAttribute();
-            attribute.setReadOnly(annotation.getRequiredValue("readOnly", Boolean.class));
-            attribute.setTimeout(annotation.getRequiredValue("timeout", Integer.class));
+            attribute.setReadOnly(annotationMetadata.isTrue(Transactional.class, "readOnly"));
+            attribute.setTimeout(annotationMetadata.intValue(Transactional.class, "timeout").orElse(TransactionDefinition.TIMEOUT_DEFAULT));
             //noinspection unchecked
-            attribute.setRollbackFor(annotation.get("rollbackFor", Class[].class).orElse(ReflectionUtils.EMPTY_CLASS_ARRAY));
+            attribute.setRollbackFor(annotationMetadata.classValues(Transactional.class, "rollbackFor"));
             //noinspection unchecked
-            attribute.setNoRollbackFor(annotation.get("noRollbackFor", Class[].class).orElse(ReflectionUtils.EMPTY_CLASS_ARRAY));
-            attribute.setPropagationBehavior(annotation.getRequiredValue("propagation", Propagation.class).value());
-            attribute.setIsolationLevel(annotation.getRequiredValue("isolation", Isolation.class).value());
+            attribute.setNoRollbackFor(annotationMetadata.classValues(Transactional.class, "noRollbackFor"));
+            int propagation = annotationMetadata
+                    .enumValue(Transactional.class, "propagation", Propagation.class)
+                    .orElse(Propagation.REQUIRED).value();
+            attribute.setPropagationBehavior(propagation);
+            int isolation = annotationMetadata
+                    .enumValue(Transactional.class, "isolation", Isolation.class)
+                    .orElse(Isolation.DEFAULT).value();
+            attribute.setIsolationLevel(isolation);
             attribute.setQualifier(transactionManagerName);
             return attribute;
         });
