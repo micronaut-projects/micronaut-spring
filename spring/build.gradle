@@ -1,4 +1,3 @@
-group "io.micronaut"
 dependencies {
     annotationProcessor "io.micronaut:micronaut-inject-java"
     

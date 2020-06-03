@@ -1,11 +1,11 @@
 /*
- * Copyright 2017-2019 original authors
+ * Copyright 2017-2020 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -28,7 +28,6 @@ import io.micronaut.views.ViewsFilter;
 import io.micronaut.views.ViewsRenderer;
 import org.reactivestreams.Publisher;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 
 import java.util.Optional;
 
@@ -78,17 +77,20 @@ public class ModelAndViewServerFilter extends OncePerRequestHttpServerFilter {
                     return res;
                 }
 
-                final Optional<ModelMap> modelMap = request.getAttribute(ModelRequestArgumentBinder.ATTRIBUTE, ModelMap.class);
+                final Optional<Object> modelMap = request.getAttribute(ModelRequestArgumentBinder.ATTRIBUTE);
 
                 if (modelMap.isPresent()) {
                     final String view = body.toString();
-                    final ModelMap model = modelMap.get();
-                    final MutableHttpResponse<Object> res = (MutableHttpResponse<Object>) mutableHttpResponse;
-                    res.body(new ModelAndView(
-                            view,
-                            model
-                    ));
-                    return res;
+                    Object o = modelMap.get();
+                    if (o instanceof Model) {
+                        final Model model = (Model) o;
+                        final MutableHttpResponse<Object> res = (MutableHttpResponse<Object>) mutableHttpResponse;
+                        res.body(new ModelAndView(
+                                view,
+                                model
+                        ));
+                        return res;
+                    }
                 }
             }
 
