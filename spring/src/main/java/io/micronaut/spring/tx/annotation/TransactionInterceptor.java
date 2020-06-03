@@ -15,6 +15,7 @@
  */
 package io.micronaut.spring.tx.annotation;
 
+import io.micronaut.aop.InterceptPhase;
 import io.micronaut.aop.MethodInterceptor;
 import io.micronaut.aop.MethodInvocationContext;
 import io.micronaut.context.BeanLocator;
@@ -53,6 +54,11 @@ public class TransactionInterceptor extends TransactionAspectSupport implements 
      */
     public TransactionInterceptor(BeanLocator beanLocator) {
         this.beanLocator = beanLocator;
+    }
+
+    @Override
+    public int getOrder() {
+        return InterceptPhase.TRANSACTION.getPosition();
     }
 
     @Override
