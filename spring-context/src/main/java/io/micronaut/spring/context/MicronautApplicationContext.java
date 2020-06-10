@@ -343,6 +343,11 @@ public class MicronautApplicationContext implements ManagedApplicationContext, C
     }
 
     @Override
+    public void setClassLoader(ClassLoader classLoader) {
+        // no-op, unsupported
+    }
+
+    @Override
     public void addProtocolResolver(ProtocolResolver resolver) {
         beanFactory.getBeanContext().registerSingleton(resolver);
     }
