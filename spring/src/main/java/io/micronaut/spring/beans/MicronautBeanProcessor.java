@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -20,6 +20,7 @@ import io.micronaut.context.DefaultBeanContext;
 import io.micronaut.context.Qualifier;
 import io.micronaut.context.env.DefaultEnvironment;
 import io.micronaut.core.convert.ArgumentConversionContext;
+import io.micronaut.core.util.ArrayUtils;
 import io.micronaut.inject.qualifiers.Qualifiers;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.DisposableBean;
@@ -66,8 +67,9 @@ public class MicronautBeanProcessor implements BeanFactoryPostProcessor, Disposa
     @Override
     public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
         if (environment != null) {
-            micronautContext = new DefaultApplicationContext(environment.getActiveProfiles()) {
-                DefaultEnvironment env = new DefaultEnvironment(() -> Arrays.asList(environment.getActiveProfiles())) {
+            String[] profiles = getProfiles();
+            micronautContext = new DefaultApplicationContext(profiles) {
+                DefaultEnvironment env = new DefaultEnvironment(() -> Arrays.asList(profiles)) {
                     @Override
                     public io.micronaut.context.env.Environment start() {
                         return this;
@@ -122,6 +124,14 @@ public class MicronautBeanProcessor implements BeanFactoryPostProcessor, Disposa
                         ((DefaultListableBeanFactory) beanFactory).registerBeanDefinition(definition.getName(), beanDefinitionBuilder.getBeanDefinition());
                     });
         });
+    }
+
+    private String[] getProfiles() {
+        if (ArrayUtils.isNotEmpty(environment.getActiveProfiles())) {
+            return environment.getActiveProfiles();
+        } else {
+            return environment.getDefaultProfiles();
+        }
     }
 
     @Override

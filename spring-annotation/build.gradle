@@ -1,6 +1,3 @@
-plugins {
-    id "net.ltgt.apt" version "0.21"
-}
 dependencies {
     annotationProcessor "io.micronaut:micronaut-inject-java"
     api "io.micronaut:micronaut-inject:$micronautVersion"

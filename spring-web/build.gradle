@@ -1,14 +1,11 @@
-plugins {
-    id "net.ltgt.apt" version "0.21"
-}
 dependencies {
     annotationProcessor "io.micronaut:micronaut-inject-java"
     api project(":spring-context")
     api "org.springframework:spring-web:$springVersion"
-    api 'io.projectreactor:reactor-core:3.3.4.RELEASE'
+    api 'io.projectreactor:reactor-core:3.3.8.RELEASE'
     implementation "io.micronaut:micronaut-http:$micronautVersion"
     compileOnly "io.micronaut:micronaut-http-server-netty"
-    compileOnly "io.micronaut:micronaut-views"
+    compileOnly "io.micronaut:micronaut-views-core"
 
     testAnnotationProcessor "io.micronaut:micronaut-inject-java"
     testAnnotationProcessor project(":spring-annotation")
