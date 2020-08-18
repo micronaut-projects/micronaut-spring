@@ -28,7 +28,7 @@ Releases are published to JCenter and Maven Central via [Github Actions](https:/
 
 A release is performed with the following steps:
 
-* [Edit the version](https://github.com/micronaut-projects/micronaut-spring/edit/master/gradle.properties) specified by `projectVersion` in `gradle.properties` to a semantic, unreleased version. Example `1.0.0`
-* [Create a new release](https://github.com/micronaut-projects/micronaut-spring/releases/new). The Git Tag should start with `v`. For example `v1.0.0`.
-* [Monitor the Workflow](https://github.com/micronaut-projects/micronaut-spring/actions?query=workflow%3ARelease) to check it passed successfully.
-* Celebrate!
+- [Edit the version](https://github.com/micronaut-projects/micronaut-spring/edit/master/gradle.properties) specified by `projectVersion` in `gradle.properties` to a semantic, unreleased version. Example `1.0.0`
+- [Create a new release](https://github.com/micronaut-projects/micronaut-spring/releases/new). The Git Tag should start with `v`. For example `v1.0.0`.
+- [Monitor the Workflow](https://github.com/micronaut-projects/micronaut-spring/actions?query=workflow%3ARelease) to check it passed successfully.
+- Celebrate!
