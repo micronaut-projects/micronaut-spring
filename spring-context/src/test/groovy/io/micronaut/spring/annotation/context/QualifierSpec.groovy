@@ -21,6 +21,7 @@ import io.micronaut.spring.context.MicronautApplicationContext
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.context.ApplicationContext
+import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Specification
 
@@ -86,6 +87,7 @@ class QualifierSpec extends Specification {
         ctx.close()
     }
 
+    @Ignore
     void "test inject ConfigurationProperty bean"() {
         given:
         ApplicationContext ctx = startContext()
