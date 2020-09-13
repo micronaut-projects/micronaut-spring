@@ -15,7 +15,7 @@ dependencies {
     testImplementation "io.micronaut:micronaut-validation"
     testImplementation "io.micronaut:micronaut-http-client"
     testImplementation "io.micronaut:micronaut-http-server-netty"
-    testRuntimeOnly "io.micronaut:micronaut-views-thymeleaf"
+    testRuntimeOnly "io.micronaut.views:micronaut-views-thymeleaf"
     testRuntimeOnly("org.springframework.boot:spring-boot-starter-thymeleaf:$springBootVersion")
 
 }
