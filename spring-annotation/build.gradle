@@ -8,7 +8,7 @@ dependencies {
     implementation "io.micronaut.cache:micronaut-cache-core"
     testAnnotationProcessor "io.micronaut:micronaut-inject-java"
     testImplementation "io.micronaut:micronaut-inject-groovy"
-    testImplementation "io.micronaut:micronaut-spring"
+    testImplementation project(":spring")
     testImplementation "org.springframework:spring-tx"
 }
 
