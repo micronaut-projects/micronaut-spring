@@ -1,4 +1,5 @@
 introduction: Introduction
+releaseHistory: Release History
 springToMicronaut:
   title: Compile Time Spring Annotation Support
   springToMicronautStart: Build Configuration
@@ -11,4 +12,6 @@ springToMicronaut:
   micronautClient: Using Micronaut's HTTP Client
 springParentContext:
   title: Using Micronaut Parent Context
+beanPostProcessor:
+  title: Using a Bean Post Processor
 repository: Repository
