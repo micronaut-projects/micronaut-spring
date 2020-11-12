@@ -429,7 +429,7 @@ public abstract&nbsp;java.lang.Class&lt;? extends java.lang.Throwable&gt;[]&nbsp
  for a detailed explanation.
  <p>This is the preferred way to construct a rollback rule (in contrast to
  <a href="../../../../../io/micronaut/spring/tx/annotation/Transactional.html#rollbackForClassName--"><code>rollbackForClassName()</code></a>), matching the exception class and its subclasses.
- <p>Similar to <code>RollbackRuleAttribute.RollbackRuleAttribute(Class clazz)</code>.</div>
+ <p>Similar to <code>RollbackRuleAttribute(Class clazz)</code>.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>Rollback for exceptions</dd>
@@ -469,7 +469,7 @@ public abstract&nbsp;java.lang.String[]&nbsp;rollbackForClassName</pre>
  were meant to define a rule for all checked exceptions. With more unusual
  <code>Exception</code> names such as <code>"BaseBusinessException"</code> there is no
  need to use a FQN.
- <p>Similar to <code>RollbackRuleAttribute.RollbackRuleAttribute(String exceptionName)</code>.</div>
+ <p>Similar to <code>RollbackRuleAttribute(String exceptionName)</code>.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>Rollback for classname</dd>
@@ -502,7 +502,7 @@ public abstract&nbsp;java.lang.Class&lt;? extends java.lang.Throwable&gt;[]&nbsp
  <p>This is the preferred way to construct a rollback rule (in contrast
  to <a href="../../../../../io/micronaut/spring/tx/annotation/Transactional.html#noRollbackForClassName--"><code>noRollbackForClassName()</code></a>), matching the exception class and
  its subclasses.
- <p>Similar to <code>NoRollbackRuleAttribute.NoRollbackRuleAttribute(Class clazz)</code>.</div>
+ <p>Similar to <code>NoRollbackRuleAttribute(Class clazz)</code>.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>Do not rollback for exceptions</dd>
@@ -534,7 +534,7 @@ public abstract&nbsp;java.lang.String[]&nbsp;noRollbackForClassName</pre>
  cause a transaction rollback.
  <p>See the description of <a href="../../../../../io/micronaut/spring/tx/annotation/Transactional.html#rollbackForClassName--"><code>rollbackForClassName()</code></a> for further
  information on how the specified names are treated.
- <p>Similar to <code>NoRollbackRuleAttribute.NoRollbackRuleAttribute(String exceptionName)</code>.</div>
+ <p>Similar to <code>NoRollbackRuleAttribute(String exceptionName)</code>.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>Do not rollback for class name</dd>
