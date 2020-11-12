@@ -7,7 +7,7 @@ dependencies {
     implementation "io.micronaut:micronaut-runtime:$micronautVersion"
     testAnnotationProcessor "io.micronaut:micronaut-inject-java"
     testImplementation "io.micronaut:micronaut-inject-groovy"
-    testImplementation "io.micronaut:micronaut-spring"
+    testImplementation project(":spring")
     testImplementation "org.springframework:spring-tx"
 }
 
