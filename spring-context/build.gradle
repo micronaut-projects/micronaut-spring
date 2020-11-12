@@ -6,7 +6,7 @@ dependencies {
     api "org.springframework:spring-context:$springVersion"
     api "io.micronaut:micronaut-aop:$micronautVersion"
     api "io.micronaut:micronaut-inject:$micronautVersion"
-    implementation "io.micronaut:micronaut-spring:$micronautVersion"
+    implementation project(":spring")
 
     testImplementation "io.micronaut:micronaut-runtime:$micronautVersion"
     testAnnotationProcessor "io.micronaut:micronaut-inject-java:$micronautVersion"
