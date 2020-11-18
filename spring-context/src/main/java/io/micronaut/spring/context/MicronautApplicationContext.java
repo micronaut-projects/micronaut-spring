@@ -33,6 +33,7 @@ import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.core.io.ProtocolResolver;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
+import org.springframework.core.metrics.ApplicationStartup;
 import org.springframework.util.ObjectUtils;
 
 import javax.annotation.Nullable;
@@ -64,6 +65,7 @@ public class MicronautApplicationContext implements ManagedApplicationContext, C
     private long startupDate;
     private String id = ObjectUtils.identityToString(this);
     private ApplicationContext parent;
+    private ApplicationStartup applicationStartup;
 
     /**
      * Default constructor.
@@ -160,6 +162,16 @@ public class MicronautApplicationContext implements ManagedApplicationContext, C
     @Override
     public String[] getBeanDefinitionNames() {
         return beanFactory.getBeanDefinitionNames();
+    }
+
+    @Override
+    public <T> ObjectProvider<T> getBeanProvider(Class<T> requiredType, boolean allowEagerInit) {
+        return beanFactory.getBeanProvider(requiredType, allowEagerInit);
+    }
+
+    @Override
+    public <T> ObjectProvider<T> getBeanProvider(ResolvableType requiredType, boolean allowEagerInit) {
+        return beanFactory.getBeanProvider(requiredType, allowEagerInit);
     }
 
     @Override
@@ -330,6 +342,16 @@ public class MicronautApplicationContext implements ManagedApplicationContext, C
     @Override
     public ConfigurableEnvironment getEnvironment() {
         return environment;
+    }
+
+    @Override
+    public void setApplicationStartup(ApplicationStartup applicationStartup) {
+        this.applicationStartup = applicationStartup;
+    }
+
+    @Override
+    public ApplicationStartup getApplicationStartup() {
+        return applicationStartup;
     }
 
     @Override

@@ -87,7 +87,6 @@ class QualifierSpec extends Specification {
         ctx.close()
     }
 
-    @Ignore
     void "test inject ConfigurationProperty bean"() {
         given:
         ApplicationContext ctx = startContext()
@@ -99,7 +98,7 @@ class QualifierSpec extends Specification {
         names.size() == 2
 
         when:
-        ctx.beanFactory.getSingleton(names.first())
+        ((MicronautApplicationContext) ctx).beanFactory.getSingleton(names.first())
 
         then:
         noExceptionThrown()

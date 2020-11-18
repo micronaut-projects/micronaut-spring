@@ -3,7 +3,7 @@ dependencies {
     api "org.springframework:spring-context:$springVersion"
     api "io.micronaut:micronaut-aop:$micronautVersion"
     api "io.micronaut:micronaut-inject:$micronautVersion"
-    implementation project(":spring")
+    api project(":spring")
 
     implementation "io.micronaut.cache:micronaut-cache-core"
 

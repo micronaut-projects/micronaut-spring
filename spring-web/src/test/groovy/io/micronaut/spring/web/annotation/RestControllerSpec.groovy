@@ -19,12 +19,10 @@ import io.micronaut.http.HttpResponse
 import io.micronaut.http.HttpStatus
 import io.micronaut.http.client.exceptions.HttpClientResponseException
 import io.micronaut.test.annotation.MicronautTest
-import spock.lang.Ignore
 import spock.lang.Specification
 
 import javax.inject.Inject
 
-@Ignore
 @MicronautTest
 class RestControllerSpec extends Specification {
 
