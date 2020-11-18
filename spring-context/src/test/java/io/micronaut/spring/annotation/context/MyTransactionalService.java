@@ -15,6 +15,7 @@
  */
 package io.micronaut.spring.annotation.context;
 
+import io.micronaut.context.annotation.Executable;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
@@ -31,6 +32,7 @@ import java.util.List;
 )
 public class MyTransactionalService {
 
+    @Executable
     public List<String> someMethod() {
         return Collections.emptyList();
     }

@@ -51,7 +51,6 @@ class SimpleConfigurationSpec extends Specification {
     @Inject
     MyComponent myComponent
 
-    @Ignore
     void "test configuration maps beans"() {
         expect:
         applicationContext.getBean(MyConfiguration).myBean() == applicationContext.getBean(MyConfiguration).myBean()
