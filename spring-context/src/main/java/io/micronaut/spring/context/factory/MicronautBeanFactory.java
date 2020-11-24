@@ -733,16 +733,13 @@ public class MicronautBeanFactory extends DefaultListableBeanFactory implements 
             if (parentBeanFactory instanceof AbstractBeanFactory) {
                 return ((AbstractBeanFactory) parentBeanFactory).getBean(
                         name, requiredType, args);
-            }
-            else if (args != null) {
+            } else if (args != null) {
                 // Delegation to parent with explicit args.
                 return (T) parentBeanFactory.getBean(name, args);
-            }
-            else if (requiredType != null) {
+            } else if (requiredType != null) {
                 // No args -> delegate to standard getBean method.
                 return parentBeanFactory.getBean(name, requiredType);
-            }
-            else {
+            } else {
                 return (T) parentBeanFactory.getBean(name);
             }
         }
