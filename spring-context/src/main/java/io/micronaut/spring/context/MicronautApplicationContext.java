@@ -320,6 +320,9 @@ public class MicronautApplicationContext implements ManagedApplicationContext, C
     @Override
     public void setParent(ApplicationContext parent) {
         this.parent = parent;
+        if (parent != null) {
+            this.beanFactory.setParentBeanFactory(parent.getAutowireCapableBeanFactory());
+        }
     }
 
     @Override
