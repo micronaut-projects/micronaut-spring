@@ -16,16 +16,17 @@
 package io.micronaut.spring.boot
 
 import io.micronaut.context.ApplicationContext
-import io.micronaut.context.ApplicationContextBuilder
 import io.micronaut.core.io.socket.SocketUtils
 import io.micronaut.spring.context.MicronautApplicationContext
 import org.springframework.boot.ApplicationArguments
 import org.springframework.boot.ApplicationRunner
 import org.springframework.boot.WebApplicationType
 import org.springframework.boot.autoconfigure.SpringBootApplication
+import org.springframework.boot.builder.ParentContextApplicationContextInitializer
 import org.springframework.boot.builder.SpringApplicationBuilder
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 import org.springframework.context.ConfigurableApplicationContext
+import org.springframework.context.support.GenericApplicationContext
 import org.springframework.stereotype.Component
 import some.other.pkg.FeaturesClient
 import some.other.pkg.MyOtherComponent
@@ -66,6 +67,49 @@ class SpringApplicationBuilderSpec extends Specification{
 
     }
 
+    void "test with Spring application builder with bootstrap context"() {
+        when:
+        SpringApplicationBuilder builder = new SpringApplicationBuilder()
+        def port = SocketUtils.findAvailableTcpPort()
+        def props = ["server.port": port,
+                     'spring.test.port': port]
+        def context = new MicronautApplicationContext(ApplicationContext.build().properties(
+                props
+        ))
+        context.start()
+        builder.web(WebApplicationType.SERVLET)
+        builder.parent(context)
+        builder.sources(Application)
+        builder.properties(
+                props
+        )
+        def application = builder.build()
+        ConfigurableApplicationContext springContext = application.run()
+
+        final ConfigurableApplicationContext bootstrapAppContext = new GenericApplicationContext()
+        bootstrapAppContext.refresh()
+
+        new ParentContextApplicationContextInitializer(bootstrapAppContext)
+                .initialize(context)
+
+        bootstrapAppContext.beanFactory.registerSingleton("mySingleton", new MySingleton())
+
+        then:
+        springContext != null
+        springContext.getBean(MyComponent).myOtherComponent
+        springContext.getBean(MyComponent).myOtherComponent == springContext.getBean(MyOtherComponent)
+        springContext.getBean(FeaturesClient)
+        springContext.getBean(TestClient).hello() == 'good'
+        springContext.getBean(MyRunner).executed
+        springContext.getBean(MySingleton)
+        springContext.beanFactory.parentBeanFactory == context.beanFactory
+        context.beanFactory.parentBeanFactory == bootstrapAppContext.beanFactory
+
+        cleanup:
+        springContext.close()
+
+    }
+
     @Component
     static class MyRunner implements ApplicationRunner {
         boolean executed = false
@@ -76,4 +120,8 @@ class SpringApplicationBuilderSpec extends Specification{
     }
     @SpringBootApplication
     static class Application extends SpringBootServletInitializer{}
+
+    class MySingleton {
+
+    }
 }
