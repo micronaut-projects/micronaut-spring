@@ -14,10 +14,6 @@ subprojects { Project subproject ->
 
     apply plugin: "io.micronaut.build.common"
 
-    if (subproject.parent.name == "docs-examples" || subproject.name == "docs-examples") {
-        return
-    }
-
     apply plugin: "io.micronaut.build.dependency-updates"
     apply plugin: "io.micronaut.build.publishing"
 
@@ -25,8 +21,26 @@ subprojects { Project subproject ->
         testImplementation("org.spockframework:spock-core:${spockVersion}") {
             exclude module:'groovy-all'
         }
-        testImplementation "io.micronaut.test:micronaut-test-spock:$micronautTestVersion"        
-    }    
+        testImplementation "io.micronaut.test:micronaut-test-spock:$micronautTestVersion"
+    }
+
+    subproject.configurations.all {
+        resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+            String group = details.requested.group
+            if (group == 'org.springframework') {
+                details.useVersion(springVersion)
+            }
+            if (group == 'org.springframework.boot') {
+                details.useVersion(springBootVersion)
+            }
+        }
+    }
+
+    tasks.withType(Test) {
+        if (JavaVersion.current().isCompatibleWith(JavaVersion.VERSION_15)) {
+            jvmArgs "--enable-preview"
+        }
+    }
 }
 
 apply plugin: "io.micronaut.build.docs"

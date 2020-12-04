@@ -32,9 +32,12 @@ class CacheAnnotationMappingSpec extends AbstractTypeElementSpec {
 
 package test;
 
+import io.micronaut.context.annotation.Executable;
 import org.springframework.stereotype.Service;
 import org.springframework.cache.annotation.*;
+
 @Service("myname")
+@Executable
 class MyBean {
 
     @Cacheable("test")

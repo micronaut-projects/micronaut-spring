@@ -30,7 +30,6 @@ class RestControllerSpec extends Specification {
     GreetingClient greetingClient
 
     void "test request controller"() {
-
         expect:
         greetingClient.home().contains("Welcome to Micronaut for Spring")
         greetingClient.greet("Fred").content == 'Hello, Fred!'

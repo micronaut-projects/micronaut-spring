@@ -28,6 +28,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import org.springframework.core.env.Environment
 import org.springframework.core.env.MapPropertySource
 import org.springframework.transaction.annotation.Propagation
+import spock.lang.Ignore
 import spock.lang.Specification
 import spock.util.concurrent.PollingConditions
 
@@ -51,7 +52,6 @@ class SimpleConfigurationSpec extends Specification {
     MyComponent myComponent
 
     void "test configuration maps beans"() {
-
         expect:
         applicationContext.getBean(MyConfiguration).myBean() == applicationContext.getBean(MyConfiguration).myBean()
         applicationContext.getBean(MyConfiguration.MyBean) == applicationContext.getBean(MyConfiguration).myBean()

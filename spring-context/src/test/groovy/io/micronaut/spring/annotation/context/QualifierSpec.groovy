@@ -21,6 +21,8 @@ import io.micronaut.spring.context.MicronautApplicationContext
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.context.ApplicationContext
+import spock.lang.Ignore
+import spock.lang.Shared
 import spock.lang.Specification
 
 import javax.inject.Named
@@ -28,30 +30,82 @@ import javax.inject.Singleton
 
 class QualifierSpec extends Specification {
 
-    void "test inject with qualifier"() {
-        given:
+    @Shared
+    Map<String, Object> config = [
+            'foo.bar.one.name':'one',
+            'foo.bar.two.name':'two',
+    ]
+
+    private ApplicationContext startContext() {
         ApplicationContext ctx = new MicronautApplicationContext(
                 io.micronaut.context.ApplicationContext.build()
-                    .properties(
-                        'foo.bar.one.name':'one',
-                        'foo.bar.two.name':'two'
-                )
-        )
+                        .properties(config))
         ctx.start()
+        ctx
+    }
 
-        expect:
+    void "test inject bean with name qualifier"() {
+        given:
+        ApplicationContext ctx = startContext()
+
+        when:
+        List<String> names = ctx.getBeanNamesForType(Foo)
+
+        then:
+        names.size() == 2
+
+        and:
         ctx.getBean(FooService).foo instanceof Bar1
-        ctx.getBeanNamesForType(Foo).size() == 2
-        ctx.beanFactory.getSingleton(ctx.getBeanNamesForType(Foo).first())
-        ctx.getBeanNamesForType(FooBarProperties).size() == 2
-        ctx.beanFactory.getSingleton(ctx.getBeanNamesForType(FooBarProperties).first())
-        ctx.beanFactory.getBeanNamesForType(ExecutorConfiguration).size() == 2
-        ctx.beanFactory.getSingleton(ctx.beanFactory.getBeanNamesForType(ExecutorConfiguration).first())
+
+        when:
+        ctx.beanFactory.getSingleton(names.first())
+
+        then:
+        noExceptionThrown()
 
         cleanup:
         ctx.close()
     }
 
+    void "test inject ExecutorConfiguration"() {
+        given:
+        ApplicationContext ctx = startContext()
+
+        when:
+        List<String> names = ctx.getBeanNamesForType(ExecutorConfiguration)
+
+        then:
+        names.size() == 2
+
+        when:
+        ctx.beanFactory.getSingleton(names.first())
+
+        then:
+        noExceptionThrown()
+
+        cleanup:
+        ctx.close()
+    }
+
+    void "test inject ConfigurationProperty bean"() {
+        given:
+        ApplicationContext ctx = startContext()
+
+        when:
+        List<String> names = ctx.getBeanNamesForType(FooBarProperties)
+
+        then:
+        names.size() == 2
+
+        when:
+        ((MicronautApplicationContext) ctx).beanFactory.getSingleton(names.first())
+
+        then:
+        noExceptionThrown()
+
+        cleanup:
+        ctx.close()
+    }
 
     @Singleton
     static class FooService {
