@@ -17,10 +17,6 @@ subprojects { Project subproject ->
     apply plugin: "io.micronaut.build.dependency-updates"
     apply plugin: "io.micronaut.build.publishing"
 
-    repositories {
-        mavenLocal()
-    }
-
     dependencies {
         testImplementation("org.spockframework:spock-core:${spockVersion}") {
             exclude module:'groovy-all'
@@ -37,6 +33,12 @@ subprojects { Project subproject ->
             if (group == 'org.springframework.boot') {
                 details.useVersion(springBootVersion)
             }
+        }
+    }
+
+    tasks.withType(Test) {
+        if (JavaVersion.current().isCompatibleWith(JavaVersion.VERSION_15)) {
+            jvmArgs "--enable-preview"
         }
     }
 }
