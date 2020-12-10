@@ -4,8 +4,8 @@ dependencies {
     api "io.micronaut:micronaut-aop:$micronautVersion"
     api "io.micronaut:micronaut-validation:$micronautVersion"
     implementation project(":spring-context")
-    implementation "io.micronaut:micronaut-runtime"
-    implementation "io.micronaut.cache:micronaut-cache-core"
+    implementation "io.micronaut:micronaut-runtime:$micronautVersion"
+    implementation "io.micronaut.cache:micronaut-cache-core:$micronautVersion"
     testAnnotationProcessor "io.micronaut:micronaut-inject-java"
     testImplementation "io.micronaut:micronaut-inject-groovy"
     testImplementation project(":spring")
