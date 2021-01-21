@@ -666,7 +666,7 @@ public class MicronautBeanFactory extends DefaultListableBeanFactory implements 
     @Override
     public org.springframework.beans.factory.config.BeanDefinition getBeanDefinition(String beanName) throws NoSuchBeanDefinitionException {
         final BeanDefinition<?> definition = beanDefinitionMap.get(beanName);
-        if (definition.isEnabled(beanContext)) {
+        if (definition != null && definition.isEnabled(beanContext)) {
             final GenericBeanDefinition genericBeanDefinition = new GenericBeanDefinition();
             genericBeanDefinition.setBeanClass(definition.getBeanType());
             return genericBeanDefinition;
