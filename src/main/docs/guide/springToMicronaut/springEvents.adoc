@@ -5,11 +5,11 @@ For compatibility the following `ApplicationEvent` instances are supported:
 
 |Spring Event|Description
 
-|link:{springapi}/org/springframework/context/event/ContextStartedEvent.html.html[ContextStartedEvent]
+|link:{springapi}org/springframework/context/event/ContextStartedEvent.html[ContextStartedEvent]
 |Fired when the application context is started
 
-|link:{springapi}/org/springframework/context/event/ContextClosedEvent.html.html[ContextClosedEvent]
+|link:{springapi}org/springframework/context/event/ContextClosedEvent.html[ContextClosedEvent]
 |Fired when the application context is shut down
 |===
 
-You can write methods annotated with link:{springapi}/org/springframework/context/event/EventListener.html[@EventListener] to receive the events in either framework.
+You can write methods annotated with link:{springapi}org/springframework/context/event/EventListener.html[@EventListener] to receive the events in either framework.

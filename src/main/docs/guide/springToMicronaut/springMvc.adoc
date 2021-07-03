@@ -1,6 +1,5 @@
 You can write Spring MVC controllers that are computed into Micronaut controllers at compilation time. The programming model is largely compatible with Spring Web Reactive.
 
-
 To get started you should modify your dependencies as following:
 
 .Including `spring-web` processing
@@ -18,11 +17,10 @@ dependencies {
     compile("io.micronaut:micronaut-http-server:{micronautVersion}")
     runtime("io.micronaut.spring:micronaut-spring-web:{version}")
     runtime("io.micronaut:micronaut-http-server-netty:{micronautVersion}")
-
 }
 ----
 
-Only `@RestController` semantics are supported, which is fine for most Microservice use cases. Special support is provided by the `micronaut-spring-web` dependency to allowing returning a link:{springapi}/org/springframework/http/ResponseEntity.html[ResponseEntity].
+Only `@RestController` semantics are supported, which is fine for most Microservice use cases. Special support is provided by the `micronaut-spring-web` dependency to allowing returning a link:{springapi}org/springframework/http/ResponseEntity.html[ResponseEntity].
 
 TIP: See the https://github.com/micronaut-projects/micronaut-spring/tree/master/examples/greeting-service[Example application] for a demonstration on how to build a Spring MVC application computable to Micronaut.
 
@@ -34,16 +32,16 @@ The following additional, Spring specific, method argument types are supported:
 |===
 |Type | Notes
 
-|link:{springapi}/org/springframework/http/server/reactive/ServerHttpRequest.html.html[ServerHttpRequest]
+|link:{springapi}org/springframework/http/server/reactive/ServerHttpRequest.html[ServerHttpRequest]
 |For receiving the whole reactive request
 
 |`java.security.Principal`
 |Requires the `micronaut-security` module
 
-|link:{springapi}/org/springframework/http/HttpMethod.html[HttpMethod]
+|link:{springapi}org/springframework/http/HttpMethod.html[HttpMethod]
 |The HTTP method
 
-|link:{springapi}/org/springframework/ui/ModelMap.html[ModelMap], link:{springapi}/org/springframework/ui/Model.html[Model]
+|link:{springapi}org/springframework/ui/ModelMap.html[ModelMap], link:{springapi}org/springframework/ui/Model.html[Model]
 |With `micronaut-views` module. See https://docs.micronaut.io/latest/guide/index.html#views[Server Side View Rendering].
 
 |===
@@ -54,10 +52,10 @@ The following return types are supported:
 |===
 |Type | Notes
 
-|link:{springapi}/org/springframework/http/HttpEntity.html[HttpEntity], link:{springapi}/org/springframework/http/ResponseEntity.html[ResponseEntity]
+|link:{springapi}org/springframework/http/HttpEntity.html[HttpEntity], link:{springapi}org/springframework/http/ResponseEntity.html[ResponseEntity]
 |For customizing the response
 
-|link:{springapi}/org/springframework/http/HttpHeaders.html[HttpHeaders]
+|link:{springapi}org/springframework/http/HttpHeaders.html[HttpHeaders]
 |For sending back only headers
 
 |`java.lang.String`
@@ -68,67 +66,66 @@ The following return types are supported:
 
 |===
 
-
 The following Spring MVC annotations are supported:
 
 .Supported Spring MVC Annotations
 |===
 |Spring Annotation|Target Annotation|Notes
 
-|link:{springapi}/org/springframework/web/bind/annotation/RestController.html[@RestController]
-|link:{micronautapi}/io/micronaut/http/annotation/Controller.html[@Controller]
+|link:{springapi}org/springframework/web/bind/annotation/RestController.html[@RestController]
+|link:{micronautapi}http/annotation/Controller.html[@Controller]
 |Example `@RestController`
 
-|link:{springapi}/org/springframework/web/bind/annotation/RequestMapping.html[@RequestMapping]
-|link:{micronautapi}/io/micronaut/http/annotation/UriMapping.html[@UriMapping]
+|link:{springapi}org/springframework/web/bind/annotation/RequestMapping.html[@RequestMapping]
+|link:{micronautapi}http/annotation/UriMapping.html[@UriMapping]
 |Example: `@RequestMapping("/foo/bar")`
 
-|link:{springapi}/org/springframework/web/bind/annotation/GetMapping.html[@GetMapping]
-|link:{micronautapi}/io/micronaut/http/annotation/Get.html[@Get]
+|link:{springapi}org/springframework/web/bind/annotation/GetMapping.html[@GetMapping]
+|link:{micronautapi}http/annotation/Get.html[@Get]
 |Example: `@GetMapping("/foo/bar")`
 
-|link:{springapi}/org/springframework/web/bind/annotation/PostMapping.html[@PostMapping]
-|link:{micronautapi}/io/micronaut/http/annotation/Post.html[@Post]
+|link:{springapi}org/springframework/web/bind/annotation/PostMapping.html[@PostMapping]
+|link:{micronautapi}http/annotation/Post.html[@Post]
 |Example: `@PostMapping("/foo/bar")`
 
-|link:{springapi}/org/springframework/web/bind/annotation/DeleteMapping.html[@DeleteMapping]
-|link:{micronautapi}/io/micronaut/http/annotation/Delete.html[@Delete]
+|link:{springapi}org/springframework/web/bind/annotation/DeleteMapping.html[@DeleteMapping]
+|link:{micronautapi}http/annotation/Delete.html[@Delete]
 |Example: `@DeleteMapping("/foo/bar")`
 
-|link:{springapi}/org/springframework/web/bind/annotation/PatchMapping.html[@PatchMapping]
-|link:{micronautapi}/io/micronaut/http/annotation/Patch.html[@Patch]
+|link:{springapi}org/springframework/web/bind/annotation/PatchMapping.html[@PatchMapping]
+|link:{micronautapi}http/annotation/Patch.html[@Patch]
 |Example: `@PatchMapping("/foo/bar")`
 
-|link:{springapi}/org/springframework/web/bind/annotation/PutMapping.html[@PutMapping]
-|link:{micronautapi}/io/micronaut/http/annotation/Put.html[@Put]
+|link:{springapi}org/springframework/web/bind/annotation/PutMapping.html[@PutMapping]
+|link:{micronautapi}http/annotation/Put.html[@Put]
 |Example: `@PutMapping("/foo/bar")`
 
-|link:{springapi}/org/springframework/web/bind/annotation/RequestHeader.html[@RequestHeader]
-|link:{micronautapi}/io/micronaut/http/annotation/Header.html[@Header]
+|link:{springapi}org/springframework/web/bind/annotation/RequestHeader.html[@RequestHeader]
+|link:{micronautapi}http/annotation/Header.html[@Header]
 |Example: `@RequestHeader("Accept")`
 
-|link:{springapi}/org/springframework/web/bind/annotation/RequestAttribute.html[@RequestAttribute]
+|link:{springapi}org/springframework/web/bind/annotation/RequestAttribute.html[@RequestAttribute]
 |No equivalent
 |Example: `@RequestAttribute("Accept")`
 
-|link:{springapi}/org/springframework/web/bind/annotation/RequestBody.html[@RequestBody]
-|link:{micronautapi}/io/micronaut/http/annotation/Body.html[@Body]
+|link:{springapi}org/springframework/web/bind/annotation/RequestBody.html[@RequestBody]
+|link:{micronautapi}http/annotation/Body.html[@Body]
 |Example: `@RequestBody`
 
-|link:{springapi}/org/springframework/web/bind/annotation/RequestParam.html[@RequestParam]
-|link:{micronautapi}/io/micronaut/http/annotation/QueryValue.html[@QueryValue]
+|link:{springapi}org/springframework/web/bind/annotation/RequestParam.html[@RequestParam]
+|link:{micronautapi}http/annotation/QueryValue.html[@QueryValue]
 |Example: `@RequestParam("myParam")`
 
-|link:{springapi}/org/springframework/web/bind/annotation/ResponseStatus.html[@ResponseStatus]
-|link:{micronautapi}/io/micronaut/http/annotation/Status.html[@Status]
+|link:{springapi}org/springframework/web/bind/annotation/ResponseStatus.html[@ResponseStatus]
+|link:{micronautapi}http/annotation/Status.html[@Status]
 |Example: `@ResponseStatus(value=HttpStatus.NOT_FOUND)`
 
-|link:{springapi}/org/springframework/web/bind/annotation/ExceptionHandler.html[@ExceptionHandler]
-|link:{micronautapi}/io/micronaut/http/annotation/Error.html[@Error]
+|link:{springapi}org/springframework/web/bind/annotation/ExceptionHandler.html[@ExceptionHandler]
+|link:{micronautapi}http/annotation/Error.html[@Error]
 |Example: `@ExceptionHandler`
 
-|link:{springapi}/org/springframework/web/bind/annotation/CookieValue.html[@CookieValue]
-|link:{micronautapi}/io/micronaut/http/annotation/CookieValue.html[@CookieValue]
+|link:{springapi}org/springframework/web/bind/annotation/CookieValue.html[@CookieValue]
+|link:{micronautapi}http/annotation/CookieValue.html[@CookieValue]
 |Example: `@CookieValue("myCookie")`
 
 |===

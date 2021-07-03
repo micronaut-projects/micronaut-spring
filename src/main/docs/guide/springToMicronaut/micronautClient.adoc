@@ -5,7 +5,7 @@ You can essentially use Spring annotations to a define a compilation-time HTTP c
 .Spring `@Client` Implementation
 [source,java]
 ----
-include::spring-web-annotation/src/test/groovy/io/micronaut/spring/web/annotation/GreetingClient.java[]
+include::spring-web/src/test/java/io/micronaut/spring/web/annotation/GreetingClient.java[]
 ----
 
 This also means you can define a common interface between client and server of a Spring application and compute the client at compilation name.
