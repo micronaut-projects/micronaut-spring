@@ -6,72 +6,72 @@ The following table summarizes the annotations that Micronaut for Spring support
 |===
 |Spring Annotation|Target Annotation|Notes
 
-|link:{springapi}/org/springframework/stereotype/Component.html[@Component]
-|link:{micronautapi}/io/micronaut/context/annotation/Bean.html[@Bean]
+|link:{springapi}org/springframework/stereotype/Component.html[@Component]
+|link:{micronautapi}context/annotation/Bean.html[@Bean]
 | Example `@Component("myBean")`. Requires `micronaut-runtime` dependency.
 
-|link:{springapi}/org/springframework/stereotype/Service.html[@Service]
-|link:{micronautapi}/io/micronaut/context/annotation/Bean.html[@Bean]
+|link:{springapi}org/springframework/stereotype/Service.html[@Service]
+|link:{micronautapi}context/annotation/Bean.html[@Bean]
 | Example `@Service("myBean")`. Requires `micronaut-runtime` dependency.
 
-|link:{springapi}/org/springframework/stereotype/Repository.html[@Repository]
-|link:{micronautapi}/io/micronaut/context/annotation/Bean.html[@Bean]
+|link:{springapi}org/springframework/stereotype/Repository.html[@Repository]
+|link:{micronautapi}context/annotation/Bean.html[@Bean]
 | Example `@Repository("myBean")`. Requires `micronaut-runtime` dependency.
 
-|link:{springapi}/org/springframework/beans/factory/annotation/Autowired.html[@Autowired]
+|link:{springapi}org/springframework/beans/factory/annotation/Autowired.html[@Autowired]
 |`@javax.inject.Inject`
 | Example `@Autowired`. `required=false` adds `@Nullable`
 
-|link:{springapi}/org/springframework/beans/factory/annotation/Value.html[@Value]
-|link:{micronautapi}/io/micronaut/context/annotation/Value.html[@Value]
+|link:{springapi}org/springframework/beans/factory/annotation/Value.html[@Value]
+|link:{micronautapi}context/annotation/Value.html[@Value]
 | Example `@Value("${foo.bar}")`
 
-|link:{springapi}/org/springframework/beans/factory/annotation/Qualifier.html[@Qualifier]
+|link:{springapi}org/springframework/beans/factory/annotation/Qualifier.html[@Qualifier]
 |`@javax.inject.Named`
 |Example `@Qualifier("myBean")`
 
-|link:{springapi}/org/springframework/context/annotation/Configuration.html[@Configuration]
-|link:{micronautapi}/io/micronaut/context/annotation/Factory.html[@Factory]
+|link:{springapi}org/springframework/context/annotation/Configuration.html[@Configuration]
+|link:{micronautapi}context/annotation/Factory.html[@Factory]
 |Example `@Configuration`
 
-|link:{springapi}/org/springframework/context/annotation/Profile.html[@Profile]
-|link:{micronautapi}/io/micronaut/context/annotation/Requires.html[@Requires(env="test")]
+|link:{springapi}org/springframework/context/annotation/Profile.html[@Profile]
+|link:{micronautapi}context/annotation/Requires.html[@Requires(env="test")]
 |Example `@Profile("test")`
 
-|link:{springapi}/org/springframework/context/annotation/Bean.html[@Bean]
-|link:{micronautapi}/io/micronaut/context/annotation/Bean.html[@Bean]
+|link:{springapi}org/springframework/context/annotation/Bean.html[@Bean]
+|link:{micronautapi}context/annotation/Bean.html[@Bean]
 |Example `@Bean`. Requires `micronaut-runtime` dependency.
 
-|link:{springapi}/org/springframework/context/annotation/Primary.html[@Primary]
-|link:{micronautapi}/io/micronaut/context/annotation/Primary.html[@Primary]
+|link:{springapi}org/springframework/context/annotation/Primary.html[@Primary]
+|link:{micronautapi}context/annotation/Primary.html[@Primary]
 |Example `@Primary`. Requires `micronaut-runtime` dependency.
 
-|link:{springapi}/org/springframework/context/event/EventListener.html[@EventListener]
-|link:{micronautapi}/io/micronaut/runtime/event/annotation/EventListener.html[@EventListener]
+|link:{springapi}org/springframework/context/event/EventListener.html[@EventListener]
+|link:{micronautapi}runtime/event/annotation/EventListener.html[@EventListener]
 |Example `@EventListener`. Requires `micronaut-inject` dependency.
 
-|link:{springapi}/org/springframework/scheduling/annotation/Async.html[@Async]
-|link:{micronautapi}/io/micronaut/scheduling/annotation/Async.html[@Async]
+|link:{springapi}org/springframework/scheduling/annotation/Async.html[@Async]
+|link:{micronautapi}scheduling/annotation/Async.html[@Async]
 |Example `@Async`. Requires `micronaut-runtime` dependency.
 
-|link:{springapi}/org/springframework/scheduling/annotation/Scheduled.html[@Scheduled]
-|link:{micronautapi}/io/micronaut/scheduling/annotation/Scheduled.html[@Scheduled]
+|link:{springapi}org/springframework/scheduling/annotation/Scheduled.html[@Scheduled]
+|link:{micronautapi}scheduling/annotation/Scheduled.html[@Scheduled]
 |Example `@Scheduled`. Requires `micronaut-runtime` dependency.
 
-|link:{springapi}/org/springframework/transaction/annotation/Transactional.html[@Transactional]
-|link:{micronautapi}/io/micronaut/spring/tx/annotation/Transactional.html[@Transactional]
+|link:{springapi}org/springframework/transaction/annotation/Transactional.html[@Transactional]
+|link:{micronautapi}spring/tx/annotation/Transactional.html[@Transactional]
 |Example `@Transactional`. Requires `micronaut-spring` dependency.
 
-|link:{springapi}/org/springframework/cache/annotation/Cacheable.html[@Cacheable]
-|link:{micronautapi}/io/micronaut/cache/annotation/Cacheable.html[@Cacheable]
+|link:{springapi}org/springframework/cache/annotation/Cacheable.html[@Cacheable]
+|link:{micronautcache}annotation/Cacheable.html[@Cacheable]
 |Requires `micronaut-runtime` and configured cache. Only `cacheNames` member supported.
 
-|link:{springapi}/org/springframework/cache/annotation/CacheEvict.html[@CacheEvict]
-|link:{micronautapi}/io/micronaut/cache/annotation/CacheInvalidate.html[@CacheInvalidate]
+|link:{springapi}org/springframework/cache/annotation/CacheEvict.html[@CacheEvict]
+|link:{micronautcache}annotation/CacheInvalidate.html[@CacheInvalidate]
 |Requires `micronaut-runtime` and configured cache. Only `cacheNames` member supported.
 
-|link:{springapi}/org/springframework/cache/annotation/Cacheable.html[@CachePut]
-|link:{micronautapi}/io/micronaut/cache/annotation/CachePut.html[@CachePut]
+|link:{springapi}org/springframework/cache/annotation/CachePut.html[@CachePut]
+|link:{micronautcache}annotation/CachePut.html[@CachePut]
 |Requires `micronaut-runtime` and configured cache. Only `cacheNames` member supported.
 
 |===

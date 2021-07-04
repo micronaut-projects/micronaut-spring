@@ -4,25 +4,24 @@ The following Spring interfaces are supported and can be injected into any bean:
 |===
 
 |Spring Interface|Adapted Target|Description
-|link:{springapi}/org/springframework/core/env/Environment.html[Environment]
-|link:{micronautapi}/io/micronaut/context/env/Environment.html[Environment]
+|link:{springapi}org/springframework/core/env/Environment.html[Environment]
+|link:{micronautapi}context/env/Environment.html[Environment]
 |The Application Environment
 
-|link:{springapi}/org/springframework/core/convert/ConversionService.html[ConversionService]
-|link:{micronautapi}/io/micronaut/core/convert/ConversionService.html[ConversionService]
+|link:{springapi}org/springframework/core/convert/ConversionService.html[ConversionService]
+|link:{micronautapi}core/convert/ConversionService.html[ConversionService]
 |For Converting Types
 
-|link:{springapi}/org/springframework/context/ApplicationEventPublisher.html.html[ApplicationEventPublisher]
-|link:{micronautapi}/io/micronaut/context/event/ApplicationEventPublisher.html[ApplicationEventPublisher]
+|link:{springapi}org/springframework/context/ApplicationEventPublisher.html[ApplicationEventPublisher]
+|link:{micronautapi}context/event/ApplicationEventPublisher.html[ApplicationEventPublisher]
 |For Publishing Events
 
-
-|link:{springapi}/org/springframework/context/ApplicationContext.html[ApplicationContext]
-|link:{micronautapi}/io/micronaut/context/ApplicationContext.html[ApplicationContext]
+|link:{springapi}org/springframework/context/ApplicationContext.html[ApplicationContext]
+|link:{micronautapi}context/ApplicationContext.html[ApplicationContext]
 |The application context
 
-|link:{springapi}/org/springframework/bean/factory/BeanFactory.html[BeanFactory]
-|link:{micronautapi}/io/micronaut/context/BeanContext.html[BeanContext]
+|link:{springapi}org/springframework/beans/factory/BeanFactory.html[BeanFactory]
+|link:{micronautapi}context/BeanContext.html[BeanContext]
 |The bean context
 
 |===
@@ -34,13 +33,13 @@ For compatibility the following `Aware` interfaces are supported:
 
 |Spring Interface|Description
 
-|link:{springapi}/org/springframework/context/EnvironmentAware.html.html[EnvironmentAware]
+|link:{springapi}org/springframework/context/EnvironmentAware.html[EnvironmentAware]
 |For looking up the `Environment` (but prefer `@Autowired`)
 
-|link:{springapi}/org/springframework/context/ApplicationContextAware.html.html[ApplicationContextAware]
+|link:{springapi}org/springframework/context/ApplicationContextAware.html[ApplicationContextAware]
 |For looking up the `ApplicationContext` (but prefer `@Autowired`)
 
-|link:{springapi}/org/springframework/bean/factory/BeanFactoryAware.html.html[BeanFactoryAware]
+|link:{springapi}org/springframework/beans/factory/BeanFactoryAware.html[BeanFactoryAware]
 |For looking up the `BeanFactory` (but prefer `@Autowired`)
 
 |===
