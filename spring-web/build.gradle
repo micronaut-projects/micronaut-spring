@@ -2,7 +2,7 @@ dependencies {
     annotationProcessor "io.micronaut:micronaut-inject-java"
     api project(":spring-context")
     api "org.springframework:spring-web:$springVersion"
-    api 'io.projectreactor:reactor-core:3.4.7'
+    api 'io.projectreactor:reactor-core:3.4.8'
     implementation "io.micronaut:micronaut-http:$micronautVersion"
     compileOnly "io.micronaut:micronaut-http-server-netty"
     compileOnly "io.micronaut.views:micronaut-views-core"
