@@ -1,0 +1,6 @@
+dependencies {
+    testAnnotationProcessor project(":spring-annotation")
+    testAnnotationProcessor "io.micronaut:micronaut-inject-java"
+    testCompileOnly "io.micronaut:micronaut-inject-groovy"
+    testImplementation project(":spring")
+}

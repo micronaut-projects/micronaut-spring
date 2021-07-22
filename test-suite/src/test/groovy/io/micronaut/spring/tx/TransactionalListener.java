@@ -16,9 +16,8 @@
 package io.micronaut.spring.tx;
 
 import io.micronaut.context.event.ApplicationEventListener;
-import io.micronaut.spring.tx.annotation.Transactional;
-
-import javax.inject.Singleton;
+import jakarta.inject.Singleton;
+import org.springframework.transaction.annotation.Transactional;
 
 @Singleton
 public class TransactionalListener implements ApplicationEventListener<FakeEvent> {

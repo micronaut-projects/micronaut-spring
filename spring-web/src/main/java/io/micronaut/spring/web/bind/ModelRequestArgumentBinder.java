@@ -21,10 +21,10 @@ import io.micronaut.core.convert.ArgumentConversionContext;
 import io.micronaut.core.type.Argument;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.bind.binders.TypedRequestArgumentBinder;
+import jakarta.inject.Singleton;
 import org.springframework.ui.ConcurrentModel;
 import org.springframework.ui.Model;
 
-import javax.inject.Singleton;
 import java.util.Optional;
 
 /**

@@ -18,15 +18,13 @@ package io.micronaut.spring.annotation.context
 import io.micronaut.context.annotation.EachProperty
 import io.micronaut.scheduling.executor.ExecutorConfiguration
 import io.micronaut.spring.context.MicronautApplicationContext
+import jakarta.inject.Named
+import jakarta.inject.Singleton
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.context.ApplicationContext
-import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Specification
-
-import javax.inject.Named
-import javax.inject.Singleton
 
 class QualifierSpec extends Specification {
 
@@ -38,7 +36,7 @@ class QualifierSpec extends Specification {
 
     private ApplicationContext startContext() {
         ApplicationContext ctx = new MicronautApplicationContext(
-                io.micronaut.context.ApplicationContext.build()
+                io.micronaut.context.ApplicationContext.builder()
                         .properties(config))
         ctx.start()
         ctx
@@ -110,7 +108,7 @@ class QualifierSpec extends Specification {
     @Singleton
     static class FooService {
         @Autowired
-        @Qualifier('bar1')
+        @Named("bar1")
         Foo foo
     }
 

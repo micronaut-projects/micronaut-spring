@@ -12,7 +12,7 @@ io.micronaut.spring.annotation.scheduling.AsyncAnnotationMapper
 io.micronaut.spring.annotation.event.EventListenerAnnotationMapper
 io.micronaut.spring.annotation.context.ValueAnnotationMapper
 io.micronaut.spring.annotation.context.AutowiredAnnotationMapper
-io.micronaut.spring.annotation.tx.TransactionalAnnotationMapper
 io.micronaut.spring.annotation.cache.CacheableAnnotationMapper
 io.micronaut.spring.annotation.cache.CachePutAnnotationMapper
 io.micronaut.spring.annotation.cache.CacheEvictAnnotationMapper
+io.micronaut.spring.annotation.tx.TransactionalAnnotationMapper

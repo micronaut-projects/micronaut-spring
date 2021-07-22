@@ -110,7 +110,12 @@ public class MicronautBeanProcessor implements BeanFactoryPostProcessor, Disposa
                 .forEach(micronautBeanQualifierType -> {
             Qualifier<Object> micronautBeanQualifier;
             if (micronautBeanQualifierType.isAnnotation()) {
-                micronautBeanQualifier = Qualifiers.byStereotype((Class<? extends Annotation>) micronautBeanQualifierType);
+                if (micronautBeanQualifierType.getPackage().getName().equals("jakarta.inject")) {
+                    String injectName = micronautBeanQualifierType.getName().replace("jakarta", "javax");
+                    micronautBeanQualifier = Qualifiers.byStereotype(injectName);
+                } else {
+                    micronautBeanQualifier = Qualifiers.byStereotype((Class<? extends Annotation>) micronautBeanQualifierType);
+                }
             } else {
                 micronautBeanQualifier = Qualifiers.byType(micronautBeanQualifierType);
             }

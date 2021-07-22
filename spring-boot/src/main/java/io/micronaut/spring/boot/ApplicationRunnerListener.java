@@ -17,12 +17,12 @@ package io.micronaut.spring.boot;
 
 import io.micronaut.context.event.StartupEvent;
 import io.micronaut.core.cli.CommandLine;
+import jakarta.inject.Singleton;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.DefaultApplicationArguments;
 import org.springframework.context.event.EventListener;
 
-import javax.inject.Singleton;
 import java.util.List;
 
 /**

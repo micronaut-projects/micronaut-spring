@@ -1,3 +1,4 @@
 dependencies {
     api project(":spring-annotation")
+    api "io.micronaut:micronaut-http"
 }

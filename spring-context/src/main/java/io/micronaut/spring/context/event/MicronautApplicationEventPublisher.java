@@ -17,10 +17,9 @@ package io.micronaut.spring.context.event;
 
 import io.micronaut.context.annotation.Primary;
 import io.micronaut.core.annotation.Internal;
+import jakarta.inject.Singleton;
 import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ApplicationEventPublisher;
-
-import javax.inject.Singleton;
 
 /**
  * Implementation of the {@link ApplicationEventPublisher} interface for Micronaut.

@@ -16,6 +16,7 @@
 package io.micronaut.spring.beans
 
 import io.micronaut.context.annotation.Prototype
+import jakarta.inject.Singleton
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.ApplicationContext
 import org.springframework.context.annotation.Bean
@@ -25,7 +26,6 @@ import org.springframework.test.context.TestExecutionListeners
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener
 import spock.lang.Specification
 
-import javax.inject.Singleton
 
 @ContextConfiguration(classes = [ByAnnotationTypeConfig])
 @TestExecutionListeners(value = [DependencyInjectionTestExecutionListener])

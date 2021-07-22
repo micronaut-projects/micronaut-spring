@@ -15,6 +15,7 @@
  */
 package io.micronaut.spring.web.annotation;
 
+import io.micronaut.core.annotation.AnnotationUtil;
 import io.micronaut.core.annotation.AnnotationValue;
 import io.micronaut.core.annotation.AnnotationValueBuilder;
 import io.micronaut.core.bind.annotation.Bindable;
@@ -22,7 +23,6 @@ import io.micronaut.http.annotation.Body;
 import io.micronaut.inject.visitor.VisitorContext;
 import io.micronaut.spring.annotation.AbstractSpringAnnotationMapper;
 
-import javax.annotation.Nullable;
 import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 import java.util.List;
@@ -48,7 +48,7 @@ public class RequestBodyAnnotationMapping extends AbstractSpringAnnotationMapper
         mappedAnnotations.add(builder.build());
         mappedAnnotations.add(bindableBuilder.build());
         if (!required) {
-            mappedAnnotations.add(AnnotationValue.builder(Nullable.class).build());
+            mappedAnnotations.add(AnnotationValue.builder(AnnotationUtil.NULLABLE).build());
         }
         return mappedAnnotations;
     }

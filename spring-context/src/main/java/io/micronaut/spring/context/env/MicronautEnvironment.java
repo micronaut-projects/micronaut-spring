@@ -19,15 +19,14 @@ import io.micronaut.context.annotation.Primary;
 import io.micronaut.context.env.EnvironmentPropertySource;
 import io.micronaut.context.env.SystemPropertiesPropertySource;
 import io.micronaut.core.annotation.Internal;
+import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.util.StringUtils;
+import jakarta.inject.Singleton;
 import org.springframework.core.convert.support.ConfigurableConversionService;
 import org.springframework.core.env.*;
-import org.springframework.lang.NonNull;
 import org.springframework.util.Assert;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.inject.Singleton;
 import java.util.*;
 
 /**
@@ -69,7 +68,7 @@ public class MicronautEnvironment implements ConfigurableEnvironment {
     }
 
     @Override
-    public boolean acceptsProfiles(@Nonnull Profiles profiles) {
+    public boolean acceptsProfiles(@NonNull Profiles profiles) {
         Assert.notNull(profiles, "Profiles must not be null");
         return profiles.matches(this::isProfileActive);
     }
@@ -85,19 +84,20 @@ public class MicronautEnvironment implements ConfigurableEnvironment {
     }
 
     @Override
-    public @Nullable String getProperty(@Nonnull String key) {
+    public @Nullable
+    String getProperty(@NonNull String key) {
         Assert.notNull(key, "Key must not be null");
         return environment.getProperty(key, String.class).orElse(null);
     }
 
     @Override
-    public @Nonnull String getProperty(@Nonnull String key, @Nonnull String defaultValue) {
+    public @NonNull String getProperty(@NonNull String key, @NonNull String defaultValue) {
         Assert.notNull(key, "Key must not be null");
         return environment.getProperty(key, String.class).orElse(defaultValue);
     }
 
     @Override
-    public @Nullable <T> T getProperty(@Nonnull String key, @Nonnull Class<T> targetType) {
+    public @Nullable <T> T getProperty(@NonNull String key, @NonNull Class<T> targetType) {
         Assert.notNull(key, "Key must not be null");
         Assert.notNull(targetType, "Target type must not be null");
         return environment.getProperty(key, targetType).orElse(null);
@@ -105,14 +105,14 @@ public class MicronautEnvironment implements ConfigurableEnvironment {
     }
 
     @Override
-    public <T> T getProperty(@Nonnull String key, @Nonnull Class<T> targetType, @Nonnull T defaultValue) {
+    public <T> T getProperty(@NonNull String key, @NonNull Class<T> targetType, @NonNull T defaultValue) {
         Assert.notNull(key, "Key must not be null");
         Assert.notNull(targetType, "Target type must not be null");
         return environment.getProperty(key, targetType).orElse(defaultValue);
     }
 
     @Override
-    public String getRequiredProperty(@Nonnull String key) throws IllegalStateException {
+    public String getRequiredProperty(@NonNull String key) throws IllegalStateException {
         Assert.notNull(key, "Key must not be null");
 
         return environment.getProperty(key, String.class).orElseThrow(() -> new IllegalStateException("Property with key [" + key + "] not present"));
@@ -127,12 +127,12 @@ public class MicronautEnvironment implements ConfigurableEnvironment {
     }
 
     @Override
-    public String resolvePlaceholders(@Nonnull String text) {
+    public String resolvePlaceholders(@NonNull String text) {
         return environment.getPlaceholderResolver().resolvePlaceholders(text).orElse(text);
     }
 
     @Override
-    public String resolveRequiredPlaceholders(@Nonnull String text) throws IllegalArgumentException {
+    public String resolveRequiredPlaceholders(@NonNull String text) throws IllegalArgumentException {
         return environment.getPlaceholderResolver().resolveRequiredPlaceholders(text);
     }
 
@@ -140,7 +140,7 @@ public class MicronautEnvironment implements ConfigurableEnvironment {
      * The target environment.
      * @return The environment
      */
-    public @Nonnull io.micronaut.context.env.Environment getEnvironment() {
+    public @NonNull io.micronaut.context.env.Environment getEnvironment() {
         return environment;
     }
 

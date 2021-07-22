@@ -46,7 +46,7 @@ class ApplicationContextSpec extends Specification {
 
     void "test spring application context implementation"() {
         when:
-        ManagedApplicationContext context = new MicronautApplicationContext( io.micronaut.context.ApplicationContext.build()
+        ManagedApplicationContext context = new MicronautApplicationContext( io.micronaut.context.ApplicationContext.builder()
                 .properties("foo.bar":'somevalue'))
 
         then:
@@ -80,7 +80,7 @@ class ApplicationContextSpec extends Specification {
     void "test use as parent context"() {
         when:
         ManagedApplicationContext parentContext = new MicronautApplicationContext(
-                io.micronaut.context.ApplicationContext.build()
+                io.micronaut.context.ApplicationContext.builder()
                     .properties("foo.bar":'somevalue')
         )
         parentContext.start()

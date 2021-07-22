@@ -16,11 +16,11 @@
 package io.micronaut.spring.boot.annotation;
 
 import io.micronaut.core.annotation.AnnotationValue;
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.http.annotation.Produces;
 import io.micronaut.inject.visitor.VisitorContext;
 import io.micronaut.spring.annotation.AbstractSpringAnnotationMapper;
 
-import javax.annotation.Nonnull;
 import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 import java.util.List;
@@ -55,7 +55,7 @@ public class ReadOperationAnnotationMapper extends AbstractSpringAnnotationMappe
      * The operation name.
      * @return The operation name
      */
-    protected @Nonnull String operationName() {
+    protected @NonNull String operationName() {
         return "Read";
     }
 }

@@ -15,11 +15,10 @@
  */
 package io.micronaut.spring.context.convert;
 
+import jakarta.inject.Named;
+import jakarta.inject.Singleton;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.core.convert.TypeDescriptor;
-
-import javax.inject.Named;
-import javax.inject.Singleton;
 
 /**
  * ConversionService adapter.

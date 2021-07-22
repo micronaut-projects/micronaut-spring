@@ -15,6 +15,8 @@
  */
 package io.micronaut.spring.boot.annotation;
 
+import io.micronaut.core.annotation.NonNull;
+
 /**
  * Maps ConditionalOnClass to Micronaut Requires.
  *
@@ -28,11 +30,13 @@ public class ConditionalOnClassAnnotationMapper extends ConditionalOnBeanAnnotat
         return "org.springframework.boot.autoconfigure.condition.ConditionalOnClass";
     }
 
+    @NonNull
     @Override
     protected String typesMemberName() {
         return "names";
     }
 
+    @NonNull
     @Override
     protected String requiresMethodName() {
         return "classes";

@@ -15,13 +15,12 @@
  */
 package io.micronaut.spring.tx;
 
+import jakarta.inject.Singleton;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionException;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.SimpleTransactionStatus;
-
-import javax.inject.Singleton;
 
 @Singleton
 public class MockTransactionManager implements PlatformTransactionManager {

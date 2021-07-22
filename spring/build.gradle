@@ -8,10 +8,11 @@ dependencies {
     api "io.micronaut:micronaut-aop:$micronautVersion"
 
     compileOnly "org.springframework:spring-jdbc:$springVersion"
+    compileOnly "io.micronaut.test:micronaut-test-core:$micronautTestVersion"
 
     testAnnotationProcessor "io.micronaut:micronaut-inject-java:$micronautVersion"
     testImplementation "io.micronaut:micronaut-runtime:$micronautVersion"
-    testImplementation "io.micronaut:micronaut-inject-groovy:$micronautVersion"
+    testCompileOnly "io.micronaut:micronaut-inject-groovy:$micronautVersion"
 
     testImplementation "org.spockframework:spock-spring:$spockVersion"
     testImplementation "org.springframework:spring-test:$springVersion"

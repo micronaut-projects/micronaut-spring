@@ -19,20 +19,17 @@ import io.micronaut.aop.Intercepted
 import io.micronaut.context.ApplicationContext
 import io.micronaut.context.annotation.Property
 import io.micronaut.inject.qualifiers.Qualifiers
-import io.micronaut.spring.tx.annotation.Transactional
-import io.micronaut.test.annotation.MicronautTest
-import org.springframework.beans.factory.BeanFactory
+import io.micronaut.test.extensions.spock.annotation.MicronautTest
+import jakarta.inject.Inject
 import org.springframework.beans.factory.ListableBeanFactory
 import org.springframework.context.ApplicationEvent
 import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import org.springframework.core.env.Environment
 import org.springframework.core.env.MapPropertySource
 import org.springframework.transaction.annotation.Propagation
-import spock.lang.Ignore
+import org.springframework.transaction.annotation.Transactional
 import spock.lang.Specification
 import spock.util.concurrent.PollingConditions
-
-import javax.inject.Inject
 
 @MicronautTest
 @Property(name = "foo.bar", value = "myvalue")
