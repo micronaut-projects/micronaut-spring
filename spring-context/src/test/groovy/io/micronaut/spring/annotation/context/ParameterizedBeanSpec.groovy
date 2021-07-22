@@ -17,10 +17,9 @@ package io.micronaut.spring.annotation.context
 
 import io.micronaut.context.annotation.Parameter
 import io.micronaut.spring.context.MicronautApplicationContext
+import jakarta.inject.Singleton
 import org.springframework.context.ApplicationContext
 import spock.lang.Specification
-
-import javax.inject.Singleton
 
 class ParameterizedBeanSpec extends Specification {
 

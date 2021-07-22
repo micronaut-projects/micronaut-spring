@@ -15,21 +15,20 @@
  */
 package io.micronaut.spring.tx;
 
-import io.micronaut.context.annotation.DefaultScope;
-import io.micronaut.spring.tx.annotation.Transactional;
+import jakarta.inject.Singleton;
+import org.junit.Assert;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
-import javax.inject.Singleton;
-import java.lang.annotation.Documented;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.Target;
+@Singleton
+public class TransactionalBean {
 
-import static java.lang.annotation.RetentionPolicy.RUNTIME;
-
-@Documented
-@Retention(RUNTIME)
-@Target({ElementType.TYPE, ElementType.METHOD})
-@Transactional
-@DefaultScope(Singleton.class)
-public @interface MetaAnnotation {
+    @Transactional
+    public String doSomething() {
+        // should not throw
+        final TransactionStatus transactionStatus = TransactionAspectSupport.currentTransactionStatus();
+        Assert.assertNotNull(transactionStatus);
+        return "foo";
+    }
 }

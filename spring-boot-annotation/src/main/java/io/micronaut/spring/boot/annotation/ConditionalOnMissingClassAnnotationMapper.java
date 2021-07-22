@@ -15,6 +15,8 @@
  */
 package io.micronaut.spring.boot.annotation;
 
+import io.micronaut.core.annotation.NonNull;
+
 /**
  * Maps ConditionalOnMissingClass to Micronaut Requires.
  *
@@ -28,6 +30,7 @@ public class ConditionalOnMissingClassAnnotationMapper extends ConditionalOnClas
         return "org.springframework.boot.autoconfigure.condition.ConditionalOnMissingClass";
     }
 
+    @NonNull
     @Override
     protected String requiresMethodName() {
         return "missing";

@@ -15,18 +15,18 @@
  */
 package io.micronaut.spring.annotation.context;
 
+import io.micronaut.core.annotation.AnnotationUtil;
 import io.micronaut.core.annotation.AnnotationValue;
+import io.micronaut.core.annotation.Nullable;
 import io.micronaut.inject.visitor.VisitorContext;
 import io.micronaut.spring.annotation.AbstractSpringAnnotationMapper;
 
-import javax.annotation.Nullable;
-import javax.inject.Inject;
 import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Maps {@code @Autowired} to {@link Inject}.
+ * Maps {@code @Autowired} to javax.inject.Inject.
  *
  * @author graemerocher
  * @since 1.0
@@ -42,7 +42,7 @@ public class AutowiredAnnotationMapper extends AbstractSpringAnnotationMapper {
         final boolean required = annotation.getValue(Boolean.class).orElse(true);
 
         List<AnnotationValue<?>> annotations = new ArrayList<>(2);
-        annotations.add(AnnotationValue.builder(Inject.class).build());
+        annotations.add(AnnotationValue.builder(AnnotationUtil.INJECT).build());
         if (!required) {
             annotations.add(AnnotationValue.builder(Nullable.class).build());
         }

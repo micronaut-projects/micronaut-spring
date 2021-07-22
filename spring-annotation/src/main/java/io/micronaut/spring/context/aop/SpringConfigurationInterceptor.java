@@ -21,9 +21,9 @@ import io.micronaut.core.annotation.AnnotationMetadata;
 import io.micronaut.core.annotation.Internal;
 import io.micronaut.inject.ExecutableMethod;
 import io.micronaut.spring.context.factory.MicronautBeanFactory;
+import jakarta.inject.Singleton;
 import org.springframework.beans.factory.BeanCreationException;
 
-import javax.inject.Singleton;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 

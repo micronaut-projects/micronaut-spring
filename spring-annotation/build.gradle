@@ -5,12 +5,12 @@ dependencies {
     api "io.micronaut:micronaut-validation:$micronautVersion"
     implementation project(":spring-context")
     implementation "io.micronaut:micronaut-runtime:$micronautVersion"
-    implementation "io.micronaut.cache:micronaut-cache-core:$micronautVersion"
+    implementation "io.micronaut.cache:micronaut-cache-core:$micronautCacheVersion"
     testAnnotationProcessor "io.micronaut:micronaut-inject-java"
     testImplementation "io.micronaut:micronaut-inject-groovy"
     testImplementation project(":spring")
     testImplementation "org.springframework:spring-tx"
 }
 
-//compileTestGroovy.options.forkOptions.jvmArgs =['-Xdebug', '-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=5005']
-//compileTestGroovy.options.fork=true
+compileTestGroovy.options.forkOptions.jvmArgs =['-Xdebug', '-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=5005']
+compileTestGroovy.options.fork=true

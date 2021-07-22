@@ -15,15 +15,15 @@
  */
 package io.micronaut.spring.web.annotation;
 
+import io.micronaut.core.annotation.AnnotationUtil;
 import io.micronaut.core.annotation.AnnotationValue;
 import io.micronaut.core.annotation.AnnotationValueBuilder;
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.bind.annotation.Bindable;
 import io.micronaut.core.util.StringUtils;
 import io.micronaut.inject.visitor.VisitorContext;
 import io.micronaut.spring.annotation.AbstractSpringAnnotationMapper;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +41,7 @@ public abstract class WebBindAnnotationMapper<T extends Annotation> extends Abst
      * The annotation type.
      * @return The type
      */
-    abstract @Nonnull Class<T> annotationType();
+    abstract @NonNull Class<T> annotationType();
 
     @Override
     protected List<AnnotationValue<?>> mapInternal(AnnotationValue<Annotation> annotation, VisitorContext visitorContext) {
@@ -65,7 +65,7 @@ public abstract class WebBindAnnotationMapper<T extends Annotation> extends Abst
         mappedAnnotations.add(builder.build());
         mappedAnnotations.add(bindableBuilder.build());
         if (!required) {
-            mappedAnnotations.add(AnnotationValue.builder(Nullable.class).build());
+            mappedAnnotations.add(AnnotationValue.builder(AnnotationUtil.NULLABLE).build());
         }
 
         return mappedAnnotations;

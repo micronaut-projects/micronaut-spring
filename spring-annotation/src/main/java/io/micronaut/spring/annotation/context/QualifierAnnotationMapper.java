@@ -15,18 +15,18 @@
  */
 package io.micronaut.spring.annotation.context;
 
+import io.micronaut.core.annotation.AnnotationUtil;
 import io.micronaut.core.annotation.AnnotationValue;
 import io.micronaut.inject.visitor.VisitorContext;
 import io.micronaut.spring.annotation.AbstractSpringAnnotationMapper;
 
-import javax.inject.Named;
 import java.lang.annotation.Annotation;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
 /**
- * Maps {@code @Qualifier} to {@link Named}.
+ * Maps {@code @Qualifier} to javax.inject.Named.
  *
  * @author graemerocher
  * @since 1.0
@@ -42,8 +42,9 @@ public class QualifierAnnotationMapper extends AbstractSpringAnnotationMapper {
         final Optional<String> value = annotation.getValue(String.class);
         if (value.isPresent()) {
             return Collections.singletonList(
-                    AnnotationValue.builder(Named.class)
+                    AnnotationValue.builder(AnnotationUtil.NAMED)
                             .value(value.get())
+                            .stereotype(AnnotationValue.builder(AnnotationUtil.QUALIFIER).build())
                             .build()
             );
         }

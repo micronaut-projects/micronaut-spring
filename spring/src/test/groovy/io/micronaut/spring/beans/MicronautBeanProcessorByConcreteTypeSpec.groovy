@@ -15,14 +15,13 @@
  */
 package io.micronaut.spring.beans
 
+import jakarta.inject.Singleton
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.ApplicationContext
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.test.context.ContextConfiguration
 import spock.lang.Specification
-
-import javax.inject.Singleton
 
 @ContextConfiguration(classes = [ByConcreteTypeConfig])
 class MicronautBeanProcessorByConcreteTypeSpec extends Specification {

@@ -21,9 +21,9 @@ import io.micronaut.http.HttpRequest;
 import io.micronaut.http.bind.binders.TypedRequestArgumentBinder;
 import io.micronaut.spring.web.reactive.ChannelResolver;
 import io.micronaut.spring.web.reactive.MicronautServerHttpRequest;
+import jakarta.inject.Singleton;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 
-import javax.inject.Singleton;
 import java.util.Optional;
 
 /**

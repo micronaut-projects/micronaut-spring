@@ -26,7 +26,7 @@ class MicronautBeanFactoryConfigurationSpec extends Specification {
     void "test exclude bean types"() {
         given:
         MicronautApplicationContext applicationContext = new MicronautApplicationContext(
-            ApplicationContext.build()
+            ApplicationContext.builder()
                 .properties("micronaut.spring.context.bean-excludes": [ObjectMapper])
         )
         applicationContext.start()

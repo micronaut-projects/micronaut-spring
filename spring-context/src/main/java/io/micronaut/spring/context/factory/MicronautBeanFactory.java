@@ -20,7 +20,9 @@ import io.micronaut.context.BeanRegistration;
 import io.micronaut.context.annotation.*;
 import io.micronaut.context.exceptions.NoSuchBeanException;
 import io.micronaut.core.annotation.AnnotationMetadata;
+import io.micronaut.core.annotation.AnnotationUtil;
 import io.micronaut.core.annotation.Internal;
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.naming.NameResolver;
 import io.micronaut.core.util.ArgumentUtils;
 import io.micronaut.core.util.ArrayUtils;
@@ -32,6 +34,7 @@ import io.micronaut.inject.DisposableBeanDefinition;
 import io.micronaut.inject.ParametrizedBeanFactory;
 import io.micronaut.inject.qualifiers.Qualifiers;
 import io.micronaut.spring.context.aware.SpringAwareListener;
+import jakarta.inject.Singleton;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.*;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
@@ -46,11 +49,6 @@ import org.springframework.core.ResolvableType;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ConcurrentReferenceHashMap;
 
-import javax.annotation.Nonnull;
-import javax.inject.Named;
-import javax.inject.Qualifier;
-import javax.inject.Scope;
-import javax.inject.Singleton;
 import java.io.Closeable;
 import java.lang.annotation.Annotation;
 import java.util.*;
@@ -142,12 +140,18 @@ public class MicronautBeanFactory extends DefaultListableBeanFactory implements 
             final String scope = annotationMetadata.stringValue(org.springframework.context.annotation.Scope.class).orElse(null);
             return scope == null || "singleton".equalsIgnoreCase(scope);
         }
-        if (annotationMetadata.isAnnotationPresent(EachProperty.class) || annotationMetadata.isAnnotationPresent(EachBean.class)) {
+        if (annotationMetadata.hasDeclaredStereotype(AnnotationUtil.SINGLETON)) {
             return true;
+        } else {
+            if (!annotationMetadata.hasDeclaredStereotype(AnnotationUtil.SCOPE) &&
+                    annotationMetadata.hasDeclaredStereotype(DefaultScope.class)) {
+                return annotationMetadata.stringValue(DefaultScope.class)
+                        .map(t -> t.equals(Singleton.class.getName()) || t.equals(AnnotationUtil.SINGLETON))
+                        .orElse(false);
+            } else {
+                return false;
+            }
         }
-        final Optional<Class<? extends Annotation>> scope = annotationMetadata.getDeclaredAnnotationTypeByStereotype(Scope.class);
-        // is singleton logic
-        return (scope.isPresent() && scope.get() == Singleton.class) || annotationMetadata.getValue(DefaultScope.class, Singleton.class).isPresent();
     }
 
     private String computeBeanName(BeanDefinition<?> definition) {
@@ -155,16 +159,16 @@ public class MicronautBeanFactory extends DefaultListableBeanFactory implements 
         if (definition instanceof NameResolver) {
             name = ((NameResolver) definition).resolveName().orElse(Primary.class.getSimpleName());
         } else {
-            name = definition.getValue(Named.class, String.class).orElseGet(() ->
-                    definition.getAnnotationTypeByStereotype(Qualifier.class).map(Class::getSimpleName).orElse(definition.getClass().getSimpleName())
+            name = definition.getValue(AnnotationUtil.NAMED, String.class).orElseGet(() ->
+                    definition.getAnnotationTypeByStereotype(AnnotationUtil.QUALIFIER).map(Class::getSimpleName).orElse(definition.getClass().getSimpleName())
             );
         }
         return definition.getBeanType().getName() + "(" + name + ")";
     }
 
     @Override
-    public @Nonnull
-    Object getBean(@Nonnull String name) throws BeansException {
+    public @NonNull
+    Object getBean(@NonNull String name) throws BeansException {
         if (super.isAlias(name)) {
             final String[] aliases = super.getAliases(name);
             for (String alias : aliases) {
@@ -194,14 +198,14 @@ public class MicronautBeanFactory extends DefaultListableBeanFactory implements 
             if (definition != null && type != null) {
 
                 AnnotationMetadata annotationMetadata = definition.getAnnotationMetadata();
-                Optional<io.micronaut.context.Qualifier> q = annotationMetadata.getAnnotationTypeByStereotype(Qualifier.class)
+                Optional<io.micronaut.context.Qualifier> q = annotationMetadata.getAnnotationNameByStereotype(AnnotationUtil.QUALIFIER)
                         .map(clazz -> Qualifiers.byAnnotation(annotationMetadata, clazz));
 
                 if (!q.isPresent()) {
                     if (definition instanceof NameResolver) {
                         name = ((NameResolver) definition).resolveName().orElse(null);
                     } else {
-                        name = definition.stringValue(Named.class).orElse(null);
+                        name = definition.stringValue(AnnotationUtil.NAMED).orElse(null);
                     }
                     if (name != null) {
                         q = Optional.of(Qualifiers.byName(name));
@@ -224,8 +228,8 @@ public class MicronautBeanFactory extends DefaultListableBeanFactory implements 
     }
 
     @Override
-    public @Nonnull
-    <T> T getBean(@Nonnull String name, @Nonnull Class<T> requiredType) throws BeansException {
+    public @NonNull
+    <T> T getBean(@NonNull String name, @NonNull Class<T> requiredType) throws BeansException {
         ArgumentUtils.requireNonNull("requiredType", requiredType);
         if (beanExcludes.contains(requiredType)) {
             throw new NoSuchBeanDefinitionException(requiredType);
@@ -255,8 +259,8 @@ public class MicronautBeanFactory extends DefaultListableBeanFactory implements 
     }
 
     @Override
-    public @Nonnull
-    Object getBean(@Nonnull String name, @Nonnull Object... args) throws BeansException {
+    public @NonNull
+    Object getBean(@NonNull String name, @NonNull Object... args) throws BeansException {
         final Class<?> type = getType(name);
         if (type != null) {
             return beanContext.createBean(type, args);
@@ -265,8 +269,8 @@ public class MicronautBeanFactory extends DefaultListableBeanFactory implements 
     }
 
     @Override
-    public @Nonnull
-    <T> T getBean(@Nonnull Class<T> requiredType) throws BeansException {
+    public @NonNull
+    <T> T getBean(@NonNull Class<T> requiredType) throws BeansException {
         ArgumentUtils.requireNonNull("requiredType", requiredType);
         if (beanExcludes.contains(requiredType)) {
             throw new NoSuchBeanDefinitionException(requiredType);
@@ -285,8 +289,8 @@ public class MicronautBeanFactory extends DefaultListableBeanFactory implements 
     }
 
     @Override
-    public @Nonnull
-    <T> T getBean(@Nonnull Class<T> requiredType, @Nonnull Object... args) throws BeansException {
+    public @NonNull
+    <T> T getBean(@NonNull Class<T> requiredType, @NonNull Object... args) throws BeansException {
         try {
             return beanContext.createBean(requiredType, args);
         } catch (NoSuchBeanException e) {
@@ -295,8 +299,8 @@ public class MicronautBeanFactory extends DefaultListableBeanFactory implements 
     }
 
     @Override
-    public @Nonnull
-    <T> ObjectProvider<T> getBeanProvider(@Nonnull Class<T> requiredType) {
+    public @NonNull
+    <T> ObjectProvider<T> getBeanProvider(@NonNull Class<T> requiredType) {
         return new ObjectProvider<T>() {
             @Override
             public T getObject(Object... args) throws BeansException {
@@ -328,14 +332,14 @@ public class MicronautBeanFactory extends DefaultListableBeanFactory implements 
     }
 
     @Override
-    public @Nonnull
-    <T> ObjectProvider<T> getBeanProvider(@Nonnull ResolvableType requiredType) {
+    public @NonNull
+    <T> ObjectProvider<T> getBeanProvider(@NonNull ResolvableType requiredType) {
         final Class<T> resolved = (Class<T>) requiredType.resolve();
         return getBeanProvider(resolved);
     }
 
     @Override
-    public boolean containsBean(@Nonnull String name) {
+    public boolean containsBean(@NonNull String name) {
         return super.containsSingleton(name) ||
                 beanDefinitionMap.containsKey(name) ||
                 beanDefinitionsByName.containsKey(name) ||
@@ -343,7 +347,7 @@ public class MicronautBeanFactory extends DefaultListableBeanFactory implements 
     }
 
     @Override
-    public boolean isSingleton(@Nonnull String name) throws NoSuchBeanDefinitionException {
+    public boolean isSingleton(@NonNull String name) throws NoSuchBeanDefinitionException {
         if (super.containsSingleton(name)) {
             return true;
         } else {
@@ -360,13 +364,13 @@ public class MicronautBeanFactory extends DefaultListableBeanFactory implements 
      * @param definition The definition
      * @return True if it is
      */
-    protected boolean isSingleton(@Nonnull BeanDefinitionReference<?> definition) {
+    protected boolean isSingleton(@NonNull BeanDefinitionReference<?> definition) {
         final AnnotationMetadata annotationMetadata = definition.getAnnotationMetadata();
         return isSingleton(annotationMetadata);
     }
 
     @Override
-    public boolean isPrototype(@Nonnull String name) throws NoSuchBeanDefinitionException {
+    public boolean isPrototype(@NonNull String name) throws NoSuchBeanDefinitionException {
         if (super.containsSingleton(name)) {
             return false;
         }
@@ -377,7 +381,7 @@ public class MicronautBeanFactory extends DefaultListableBeanFactory implements 
             if (annotationMetadata.hasDeclaredStereotype(Prototype.class)) {
                 return true;
             } else {
-                final boolean hasScope = annotationMetadata.getAnnotationNamesByStereotype(Scope.class).isEmpty();
+                final boolean hasScope = annotationMetadata.getAnnotationNamesByStereotype(AnnotationUtil.SCOPE).isEmpty();
                 return !hasScope;
             }
         }
@@ -385,7 +389,7 @@ public class MicronautBeanFactory extends DefaultListableBeanFactory implements 
     }
 
     @Override
-    public boolean isTypeMatch(@Nonnull String name, @Nonnull ResolvableType typeToMatch) throws NoSuchBeanDefinitionException {
+    public boolean isTypeMatch(@NonNull String name, @NonNull ResolvableType typeToMatch) throws NoSuchBeanDefinitionException {
         final Class<?> resolved = typeToMatch.resolve();
         if (resolved != null) {
             return isTypeMatch(name, resolved);
@@ -394,7 +398,7 @@ public class MicronautBeanFactory extends DefaultListableBeanFactory implements 
     }
 
     @Override
-    public boolean isTypeMatch(@Nonnull String name, @Nonnull Class<?> typeToMatch) throws NoSuchBeanDefinitionException {
+    public boolean isTypeMatch(@NonNull String name, @NonNull Class<?> typeToMatch) throws NoSuchBeanDefinitionException {
         final Class<?> beanType = getType(name);
         if (beanType != null) {
             return typeToMatch.isAssignableFrom(beanType);
@@ -403,7 +407,7 @@ public class MicronautBeanFactory extends DefaultListableBeanFactory implements 
     }
 
     @Override
-    public Class<?> getType(@Nonnull String beanName) throws NoSuchBeanDefinitionException {
+    public Class<?> getType(@NonNull String beanName) throws NoSuchBeanDefinitionException {
         Optional<Class<?>> opt = beanTypeCache.get(beanName);
         //noinspection OptionalAssignedToNull
         if (opt == null) {
@@ -473,7 +477,7 @@ public class MicronautBeanFactory extends DefaultListableBeanFactory implements 
     }
 
     @Override
-    public boolean containsBeanDefinition(@Nonnull String beanName) {
+    public boolean containsBeanDefinition(@NonNull String beanName) {
         return beanDefinitionMap.containsKey(beanName);
     }
 
@@ -483,14 +487,14 @@ public class MicronautBeanFactory extends DefaultListableBeanFactory implements 
     }
 
     @Override
-    public @Nonnull
+    public @NonNull
     String[] getBeanDefinitionNames() {
         return beanDefinitionMap.keySet().toArray(new String[0]);
     }
 
     @Override
-    public @Nonnull
-    String[] getBeanNamesForType(@Nonnull ResolvableType type) {
+    public @NonNull
+    String[] getBeanNamesForType(@NonNull ResolvableType type) {
         final Class<?> resolved = type.resolve();
         if (resolved != null) {
             return getBeanNamesForType(resolved);
@@ -499,13 +503,13 @@ public class MicronautBeanFactory extends DefaultListableBeanFactory implements 
     }
 
     @Override
-    public @Nonnull
+    public @NonNull
     String[] getBeanNamesForType(Class<?> type) {
         return getBeanNamesForType(type, true, true);
     }
 
     @Override
-    public @Nonnull
+    public @NonNull
     String[] getBeanNamesForType(Class<?> type, boolean includeNonSingletons, boolean allowEagerInit) {
         // ignore certain common cases
         if (type == null || Object.class == type || List.class == type || beanExcludes.contains(type)) {
@@ -526,7 +530,7 @@ public class MicronautBeanFactory extends DefaultListableBeanFactory implements 
     }
 
     @Override
-    public @Nonnull
+    public @NonNull
     <T> Map<String, T> getBeansOfType(Class<T> type, boolean includeNonSingletons, boolean allowEagerInit) throws BeansException {
         if (type == null || beanExcludes.contains(type)) {
             return Collections.emptyMap();
@@ -546,15 +550,15 @@ public class MicronautBeanFactory extends DefaultListableBeanFactory implements 
     }
 
     @Override
-    public @Nonnull
-    String[] getBeanNamesForAnnotation(@Nonnull Class<? extends Annotation> annotationType) {
+    public @NonNull
+    String[] getBeanNamesForAnnotation(@NonNull Class<? extends Annotation> annotationType) {
         final String[] beanNamesForAnnotation = super.getBeanNamesForAnnotation(annotationType);
         final Collection<BeanDefinition<?>> beanDefinitions = beanContext.getBeanDefinitions(Qualifiers.byStereotype(annotationType));
         return ArrayUtils.concat(beansToNames(beanDefinitions), beanNamesForAnnotation);
     }
 
     @Override
-    public <A extends Annotation> A findAnnotationOnBean(@Nonnull String beanName, @Nonnull Class<A> annotationType) throws NoSuchBeanDefinitionException {
+    public <A extends Annotation> A findAnnotationOnBean(@NonNull String beanName, @NonNull Class<A> annotationType) throws NoSuchBeanDefinitionException {
         if (super.containsSingleton(beanName)) {
             return super.findAnnotationOnBean(beanName, annotationType);
         } else {
@@ -573,14 +577,14 @@ public class MicronautBeanFactory extends DefaultListableBeanFactory implements 
     }
 
     @Override
-    public @Nonnull
-    <T> T createBean(@Nonnull Class<T> beanClass) throws BeansException {
+    public @NonNull
+    <T> T createBean(@NonNull Class<T> beanClass) throws BeansException {
         return beanContext.createBean(beanClass);
     }
 
     @SuppressWarnings("ConstantConditions")
     @Override
-    public void autowireBean(@Nonnull Object existingBean) throws BeansException {
+    public void autowireBean(@NonNull Object existingBean) throws BeansException {
         if (existingBean != null) {
             beanContext.inject(existingBean);
         }
@@ -710,7 +714,7 @@ public class MicronautBeanFactory extends DefaultListableBeanFactory implements 
             }
 
             BeanDefinition<?> finalDefinition = definition;
-            io.micronaut.context.Qualifier<T> q = (io.micronaut.context.Qualifier<T>) definition.getValue(Named.class, String.class)
+            io.micronaut.context.Qualifier<T> q = (io.micronaut.context.Qualifier<T>) definition.getValue(AnnotationUtil.NAMED, String.class)
                     .map((String n) -> {
                         if (Primary.class.getName().equals(n)) {
                             return n;
@@ -721,7 +725,7 @@ public class MicronautBeanFactory extends DefaultListableBeanFactory implements 
                                 if (finalDefinition.hasDeclaredStereotype(Primary.class)) {
                                     return null;
                                 }
-                                final Class annotationType = finalDefinition.getAnnotationTypeByStereotype(Qualifier.class).orElse(null);
+                                final String annotationType = finalDefinition.getAnnotationNameByStereotype(AnnotationUtil.QUALIFIER).orElse(null);
                                 if (annotationType != null) {
                                     return Qualifiers.byAnnotation(finalDefinition, annotationType);
                                 }
@@ -833,7 +837,7 @@ public class MicronautBeanFactory extends DefaultListableBeanFactory implements 
         }
 
         if (definition != null) {
-            return definition.hasDeclaredStereotype(Primary.class) || definition.getValue(Named.class, String.class).map((String n) -> Primary.class.getName().equals(n)).orElse(false);
+            return definition.hasDeclaredStereotype(Primary.class) || definition.getValue(AnnotationUtil.NAMED, String.class).map((String n) -> Primary.class.getName().equals(n)).orElse(false);
         } else {
             return false;
         }

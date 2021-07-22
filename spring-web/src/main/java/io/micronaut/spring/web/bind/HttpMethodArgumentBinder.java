@@ -19,9 +19,9 @@ import io.micronaut.core.convert.ArgumentConversionContext;
 import io.micronaut.core.type.Argument;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.bind.binders.TypedRequestArgumentBinder;
+import jakarta.inject.Singleton;
 import org.springframework.http.HttpMethod;
 
-import javax.inject.Singleton;
 import java.util.Optional;
 
 /**

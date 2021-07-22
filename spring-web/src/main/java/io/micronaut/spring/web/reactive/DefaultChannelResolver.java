@@ -19,8 +19,8 @@ import io.micronaut.http.HttpRequest;
 import io.micronaut.http.server.netty.HttpContentProcessor;
 import io.netty.buffer.ByteBufHolder;
 import io.netty.channel.Channel;
+import jakarta.inject.Singleton;
 
-import javax.inject.Singleton;
 import java.util.Optional;
 
 /**

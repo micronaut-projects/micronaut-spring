@@ -20,10 +20,9 @@ import io.micronaut.context.event.ApplicationEventPublisher;
 import io.micronaut.context.event.ShutdownEvent;
 import io.micronaut.context.event.StartupEvent;
 import io.micronaut.spring.context.MicronautApplicationContext;
+import jakarta.inject.Singleton;
 import org.springframework.context.event.ContextClosedEvent;
 import org.springframework.context.event.ContextStartedEvent;
-
-import javax.inject.Singleton;
 
 /**
  * Adapts Micronaut events to Spring events.

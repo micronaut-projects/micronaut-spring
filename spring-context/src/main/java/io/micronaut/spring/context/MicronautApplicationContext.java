@@ -17,9 +17,12 @@ package io.micronaut.spring.context;
 
 import io.micronaut.context.ApplicationContextBuilder;
 import io.micronaut.context.annotation.Secondary;
+import io.micronaut.core.annotation.Nullable;
 import io.micronaut.spring.context.env.MicronautEnvironment;
 import io.micronaut.spring.context.event.MicronautApplicationEventPublisher;
 import io.micronaut.spring.context.factory.MicronautBeanFactory;
+import jakarta.inject.Inject;
+import jakarta.inject.Singleton;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
@@ -36,9 +39,6 @@ import org.springframework.core.io.UrlResource;
 import org.springframework.core.metrics.ApplicationStartup;
 import org.springframework.util.ObjectUtils;
 
-import javax.annotation.Nullable;
-import javax.inject.Inject;
-import javax.inject.Singleton;
 import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.util.Locale;
@@ -94,7 +94,7 @@ public class MicronautApplicationContext implements ManagedApplicationContext, C
      * Default constructor.
      */
     public MicronautApplicationContext() {
-        this(io.micronaut.context.ApplicationContext.build());
+        this(io.micronaut.context.ApplicationContext.builder());
     }
 
     /**

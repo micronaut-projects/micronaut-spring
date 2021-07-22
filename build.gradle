@@ -11,10 +11,16 @@ buildscript {
 subprojects { Project subproject ->
     group "io.micronaut.spring"
 
+    repositories {
+        maven { url "https://s01.oss.sonatype.org/content/repositories/snapshots/" }
+    }
+
     apply plugin: "io.micronaut.build.internal.common"
 
-    apply plugin: "io.micronaut.build.internal.dependency-updates"
-    apply plugin: "io.micronaut.build.internal.publishing"
+    if (!subproject.name.startsWith('test-')) {
+        apply plugin: "io.micronaut.build.internal.dependency-updates"
+        apply plugin: "io.micronaut.build.internal.publishing"
+    }
 
     dependencies {
         testImplementation("org.spockframework:spock-core:${spockVersion}") {

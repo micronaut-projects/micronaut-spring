@@ -16,11 +16,11 @@
 package io.micronaut.spring.annotation;
 
 import io.micronaut.core.annotation.AnnotationValue;
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.version.VersionUtils;
 import io.micronaut.inject.annotation.NamedAnnotationMapper;
 import io.micronaut.inject.visitor.VisitorContext;
 
-import javax.annotation.Nonnull;
 import java.lang.annotation.Annotation;
 import java.util.Collections;
 import java.util.List;
@@ -52,7 +52,7 @@ public abstract class AbstractSpringAnnotationMapper implements NamedAnnotationM
      * @param visitorContext The visitor context
      * @return A list of annotations
      */
-    protected abstract @Nonnull List<AnnotationValue<?>> mapInternal(
-            @Nonnull AnnotationValue<Annotation> annotation,
-            @Nonnull VisitorContext visitorContext);
+    protected abstract @NonNull List<AnnotationValue<?>> mapInternal(
+            @NonNull AnnotationValue<Annotation> annotation,
+            @NonNull VisitorContext visitorContext);
 }

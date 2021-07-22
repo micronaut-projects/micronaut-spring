@@ -15,6 +15,7 @@
  */
 package io.micronaut.spring.context.aware;
 
+import io.micronaut.context.BeanProvider;
 import io.micronaut.context.event.BeanCreatedEvent;
 import io.micronaut.context.event.BeanCreatedEventListener;
 import io.micronaut.context.event.BeanInitializedEventListener;
@@ -23,14 +24,12 @@ import io.micronaut.core.annotation.Internal;
 import io.micronaut.spring.context.MicronautApplicationContext;
 import io.micronaut.spring.context.factory.MicronautBeanFactory;
 import io.micronaut.spring.context.env.MicronautEnvironment;
+import jakarta.inject.Singleton;
 import org.springframework.beans.factory.BeanCreationException;
 import org.springframework.beans.factory.BeanFactoryAware;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.EnvironmentAware;
-
-import javax.inject.Provider;
-import javax.inject.Singleton;
 
 /**
  * Enables support for the interfaces {@link EnvironmentAware}, {@link ApplicationContextAware}, and {@link BeanFactoryAware}.
@@ -41,9 +40,9 @@ import javax.inject.Singleton;
 @Internal
 public class SpringAwareListener implements BeanInitializedEventListener<Object>, BeanCreatedEventListener<Object> {
 
-    private final Provider<MicronautBeanFactory> beanFactoryProvider;
-    private final Provider<MicronautEnvironment> environmentProvider;
-    private final Provider<MicronautApplicationContext> applicationContextProvider;
+    private final BeanProvider<MicronautBeanFactory> beanFactoryProvider;
+    private final BeanProvider<MicronautEnvironment> environmentProvider;
+    private final BeanProvider<MicronautApplicationContext> applicationContextProvider;
 
     /**
      * Default constructor.
@@ -51,7 +50,7 @@ public class SpringAwareListener implements BeanInitializedEventListener<Object>
      * @param environmentProvider The env provider
      * @param applicationContextProvider The context provider
      */
-    public SpringAwareListener(Provider<MicronautBeanFactory> beanFactoryProvider, Provider<MicronautEnvironment> environmentProvider, Provider<MicronautApplicationContext> applicationContextProvider) {
+    public SpringAwareListener(BeanProvider<MicronautBeanFactory> beanFactoryProvider, BeanProvider<MicronautEnvironment> environmentProvider, BeanProvider<MicronautApplicationContext> applicationContextProvider) {
         this.beanFactoryProvider = beanFactoryProvider;
         this.environmentProvider = environmentProvider;
         this.applicationContextProvider = applicationContextProvider;

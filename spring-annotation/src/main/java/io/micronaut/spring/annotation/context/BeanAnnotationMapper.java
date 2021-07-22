@@ -17,14 +17,14 @@ package io.micronaut.spring.annotation.context;
 
 import io.micronaut.context.annotation.Bean;
 import io.micronaut.context.annotation.DefaultScope;
+import io.micronaut.core.annotation.AnnotationUtil;
 import io.micronaut.core.annotation.AnnotationValue;
 import io.micronaut.core.annotation.AnnotationValueBuilder;
 import io.micronaut.core.util.StringUtils;
 import io.micronaut.inject.visitor.VisitorContext;
 import io.micronaut.spring.annotation.AbstractSpringAnnotationMapper;
+import jakarta.inject.Singleton;
 
-import javax.inject.Named;
-import javax.inject.Singleton;
 import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 import java.util.List;
@@ -56,7 +56,7 @@ public class BeanAnnotationMapper extends AbstractSpringAnnotationMapper {
         final String beanName = annotation.getValue(String.class).orElse(annotation.get("name", String.class).orElse(null));
 
         if (StringUtils.isNotEmpty(beanName)) {
-            newAnnotations.add(AnnotationValue.builder(Named.class).value(beanName).build());
+            newAnnotations.add(AnnotationValue.builder(AnnotationUtil.NAMED).value(beanName).build());
         }
 
         return newAnnotations;

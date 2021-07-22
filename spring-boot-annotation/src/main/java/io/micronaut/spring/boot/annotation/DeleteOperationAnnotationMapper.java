@@ -15,6 +15,8 @@
  */
 package io.micronaut.spring.boot.annotation;
 
+import io.micronaut.core.annotation.NonNull;
+
 /**
  * Maps Actuator DeleteOperation to Micronaut Delete.
  *
@@ -22,6 +24,7 @@ package io.micronaut.spring.boot.annotation;
  * @since 1.0
  */
 public class DeleteOperationAnnotationMapper extends ReadOperationAnnotationMapper {
+    @NonNull
     @Override
     protected String operationName() {
         return "Delete";

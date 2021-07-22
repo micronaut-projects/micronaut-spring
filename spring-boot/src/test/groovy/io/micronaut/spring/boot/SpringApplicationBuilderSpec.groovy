@@ -41,7 +41,7 @@ class SpringApplicationBuilderSpec extends Specification{
         def port = SocketUtils.findAvailableTcpPort()
         def props = ["server.port": port,
                      'spring.test.port': port]
-        def context = new MicronautApplicationContext(ApplicationContext.build().properties(
+        def context = new MicronautApplicationContext(ApplicationContext.builder().properties(
                 props
         ))
         context.start()
@@ -61,7 +61,7 @@ class SpringApplicationBuilderSpec extends Specification{
         springContext.getBean(FeaturesClient)
         springContext.getBean(TestClient).hello() == 'good'
         springContext.getBean(MyRunner).executed
-        
+
         cleanup:
         springContext.close()
 
@@ -73,7 +73,7 @@ class SpringApplicationBuilderSpec extends Specification{
         def port = SocketUtils.findAvailableTcpPort()
         def props = ["server.port": port,
                      'spring.test.port': port]
-        def context = new MicronautApplicationContext(ApplicationContext.build().properties(
+        def context = new MicronautApplicationContext(ApplicationContext.builder().properties(
                 props
         ))
         context.start()

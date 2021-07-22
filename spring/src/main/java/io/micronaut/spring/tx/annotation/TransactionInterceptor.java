@@ -16,6 +16,7 @@
 package io.micronaut.spring.tx.annotation;
 
 import io.micronaut.aop.InterceptPhase;
+import io.micronaut.aop.InterceptorBean;
 import io.micronaut.aop.MethodInterceptor;
 import io.micronaut.aop.MethodInvocationContext;
 import io.micronaut.context.BeanLocator;
@@ -29,10 +30,10 @@ import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionSystemException;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
 import org.springframework.transaction.interceptor.TransactionAttribute;
 
-import javax.inject.Singleton;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -42,7 +43,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author graemerocher
  * @since 1.0
  */
-@Singleton
+@InterceptorBean(Transactional.class)
 public class TransactionInterceptor extends TransactionAspectSupport implements MethodInterceptor<Object, Object> {
 
     private final Map<ExecutableMethod, TransactionAttribute> transactionDefinitionMap = new ConcurrentHashMap<>();

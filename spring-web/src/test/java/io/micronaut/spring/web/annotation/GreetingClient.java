@@ -15,12 +15,11 @@
  */
 package io.micronaut.spring.web.annotation;
 
+import io.micronaut.core.annotation.Nullable;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.annotation.Header;
 import io.micronaut.http.client.annotation.Client;
 import org.springframework.web.bind.annotation.*;
-
-import javax.annotation.Nullable;
 
 @Client("/")
 public interface GreetingClient {

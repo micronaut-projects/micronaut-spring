@@ -15,6 +15,8 @@
  */
 package io.micronaut.spring.boot.annotation;
 
+import io.micronaut.core.annotation.NonNull;
+
 /**
  * Maps ConditionalOnMissingBean to Micronaut Requires.
  *
@@ -27,6 +29,7 @@ public class ConditionalOnMissingBeanAnnotationMapper extends ConditionalOnBeanA
         return "org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean";
     }
 
+    @NonNull
     @Override
     protected String requiresMethodName() {
         return "missingBeans";

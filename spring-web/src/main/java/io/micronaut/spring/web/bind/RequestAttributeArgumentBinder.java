@@ -20,9 +20,9 @@ import io.micronaut.core.annotation.AnnotationMetadata;
 import io.micronaut.core.convert.ArgumentConversionContext;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.bind.binders.AnnotatedRequestArgumentBinder;
+import jakarta.inject.Singleton;
 import org.springframework.web.bind.annotation.RequestAttribute;
 
-import javax.inject.Singleton;
 import java.util.Optional;
 
 /**

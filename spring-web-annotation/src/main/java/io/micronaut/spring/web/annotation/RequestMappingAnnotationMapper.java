@@ -17,14 +17,14 @@ package io.micronaut.spring.web.annotation;
 
 import io.micronaut.core.annotation.AnnotationValue;
 import io.micronaut.core.annotation.AnnotationValueBuilder;
+import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.util.ArrayUtils;
 import io.micronaut.http.HttpMethod;
 import io.micronaut.http.annotation.*;
 import io.micronaut.inject.visitor.VisitorContext;
 import io.micronaut.spring.annotation.AbstractSpringAnnotationMapper;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 import java.util.List;
@@ -82,7 +82,7 @@ public class RequestMappingAnnotationMapper extends AbstractSpringAnnotationMapp
      * @param annotation The annotation
      * @return The builder
      */
-    protected @Nonnull AnnotationValueBuilder<?> newBuilder(
+    protected @NonNull AnnotationValueBuilder<?> newBuilder(
             @Nullable HttpMethod httpMethod,
             AnnotationValue<Annotation> annotation) {
 
