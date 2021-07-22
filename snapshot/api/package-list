@@ -19,6 +19,7 @@ io.micronaut.spring.context.factory
 io.micronaut.spring.core.env
 io.micronaut.spring.core.event
 io.micronaut.spring.tx.annotation
+io.micronaut.spring.tx.test
 io.micronaut.spring.web
 io.micronaut.spring.web.annotation
 io.micronaut.spring.web.bind
