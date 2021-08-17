@@ -54,7 +54,7 @@ class RestControllerSpec extends Specification {
 
         then:
         def e = thrown(HttpClientResponseException)
-        e.message.contains('name: must match "\\D+"')
+        e.response.getBody(Map).get()._embedded.errors[0].message.contains('name: must match "\\D+"')
     }
 
     void "test ServerHttpRequest argument"() {
