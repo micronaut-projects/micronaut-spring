@@ -5,8 +5,7 @@ dependencies {
     api 'io.projectreactor:reactor-core:3.4.8'
     implementation "io.micronaut:micronaut-http:$micronautVersion"
     compileOnly "io.micronaut:micronaut-http-server-netty"
-    compileOnly "io.micronaut.views:micronaut-views-core:3.0.0-M1"
-
+    compileOnly "io.micronaut.views:micronaut-views-core"
     testAnnotationProcessor "io.micronaut:micronaut-inject-java"
     testAnnotationProcessor project(":spring-annotation")
     testAnnotationProcessor project(":spring-web-annotation")
@@ -15,9 +14,8 @@ dependencies {
     testImplementation "io.micronaut:micronaut-validation"
     testImplementation "io.micronaut:micronaut-http-client"
     testImplementation "io.micronaut:micronaut-http-server-netty"
-    testRuntimeOnly "io.micronaut.views:micronaut-views-thymeleaf:3.0.0-M1"
+    testRuntimeOnly "io.micronaut.views:micronaut-views-thymeleaf"
     testRuntimeOnly("org.springframework.boot:spring-boot-starter-thymeleaf:$springBootVersion")
-
 }
 
 //compileTestJava.options.fork = true
