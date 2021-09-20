@@ -1,3 +1,5 @@
+import org.gradle.internal.jvm.Jvm
+
 dependencies {
     annotationProcessor "io.micronaut:micronaut-inject-java:$micronautVersion"
     api "org.springframework:spring-context:$springVersion"
@@ -14,7 +16,7 @@ dependencies {
     testImplementation "io.micronaut:micronaut-inject-java:$micronautVersion"
     testImplementation  project(":spring-annotation")
     testImplementation "io.micronaut:micronaut-inject-java-test:$micronautVersion"
-    if(!JavaVersion.current().isJava9Compatible()) {
-        testImplementation files(org.gradle.internal.jvm.Jvm.current().toolsJar)
+    if (!JavaVersion.current().isJava9Compatible()) {
+        testImplementation files(Jvm.current().toolsJar)
     }
 }
