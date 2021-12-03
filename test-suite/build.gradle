@@ -8,8 +8,8 @@ repositories {
 
 dependencies {
     testAnnotationProcessor project(":spring-annotation")
-    testAnnotationProcessor "io.micronaut:micronaut-inject-java"
-    testCompileOnly "io.micronaut:micronaut-inject-groovy"
+    testAnnotationProcessor "io.micronaut:micronaut-inject-java:$micronautVersion"
+    testCompileOnly "io.micronaut:micronaut-inject-groovy:$micronautVersion"
     testImplementation project(":spring")
 }
 
