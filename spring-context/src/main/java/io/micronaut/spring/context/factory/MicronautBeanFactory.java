@@ -728,8 +728,10 @@ public class MicronautBeanFactory extends DefaultListableBeanFactory implements 
                                 final String annotationType = finalDefinition.getAnnotationNameByStereotype(AnnotationUtil.QUALIFIER).orElse(null);
                                 if (annotationType != null) {
                                     return Qualifiers.byAnnotation(finalDefinition, annotationType);
+                                } else if (finalDefinition instanceof NameResolver) {
+                                    return ((NameResolver) finalDefinition).resolveName().map(Qualifiers::byName).orElse(null);
                                 }
-                                return null;
+                        return null;
                             }
                     );
             if (q != null) {
