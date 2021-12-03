@@ -1,4 +1,10 @@
+plugins {
+    id "io.micronaut.build.internal.module"
+}
+
 dependencies {
     api project(":spring-annotation")
     api "io.micronaut:micronaut-http"
 }
+
+group "io.micronaut.spring"

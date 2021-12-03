@@ -1,6 +1,18 @@
+plugins {
+    id 'java-library'
+    id 'groovy'
+}
+repositories {
+    mavenCentral()
+}
+
 dependencies {
     testAnnotationProcessor project(":spring-annotation")
     testAnnotationProcessor "io.micronaut:micronaut-inject-java"
     testCompileOnly "io.micronaut:micronaut-inject-groovy"
     testImplementation project(":spring")
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
 }

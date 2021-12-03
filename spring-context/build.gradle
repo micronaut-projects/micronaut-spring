@@ -1,5 +1,9 @@
 import org.gradle.internal.jvm.Jvm
 
+plugins {
+    id "io.micronaut.build.internal.module"
+}
+
 dependencies {
     annotationProcessor "io.micronaut:micronaut-inject-java:$micronautVersion"
     api "org.springframework:spring-context:$springVersion"
@@ -20,3 +24,5 @@ dependencies {
         testImplementation files(Jvm.current().toolsJar)
     }
 }
+
+group "io.micronaut.spring"

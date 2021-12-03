@@ -1,3 +1,7 @@
+plugins {
+    id "io.micronaut.build.internal.module"
+}
+
 dependencies {
     implementation project(":spring-annotation")
     api "io.micronaut:micronaut-inject:$micronautVersion"
@@ -9,3 +13,4 @@ dependencies {
     testImplementation "org.springframework.boot:spring-boot-actuator:$springBootVersion"
 }
 
+group "io.micronaut.spring"

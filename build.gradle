@@ -1,34 +1,9 @@
-buildscript {
-    repositories {
-        mavenCentral()
-        gradlePluginPortal()
-    }
-    dependencies {
-        classpath "io.micronaut.build.internal:micronaut-gradle-plugins:4.2.6"
-    }
+plugins {
+    id "io.micronaut.build.internal.docs"
+    id "io.micronaut.build.internal.dependency-updates"
 }
 
 subprojects { Project subproject ->
-    group "io.micronaut.spring"
-
-    repositories {
-        maven { url "https://s01.oss.sonatype.org/content/repositories/snapshots/" }
-    }
-
-    apply plugin: "io.micronaut.build.internal.common"
-
-    if (!subproject.name.startsWith('test-')) {
-        apply plugin: "io.micronaut.build.internal.dependency-updates"
-        apply plugin: "io.micronaut.build.internal.publishing"
-    }
-
-    dependencies {
-        testImplementation("org.spockframework:spock-core:${spockVersion}") {
-            exclude module:'groovy-all'
-        }
-        testImplementation "io.micronaut.test:micronaut-test-spock:$micronautTestVersion"
-    }
-
     subproject.configurations.all {
         resolutionStrategy.eachDependency { DependencyResolveDetails details ->
             String group = details.requested.group
@@ -40,13 +15,5 @@ subprojects { Project subproject ->
             }
         }
     }
-
-    tasks.withType(Test) {
-        if (JavaVersion.current().isCompatibleWith(JavaVersion.VERSION_15)) {
-            jvmArgs "--enable-preview"
-        }
-    }
 }
 
-apply plugin: "io.micronaut.build.internal.docs"
-apply plugin: "io.micronaut.build.internal.dependency-updates"

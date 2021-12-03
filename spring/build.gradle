@@ -1,3 +1,7 @@
+plugins {
+    id "io.micronaut.build.internal.module"
+}
+
 dependencies {
     annotationProcessor "io.micronaut:micronaut-inject-java:$micronautVersion"
 
@@ -17,3 +21,5 @@ dependencies {
     testImplementation "org.spockframework:spock-spring:$spockVersion"
     testImplementation "org.springframework:spring-test:$springVersion"
 }
+
+group "io.micronaut.spring"

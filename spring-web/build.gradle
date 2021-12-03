@@ -1,3 +1,7 @@
+plugins {
+    id "io.micronaut.build.internal.module"
+}
+
 dependencies {
     annotationProcessor "io.micronaut:micronaut-inject-java"
     api project(":spring-context")
@@ -17,6 +21,8 @@ dependencies {
     testRuntimeOnly "io.micronaut.views:micronaut-views-thymeleaf"
     testRuntimeOnly("org.springframework.boot:spring-boot-starter-thymeleaf:$springBootVersion")
 }
+
+group "io.micronaut.spring"
 
 //compileTestJava.options.fork = true
 //compileTestJava.options.forkOptions.jvmArgs = ['-Xdebug', '-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=5005']
