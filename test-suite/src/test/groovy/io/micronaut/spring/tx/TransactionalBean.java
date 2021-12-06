@@ -16,7 +16,7 @@
 package io.micronaut.spring.tx;
 
 import jakarta.inject.Singleton;
-import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
@@ -28,7 +28,7 @@ public class TransactionalBean {
     public String doSomething() {
         // should not throw
         final TransactionStatus transactionStatus = TransactionAspectSupport.currentTransactionStatus();
-        Assert.assertNotNull(transactionStatus);
+        Assertions.assertNotNull(transactionStatus);
         return "foo";
     }
 }

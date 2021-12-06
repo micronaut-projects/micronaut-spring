@@ -11,6 +11,11 @@ dependencies {
     testAnnotationProcessor "io.micronaut:micronaut-inject-java:$micronautVersion"
     testCompileOnly "io.micronaut:micronaut-inject-groovy:$micronautVersion"
     testImplementation project(":spring")
+    testImplementation "org.junit.jupiter:junit-jupiter-api:${junitVersion}"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${junitVersion}"
+    testImplementation("org.spockframework:spock-core:${spockVersion}") {
+        exclude module:'groovy-all'
+    }
 }
 
 tasks.named('test') {
