@@ -245,13 +245,13 @@ If an annotation or interface of Spring is not mentioned in this documentation c
 
 dependencies {
     // for Java applications
-    annotationProcessor "io.micronaut:micronaut-inject-java:3.0.1"
-    annotationProcessor "io.micronaut:micronaut-validation:3.0.1"
+    annotationProcessor "io.micronaut:micronaut-inject-java:3.2.0"
+    annotationProcessor "io.micronaut:micronaut-validation:3.2.0"
     annotationProcessor "io.micronaut.spring:micronaut-spring-annotation:4.0.2-SNAPSHOT"
 
     // for Kotlin applications
-    kapt "io.micronaut:micronaut-inject-java:3.0.1"
-    kapt "io.micronaut:micronaut-validation:3.0.1"
+    kapt "io.micronaut:micronaut-inject-java:3.2.0"
+    kapt "io.micronaut:micronaut-validation:3.2.0"
     kapt "io.micronaut.spring:micronaut-spring-annotation:4.0.2-SNAPSHOT"
 
     // for Groovy applications
@@ -259,7 +259,7 @@ dependencies {
     compileOnly "io.micronaut:micronaut-validation:$micronautVersion"
     compileOnly "io.micronaut.spring:micronaut-spring-annotation:$micronautSpringVersion"
 
-    compile "io.micronaut:micronaut-inject:3.0.1"
+    compile "io.micronaut:micronaut-inject:3.2.0"
     compile("org.springframework.boot:spring-boot-starter")
     ...
 }</code></pre>
@@ -538,9 +538,9 @@ If you are only going to reference Spring annotations and not Spring classes or 
 
 
     // additional web dependencies for Micronaut
-    compile("io.micronaut:micronaut-http-server:3.0.1")
+    compile("io.micronaut:micronaut-http-server:3.2.0")
     runtime("io.micronaut.spring:micronaut-spring-web:4.0.2-SNAPSHOT")
-    runtime("io.micronaut:micronaut-http-server-netty:3.0.1")
+    runtime("io.micronaut:micronaut-http-server-netty:3.2.0")
 }</code></pre>
 </div>
 </div>
