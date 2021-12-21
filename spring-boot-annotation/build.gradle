@@ -1,16 +1,14 @@
 plugins {
-    id "io.micronaut.build.internal.module"
+    id 'io.micronaut.build.internal.spring-module'
 }
 
 dependencies {
-    implementation project(":spring-annotation")
-    api "io.micronaut:micronaut-inject:$micronautVersion"
-    api "io.micronaut:micronaut-runtime:$micronautVersion"
-    testImplementation project(":spring-boot")
-    testAnnotationProcessor "io.micronaut:micronaut-inject-java:$micronautVersion"
-    testImplementation "org.springframework.boot:spring-boot:$springBootVersion"
-    testImplementation "org.springframework.boot:spring-boot-autoconfigure:$springBootVersion"
-    testImplementation "org.springframework.boot:spring-boot-actuator:$springBootVersion"
+    implementation projects.springAnnotation
+    api mn.micronaut.inject
+    api mn.micronaut.runtime
+    testImplementation projects.springBoot
+    testAnnotationProcessor mn.micronaut.inject.java
+    testImplementation libs.boot
+    testImplementation libs.boot.autoconfigure
+    testImplementation libs.boot.actuator
 }
-
-group "io.micronaut.spring"

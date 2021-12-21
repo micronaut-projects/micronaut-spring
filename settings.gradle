@@ -6,17 +6,30 @@ pluginManagement {
 }
 
 plugins {
-    id 'io.micronaut.build.shared.settings' version '4.2.6'
+    id 'io.micronaut.build.shared.settings' version '5.1.0'
 }
 
-rootProject.name = "spring"
+rootProject.name = 'micronaut-spring'
 
-include "spring"
-include "spring-annotation"
-include "spring-boot-annotation"
-include "spring-boot"
-include "spring-web-annotation"
-include "spring-web"
-include "spring-context"
+include 'spring'
+include 'spring-annotation'
+include 'spring-boot-annotation'
+include 'spring-boot'
+include 'spring-web-annotation'
+include 'spring-web'
+include 'spring-context'
+include 'test-suite'
 
-include "test-suite"
+enableFeaturePreview 'TYPESAFE_PROJECT_ACCESSORS'
+enableFeaturePreview 'VERSION_CATALOGS'
+
+dependencyResolutionManagement {
+    repositories {
+        mavenCentral()
+    }
+    versionCatalogs {
+        mn {
+            from "io.micronaut:micronaut-bom:${providers.gradleProperty('micronautVersion').get()}"
+        }
+    }
+}

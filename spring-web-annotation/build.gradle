@@ -1,10 +1,8 @@
 plugins {
-    id "io.micronaut.build.internal.module"
+    id 'io.micronaut.build.internal.spring-module'
 }
 
 dependencies {
-    api project(":spring-annotation")
-    api "io.micronaut:micronaut-http"
+    api projects.springAnnotation
+    api mn.micronaut.http
 }
-
-group "io.micronaut.spring"

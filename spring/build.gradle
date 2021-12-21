@@ -1,25 +1,23 @@
 plugins {
-    id "io.micronaut.build.internal.module"
+    id 'io.micronaut.build.internal.spring-module'
 }
 
 dependencies {
-    annotationProcessor "io.micronaut:micronaut-inject-java:$micronautVersion"
+    annotationProcessor mn.micronaut.inject.java
 
-    api "org.springframework:spring-core:$springVersion"
-    api "org.springframework:spring-tx:$springVersion"
-    api "org.springframework:spring-context:$springVersion"
-    api "io.micronaut:micronaut-inject:$micronautVersion"
-    api "io.micronaut:micronaut-aop:$micronautVersion"
+    api libs.spring.core
+    api libs.spring.tx
+    api libs.spring.context
+    api mn.micronaut.inject
+    api mn.micronaut.aop
 
-    compileOnly "org.springframework:spring-jdbc:$springVersion"
-    compileOnly "io.micronaut.test:micronaut-test-core:$micronautTestVersion"
+    compileOnly libs.spring.jdbc
+    compileOnly mn.micronaut.test.core
 
-    testAnnotationProcessor "io.micronaut:micronaut-inject-java:$micronautVersion"
-    testImplementation "io.micronaut:micronaut-runtime:$micronautVersion"
-    testCompileOnly "io.micronaut:micronaut-inject-groovy:$micronautVersion"
+    testAnnotationProcessor mn.micronaut.inject.java
+    testImplementation mn.micronaut.runtime
+    testCompileOnly mn.micronaut.inject.groovy
 
     testImplementation "org.spockframework:spock-spring:$spockVersion"
-    testImplementation "org.springframework:spring-test:$springVersion"
+    testImplementation libs.spring.test
 }
-
-group "io.micronaut.spring"
