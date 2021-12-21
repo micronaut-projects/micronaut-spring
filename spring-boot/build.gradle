@@ -1,25 +1,23 @@
 plugins {
-    id "io.micronaut.build.internal.module"
+    id 'io.micronaut.build.internal.spring-module'
 }
 
 dependencies {
-    annotationProcessor "io.micronaut:micronaut-inject-java:$micronautVersion"
-    api project(":spring-context")
-    api "org.springframework.boot:spring-boot:$springBootVersion"
-    compileOnly "org.springframework.boot:spring-boot-autoconfigure:$springBootVersion"
+    annotationProcessor mn.micronaut.inject.java
+    api projects.springContext
+    api libs.boot
+    compileOnly libs.boot.autoconfigure
 
-    testAnnotationProcessor "io.micronaut:micronaut-inject-java:$micronautVersion"
-    testAnnotationProcessor project(":spring-boot-annotation")
-    testAnnotationProcessor project(":spring-web-annotation")
-    testImplementation project(":spring-web")
-    testImplementation "io.micronaut:micronaut-management:$micronautVersion"
-    testImplementation "io.micronaut:micronaut-http-client:$micronautVersion"
-    testImplementation "io.micronaut:micronaut-http-server-netty:$micronautVersion"
-    testImplementation "org.springframework.boot:spring-boot-autoconfigure:$springBootVersion"
-    testImplementation "org.springframework.boot:spring-boot-actuator:$springBootVersion"
-    testImplementation 'javax.servlet:javax.servlet-api:4.0.1'
-    testRuntimeOnly "org.springframework.boot:spring-boot-starter-web:$springBootVersion"
-    testRuntimeOnly "org.springframework.boot:spring-boot-starter-tomcat:$springBootVersion"
+    testAnnotationProcessor mn.micronaut.inject.java
+    testAnnotationProcessor projects.springBootAnnotation
+    testAnnotationProcessor projects.springWebAnnotation
+    testImplementation projects.springWeb
+    testImplementation mn.micronaut.management
+    testImplementation mn.micronaut.http.client
+    testImplementation mn.micronaut.http.server.netty
+    testImplementation libs.boot.autoconfigure
+    testImplementation libs.boot.actuator
+    testImplementation libs.servlet.api
+    testRuntimeOnly libs.boot.web
+    testRuntimeOnly libs.boot.tomcat
 }
-
-group "io.micronaut.spring"

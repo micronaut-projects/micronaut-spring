@@ -2,20 +2,19 @@ plugins {
     id 'java-library'
     id 'groovy'
 }
+
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    testAnnotationProcessor project(":spring-annotation")
-    testAnnotationProcessor "io.micronaut:micronaut-inject-java:$micronautVersion"
-    testCompileOnly "io.micronaut:micronaut-inject-groovy:$micronautVersion"
-    testImplementation project(":spring")
-    testImplementation "org.junit.jupiter:junit-jupiter-api:${junitVersion}"
-    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${junitVersion}"
-    testImplementation("org.spockframework:spock-core:${spockVersion}") {
-        exclude module:'groovy-all'
-    }
+    testAnnotationProcessor projects.springAnnotation
+    testAnnotationProcessor mn.micronaut.inject.java
+    testCompileOnly mn.micronaut.inject.groovy
+    testImplementation projects.spring
+    testImplementation libs.junit.jupiter.api
+    testRuntimeOnly libs.junit.jupiter.engine
+    testImplementation mn.spock
 }
 
 tasks.named('test') {

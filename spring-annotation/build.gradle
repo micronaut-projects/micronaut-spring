@@ -1,22 +1,20 @@
 plugins {
-    id "io.micronaut.build.internal.module"
+    id 'io.micronaut.build.internal.spring-module'
 }
 
 dependencies {
-    annotationProcessor "io.micronaut:micronaut-inject-java"
-    api "io.micronaut:micronaut-inject:$micronautVersion"
-    api "io.micronaut:micronaut-aop:$micronautVersion"
-    api "io.micronaut:micronaut-validation:$micronautVersion"
-    implementation project(":spring-context")
-    implementation "io.micronaut:micronaut-runtime:$micronautVersion"
-    implementation "io.micronaut.cache:micronaut-cache-core:$micronautCacheVersion"
-    testAnnotationProcessor "io.micronaut:micronaut-inject-java"
-    testImplementation "io.micronaut:micronaut-inject-groovy"
-    testImplementation project(":spring")
-    testImplementation "org.springframework:spring-tx"
+    annotationProcessor mn.micronaut.inject.java
+    api mn.micronaut.inject
+    api mn.micronaut.aop
+    api mn.micronaut.validation
+    implementation projects.springContext
+    implementation mn.micronaut.runtime
+    implementation libs.micronaut.cache
+    testAnnotationProcessor mn.micronaut.inject.java
+    testImplementation mn.micronaut.inject.groovy
+    testImplementation projects.spring
+    testImplementation libs.spring.tx
 }
-
-group "io.micronaut.spring"
 
 compileTestGroovy.options.forkOptions.jvmArgs =['-Xdebug', '-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=5005']
 compileTestGroovy.options.fork=true

@@ -1,6 +1,6 @@
 plugins {
-    id "io.micronaut.build.internal.docs"
-    id "io.micronaut.build.internal.dependency-updates"
+    id 'io.micronaut.build.internal.docs'
+    id 'io.micronaut.build.internal.dependency-updates'
 }
 
 subprojects { Project subproject ->
@@ -17,8 +17,7 @@ subprojects { Project subproject ->
     }
     tasks.withType(Test) {
         if (JavaVersion.current().isCompatibleWith(JavaVersion.VERSION_15)) {
-            jvmArgs "--enable-preview"
+            jvmArgs '--enable-preview'
         }
     }
 }
-

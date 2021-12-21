@@ -1,28 +1,26 @@
 plugins {
-    id "io.micronaut.build.internal.module"
+    id 'io.micronaut.build.internal.spring-module'
 }
 
 dependencies {
-    annotationProcessor "io.micronaut:micronaut-inject-java"
-    api project(":spring-context")
-    api "org.springframework:spring-web:$springVersion"
-    api 'io.projectreactor:reactor-core:3.4.8'
-    implementation "io.micronaut:micronaut-http:$micronautVersion"
-    compileOnly "io.micronaut:micronaut-http-server-netty"
-    compileOnly "io.micronaut.views:micronaut-views-core"
-    testAnnotationProcessor "io.micronaut:micronaut-inject-java"
-    testAnnotationProcessor project(":spring-annotation")
-    testAnnotationProcessor project(":spring-web-annotation")
-    testImplementation "org.springframework:spring-web:$springVersion"
-    testImplementation "io.micronaut:micronaut-inject-java"
-    testImplementation "io.micronaut:micronaut-validation"
-    testImplementation "io.micronaut:micronaut-http-client"
-    testImplementation "io.micronaut:micronaut-http-server-netty"
-    testRuntimeOnly "io.micronaut.views:micronaut-views-thymeleaf"
-    testRuntimeOnly("org.springframework.boot:spring-boot-starter-thymeleaf:$springBootVersion")
+    annotationProcessor mn.micronaut.inject.java
+    api projects.springContext
+    api libs.spring.web
+    api mn.reactor
+    implementation mn.micronaut.http
+    compileOnly mn.micronaut.http.server.netty
+    compileOnly 'io.micronaut.views:micronaut-views-core'
+    testAnnotationProcessor mn.micronaut.inject.java
+    testAnnotationProcessor projects.springAnnotation
+    testAnnotationProcessor projects.springWebAnnotation
+    testImplementation libs.spring.web
+    testImplementation mn.micronaut.inject.java
+    testImplementation mn.micronaut.validation
+    testImplementation mn.micronaut.http.client
+    testImplementation mn.micronaut.http.server.netty
+    testRuntimeOnly 'io.micronaut.views:micronaut-views-thymeleaf'
+    testRuntimeOnly libs.boot.thymeleaf
 }
-
-group "io.micronaut.spring"
 
 //compileTestJava.options.fork = true
 //compileTestJava.options.forkOptions.jvmArgs = ['-Xdebug', '-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=5005']
