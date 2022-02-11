@@ -1,0 +1,10 @@
+plugins {
+    id "io.micronaut.build.internal.bom"
+}
+dependencies {
+    constraints {
+        api libs.boot
+        api libs.spring.context
+        api libs.spring.web
+    }
+}
