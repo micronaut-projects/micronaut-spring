@@ -6,10 +6,10 @@ pluginManagement {
 }
 
 plugins {
-    id 'io.micronaut.build.shared.settings' version '5.2.2'
+    id 'io.micronaut.build.shared.settings' version '5.2.3'
 }
 
-rootProject.name = 'micronaut-spring'
+rootProject.name = 'spring-parent'
 
 include 'spring'
 include 'spring-annotation'
