@@ -22,7 +22,7 @@ dependencies {
 
 Only `@RestController` semantics are supported, which is fine for most Microservice use cases. Special support is provided by the `micronaut-spring-web` dependency to allowing returning a link:{springapi}org/springframework/http/ResponseEntity.html[ResponseEntity].
 
-TIP: See the https://github.com/micronaut-projects/micronaut-spring/tree/master/examples/greeting-service[Example application] for a demonstration on how to build a Spring MVC application computable to Micronaut.
+TIP: See the https://github.com/micronaut-projects/micronaut-guides/pull/839[Example application] for a demonstration on how to build a Spring MVC application computable to Micronaut.
 
 The binding semantics as described in the https://docs.micronaut.io/latest/guide/index.html#binding[Micronaut documentation] and are generally equivalent to how Spring MVC behaves.
 

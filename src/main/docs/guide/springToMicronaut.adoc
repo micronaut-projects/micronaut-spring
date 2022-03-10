@@ -2,7 +2,7 @@ Micronaut for Spring allows you to use traditional Spring annotations which are 
 
 Unlike traditional runtime reflection based frameworks Micronaut uses Ahead of Time (AOT) compilation, hence there is no runtime overhead to supporting an additional set of annotations (in this case Spring's annotation programming model).
 
-As part of this project an https://github.com/micronaut-projects/micronaut-spring/tree/master/examples/greeting-service[Example Application] is provided that includes no dependencies on Micronaut itself in the source code (only Spring dependencies) but is computed into a Micronaut application at compilation time.
+As part of this project an  https://github.com/micronaut-projects/micronaut-guides/pull/839[Example Application] is provided that includes no dependencies on Micronaut itself in the source code (only Spring dependencies) but is computed into a Micronaut application at compilation time.
 
 The value in this as follows:
 
