@@ -1,5 +1,0 @@
-micronaut:
-  application:
-    name: greeting-service
-greeting:
-  template: "Hola, %s!"

@@ -17,7 +17,7 @@ To achieve this the project provides the ability to use a subset of the Spring A
 
 [![Micronaut for Spring](https://img.youtube.com/vi/JvzD2SEw0-E/0.jpg)](https://www.youtube.com/watch?v=JvzD2SEw0-E)
 
-See the [User Guide](https://micronaut-projects.github.io/micronaut-spring/latest/guide/index.html) and [Example Project](https://github.com/micronaut-projects/micronaut-spring/tree/master/examples/greeting-service) for more information on how to use this project.
+See the [User Guide](https://micronaut-projects.github.io/micronaut-spring/latest/guide/index.html) and [Example Project](https://github.com/micronaut-projects/micronaut-guides/pull/839) for more information on how to use this project.
 
 ## Snapshots and Releases
 
