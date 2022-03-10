@@ -245,21 +245,21 @@ If an annotation or interface of Spring is not mentioned in this documentation c
 
 dependencies {
     // for Java applications
-    annotationProcessor "io.micronaut:micronaut-inject-java:3.2.3"
-    annotationProcessor "io.micronaut:micronaut-validation:3.2.3"
-    annotationProcessor "io.micronaut.spring:micronaut-spring-annotation:4.0.2-SNAPSHOT"
+    annotationProcessor "io.micronaut:micronaut-inject-java:3.3.4"
+    annotationProcessor "io.micronaut:micronaut-validation:3.3.4"
+    annotationProcessor "io.micronaut.spring:micronaut-spring-annotation:4.1.0-SNAPSHOT"
 
     // for Kotlin applications
-    kapt "io.micronaut:micronaut-inject-java:3.2.3"
-    kapt "io.micronaut:micronaut-validation:3.2.3"
-    kapt "io.micronaut.spring:micronaut-spring-annotation:4.0.2-SNAPSHOT"
+    kapt "io.micronaut:micronaut-inject-java:3.3.4"
+    kapt "io.micronaut:micronaut-validation:3.3.4"
+    kapt "io.micronaut.spring:micronaut-spring-annotation:4.1.0-SNAPSHOT"
 
     // for Groovy applications
     compileOnly "io.micronaut:micronaut-inject-groovy:$micronautVersion"
     compileOnly "io.micronaut:micronaut-validation:$micronautVersion"
     compileOnly "io.micronaut.spring:micronaut-spring-annotation:$micronautSpringVersion"
 
-    compile "io.micronaut:micronaut-inject:3.2.3"
+    compile "io.micronaut:micronaut-inject:3.3.4"
     compile("org.springframework.boot:spring-boot-starter")
     ...
 }</code></pre>
@@ -533,14 +533,14 @@ If you are only going to reference Spring annotations and not Spring classes or 
 
     ...
     // additional Spring web dependencies
-    annotationProcessor "io.micronaut.spring:micronaut-spring-web-annotation:4.0.2-SNAPSHOT"
+    annotationProcessor "io.micronaut.spring:micronaut-spring-web-annotation:4.1.0-SNAPSHOT"
     compile("org.springframework.boot:spring-boot-starter-web")
 
 
     // additional web dependencies for Micronaut
-    compile("io.micronaut:micronaut-http-server:3.2.3")
-    runtime("io.micronaut.spring:micronaut-spring-web:4.0.2-SNAPSHOT")
-    runtime("io.micronaut:micronaut-http-server-netty:3.2.3")
+    compile("io.micronaut:micronaut-http-server:3.3.4")
+    runtime("io.micronaut.spring:micronaut-spring-web:4.1.0-SNAPSHOT")
+    runtime("io.micronaut:micronaut-http-server-netty:3.3.4")
 }</code></pre>
 </div>
 </div>
@@ -740,11 +740,11 @@ See the <a href="https://github.com/micronaut-projects/micronaut-guides/pull/839
 
     ...
     // additional Spring Boot dependencies
-    annotationProcessor "io.micronaut.spring:micronaut-spring-boot:4.0.2-SNAPSHOT"
+    annotationProcessor "io.micronaut.spring:micronaut-spring-boot:4.1.0-SNAPSHOT"
     compile("org.springframework.boot:spring-boot-starter-web")
 
     // additional Spring Boot dependencies for Micronaut
-    runtime("io.micronaut.spring:micronaut-spring-boot:4.0.2-SNAPSHOT")
+    runtime("io.micronaut.spring:micronaut-spring-boot:4.1.0-SNAPSHOT")
 }</code></pre>
 </div>
 </div>
