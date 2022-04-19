@@ -59,7 +59,7 @@ The following table summarizes the annotations that Micronaut for Spring support
 |Example `@Scheduled`. Requires `micronaut-runtime` dependency.
 
 |link:{springapi}org/springframework/transaction/annotation/Transactional.html[@Transactional]
-|link:{micronautapi}spring/tx/annotation/Transactional.html[@Transactional]
+|link:{micronautapi}spring/tx/annotation/TransactionInterceptor.html[TransactionInterceptor]
 |Example `@Transactional`. Requires `micronaut-spring` dependency.
 
 |link:{springapi}org/springframework/cache/annotation/Cacheable.html[@Cacheable]
