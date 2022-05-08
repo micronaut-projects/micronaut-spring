@@ -3,7 +3,7 @@ boot = '2.5.3'
 junit = '5.8.1'
 micronaut-cache = '3.0.0'
 servlet-api = '4.0.1'
-spring = '5.3.9'
+spring = '5.3.19'
 
 [libraries]
 boot = { module = 'org.springframework.boot:spring-boot', version.ref = 'boot' }
