@@ -1,6 +1,6 @@
 [versions]
 boot = '2.5.3'
-junit = '5.8.1'
+junit = '5.8.2'
 micronaut-cache = '3.0.0'
 servlet-api = '4.0.1'
 spring = '5.3.19'
