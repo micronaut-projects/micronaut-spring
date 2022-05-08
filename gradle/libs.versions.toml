@@ -1,5 +1,5 @@
 [versions]
-boot = '2.5.3'
+boot = '2.5.12'
 junit = '5.8.2'
 micronaut-cache = '3.0.0'
 servlet-api = '4.0.1'
