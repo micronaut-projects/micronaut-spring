@@ -3,23 +3,27 @@ plugins {
 }
 
 dependencies {
-    annotationProcessor mn.micronaut.inject.java
     api projects.springContext
-    api libs.spring.web
+    api libs.managed.spring.web
     api mn.reactor
+
     implementation mn.micronaut.http
+
     compileOnly mn.micronaut.http.server.netty
     compileOnly 'io.micronaut.views:micronaut-views-core'
+
     testAnnotationProcessor mn.micronaut.inject.java
     testAnnotationProcessor projects.springAnnotation
     testAnnotationProcessor projects.springWebAnnotation
-    testImplementation libs.spring.web
+
+    testImplementation libs.managed.spring.web
     testImplementation mn.micronaut.inject.java
     testImplementation mn.micronaut.validation
     testImplementation mn.micronaut.http.client
     testImplementation mn.micronaut.http.server.netty
+
     testRuntimeOnly 'io.micronaut.views:micronaut-views-thymeleaf'
-    testRuntimeOnly libs.boot.thymeleaf
+    testRuntimeOnly libs.spring.boot.starter.thymeleaf
 }
 
 //compileTestJava.options.fork = true

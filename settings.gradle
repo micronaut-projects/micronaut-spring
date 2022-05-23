@@ -23,13 +23,6 @@ include 'test-suite'
 
 enableFeaturePreview 'TYPESAFE_PROJECT_ACCESSORS'
 
-dependencyResolutionManagement {
-    repositories {
-        mavenCentral()
-    }
-    versionCatalogs {
-        mn {
-            from "io.micronaut:micronaut-bom:${providers.gradleProperty('micronautVersion').get()}"
-        }
-    }
+micronautBuild {
+    importMicronautCatalog()
 }

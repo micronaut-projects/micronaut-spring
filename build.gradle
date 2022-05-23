@@ -5,17 +5,6 @@ plugins {
 }
 
 subprojects { Project subproject ->
-    subproject.configurations.all {
-        resolutionStrategy.eachDependency { DependencyResolveDetails details ->
-            String group = details.requested.group
-            if (group == 'org.springframework') {
-                details.useVersion(springVersion)
-            }
-            if (group == 'org.springframework.boot') {
-                details.useVersion(springBootVersion)
-            }
-        }
-    }
     tasks.withType(Test) {
         if (JavaVersion.current().isCompatibleWith(JavaVersion.VERSION_15)) {
             jvmArgs '--enable-preview'
