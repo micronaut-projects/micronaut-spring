@@ -12,10 +12,10 @@ dependencies {
     testAnnotationProcessor mn.micronaut.inject.java
     testCompileOnly mn.micronaut.inject.groovy
     testImplementation projects.spring
-    testImplementation mn.spock
+    
     testImplementation libs.junit.jupiter.api
     testRuntimeOnly libs.junit.jupiter.engine
-    
+    testImplementation mn.spock
 }
 
 tasks.named('test') {
