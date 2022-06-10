@@ -32,7 +32,7 @@ import java.lang.annotation.*;
 public @interface RequiresSingleCandidate {
     /**
      * The candidate type.
-     * @return The canditate type
+     * @return The candidate type
      */
     Class<?> value();
 }
