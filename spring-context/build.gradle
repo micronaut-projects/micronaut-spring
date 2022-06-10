@@ -5,21 +5,21 @@ plugins {
 }
 
 dependencies {
-    annotationProcessor mn.micronaut.inject.java
     api libs.spring.context
     api mn.micronaut.aop
     api mn.micronaut.inject
 
     implementation projects.spring
-    implementation libs.micronaut.cache
+    implementation mn.micronaut.cache.core
 
-    testImplementation mn.micronaut.runtime
     testAnnotationProcessor mn.micronaut.inject.java
     testAnnotationProcessor projects.springAnnotation
 
+    testImplementation mn.micronaut.runtime
     testImplementation mn.micronaut.inject.java
-    testImplementation  projects.springAnnotation
+    testImplementation projects.springAnnotation
     testImplementation mn.micronaut.inject.java.test
+
     if (!JavaVersion.current().isJava9Compatible()) {
         testImplementation files(Jvm.current().toolsJar)
     }

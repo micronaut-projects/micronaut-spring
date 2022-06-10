@@ -1,24 +1,34 @@
 [versions]
-boot = '2.5.12'
+managed-spring-boot = '2.5.12'
+managed-spring = '5.3.20'
+
 junit = '5.8.2'
-micronaut-cache = '3.0.0'
 servlet-api = '4.0.1'
-spring = '5.3.20'
 
 [libraries]
-boot = { module = 'org.springframework.boot:spring-boot', version.ref = 'boot' }
-boot-actuator = { module = 'org.springframework.boot:spring-boot-actuator', version.ref = 'boot' }
-boot-autoconfigure = { module = 'org.springframework.boot:spring-boot-autoconfigure', version.ref = 'boot' }
-boot-thymeleaf = { module = 'org.springframework.boot:spring-boot-starter-thymeleaf', version.ref = 'boot' }
-boot-tomcat = { module = 'org.springframework.boot:spring-boot-starter-tomcat', version.ref = 'boot' }
-boot-web = { module = 'org.springframework.boot:spring-boot-starter-web', version.ref = 'boot' }
+managed-spring-boot = { module = 'org.springframework.boot:spring-boot', version.ref = 'managed-spring-boot' }
+managed-spring-boot-starter = { module = 'org.springframework.boot:spring-boot-starter', version.ref = 'managed-spring-boot' }
+managed-spring-boot-starter-web = { module = 'org.springframework.boot:spring-boot-starter-web', version.ref = 'managed-spring-boot' }
+
+
+boms-spring = { module = 'org.springframework:spring-framework-bom', version.ref = 'managed-spring' }
+spring-core = { module = 'org.springframework:spring-core' }
+spring-context = { module = 'org.springframework:spring-context' }
+spring-tx = { module = 'org.springframework:spring-tx' }
+spring-orm = { module = 'org.springframework:spring-orm' }
+spring-jdbc = { module = 'org.springframework:spring-jdbc' }
+spring-web = { module = 'org.springframework:spring-web' }
+
+spring-boot-actuator = { module = 'org.springframework.boot:spring-boot-actuator', version.ref = 'managed-spring-boot' }
+spring-boot-autoconfigure = { module = 'org.springframework.boot:spring-boot-autoconfigure', version.ref = 'managed-spring-boot' }
+spring-boot-starter-thymeleaf = { module = 'org.springframework.boot:spring-boot-starter-thymeleaf', version.ref = 'managed-spring-boot' }
+spring-boot-starter-tomcat = { module = 'org.springframework.boot:spring-boot-starter-tomcat', version.ref = 'managed-spring-boot' }
+
 junit-jupiter-api = { module = 'org.junit.jupiter:junit-jupiter-api', version.ref = 'junit' }
 junit-jupiter-engine = { module = 'org.junit.jupiter:junit-jupiter-engine', version.ref = 'junit' }
-micronaut-cache = { module = 'io.micronaut.cache:micronaut-cache-core', version.ref = 'micronaut-cache' }
+
 servlet-api = { module = 'javax.servlet:javax.servlet-api', version.ref = 'servlet-api' }
-spring-context = { module = 'org.springframework:spring-context', version.ref = 'spring' }
-spring-core = { module = 'org.springframework:spring-core', version.ref = 'spring' }
-spring-jdbc = { module = 'org.springframework:spring-jdbc', version.ref = 'spring' }
-spring-test = { module = 'org.springframework:spring-test', version.ref = 'spring' }
-spring-tx = { module = 'org.springframework:spring-tx', version.ref = 'spring' }
-spring-web = { module = 'org.springframework:spring-web', version.ref = 'spring' }
+
+spring-test = { module = 'org.springframework:spring-test', version.ref = 'managed-spring' }
+
+spock-spring = { module = 'org.spockframework:spock-spring' }

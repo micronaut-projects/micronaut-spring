@@ -3,13 +3,15 @@ plugins {
 }
 
 dependencies {
-    annotationProcessor mn.micronaut.inject.java
+    api(platform(libs.boms.spring))
     api mn.micronaut.inject
     api mn.micronaut.aop
     api mn.micronaut.validation
+
     implementation projects.springContext
     implementation mn.micronaut.runtime
-    implementation libs.micronaut.cache
+    implementation mn.micronaut.cache.core
+
     testAnnotationProcessor mn.micronaut.inject.java
     testImplementation mn.micronaut.inject.groovy
     testImplementation projects.spring

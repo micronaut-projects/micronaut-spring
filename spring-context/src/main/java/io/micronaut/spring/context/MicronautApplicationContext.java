@@ -220,6 +220,11 @@ public class MicronautApplicationContext implements ManagedApplicationContext, C
     }
 
     @Override
+    public <A extends Annotation> A findAnnotationOnBean(String beanName, Class<A> annotationType, boolean allowFactoryBeanInit) throws NoSuchBeanDefinitionException {
+        return beanFactory.findAnnotationOnBean(beanName, annotationType, allowFactoryBeanInit);
+    }
+
+    @Override
     public Object getBean(String name) throws BeansException {
         return beanFactory.getBean(name);
     }
