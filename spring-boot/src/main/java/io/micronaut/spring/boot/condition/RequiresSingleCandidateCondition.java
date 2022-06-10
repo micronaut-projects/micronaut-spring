@@ -31,7 +31,7 @@ public class RequiresSingleCandidateCondition implements Condition {
         final Class<?> type = context.getComponent().findAnnotation(RequiresSingleCandidate.class).flatMap(ann -> ann.getValue(Class.class)).orElse(null);
         if (type != null) {
             final BeanContext beanContext = context.getBeanContext();
-            return beanContext.findBeanDefinition(type).isPresent();
+            return beanContext.getBeanDefinitions(type).size() == 1;
         }
         return true;
     }

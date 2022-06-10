@@ -196,32 +196,7 @@ public class MicronautBeanFactory extends DefaultListableBeanFactory implements 
             }
 
             if (definition != null && type != null) {
-
-                AnnotationMetadata annotationMetadata = definition.getAnnotationMetadata();
-                Optional<io.micronaut.context.Qualifier> q = annotationMetadata.getAnnotationNameByStereotype(AnnotationUtil.QUALIFIER)
-                        .map(clazz -> Qualifiers.byAnnotation(annotationMetadata, clazz));
-
-                if (!q.isPresent()) {
-                    if (definition instanceof NameResolver) {
-                        name = ((NameResolver) definition).resolveName().orElse(null);
-                    } else {
-                        name = definition.stringValue(AnnotationUtil.NAMED).orElse(null);
-                    }
-                    if (name != null) {
-                        q = Optional.of(Qualifiers.byName(name));
-                    }
-                }
-                if (q.isPresent()) {
-                    try {
-                        return beanContext.getBean(type, q.get());
-                    } catch (NoSuchBeanException e) {
-                        throw new NoSuchBeanDefinitionException(type, e.getMessage());
-                    } catch (Exception e) {
-                        throw new BeanCreationException(name, e.getMessage(), e);
-                    }
-                } else {
-                    return getBean(type);
-                }
+                return beanContext.getBean(definition);
             }
             throw new NoSuchBeanDefinitionException(name);
         }
