@@ -3,8 +3,9 @@ plugins {
 }
 
 dependencies {
+    api(platform(libs.boms.spring))
     api projects.springContext
-    api libs.managed.spring.web
+    api libs.spring.web
     api mn.reactor
 
     implementation mn.micronaut.http
@@ -16,7 +17,6 @@ dependencies {
     testAnnotationProcessor projects.springAnnotation
     testAnnotationProcessor projects.springWebAnnotation
 
-    testImplementation libs.managed.spring.web
     testImplementation mn.micronaut.inject.java
     testImplementation mn.micronaut.validation
     testImplementation mn.micronaut.http.client

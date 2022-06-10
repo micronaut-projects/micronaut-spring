@@ -3,13 +3,13 @@ plugins {
 }
 
 dependencies {
-    api libs.managed.spring
-    api libs.managed.spring.tx
-    api libs.managed.spring.context
+    api libs.spring.core
+    api libs.spring.tx
+    api libs.spring.context
     api mn.micronaut.inject
     api mn.micronaut.aop
 
-    compileOnly libs.managed.spring.jdbc
+    compileOnly libs.spring.jdbc
     compileOnly mn.micronaut.test.core
 
     testAnnotationProcessor mn.micronaut.inject.java
