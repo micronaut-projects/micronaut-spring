@@ -2,9 +2,13 @@ package io.micronaut.spring.annotation.context
 
 import io.micronaut.annotation.processing.test.AbstractTypeElementSpec
 import io.micronaut.spring.beans.SpringImport
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Import;
+import org.springframework.core.env.Environment
+import org.springframework.stereotype.Component
+
 /**
  *
  * @author graemerocher
@@ -16,6 +20,7 @@ class ImportAnnotationSpec extends AbstractTypeElementSpec {
         def context = buildContext('''
 package importtest;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -34,7 +39,7 @@ class Foo {
 
 }
 
-@Import(OneConfiguration.class)
+@Import({OneConfiguration.class, BeanA.class})
 @interface ImportOne {}
 
 @Import(TwoConfiguration.class)
@@ -64,12 +69,18 @@ class Foo {
         then:
         foo.two.destroyCalled
     }
+
+    
 }
 
 @Configuration
 class OneConfiguration {
+    @Autowired
+    BeanA beanA;
+
     @Bean
     One one() {
+        assert beanA != null
         return new One();
     }
 }
@@ -94,3 +105,7 @@ class Two {
         destroyCalled = true
     }
 }
+
+
+@Component
+class BeanA {}

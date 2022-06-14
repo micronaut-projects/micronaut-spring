@@ -59,20 +59,24 @@ public class ImportAnnotationVisitor implements TypeElementVisitor<Object, Objec
             List<AnnotationValue<? extends Annotation>> values = element.getAnnotationValuesByType(annType);
             if (!values.isEmpty()) {
                 for (AnnotationValue<?> av : values) {
-                    AnnotationClassValue<?> acv = av.annotationClassValue(AnnotationMetadata.VALUE_MEMBER).orElse(null);
-                    String className = acv.getName();
-                    context.getClassElement(className).ifPresent((typeToImport) -> {
-                        if (typeToImport.isAssignable(ImportSelector.class)) {
-                            // handle import selector
-                        } else if (typeToImport.isAssignable(ImportBeanDefinitionRegistrar.class)) {
-                            // handle import registrar
-                        } else if (typeToImport.hasAnnotation(Configuration.class)) {
-                            // handle configuration class
-                            handleConfigurationImport(element, typeToImport, context);
-                        } else if (typeToImport.hasStereotype(Component.class)) {
-                            // handle component
-                        } 
-                    });
+                    AnnotationClassValue<?>[] acv = av.annotationClassValues(AnnotationMetadata.VALUE_MEMBER);
+                    for (int idx = 0; idx < acv.length; idx++) {
+                        AnnotationClassValue<?> a = acv[idx];
+                        String className = a.getName();
+                        context.getClassElement(className).ifPresent((typeToImport) -> {
+                            if (typeToImport.isAssignable(ImportSelector.class)) {
+                                // handle import selector
+                            } else if (typeToImport.isAssignable(ImportBeanDefinitionRegistrar.class)) {
+                                // handle import registrar
+                            } else if (typeToImport.hasAnnotation(Configuration.class)) {
+                                // handle configuration class
+                                handleConfigurationImport(element, typeToImport, context);
+                            } else if (typeToImport.hasStereotype(Component.class)) {
+                                // handle component
+                                element.addAssociatedBean(typeToImport).inject();
+                            } 
+                        });                        
+                    }
                 }
             }
         }
@@ -93,7 +97,9 @@ public class ImportAnnotationVisitor implements TypeElementVisitor<Object, Objec
         ClassElement typeToImport, 
         VisitorContext context) {
         // TODO: In Micronaut 3.5.2 interception was added so need to proxy these
-        BeanElementBuilder beanBuilder = originatingElement.addAssociatedBean(typeToImport);
+        BeanElementBuilder beanBuilder = originatingElement
+            .addAssociatedBean(typeToImport)
+            .inject();
         ElementQuery<MethodElement> instanceMethods = ElementQuery.ALL_METHODS
             .onlyInstance()
             .filter(m -> !m.hasParameters());
