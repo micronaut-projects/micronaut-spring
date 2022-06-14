@@ -24,15 +24,18 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.ImportBeanDefinitionRegistrar;
 import org.springframework.context.annotation.ImportSelector;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import io.micronaut.core.annotation.AnnotationClassValue;
 import io.micronaut.core.annotation.AnnotationMetadata;
+import io.micronaut.core.annotation.AnnotationUtil;
 import io.micronaut.core.annotation.AnnotationValue;
 import io.micronaut.inject.ast.ClassElement;
 import io.micronaut.inject.ast.ElementQuery;
 import io.micronaut.inject.ast.MethodElement;
 import io.micronaut.inject.ast.beans.BeanElementBuilder;
+import io.micronaut.inject.ast.beans.BeanMethodElement;
 import io.micronaut.inject.visitor.TypeElementVisitor;
 import io.micronaut.inject.visitor.VisitorContext;
 
@@ -89,11 +92,32 @@ public class ImportAnnotationVisitor implements TypeElementVisitor<Object, Objec
         VisitorContext context) {
         // TODO: In Micronaut 3.5.2 interception was added so need to proxy these
         BeanElementBuilder beanBuilder = originatingElement.addAssociatedBean(typeToImport);
-        ElementQuery<MethodElement> beanMethods = ElementQuery.ALL_METHODS.onlyInstance().annotated(ann -> ann.hasDeclaredAnnotation(Bean.class));
+        ElementQuery<MethodElement> instanceMethods = ElementQuery.ALL_METHODS
+            .onlyInstance()
+            .filter(m -> !m.hasParameters());
+        ElementQuery<MethodElement> beanMethods = instanceMethods.annotated(ann -> ann.hasDeclaredAnnotation(Bean.class));
         beanBuilder.produceBeans(beanMethods, (childBuilder) -> {
-            // TODO: handle pre destroy / post construct
-            // TODO: handle scope
-            // TODO: handle bean
+            MethodElement me = (MethodElement) childBuilder.getProducingElement();
+            String scopeName = me.stringValue(Scope.class).orElse(null);
+            if (scopeName != null) {
+                // TODO: handle scopes
+            } else {
+                childBuilder.annotate(AnnotationUtil.SINGLETON);
+            }
+            String initMethod = me.stringValue(Bean.class, "initMethod").orElse(null);
+            String destroyMethod = me.stringValue(Bean.class, "destroyMethod").orElse(null);
+            if (initMethod != null) {
+                childBuilder.withMethods(
+                    instanceMethods.named(n -> n.equals(initMethod)), 
+                    BeanMethodElement::postConstruct
+                );                 
+            }
+            if (destroyMethod != null) {
+                childBuilder.withMethods(
+                    instanceMethods.named(n -> n.equals(destroyMethod)), 
+                    BeanMethodElement::preDestroy
+                );                   
+            }
         });
             
     }

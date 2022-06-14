@@ -42,21 +42,27 @@ class Foo {
 
 
 ''')
+        when:
         def fooDefinition = getBeanDefinition(context, 'importtest.Foo')
         def oneDefinition = getBeanDefinition(context, One.name)
         def twoDefinition = getBeanDefinition(context, Two.name)
         def foo = getBean(context, 'importtest.Foo')
 
-        expect:
+        then:
         foo
         foo.one
         foo.two
+        foo.two.initCalled
+        !foo.two.destroyCalled
         context != null
         fooDefinition != null
         fooDefinition.getAnnotationMetadata().getAnnotationValuesByType(SpringImport).size() == 2
 
-        cleanup:
+        when:
         context.close()
+
+        then:
+        foo.two.destroyCalled
     }
 }
 
@@ -70,11 +76,21 @@ class OneConfiguration {
 
 @Configuration
 class TwoConfiguration {
-    @Bean
+    @Bean(initMethod="init", destroyMethod="destroy")
     Two two() {
         return new Two();
     }    
 }
 
 class One {}
-class Two{}
+class Two {
+    boolean initCalled = false
+    boolean destroyCalled = false
+    void init() {
+        initCalled = true
+    }
+
+    void destroy() {
+        destroyCalled = true
+    }
+}

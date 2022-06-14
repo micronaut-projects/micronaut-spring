@@ -13,19 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package io.micronaut.spring.beans;
 
 import java.lang.annotation.Repeatable;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
+import io.micronaut.core.annotation.Internal;
+
 /**
  * Allows the spring import annotation to be represented as a repeated annotation.
+ * This is an internal annotation and should be used directly.
+ *
  * @author graemerocher
  */
 @Retention(RetentionPolicy.RUNTIME) 
 @Repeatable(SpringImport.List.class)
+@Internal
 public @interface SpringImport {
     Class<?> value();
 
