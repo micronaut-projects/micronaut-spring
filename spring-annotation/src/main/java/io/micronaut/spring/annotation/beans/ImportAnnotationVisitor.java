@@ -27,6 +27,7 @@ import org.springframework.context.annotation.ImportSelector;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import io.micronaut.context.annotation.Prototype;
 import io.micronaut.core.annotation.AnnotationClassValue;
 import io.micronaut.core.annotation.AnnotationMetadata;
 import io.micronaut.core.annotation.AnnotationUtil;
@@ -38,6 +39,7 @@ import io.micronaut.inject.ast.beans.BeanElementBuilder;
 import io.micronaut.inject.ast.beans.BeanMethodElement;
 import io.micronaut.inject.visitor.TypeElementVisitor;
 import io.micronaut.inject.visitor.VisitorContext;
+import io.micronaut.runtime.http.scope.RequestScope;
 
 /**
  * Handles the import importDeclaration allowing importing of additional Spring beans into a Micronaut 
@@ -100,7 +102,16 @@ public class ImportAnnotationVisitor implements TypeElementVisitor<Object, Objec
             MethodElement me = (MethodElement) childBuilder.getProducingElement();
             String scopeName = me.stringValue(Scope.class).orElse(null);
             if (scopeName != null) {
-                // TODO: handle scopes
+                switch(scopeName) {
+                    case "prototype":
+                        childBuilder.annotate(Prototype.class);        
+                    break;
+                    case "request":
+                        childBuilder.annotate(RequestScope.class);        
+                    break;
+                    default:
+                        childBuilder.annotate(AnnotationUtil.SINGLETON);    
+                }
             } else {
                 childBuilder.annotate(AnnotationUtil.SINGLETON);
             }
