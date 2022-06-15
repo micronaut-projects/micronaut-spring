@@ -32,6 +32,8 @@ import io.micronaut.core.annotation.AnnotationClassValue;
 import io.micronaut.core.annotation.AnnotationMetadata;
 import io.micronaut.core.annotation.AnnotationUtil;
 import io.micronaut.core.annotation.AnnotationValue;
+import io.micronaut.core.reflect.InstantiationUtils;
+import io.micronaut.core.reflect.exception.InstantiationException;
 import io.micronaut.inject.ast.ClassElement;
 import io.micronaut.inject.ast.ElementQuery;
 import io.micronaut.inject.ast.MethodElement;
@@ -66,6 +68,7 @@ public class ImportAnnotationVisitor implements TypeElementVisitor<Object, Objec
                         context.getClassElement(className).ifPresent((typeToImport) -> {
                             if (typeToImport.isAssignable(ImportSelector.class)) {
                                 // handle import selector
+                                importSelector(element, typeToImport, context);
                             } else if (typeToImport.isAssignable(ImportBeanDefinitionRegistrar.class)) {
                                 // handle import registrar
                             } else if (typeToImport.hasAnnotation(Configuration.class)) {
@@ -137,5 +140,17 @@ public class ImportAnnotationVisitor implements TypeElementVisitor<Object, Objec
             }
         });
             
+    }
+
+    private void importSelector(ClassElement originatingElement, ClassElement typeToImport, VisitorContext context) {
+        try {
+            Object selectorObject = InstantiationUtils.instantiate(typeToImport.getCanonicalName(), getClass().getClassLoader());
+            if (selectorObject instanceof ImportSelector) {
+                ImportSelector selector = (ImportSelector) selectorObject;
+                selector.selectImports(importingClassMetadata)                
+            }
+        } catch (InstantiationException e) {
+            context.fail("ImportSelector of type [" + typeToImport.getName() + "] found in Spring @Import declaration must be placed on the annotation processor classpath: " + e.getMessage(), originatingElement);            
+        }
     }
 }
