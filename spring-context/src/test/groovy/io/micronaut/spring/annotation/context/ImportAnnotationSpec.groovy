@@ -5,8 +5,11 @@ import io.micronaut.spring.beans.SpringImport
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.Import
+import org.springframework.context.annotation.ImportSelector
+import org.springframework.core.annotation.MergedAnnotation;
 import org.springframework.core.env.Environment
+import org.springframework.core.type.AnnotationMetadata
 import org.springframework.stereotype.Component
 
 /**
@@ -14,6 +17,37 @@ import org.springframework.stereotype.Component
  * @author graemerocher
  */
 class ImportAnnotationSpec extends AbstractTypeElementSpec {
+
+    void "test build time import selector"() {
+        given:
+        def context = buildContext('''
+package importselector;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.MergedAnnotation;
+import org.springframework.stereotype.Component;
+import io.micronaut.spring.annotation.context.*;
+import org.springframework.context.annotation.ImportSelector;
+import org.springframework.core.type.AnnotationMetadata;
+
+@Component
+@Speed(fast = true)
+class Car {
+    @Autowired
+    Engine engine;
+}
+''')
+        def car = getBean(context, 'importselector.Car')
+
+        expect:
+        car.engine.getClass().name.contains("Fast")
+
+        cleanup:
+        context.close()
+    }
 
     void "test import annotation repetition"() {
         given:
@@ -26,15 +60,14 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 import io.micronaut.spring.annotation.context.*;
-import jakarta.inject.*;
 
 @ImportOne
 @ImportTwo
 @Component
 class Foo {
-    @Inject
+    @Autowired
     One one;
-    @Inject
+    @Autowired
     Two two;
 
 }
@@ -70,7 +103,7 @@ class Foo {
         foo.two.destroyCalled
     }
 
-    
+
 }
 
 @Configuration
@@ -90,7 +123,7 @@ class TwoConfiguration {
     @Bean(initMethod="init", destroyMethod="destroy")
     Two two() {
         return new Two();
-    }    
+    }
 }
 
 class One {}
@@ -109,3 +142,26 @@ class Two {
 
 @Component
 class BeanA {}
+
+interface Engine {}
+
+class FastEngine implements Engine {}
+
+class SlowEngine implements Engine {}
+
+class MySelector implements ImportSelector {
+    @Override
+    public String[] selectImports(AnnotationMetadata importingClassMetadata) {
+        MergedAnnotation<Speed> mergedAnnotation = importingClassMetadata.getAnnotations().get(Speed.class);
+        if(mergedAnnotation.getBoolean("fast")) {
+            return new String[] { FastEngine.class.getName() };
+        } else {
+            return new String[] { SlowEngine.class.getName() };
+        }
+    }
+}
+
+@Import(MySelector.class)
+@interface Speed {
+    boolean fast();
+}

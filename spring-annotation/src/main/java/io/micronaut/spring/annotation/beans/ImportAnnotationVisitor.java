@@ -20,8 +20,15 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
+import io.micronaut.core.util.ArrayUtils;
+import io.micronaut.spring.core.type.ClassElementSpringMetadata;
+import org.springframework.beans.factory.BeanClassLoaderAware;
+import org.springframework.beans.factory.BeanFactoryAware;
+import org.springframework.context.EnvironmentAware;
+import org.springframework.context.ResourceLoaderAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.DeferredImportSelector;
 import org.springframework.context.annotation.ImportBeanDefinitionRegistrar;
 import org.springframework.context.annotation.ImportSelector;
 import org.springframework.context.annotation.Scope;
@@ -44,7 +51,7 @@ import io.micronaut.inject.visitor.VisitorContext;
 import io.micronaut.runtime.http.scope.RequestScope;
 
 /**
- * Handles the import importDeclaration allowing importing of additional Spring beans into a Micronaut 
+ * Handles the import importDeclaration allowing importing of additional Spring beans into a Micronaut
  application.
  *
  * @author graemerocher
@@ -65,23 +72,27 @@ public class ImportAnnotationVisitor implements TypeElementVisitor<Object, Objec
                     for (int idx = 0; idx < acv.length; idx++) {
                         AnnotationClassValue<?> a = acv[idx];
                         String className = a.getName();
-                        context.getClassElement(className).ifPresent((typeToImport) -> {
-                            if (typeToImport.isAssignable(ImportSelector.class)) {
-                                // handle import selector
-                                importSelector(element, typeToImport, context);
-                            } else if (typeToImport.isAssignable(ImportBeanDefinitionRegistrar.class)) {
-                                // handle import registrar
-                            } else if (typeToImport.hasAnnotation(Configuration.class)) {
-                                // handle configuration class
-                                handleConfigurationImport(element, typeToImport, context);
-                            } else if (typeToImport.hasStereotype(Component.class)) {
-                                // handle component
-                                element.addAssociatedBean(typeToImport).inject();
-                            } 
-                        });                        
+                        context.getClassElement(className).ifPresent(typeToImport -> {
+                            handleImport(element, context, typeToImport);
+                        });
                     }
                 }
             }
+        }
+    }
+
+    private void handleImport(ClassElement originatingElement, VisitorContext context, ClassElement typeToImport) {
+        if (typeToImport.isAssignable(ImportSelector.class)) {
+            // handle import selector
+            importSelector(originatingElement, typeToImport, context);
+        } else if (typeToImport.isAssignable(ImportBeanDefinitionRegistrar.class)) {
+            // handle import registrar
+        } else if (typeToImport.hasAnnotation(Configuration.class)) {
+            // handle configuration class
+            handleConfigurationImport(originatingElement, typeToImport, context);
+        } else {
+            // handle component
+            originatingElement.addAssociatedBean(typeToImport).inject();
         }
     }
 
@@ -96,8 +107,8 @@ public class ImportAnnotationVisitor implements TypeElementVisitor<Object, Objec
     }
 
     private void handleConfigurationImport(
-        ClassElement originatingElement, 
-        ClassElement typeToImport, 
+        ClassElement originatingElement,
+        ClassElement typeToImport,
         VisitorContext context) {
         // TODO: In Micronaut 3.5.2 interception was added so need to proxy these
         BeanElementBuilder beanBuilder = originatingElement
@@ -113,13 +124,13 @@ public class ImportAnnotationVisitor implements TypeElementVisitor<Object, Objec
             if (scopeName != null) {
                 switch(scopeName) {
                     case "prototype":
-                        childBuilder.annotate(Prototype.class);        
+                        childBuilder.annotate(Prototype.class);
                     break;
                     case "request":
-                        childBuilder.annotate(RequestScope.class);        
+                        childBuilder.annotate(RequestScope.class);
                     break;
                     default:
-                        childBuilder.annotate(AnnotationUtil.SINGLETON);    
+                        childBuilder.annotate(AnnotationUtil.SINGLETON);
                 }
             } else {
                 childBuilder.annotate(AnnotationUtil.SINGLETON);
@@ -128,29 +139,46 @@ public class ImportAnnotationVisitor implements TypeElementVisitor<Object, Objec
             String destroyMethod = me.stringValue(Bean.class, "destroyMethod").orElse(null);
             if (initMethod != null) {
                 childBuilder.withMethods(
-                    instanceMethods.named(n -> n.equals(initMethod)), 
+                    instanceMethods.named(n -> n.equals(initMethod)),
                     BeanMethodElement::postConstruct
-                );                 
+                );
             }
             if (destroyMethod != null) {
                 childBuilder.withMethods(
-                    instanceMethods.named(n -> n.equals(destroyMethod)), 
+                    instanceMethods.named(n -> n.equals(destroyMethod)),
                     BeanMethodElement::preDestroy
-                );                   
+                );
             }
         });
-            
+
     }
 
-    private void importSelector(ClassElement originatingElement, ClassElement typeToImport, VisitorContext context) {
+    private void importSelector(ClassElement originatingElement, ClassElement importSelectorElement, VisitorContext context) {
         try {
-            Object selectorObject = InstantiationUtils.instantiate(typeToImport.getCanonicalName(), getClass().getClassLoader());
+            Object selectorObject = null;
+
+            if (!importSelectorElement.isAssignable(BeanClassLoaderAware.class) &&
+                !importSelectorElement.isAssignable(BeanFactoryAware.class) &&
+                !importSelectorElement.isAssignable(ResourceLoaderAware.class) &&
+                !importSelectorElement.isAssignable(EnvironmentAware.class) &&
+                !importSelectorElement.isAssignable(DeferredImportSelector.class)) {
+                selectorObject = InstantiationUtils.tryInstantiate(importSelectorElement.getName(), getClass().getClassLoader()).orElse(null);
+            }
             if (selectorObject instanceof ImportSelector) {
                 ImportSelector selector = (ImportSelector) selectorObject;
-                selector.selectImports(importingClassMetadata)                
+                String[] importedTypes = selector.selectImports(new ClassElementSpringMetadata(originatingElement));
+                if (ArrayUtils.isNotEmpty(importedTypes)) {
+                    for (String importedType : importedTypes) {
+                        context.getClassElement(importedType).ifPresent(typeToImport -> {
+                            handleImport(originatingElement, context, typeToImport);
+                        });
+                    }
+                }
+            } else {
+                // TODO: defer to runtime
             }
         } catch (InstantiationException e) {
-            context.fail("ImportSelector of type [" + typeToImport.getName() + "] found in Spring @Import declaration must be placed on the annotation processor classpath: " + e.getMessage(), originatingElement);            
+            context.fail("ImportSelector of type [" + importSelectorElement.getName() + "] found in Spring @Import declaration must be placed on the annotation processor classpath: " + e.getMessage(), originatingElement);
         }
     }
 }
