@@ -179,6 +179,8 @@ public class ImportAnnotationVisitor implements TypeElementVisitor<Object, Objec
             }
         } catch (InstantiationException e) {
             context.fail("ImportSelector of type [" + importSelectorElement.getName() + "] found in Spring @Import declaration must be placed on the annotation processor classpath: " + e.getMessage(), originatingElement);
+        } catch (Exception e) {
+            context.fail("ImportSelector of type [" + importSelectorElement.getName() + "] failed to import: " + e.getMessage(), originatingElement);
         }
     }
 }

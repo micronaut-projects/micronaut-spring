@@ -1,8 +1,10 @@
 package io.micronaut.spring.core.annotation;
 
 import java.lang.annotation.Annotation;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -347,7 +349,7 @@ public class MergedAnnotationValue<A extends Annotation> implements MergedAnnota
 
     @Override
     public AnnotationAttributes asAnnotationAttributes(Adapt... adaptations) {
-        return asMap(mergedAnnotation -> new AnnotationAttributes(), adaptations);
+        return asMap(mergedAnnotation -> new AnnotationAttributes(value.getAnnotationName(), getClass().getClassLoader()), adaptations);
     }
 
     @SuppressWarnings("Convert2Diamond")
@@ -364,26 +366,56 @@ public class MergedAnnotationValue<A extends Annotation> implements MergedAnnota
     private <T extends Map<String, Object>> T asMap(Function<MergedAnnotation<?>, T> factory, AnnotationValue<?> thisValue, Adapt[] adaptations) {
         Map<CharSequence, Object> values = thisValue.getValues();
         T newMap = factory.apply(this);
+        Map<String, Class<? extends Enum>> enumMembers = computeEnumMembers(thisValue);
         Set<Adapt> adapts = CollectionUtils.setOf(adaptations);
-        values.forEach((attribute, value) -> {
-            if (value instanceof AnnotationClassValue) {
-                AnnotationClassValue<?> acv = (AnnotationClassValue<?>) value;
-                if (adapts.contains(Adapt.CLASS_TO_STRING)) {
-                    value = acv.getName();
-                } else {
-                    value = acv.getType().orElse(null);
-                }
-            } else if (value instanceof AnnotationValue) {
-                AnnotationValue<?> av = (AnnotationValue<?>) value;
-                if (adapts.contains(Adapt.ANNOTATION_TO_MAP)) {
-                    value = asMap(factory, av, adaptations);
-                } else {
-                    // TODO: synthesize annotation from value?
-                }
-            }
-            newMap.put(attribute.toString(), value);
+        values.forEach((attribute, v) -> {
+            v = convertValue(factory, adaptations, adapts, v, enumMembers.get(attribute));
+            newMap.put(attribute.toString(), v);
+        });
+        Map<String, Object> defaultValues = annotationMetadata.getDefaultValues(thisValue.getAnnotationName());
+        defaultValues.forEach((key, v) -> {
+            v = convertValue(factory, adaptations, adapts, v, enumMembers.get(key));
+            newMap.putIfAbsent(key, v);
         });
         return newMap;
+    }
+
+    private Map<String, Class<? extends Enum>> computeEnumMembers(AnnotationValue<?> thisValue) {
+        Class<? extends Annotation> t = annotationMetadata.getAnnotationType(thisValue.getAnnotationName()).orElse(null);
+        if (t != null) {
+            Map<String, Class<? extends Enum>> result = new HashMap<>(5);
+            Method[] declaredMethods = t.getDeclaredMethods();
+            for (Method declaredMethod : declaredMethods) {
+                Class<?> rt = declaredMethod.getReturnType();
+                if (Enum.class.isAssignableFrom(rt)) {
+                    result.put(declaredMethod.getName(), (Class<? extends Enum>) rt);
+                }
+            }
+            return Collections.unmodifiableMap(result);
+        }
+        return Collections.emptyMap();
+    }
+
+    private <T extends Map<String, Object>> Object convertValue(Function<MergedAnnotation<?>, T> factory, Adapt[] adaptations, Set<Adapt> adapts, Object value, Class<? extends Enum> aClass) {
+        if (aClass != null && value instanceof String) {
+            return Enum.valueOf(aClass, value.toString());
+        }
+        if (value instanceof AnnotationClassValue) {
+            AnnotationClassValue<?> acv = (AnnotationClassValue<?>) value;
+            if (adapts.contains(Adapt.CLASS_TO_STRING)) {
+                value = acv.getName();
+            } else {
+                value = acv.getType().orElse(null);
+            }
+        } else if (value instanceof AnnotationValue) {
+            AnnotationValue<?> av = (AnnotationValue<?>) value;
+            if (adapts.contains(Adapt.ANNOTATION_TO_MAP)) {
+                value = asMap(factory, av, adaptations);
+            } else {
+                // TODO: synthesize annotation from value?
+            }
+        }
+        return value;
     }
 
     @Override

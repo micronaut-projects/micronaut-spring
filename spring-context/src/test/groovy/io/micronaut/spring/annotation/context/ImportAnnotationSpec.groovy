@@ -1,7 +1,10 @@
 package io.micronaut.spring.annotation.context
 
 import io.micronaut.annotation.processing.test.AbstractTypeElementSpec
+import io.micronaut.inject.BeanDefinitionReference
+import io.micronaut.spring.beans.ObjectProviderBeanDefinition
 import io.micronaut.spring.beans.SpringImport
+import org.springframework.aop.framework.Advised
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -10,6 +13,7 @@ import org.springframework.context.annotation.ImportSelector
 import org.springframework.core.annotation.MergedAnnotation;
 import org.springframework.core.env.Environment
 import org.springframework.core.type.AnnotationMetadata
+import org.springframework.scheduling.annotation.AsyncAnnotationBeanPostProcessor
 import org.springframework.stereotype.Component
 
 /**
@@ -17,6 +21,47 @@ import org.springframework.stereotype.Component
  * @author graemerocher
  */
 class ImportAnnotationSpec extends AbstractTypeElementSpec {
+
+    void "test @EnableAsync"() {
+        given:
+        def context = buildContext('''
+package enableasync;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.MergedAnnotation;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.stereotype.Component;
+import io.micronaut.spring.annotation.context.*;
+import org.springframework.context.annotation.ImportSelector;
+import org.springframework.core.type.AnnotationMetadata;
+
+@EnableAsync
+class Application {
+}
+
+@Component
+class Job {
+    @Async
+    void doWork() {
+        System.out.println(Thread.currentThread().getName());
+    }
+}
+''')
+        def job = getBean(context, 'enableasync.Job')
+
+        expect:
+        context.containsBean(AsyncAnnotationBeanPostProcessor)
+        context.getBean(AsyncAnnotationBeanPostProcessor)
+        job != null
+        job instanceof Advised
+
+        cleanup:
+        context.close()
+    }
 
     void "test build time import selector"() {
         given:
@@ -103,7 +148,10 @@ class Foo {
         foo.two.destroyCalled
     }
 
-
+    @Override
+    List<BeanDefinitionReference<?>> getBuiltInBeanReferences() {
+        return super.getBuiltInBeanReferences() + [new ObjectProviderBeanDefinition()]
+    }
 }
 
 @Configuration
