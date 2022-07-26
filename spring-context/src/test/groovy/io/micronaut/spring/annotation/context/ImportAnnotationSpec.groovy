@@ -56,10 +56,13 @@ class Job {
 }
 ''', true)
         def job = getBean(context, 'enableasync.Job')
+        def job2 = getBean(context, 'enableasync.Job')
         PollingConditions conditions = new PollingConditions()
         expect:
+        job.is(job2)
         context.containsBean(SchedulingConfiguration)
         context.getBean(ScheduledAnnotationBeanPostProcessor)
+        context.getBean(ScheduledAnnotationBeanPostProcessor).is(context.getBean(ScheduledAnnotationBeanPostProcessor))
         job != null
         conditions.eventually {
             job.executed

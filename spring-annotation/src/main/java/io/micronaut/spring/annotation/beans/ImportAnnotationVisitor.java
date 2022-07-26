@@ -20,6 +20,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
+import jakarta.inject.Singleton;
 import org.springframework.beans.factory.BeanClassLoaderAware;
 import org.springframework.beans.factory.BeanFactoryAware;
 import org.springframework.context.EnvironmentAware;
@@ -151,12 +152,10 @@ public class ImportAnnotationVisitor implements TypeElementVisitor<Object, Objec
 
     private void handleScopesAndQualifiers(Element originatingElement, BeanElementBuilder beanBuilder, ClassElement typeToImport) {
         // store the name of the type that performs the import
-        beanBuilder.annotate(ImportedBy.class, (builder) -> {
-            builder.member(
-                AnnotationMetadata.VALUE_MEMBER,
-                new AnnotationClassValue<>(originatingElement.getName())
-            );
-        });
+        beanBuilder.annotate(ImportedBy.class, builder -> builder.member(
+            AnnotationMetadata.VALUE_MEMBER,
+            new AnnotationClassValue<>(originatingElement.getName())
+        ));
         String scopeName = typeToImport.stringValue(Scope.class).orElse(null);
         if (typeToImport.hasAnnotation(Primary.class)) {
             beanBuilder.annotate(io.micronaut.context.annotation.Primary.class);
@@ -181,12 +180,12 @@ public class ImportAnnotationVisitor implements TypeElementVisitor<Object, Objec
         if (element.hasAnnotation(Lazy.class)) {
             boolean lazy = element.booleanValue(Lazy.class).orElse(true);
             if (lazy) {
-                childBuilder.annotate(AnnotationUtil.SINGLETON);
+                childBuilder.annotate(Singleton.class);
             } else {
                 childBuilder.annotate(Context.class);
             }
         } else {
-            childBuilder.annotate(AnnotationUtil.SINGLETON);
+            childBuilder.annotate(Singleton.class);
         }
     }
 

@@ -17,7 +17,12 @@ package io.micronaut.spring.context;
 
 import io.micronaut.context.ApplicationContextBuilder;
 import io.micronaut.context.annotation.Secondary;
+import io.micronaut.context.event.StartupEvent;
 import io.micronaut.core.annotation.Nullable;
+import io.micronaut.core.reflect.GenericTypeUtils;
+import io.micronaut.core.type.GenericArgument;
+import io.micronaut.inject.BeanDefinition;
+import io.micronaut.runtime.event.annotation.EventListener;
 import io.micronaut.spring.beans.MicronautContextInternal;
 import io.micronaut.spring.context.env.MicronautEnvironment;
 import io.micronaut.spring.context.event.MicronautApplicationEventPublisher;
@@ -28,10 +33,12 @@ import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.beans.factory.ObjectProvider;
+import org.springframework.beans.factory.SmartInitializingSingleton;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.context.*;
+import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.core.ResolvableType;
 import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.core.io.ProtocolResolver;
@@ -42,6 +49,7 @@ import org.springframework.util.ObjectUtils;
 
 import java.io.IOException;
 import java.lang.annotation.Annotation;
+import java.util.Collection;
 import java.util.Locale;
 import java.util.Map;
 
@@ -436,7 +444,9 @@ public class MicronautApplicationContext implements ManagedApplicationContext, C
     @Override
     public void start() {
         if (!isRunning()) {
-            micronautContext.start();
+            if (!micronautContext.isRunning()) {
+                micronautContext.start();
+            }
             this.beanFactory = micronautContext.getBean(MicronautBeanFactory.class);
             this.environment = micronautContext.getBean(MicronautEnvironment.class);
             this.eventPublisher = micronautContext.getBean(MicronautApplicationEventPublisher.class);
@@ -447,7 +457,7 @@ public class MicronautApplicationContext implements ManagedApplicationContext, C
 
     @Override
     public void stop() {
-        if (isRunning()) {
+        if (isRunning() && micronautContext.isRunning()) {
             micronautContext.stop();
         }
     }
@@ -455,5 +465,23 @@ public class MicronautApplicationContext implements ManagedApplicationContext, C
     @Override
     public boolean isRunning() {
         return micronautContext.isRunning();
+    }
+
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    @EventListener
+    protected void onStartup(StartupEvent startupEvent) {
+        Collection<SmartInitializingSingleton> smartSingletons =
+            micronautContext.getBeansOfType(SmartInitializingSingleton.class);
+        for (SmartInitializingSingleton smartSingleton : smartSingletons) {
+            smartSingleton.afterSingletonsInstantiated();
+        }
+        Collection<BeanDefinition<ApplicationListener>> beanDefinitions = micronautContext.getBeanDefinitions(ApplicationListener.class);
+        for (BeanDefinition<ApplicationListener> beanDefinition : beanDefinitions) {
+            Class<?> t = GenericTypeUtils.resolveInterfaceTypeArgument(beanDefinition.getBeanType(), ApplicationListener.class).orElse(null);
+            if (t != null && t.equals(ContextRefreshedEvent.class)) {
+                ApplicationListener applicationListener = micronautContext.getBean(beanDefinition);
+                applicationListener.onApplicationEvent(new ContextRefreshedEvent(this));
+            }
+        }
     }
 }
