@@ -27,6 +27,9 @@ import org.springframework.core.annotation.MergedAnnotation;
 import org.springframework.core.annotation.MergedAnnotationSelector;
 import org.springframework.core.annotation.MergedAnnotations;
 
+/**
+ * Implements the {@link MergedAnnotations} interface.
+ */
 public class MicronautMergedAnnotations implements MergedAnnotations {
     private final AnnotationMetadata annotationMetadata;
 

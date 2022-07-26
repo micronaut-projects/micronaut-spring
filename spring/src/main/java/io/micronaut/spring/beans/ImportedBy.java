@@ -26,12 +26,11 @@ import java.lang.annotation.Target;
  * @author graemerocher
  * @see SpringImport
  */
-@Retention(RetentionPolicy.RUNTIME) 
+@Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.TYPE, ElementType.METHOD})
 public @interface ImportedBy {
     /**
-     * 
-     * @return 
+     * @return The type that imported this bean.
      */
     Class<?> value();
 }

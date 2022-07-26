@@ -26,6 +26,11 @@ import org.springframework.core.annotation.MergedAnnotations;
 import org.springframework.core.type.AnnotationMetadata;
 import org.springframework.core.type.MethodMetadata;
 
+/**
+ * Implementation of Spring's {@link AnnotationMetadata} that backs onto a {@link BeanDefinition}.
+ *
+ * @author graemerocher 
+ */
 public class BeanDefinitionSpringMetadata implements AnnotationMetadata {
     private final BeanDefinition<?> beanDefinition;
 

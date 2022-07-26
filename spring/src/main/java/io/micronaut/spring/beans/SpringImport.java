@@ -27,14 +27,21 @@ import io.micronaut.core.annotation.Internal;
  *
  * @author graemerocher
  */
-@Retention(RetentionPolicy.RUNTIME) 
+@Retention(RetentionPolicy.RUNTIME)
 @Repeatable(SpringImport.List.class)
 @Internal
 public @interface SpringImport {
+    /**
+     * The type to import.
+     * @return The type to import
+     */
     Class<?> value();
 
-    @Retention(RetentionPolicy.RUNTIME) 
-    public @interface List {
+    /**
+     * Repeatable wrapper type.
+     */
+    @Retention(RetentionPolicy.RUNTIME)
+    @interface List {
         SpringImport[] value();
     }
 }

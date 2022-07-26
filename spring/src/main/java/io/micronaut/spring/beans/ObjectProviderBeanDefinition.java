@@ -121,7 +121,7 @@ public final class ObjectProviderBeanDefinition extends AbstractProviderDefiniti
 
         @Override
         public Object getIfUnique() throws BeansException {
-            if ( context.getBeanDefinitions(argument, finalQualifier).size() == 1) {
+            if (context.getBeanDefinitions(argument, finalQualifier).size() == 1) {
                 try {
                     return ((DefaultBeanContext) context).getBean(resolutionContext.copy(), argument, qualify(qualifier));
                 } catch (Exception e) {

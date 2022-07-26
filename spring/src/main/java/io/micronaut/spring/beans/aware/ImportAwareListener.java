@@ -23,6 +23,9 @@ import io.micronaut.spring.core.type.BeanDefinitionSpringMetadata;
 import jakarta.inject.Singleton;
 import org.springframework.context.annotation.ImportAware;
 
+/**
+ * Handles the import aware interface.
+ */
 @Singleton
 public class ImportAwareListener implements BeanCreatedEventListener<ImportAware> {
     @Override

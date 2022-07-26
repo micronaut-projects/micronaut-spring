@@ -18,7 +18,6 @@ package io.micronaut.spring.context.aware;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Objects;
-import java.util.function.Supplier;
 
 import io.micronaut.context.BeanProvider;
 import io.micronaut.context.event.BeanCreatedEvent;
@@ -26,11 +25,10 @@ import io.micronaut.context.event.BeanCreatedEventListener;
 import io.micronaut.context.event.BeanInitializedEventListener;
 import io.micronaut.context.event.BeanInitializingEvent;
 import io.micronaut.core.annotation.Internal;
-import io.micronaut.core.util.SupplierUtil;
-import io.micronaut.spring.context.MicronautApplicationContext;
 import io.micronaut.spring.beans.MicronautContextInternal;
-import io.micronaut.spring.context.factory.MicronautBeanFactory;
+import io.micronaut.spring.context.MicronautApplicationContext;
 import io.micronaut.spring.context.env.MicronautEnvironment;
+import io.micronaut.spring.context.factory.MicronautBeanFactory;
 import jakarta.inject.Singleton;
 import org.springframework.beans.factory.BeanClassLoaderAware;
 import org.springframework.beans.factory.BeanCreationException;
@@ -66,7 +64,6 @@ public class SpringAwareListener implements BeanInitializedEventListener<Object>
         this.environmentProvider = environmentProvider;
         this.applicationContextProvider = applicationContextProvider;
     }
-
 
     @Override
     public Object onInitialized(BeanInitializingEvent<Object> event) {
