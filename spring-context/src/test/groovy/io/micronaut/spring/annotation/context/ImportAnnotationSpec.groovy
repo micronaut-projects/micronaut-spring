@@ -14,13 +14,61 @@ import org.springframework.core.annotation.MergedAnnotation;
 import org.springframework.core.env.Environment
 import org.springframework.core.type.AnnotationMetadata
 import org.springframework.scheduling.annotation.AsyncAnnotationBeanPostProcessor
+import org.springframework.scheduling.annotation.ScheduledAnnotationBeanPostProcessor
+import org.springframework.scheduling.annotation.SchedulingConfiguration
 import org.springframework.stereotype.Component
+import spock.util.concurrent.PollingConditions
 
 /**
  *
  * @author graemerocher
  */
 class ImportAnnotationSpec extends AbstractTypeElementSpec {
+    void "test @EnabledScheduling"() {
+        given:
+        def context = buildContext("enabeasync.Application",'''
+package enableasync;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.MergedAnnotation;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
+import io.micronaut.spring.annotation.context.*;
+import org.springframework.context.annotation.ImportSelector;
+import org.springframework.core.type.AnnotationMetadata;
+
+@EnableScheduling
+class Application {
+}
+
+@Component
+class Job {
+    public boolean executed = false;
+    @Scheduled(fixedDelay = 100)
+    public void doWork() {
+        executed = true;
+        System.out.println(Thread.currentThread().getName());
+    }
+}
+''', true)
+        def job = getBean(context, 'enableasync.Job')
+        PollingConditions conditions = new PollingConditions()
+        expect:
+        context.containsBean(SchedulingConfiguration)
+        context.getBean(ScheduledAnnotationBeanPostProcessor)
+        job != null
+        conditions.eventually {
+            job.executed
+        }
+
+
+        cleanup:
+        context.close()
+    }
 
     void "test @EnableAsync"() {
         given:
