@@ -33,6 +33,7 @@ import io.micronaut.inject.BeanFactory;
 import io.micronaut.inject.DisposableBeanDefinition;
 import io.micronaut.inject.ParametrizedBeanFactory;
 import io.micronaut.inject.qualifiers.Qualifiers;
+import io.micronaut.spring.beans.MicronautContextInternal;
 import io.micronaut.spring.context.aware.SpringAwareListener;
 import jakarta.inject.Singleton;
 import org.springframework.beans.BeansException;
@@ -62,7 +63,7 @@ import java.util.function.Supplier;
  */
 @Singleton
 @Internal
-public class MicronautBeanFactory extends DefaultListableBeanFactory implements ListableBeanFactory, AutowireCapableBeanFactory, HierarchicalBeanFactory, ConfigurableListableBeanFactory {
+public class MicronautBeanFactory extends DefaultListableBeanFactory implements ListableBeanFactory, AutowireCapableBeanFactory, HierarchicalBeanFactory, ConfigurableListableBeanFactory, MicronautContextInternal {
 
     private final BeanContext beanContext;
     private final Map<String, BeanDefinition<?>> beanDefinitionMap = new LinkedHashMap<>(200);
@@ -593,7 +594,7 @@ public class MicronautBeanFactory extends DefaultListableBeanFactory implements 
 
     @Override
     public Object initializeBean(Object existingBean, String beanName) throws BeansException {
-        return springAwareListener.onBeanCreated(existingBean);
+        return springAwareListener.onBeanCreated(existingBean, beanName);
     }
 
     @Override

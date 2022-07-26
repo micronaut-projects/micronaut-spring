@@ -15,19 +15,28 @@
  */
 package io.micronaut.spring.context.aware;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Objects;
+import java.util.function.Supplier;
+
 import io.micronaut.context.BeanProvider;
 import io.micronaut.context.event.BeanCreatedEvent;
 import io.micronaut.context.event.BeanCreatedEventListener;
 import io.micronaut.context.event.BeanInitializedEventListener;
 import io.micronaut.context.event.BeanInitializingEvent;
 import io.micronaut.core.annotation.Internal;
+import io.micronaut.core.util.SupplierUtil;
 import io.micronaut.spring.context.MicronautApplicationContext;
+import io.micronaut.spring.beans.MicronautContextInternal;
 import io.micronaut.spring.context.factory.MicronautBeanFactory;
 import io.micronaut.spring.context.env.MicronautEnvironment;
 import jakarta.inject.Singleton;
+import org.springframework.beans.factory.BeanClassLoaderAware;
 import org.springframework.beans.factory.BeanCreationException;
 import org.springframework.beans.factory.BeanFactoryAware;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.EnvironmentAware;
 
@@ -44,6 +53,8 @@ public class SpringAwareListener implements BeanInitializedEventListener<Object>
     private final BeanProvider<MicronautEnvironment> environmentProvider;
     private final BeanProvider<MicronautApplicationContext> applicationContextProvider;
 
+    private Collection<BeanPostProcessor> beanPostProcessors;
+
     /**
      * Default constructor.
      * @param beanFactoryProvider The bean factory provider
@@ -56,14 +67,21 @@ public class SpringAwareListener implements BeanInitializedEventListener<Object>
         this.applicationContextProvider = applicationContextProvider;
     }
 
+
     @Override
     public Object onInitialized(BeanInitializingEvent<Object> event) {
         final Object bean = event.getBean();
-        wireAwareObjects(bean);
+        if (bean instanceof MicronautContextInternal) {
+            return bean;
+        }
+        wireAwareObjects(bean, event.getBeanDefinition().getName());
         return bean;
     }
 
-    private void wireAwareObjects(Object bean) {
+    private void wireAwareObjects(Object bean, String beanName) {
+        if (bean instanceof BeanClassLoaderAware) {
+            ((BeanClassLoaderAware) bean).setBeanClassLoader(Objects.requireNonNull(applicationContextProvider.get().getClassLoader()));
+        }
         if (bean instanceof EnvironmentAware) {
             ((EnvironmentAware) bean).setEnvironment(environmentProvider.get());
         }
@@ -73,21 +91,52 @@ public class SpringAwareListener implements BeanInitializedEventListener<Object>
         if (bean instanceof ApplicationContextAware) {
             ((ApplicationContextAware) bean).setApplicationContext(applicationContextProvider.get());
         }
+
     }
 
     @Override
     public Object onCreated(BeanCreatedEvent<Object> event) {
         final Object bean = event.getBean();
-        return onBeanCreated(bean);
+        if (bean instanceof MicronautContextInternal) {
+            return bean;
+        }
+        return onBeanCreated(bean, event.getBeanIdentifier().getName());
     }
 
     /**
      * Execute when a bean is created.
-     * @param bean The bean.
+     *
+     * @param bean           The bean.
+     * @return The result
+     * @deprecated Use {@link #onBeanCreated(Object, String)}
+     */
+    @Deprecated
+    public Object onBeanCreated(Object bean) {
+        return onBeanCreated(bean, null);
+    }
+
+    /**
+     * Execute when a bean is created.
+     *
+     * @param bean           The bean.
+     * @param beanName       The bean name
      * @return The result
      */
-    public Object onBeanCreated(Object bean) {
-        wireAwareObjects(bean);
+    public Object onBeanCreated(Object bean, String beanName) {
+        wireAwareObjects(bean, beanName);
+        if (!(bean instanceof BeanPostProcessor)) {
+            // init provider
+            initProcessors();
+            Collection<BeanPostProcessor> processors = beanPostProcessors;
+            for (BeanPostProcessor processor : processors) {
+                Object o = processor.postProcessBeforeInitialization(bean, beanName);
+                if (o == null) {
+                    break;
+                } else {
+                    bean = o;
+                }
+            }
+        }
         if (bean instanceof InitializingBean) {
             try {
                 ((InitializingBean) bean).afterPropertiesSet();
@@ -95,6 +144,26 @@ public class SpringAwareListener implements BeanInitializedEventListener<Object>
                 throw new BeanCreationException(e.getMessage(), e);
             }
         }
+        if (!(bean instanceof BeanPostProcessor)) {
+            initProcessors();
+            for (BeanPostProcessor processor : beanPostProcessors) {
+                Object o = processor.postProcessAfterInitialization(bean, beanName);
+                if (o == null) {
+                    break;
+                } else {
+                    bean = o;
+                }
+            }
+        }
         return bean;
+    }
+
+    private void initProcessors() {
+        if (beanPostProcessors == null) {
+            beanPostProcessors = new ArrayList<>();
+            MicronautBeanFactory micronautBeanFactory = beanFactoryProvider.get();
+            Collection<BeanPostProcessor> processors = micronautBeanFactory.getBeanContext().getBeansOfType(BeanPostProcessor.class);
+            beanPostProcessors.addAll(processors);
+        }
     }
 }

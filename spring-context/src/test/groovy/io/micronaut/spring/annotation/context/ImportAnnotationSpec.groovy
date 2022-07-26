@@ -24,7 +24,7 @@ class ImportAnnotationSpec extends AbstractTypeElementSpec {
 
     void "test @EnableAsync"() {
         given:
-        def context = buildContext('''
+        def context = buildContext("enabeasync.Application",'''
 package enableasync;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,11 +46,11 @@ class Application {
 @Component
 class Job {
     @Async
-    void doWork() {
+    public void doWork() {
         System.out.println(Thread.currentThread().getName());
     }
 }
-''')
+''', true)
         def job = getBean(context, 'enableasync.Job')
 
         expect:

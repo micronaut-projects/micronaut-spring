@@ -18,6 +18,8 @@ package io.micronaut.spring.annotation.beans;
 import java.util.Arrays;
 import java.util.List;
 
+import io.micronaut.context.annotation.Bean;
+import io.micronaut.core.annotation.AnnotationUtil;
 import org.springframework.context.annotation.Import;
 
 import io.micronaut.core.annotation.AnnotationMetadata;
@@ -42,7 +44,8 @@ public class ImportAnnotationMapper implements TypedAnnotationMapper<Import> {
             AnnotationValue.builder("io.micronaut.spring.beans.SpringImport")
                 .member(AnnotationMetadata.VALUE_MEMBER, annotation.annotationClassValues(AnnotationMetadata.VALUE_MEMBER))
                 .build(),
-            annotation
+            annotation,
+            AnnotationValue.builder(Bean.class).build()
         );
     }
 }

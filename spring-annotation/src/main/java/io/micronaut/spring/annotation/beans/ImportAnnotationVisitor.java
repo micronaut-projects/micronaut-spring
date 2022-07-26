@@ -20,8 +20,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
-import io.micronaut.core.util.ArrayUtils;
-import io.micronaut.spring.core.type.ClassElementSpringMetadata;
 import org.springframework.beans.factory.BeanClassLoaderAware;
 import org.springframework.beans.factory.BeanFactoryAware;
 import org.springframework.context.EnvironmentAware;
@@ -31,9 +29,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DeferredImportSelector;
 import org.springframework.context.annotation.ImportBeanDefinitionRegistrar;
 import org.springframework.context.annotation.ImportSelector;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
 
+import io.micronaut.context.annotation.Context;
 import io.micronaut.context.annotation.Prototype;
 import io.micronaut.core.annotation.AnnotationClassValue;
 import io.micronaut.core.annotation.AnnotationMetadata;
@@ -41,7 +41,9 @@ import io.micronaut.core.annotation.AnnotationUtil;
 import io.micronaut.core.annotation.AnnotationValue;
 import io.micronaut.core.reflect.InstantiationUtils;
 import io.micronaut.core.reflect.exception.InstantiationException;
+import io.micronaut.core.util.ArrayUtils;
 import io.micronaut.inject.ast.ClassElement;
+import io.micronaut.inject.ast.Element;
 import io.micronaut.inject.ast.ElementQuery;
 import io.micronaut.inject.ast.MethodElement;
 import io.micronaut.inject.ast.beans.BeanElementBuilder;
@@ -49,6 +51,8 @@ import io.micronaut.inject.ast.beans.BeanMethodElement;
 import io.micronaut.inject.visitor.TypeElementVisitor;
 import io.micronaut.inject.visitor.VisitorContext;
 import io.micronaut.runtime.http.scope.RequestScope;
+import io.micronaut.spring.beans.ImportedBy;
+import io.micronaut.spring.core.type.ClassElementSpringMetadata;
 
 /**
  * Handles the import importDeclaration allowing importing of additional Spring beans into a Micronaut
@@ -64,13 +68,12 @@ public class ImportAnnotationVisitor implements TypeElementVisitor<Object, Objec
     @Override
     public void visitClass(ClassElement element, VisitorContext context) {
         Class annType = element.getAnnotationType(IMPORT_ANNOTATION).orElse(null);
-        if (annType != null) {
+        if (annType != null && element.hasStereotype(annType)) {
             List<AnnotationValue<? extends Annotation>> values = element.getAnnotationValuesByType(annType);
             if (!values.isEmpty()) {
                 for (AnnotationValue<?> av : values) {
                     AnnotationClassValue<?>[] acv = av.annotationClassValues(AnnotationMetadata.VALUE_MEMBER);
-                    for (int idx = 0; idx < acv.length; idx++) {
-                        AnnotationClassValue<?> a = acv[idx];
+                    for (AnnotationClassValue<?> a : acv) {
                         String className = a.getName();
                         context.getClassElement(className).ifPresent(typeToImport -> {
                             handleImport(element, context, typeToImport);
@@ -92,7 +95,13 @@ public class ImportAnnotationVisitor implements TypeElementVisitor<Object, Objec
             handleConfigurationImport(originatingElement, typeToImport, context);
         } else {
             // handle component
-            originatingElement.addAssociatedBean(typeToImport).inject();
+            BeanElementBuilder beanElementBuilder = originatingElement.addAssociatedBean(typeToImport);
+            beanElementBuilder.inject();
+            handleScopesAndQualifiers(
+                originatingElement,
+                beanElementBuilder,
+                typeToImport
+            );
         }
     }
 
@@ -118,23 +127,10 @@ public class ImportAnnotationVisitor implements TypeElementVisitor<Object, Objec
             .onlyInstance()
             .filter(m -> !m.hasParameters());
         ElementQuery<MethodElement> beanMethods = instanceMethods.annotated(ann -> ann.hasDeclaredAnnotation(Bean.class));
-        beanBuilder.produceBeans(beanMethods, (childBuilder) -> {
+        handleScopesAndQualifiers(originatingElement, beanBuilder, typeToImport);
+        beanBuilder.produceBeans(beanMethods, childBuilder -> {
             MethodElement me = (MethodElement) childBuilder.getProducingElement();
-            String scopeName = me.stringValue(Scope.class).orElse(null);
-            if (scopeName != null) {
-                switch(scopeName) {
-                    case "prototype":
-                        childBuilder.annotate(Prototype.class);
-                    break;
-                    case "request":
-                        childBuilder.annotate(RequestScope.class);
-                    break;
-                    default:
-                        childBuilder.annotate(AnnotationUtil.SINGLETON);
-                }
-            } else {
-                childBuilder.annotate(AnnotationUtil.SINGLETON);
-            }
+            handleScopesAndQualifiers(originatingElement, childBuilder, typeToImport);
             String initMethod = me.stringValue(Bean.class, "initMethod").orElse(null);
             String destroyMethod = me.stringValue(Bean.class, "destroyMethod").orElse(null);
             if (initMethod != null) {
@@ -151,6 +147,47 @@ public class ImportAnnotationVisitor implements TypeElementVisitor<Object, Objec
             }
         });
 
+    }
+
+    private void handleScopesAndQualifiers(Element originatingElement, BeanElementBuilder beanBuilder, ClassElement typeToImport) {
+        // store the name of the type that performs the import
+        beanBuilder.annotate(ImportedBy.class, (builder) -> {
+            builder.member(
+                AnnotationMetadata.VALUE_MEMBER,
+                new AnnotationClassValue<>(originatingElement.getName())
+            );
+        });
+        String scopeName = typeToImport.stringValue(Scope.class).orElse(null);
+        if (typeToImport.hasAnnotation(Primary.class)) {
+            beanBuilder.annotate(io.micronaut.context.annotation.Primary.class);
+        }
+        if (scopeName != null) {
+            switch(scopeName) {
+                case "prototype":
+                    beanBuilder.annotate(Prototype.class);
+                break;
+                case "request":
+                    beanBuilder.annotate(RequestScope.class);
+                break;
+                default:
+                    handleDefaultScope(beanBuilder, typeToImport);
+            }
+        } else {
+            handleDefaultScope(beanBuilder, typeToImport);
+        }
+    }
+
+    private void handleDefaultScope(BeanElementBuilder childBuilder, Element element) {
+        if (element.hasAnnotation(Lazy.class)) {
+            boolean lazy = element.booleanValue(Lazy.class).orElse(true);
+            if (lazy) {
+                childBuilder.annotate(AnnotationUtil.SINGLETON);
+            } else {
+                childBuilder.annotate(Context.class);
+            }
+        } else {
+            childBuilder.annotate(AnnotationUtil.SINGLETON);
+        }
     }
 
     private void importSelector(ClassElement originatingElement, ClassElement importSelectorElement, VisitorContext context) {
