@@ -2,7 +2,7 @@
 managed-spring-boot = '2.7.0'
 managed-spring = '5.3.20'
 
-junit = '5.8.2'
+junit = '5.9.0'
 servlet-api = '4.0.1'
 
 [libraries]
