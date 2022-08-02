@@ -8,8 +8,7 @@ dependencies {
     api libs.spring.context
     api mn.micronaut.aop
     api mn.micronaut.inject
-
-    implementation projects.spring
+    api projects.spring
     implementation mn.micronaut.cache.core
 
     testAnnotationProcessor mn.micronaut.inject.java
@@ -19,6 +18,8 @@ dependencies {
     testImplementation mn.micronaut.inject.java
     testImplementation projects.springAnnotation
     testImplementation mn.micronaut.inject.java.test
+    testImplementation libs.spring.jdbc
+    testImplementation libs.h2database
 
     if (!JavaVersion.current().isJava9Compatible()) {
         testImplementation files(Jvm.current().toolsJar)

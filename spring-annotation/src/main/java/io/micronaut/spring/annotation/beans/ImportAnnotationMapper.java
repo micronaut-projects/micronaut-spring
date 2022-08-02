@@ -19,7 +19,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import io.micronaut.context.annotation.Bean;
-import io.micronaut.core.annotation.AnnotationUtil;
 import org.springframework.context.annotation.Import;
 
 import io.micronaut.core.annotation.AnnotationMetadata;

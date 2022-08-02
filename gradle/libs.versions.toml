@@ -4,6 +4,7 @@ managed-spring = '5.3.20'
 
 junit = '5.8.2'
 servlet-api = '4.0.1'
+h2 = '2.1.214'
 
 [libraries]
 managed-spring-boot = { module = 'org.springframework.boot:spring-boot', version.ref = 'managed-spring-boot' }
@@ -32,3 +33,5 @@ servlet-api = { module = 'javax.servlet:javax.servlet-api', version.ref = 'servl
 spring-test = { module = 'org.springframework:spring-test', version.ref = 'managed-spring' }
 
 spock-spring = { module = 'org.spockframework:spock-spring' }
+
+h2database = { module = 'com.h2database:h2', version.ref = 'h2' }

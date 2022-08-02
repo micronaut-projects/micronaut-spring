@@ -20,7 +20,6 @@ import io.micronaut.context.annotation.Secondary;
 import io.micronaut.context.event.StartupEvent;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.reflect.GenericTypeUtils;
-import io.micronaut.core.type.GenericArgument;
 import io.micronaut.inject.BeanDefinition;
 import io.micronaut.runtime.event.annotation.EventListener;
 import io.micronaut.spring.beans.MicronautContextInternal;
@@ -467,6 +466,10 @@ public class MicronautApplicationContext implements ManagedApplicationContext, C
         return micronautContext.isRunning();
     }
 
+    /**
+     * Method executed on startup.
+     * @param startupEvent The startup event.
+     */
     @SuppressWarnings({"unchecked", "rawtypes"})
     @EventListener
     protected void onStartup(StartupEvent startupEvent) {

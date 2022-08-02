@@ -17,6 +17,11 @@ import org.springframework.scheduling.annotation.AsyncAnnotationBeanPostProcesso
 import org.springframework.scheduling.annotation.ScheduledAnnotationBeanPostProcessor
 import org.springframework.scheduling.annotation.SchedulingConfiguration
 import org.springframework.stereotype.Component
+import org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration
+import org.springframework.transaction.event.TransactionalEventListenerFactory
+import org.springframework.transaction.interceptor.BeanFactoryTransactionAttributeSourceAdvisor
+import org.springframework.transaction.interceptor.TransactionAttributeSource
+import org.springframework.transaction.interceptor.TransactionInterceptor
 import spock.util.concurrent.PollingConditions
 
 /**
@@ -24,6 +29,71 @@ import spock.util.concurrent.PollingConditions
  * @author graemerocher
  */
 class ImportAnnotationSpec extends AbstractTypeElementSpec {
+    void "test @EnableTransactionManagement"() {
+        given:
+        def context = buildContext("enabeasync.Application",'''
+package enableasync;
+
+import javax.sql.DataSource;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.MergedAnnotation;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.jdbc.datasource.SimpleDriverDataSource;
+import org.springframework.stereotype.Component;
+import io.micronaut.spring.annotation.context.*;
+import org.springframework.context.annotation.ImportSelector;
+import org.springframework.core.type.AnnotationMetadata;
+import org.springframework.transaction.TransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.interceptor.TransactionAspectSupport;
+
+@EnableTransactionManagement
+class Application {
+}
+
+@Component
+class Job {
+    @Transactional
+    public boolean doWork() {
+        return TransactionAspectSupport.currentTransactionStatus().isNewTransaction();
+    }
+}
+
+@Configuration
+class DataFactory {
+    @Bean
+    TransactionManager transactionManager(DataSource dataSource) {
+        return new DataSourceTransactionManager(dataSource);
+    }
+
+    @Bean
+    DataSource dataSource() {
+        return new DriverManagerDataSource("jdbc:h2:mem:devDb;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE");
+    }
+}
+''', true)
+        def job = getBean(context, 'enableasync.Job')
+
+        expect:
+        context.containsBean(ProxyTransactionManagementConfiguration)
+        context.containsBean(BeanFactoryTransactionAttributeSourceAdvisor)
+        context.containsBean(TransactionAttributeSource)
+        context.containsBean(TransactionInterceptor)
+//        context.containsBean(TransactionalEventListenerFactory) needs static method support
+        context.getBean(TransactionInterceptor)
+        job != null
+        job instanceof Advised
+        job.doWork()
+
+        cleanup:
+        context.close()
+    }
+
     void "test @EnabledScheduling"() {
         given:
         def context = buildContext("enabeasync.Application",'''

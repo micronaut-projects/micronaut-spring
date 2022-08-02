@@ -32,13 +32,13 @@ import org.springframework.context.annotation.ImportBeanDefinitionRegistrar;
 import org.springframework.context.annotation.ImportSelector;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Primary;
+import org.springframework.context.annotation.Role;
 import org.springframework.context.annotation.Scope;
 
 import io.micronaut.context.annotation.Context;
 import io.micronaut.context.annotation.Prototype;
 import io.micronaut.core.annotation.AnnotationClassValue;
 import io.micronaut.core.annotation.AnnotationMetadata;
-import io.micronaut.core.annotation.AnnotationUtil;
 import io.micronaut.core.annotation.AnnotationValue;
 import io.micronaut.core.reflect.InstantiationUtils;
 import io.micronaut.core.reflect.exception.InstantiationException;
@@ -62,7 +62,7 @@ import io.micronaut.spring.core.type.ClassElementSpringMetadata;
  * @author graemerocher
  * @since 4.2.0
  */
-public class ImportAnnotationVisitor implements TypeElementVisitor<Object, Object>{
+public class ImportAnnotationVisitor implements TypeElementVisitor<Object, Object> {
 
     private static final String IMPORT_ANNOTATION = "io.micronaut.spring.beans.SpringImport";
 
@@ -91,6 +91,7 @@ public class ImportAnnotationVisitor implements TypeElementVisitor<Object, Objec
             importSelector(originatingElement, typeToImport, context);
         } else if (typeToImport.isAssignable(ImportBeanDefinitionRegistrar.class)) {
             // handle import registrar
+            handleImportRegistrar(originatingElement, typeToImport, context);
         } else if (typeToImport.hasAnnotation(Configuration.class)) {
             // handle configuration class
             handleConfigurationImport(originatingElement, typeToImport, context);
@@ -104,6 +105,17 @@ public class ImportAnnotationVisitor implements TypeElementVisitor<Object, Objec
                 typeToImport
             );
         }
+    }
+
+    private void handleImportRegistrar(ClassElement originatingElement, ClassElement typeToImport, VisitorContext context) {
+        // add the registrar as a bean
+        originatingElement
+            .addAssociatedBean(typeToImport)
+            .scope(AnnotationValue.builder(Singleton.class).build())
+            .annotate(ImportedBy.class, builder -> builder.member(
+                AnnotationMetadata.VALUE_MEMBER,
+                new AnnotationClassValue<>(originatingElement.getName())
+        ));
     }
 
     @Override
@@ -125,13 +137,20 @@ public class ImportAnnotationVisitor implements TypeElementVisitor<Object, Objec
             .addAssociatedBean(typeToImport)
             .inject();
         ElementQuery<MethodElement> instanceMethods = ElementQuery.ALL_METHODS
-            .onlyInstance()
-            .filter(m -> !m.hasParameters());
+            .onlyInstance();
         ElementQuery<MethodElement> beanMethods = instanceMethods.annotated(ann -> ann.hasDeclaredAnnotation(Bean.class));
         handleScopesAndQualifiers(originatingElement, beanBuilder, typeToImport);
         beanBuilder.produceBeans(beanMethods, childBuilder -> {
             MethodElement me = (MethodElement) childBuilder.getProducingElement();
             handleScopesAndQualifiers(originatingElement, childBuilder, typeToImport);
+            AnnotationValue<Bean> av = me.getAnnotation(Bean.class);
+            if (av != null) {
+                childBuilder.annotate(av);
+            }
+            AnnotationValue<Role> r = me.getAnnotation(Role.class);
+            if (r != null) {
+                childBuilder.annotate(r);
+            }
             String initMethod = me.stringValue(Bean.class, "initMethod").orElse(null);
             String destroyMethod = me.stringValue(Bean.class, "destroyMethod").orElse(null);
             if (initMethod != null) {
@@ -161,7 +180,7 @@ public class ImportAnnotationVisitor implements TypeElementVisitor<Object, Objec
             beanBuilder.annotate(io.micronaut.context.annotation.Primary.class);
         }
         if (scopeName != null) {
-            switch(scopeName) {
+            switch (scopeName) {
                 case "prototype":
                     beanBuilder.annotate(Prototype.class);
                 break;

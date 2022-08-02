@@ -17,6 +17,7 @@ package io.micronaut.spring.context.factory;
 
 import io.micronaut.context.BeanContext;
 import io.micronaut.context.BeanRegistration;
+import io.micronaut.context.RuntimeBeanDefinition;
 import io.micronaut.context.annotation.*;
 import io.micronaut.context.exceptions.NoSuchBeanException;
 import io.micronaut.core.annotation.AnnotationMetadata;
@@ -24,6 +25,7 @@ import io.micronaut.core.annotation.AnnotationUtil;
 import io.micronaut.core.annotation.Internal;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.naming.NameResolver;
+import io.micronaut.core.reflect.InstantiationUtils;
 import io.micronaut.core.util.ArgumentUtils;
 import io.micronaut.core.util.ArrayUtils;
 import io.micronaut.core.util.StringUtils;
@@ -40,12 +42,14 @@ import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.*;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.beans.factory.config.BeanDefinitionHolder;
+import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.config.DependencyDescriptor;
 import org.springframework.beans.factory.support.AbstractBeanFactory;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.beans.factory.support.GenericBeanDefinition;
 import org.springframework.beans.factory.support.RootBeanDefinition;
+import org.springframework.context.annotation.Role;
 import org.springframework.core.ResolvableType;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ConcurrentReferenceHashMap;
@@ -212,6 +216,13 @@ public class MicronautBeanFactory extends DefaultListableBeanFactory implements 
         }
 
         try {
+            if (containsBeanDefinition(name)) {
+                @SuppressWarnings("unchecked")
+                BeanDefinition<T> beanDefinition = (BeanDefinition<T>) beanDefinitionMap.get(name);
+                if (requiredType.isAssignableFrom(requiredType)) {
+                    return beanContext.getBean(beanDefinition);
+                }
+            }
             if (isAlias(name)) {
                 final String[] aliases = getAliases(name);
                 for (String alias : aliases) {
@@ -594,7 +605,7 @@ public class MicronautBeanFactory extends DefaultListableBeanFactory implements 
 
     @Override
     public Object initializeBean(Object existingBean, String beanName) throws BeansException {
-        return springAwareListener.onBeanCreated(existingBean, beanName);
+        return springAwareListener.onBeanCreated(null, existingBean, beanName);
     }
 
     @Override
@@ -649,6 +660,8 @@ public class MicronautBeanFactory extends DefaultListableBeanFactory implements 
         if (definition != null && definition.isEnabled(beanContext)) {
             final GenericBeanDefinition genericBeanDefinition = new GenericBeanDefinition();
             genericBeanDefinition.setBeanClass(definition.getBeanType());
+            int role = definition.intValue(Role.class).orElse(org.springframework.beans.factory.config.BeanDefinition.ROLE_APPLICATION);
+            genericBeanDefinition.setRole(role);
             return genericBeanDefinition;
         }
         throw new NoSuchBeanDefinitionException(beanName);
@@ -800,9 +813,36 @@ public class MicronautBeanFactory extends DefaultListableBeanFactory implements 
     public void registerBeanDefinition(String beanName, org.springframework.beans.factory.config.BeanDefinition beanDefinition) throws BeanDefinitionStoreException {
         if (beanDefinition instanceof org.springframework.beans.factory.support.AbstractBeanDefinition) {
             org.springframework.beans.factory.support.AbstractBeanDefinition abstractBeanDefinition = (org.springframework.beans.factory.support.AbstractBeanDefinition) beanDefinition;
-            final Supplier<?> instanceSupplier = abstractBeanDefinition.getInstanceSupplier();
+            final Supplier<Object> instanceSupplier = (Supplier<Object>) abstractBeanDefinition.getInstanceSupplier();
+            final Class<Object> beanClass = (Class<Object>) abstractBeanDefinition.getBeanClass();
+
+            RuntimeBeanDefinition.Builder<Object> builder;
             if (instanceSupplier != null) {
-                registerSingleton(beanName, instanceSupplier.get());
+                builder = RuntimeBeanDefinition.builder(
+                    beanClass,
+                    instanceSupplier
+                );
+            } else {
+                builder = RuntimeBeanDefinition.builder(
+                    beanClass,
+                    () -> InstantiationUtils.instantiate(beanClass)
+                );
+            }
+            String scope = abstractBeanDefinition.getScope();
+            if (scope != null) {
+                if ("prototype".equals(scope)) {
+                    builder.scope(Prototype.class);
+                } else {
+                    builder.scope(Singleton.class);
+                }
+            } else {
+                builder.scope(Singleton.class);
+            }
+            builder.qualifier(Qualifiers.byName(beanName));
+            beanContext.registerBeanDefinition(builder.build());
+            if (BeanPostProcessor.class.isAssignableFrom(beanClass)) {
+                beanContext.getBean(SpringAwareListener.class)
+                    .resetPostProcessors();
             }
         }
     }
