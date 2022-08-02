@@ -1,4 +1,5 @@
 [versions]
+dummy = "1.0"
 managed-spring-boot = '2.7.0'
 managed-spring = '5.3.20'
 

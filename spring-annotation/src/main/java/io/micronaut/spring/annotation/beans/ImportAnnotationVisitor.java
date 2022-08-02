@@ -204,7 +204,7 @@ public class ImportAnnotationVisitor implements TypeElementVisitor<Object, Objec
                 childBuilder.annotate(Context.class);
             }
         } else {
-            childBuilder.annotate(Singleton.class);
+            childBuilder.annotate(Context.class);
         }
     }
 
