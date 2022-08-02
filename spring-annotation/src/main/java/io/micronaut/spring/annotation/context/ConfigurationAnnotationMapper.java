@@ -43,7 +43,10 @@ public class ConfigurationAnnotationMapper extends AbstractSpringAnnotationMappe
         mappedAnnotations.add(AnnotationValue.builder(Factory.class)
                 .build());
 
-        mappedAnnotations.add(AnnotationValue.builder(SpringConfigurationAdvice.class).build());
+        Boolean proxyMethods = annotation.booleanValue("proxyBeanMethods").orElse(true);
+        if (proxyMethods) {
+            mappedAnnotations.add(AnnotationValue.builder(SpringConfigurationAdvice.class).build());
+        }
         return mappedAnnotations;
     }
 }
