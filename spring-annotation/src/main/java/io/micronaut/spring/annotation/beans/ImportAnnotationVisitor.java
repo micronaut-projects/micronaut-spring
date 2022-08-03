@@ -219,6 +219,7 @@ public class ImportAnnotationVisitor implements TypeElementVisitor<Object, Objec
                 !importSelectorElement.isAssignable(DeferredImportSelector.class)) {
                 selectorObject = InstantiationUtils.tryInstantiate(importSelectorElement.getName(), getClass().getClassLoader()).orElse(null);
             }
+
             if (selectorObject instanceof ImportSelector) {
                 ImportSelector selector = (ImportSelector) selectorObject;
                 String[] importedTypes = selector.selectImports(new ClassElementSpringMetadata(originatingElement));
@@ -230,12 +231,12 @@ public class ImportAnnotationVisitor implements TypeElementVisitor<Object, Objec
                     }
                 }
             } else {
-                // TODO: defer to runtime
+                context.warn("Spring ImportSelector [" + importSelectorElement.getName() + "] found in @Import declaration on element [" + originatingElement.getName() + "] was ignored. Ensure that the type is present on the annotation processor classpath. Note that only simple ImportSelector implementations that do no implement Aware interfaces (which cannot run at build time) are supported.", originatingElement);
             }
         } catch (InstantiationException e) {
-            context.fail("ImportSelector of type [" + importSelectorElement.getName() + "] found in Spring @Import declaration must be placed on the annotation processor classpath: " + e.getMessage(), originatingElement);
+            context.fail("Spring ImportSelector [" + importSelectorElement.getName() + "] found in @Import declaration on element [" + originatingElement.getName() + "] must be placed on the annotation processor classpath: " + e.getMessage(), originatingElement);
         } catch (Exception e) {
-            context.fail("ImportSelector of type [" + importSelectorElement.getName() + "] failed to import: " + e.getMessage(), originatingElement);
+            context.fail("Spring ImportSelector [" + importSelectorElement.getName() + "] found in @Import declaration on element [" + originatingElement.getName() + "] failed to import: " + e.getMessage(), originatingElement);
         }
     }
 }
