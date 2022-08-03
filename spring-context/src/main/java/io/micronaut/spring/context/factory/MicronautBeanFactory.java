@@ -50,6 +50,7 @@ import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.beans.factory.support.GenericBeanDefinition;
 import org.springframework.beans.factory.support.RootBeanDefinition;
 import org.springframework.context.annotation.Role;
+import org.springframework.core.OrderComparator;
 import org.springframework.core.ResolvableType;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ConcurrentReferenceHashMap;
@@ -58,6 +59,7 @@ import java.io.Closeable;
 import java.lang.annotation.Annotation;
 import java.util.*;
 import java.util.function.Supplier;
+import java.util.stream.Stream;
 
 /**
  * Implementation of the {@link ListableBeanFactory} interface for Micronaut.
@@ -314,6 +316,16 @@ public class MicronautBeanFactory extends DefaultListableBeanFactory implements 
             @Override
             public T getObject() throws BeansException {
                 return beanContext.getBean(requiredType);
+            }
+
+            @Override
+            public Stream<T> stream() {
+                return Arrays.stream(getBeanNamesForType(requiredType)).map(name -> (T) getBean(name));
+            }
+
+            @Override
+            public Stream<T> orderedStream() {
+                return stream().sorted(OrderComparator.INSTANCE);
             }
         };
     }

@@ -68,6 +68,8 @@ class ApplicationContextSpec extends Specification {
         context.findAnnotationOnBean(names[0], Service)
         context.getBeansWithAnnotation(Service).size() == 2 // the event listener is also there
         context.getBeanProvider(MyNamedService).ifAvailable == context.getBean(MyNamedService)
+        context.getBeanProvider(MyNamedService).stream().count() == 1
+        context.getBeanProvider(MyNamedService).stream().find() == context.getBean(MyNamedService)
         context.getBeansOfType(MyNamedService).size() == 1
 
         when:

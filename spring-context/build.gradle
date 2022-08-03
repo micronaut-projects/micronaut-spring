@@ -5,7 +5,7 @@ plugins {
 }
 
 dependencies {
-    api libs.spring.context
+    api libs.managed.spring.context
     api mn.micronaut.aop
     api mn.micronaut.inject
     api projects.spring
