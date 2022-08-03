@@ -18,7 +18,7 @@ dependencies {
     testImplementation mn.micronaut.inject.java
     testImplementation projects.springAnnotation
     testImplementation mn.micronaut.inject.java.test
-    testImplementation libs.spring.jdbc
+    testImplementation "org.springframework:spring-jdbc:5.3.20"
     testImplementation libs.h2database
 
     if (!JavaVersion.current().isJava9Compatible()) {
