@@ -131,7 +131,7 @@ public class SpringAwareListener implements BeanInitializedEventListener<Object>
      */
     @Deprecated
     public Object onBeanCreated(Object o, Object bean) {
-        return onBeanCreated(bean, null);
+        return onBeanCreated(null, bean, null);
     }
 
     /**
