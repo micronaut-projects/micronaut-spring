@@ -3,11 +3,6 @@ plugins {
     id 'groovy'
 }
 
-repositories {
-    mavenCentral()
-    maven { url = "https://s01.oss.sonatype.org/content/repositories/snapshots/" }
-}
-
 dependencies {
     testAnnotationProcessor projects.springAnnotation
     testAnnotationProcessor mn.micronaut.inject.java
@@ -16,7 +11,7 @@ dependencies {
     testImplementation mn.spock
     testImplementation libs.junit.jupiter.api
     testRuntimeOnly libs.junit.jupiter.engine
-    
+
 }
 
 tasks.named('test') {
