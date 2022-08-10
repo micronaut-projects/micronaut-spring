@@ -25,6 +25,7 @@ spring-boot-actuator = { module = 'org.springframework.boot:spring-boot-actuator
 spring-boot-autoconfigure = { module = 'org.springframework.boot:spring-boot-autoconfigure', version.ref = 'managed-spring-boot' }
 spring-boot-starter-thymeleaf = { module = 'org.springframework.boot:spring-boot-starter-thymeleaf', version.ref = 'managed-spring-boot' }
 spring-boot-starter-tomcat = { module = 'org.springframework.boot:spring-boot-starter-tomcat', version.ref = 'managed-spring-boot' }
+spring-boot-test = { module = 'org.springframework.boot:spring-boot-starter-test', version.ref = 'managed-spring-boot' }
 
 junit-jupiter-api = { module = 'org.junit.jupiter:junit-jupiter-api', version.ref = 'junit' }
 junit-jupiter-engine = { module = 'org.junit.jupiter:junit-jupiter-engine', version.ref = 'junit' }
