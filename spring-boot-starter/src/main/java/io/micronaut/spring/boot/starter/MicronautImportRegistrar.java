@@ -119,16 +119,17 @@ public class MicronautImportRegistrar implements ImportBeanDefinitionRegistrar, 
                     String scope = definition.getScopeName().orElse(null);
                     GenericBeanDefinition gbd = new GenericBeanDefinition();
                     boolean isContextScope = Context.class.getName().equals(scope);
+                    gbd.setPrimary(definition.isPrimary());
                     gbd.setLazyInit(!isContextScope);
                     if (gbd.isSingleton() || isContextScope) {
                         gbd.setScope("singleton");
                     }
 
-                    Qualifier<?> qualifier = definition.getDeclaredQualifier();
                     gbd.setBeanClass(beanType);
                     gbd.setInstanceSupplier(() ->
                         context.getBean(definition)
                     );
+                    Qualifier<?> qualifier = definition.getDeclaredQualifier();
                     String beanName = computeBeanName(registry, definition, gbd, qualifier);
                     if (!registry.containsBeanDefinition(beanName)) {
                         registry.registerBeanDefinition(
