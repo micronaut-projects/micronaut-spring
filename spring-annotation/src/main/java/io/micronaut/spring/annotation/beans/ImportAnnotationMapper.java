@@ -19,6 +19,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import io.micronaut.context.annotation.Bean;
+import io.micronaut.core.annotation.Internal;
 import org.springframework.context.annotation.Import;
 
 import io.micronaut.core.annotation.AnnotationMetadata;
@@ -30,7 +31,8 @@ import io.micronaut.inject.visitor.VisitorContext;
  *
  * @author graemerocher
  */
-public class ImportAnnotationMapper implements TypedAnnotationMapper<Import> {
+@Internal
+public final class ImportAnnotationMapper implements TypedAnnotationMapper<Import> {
 
     @Override
     public Class<Import> annotationType() {

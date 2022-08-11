@@ -20,6 +20,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
+import io.micronaut.core.annotation.Internal;
 import jakarta.inject.Singleton;
 import org.springframework.beans.factory.BeanClassLoaderAware;
 import org.springframework.beans.factory.BeanFactoryAware;
@@ -62,7 +63,8 @@ import io.micronaut.spring.core.type.ClassElementSpringMetadata;
  * @author graemerocher
  * @since 4.2.0
  */
-public class ImportAnnotationVisitor implements TypeElementVisitor<Object, Object> {
+@Internal
+public final class ImportAnnotationVisitor implements TypeElementVisitor<Object, Object> {
 
     private static final String IMPORT_ANNOTATION = "io.micronaut.spring.beans.SpringImport";
 

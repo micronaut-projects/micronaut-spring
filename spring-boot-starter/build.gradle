@@ -8,6 +8,7 @@ dependencies {
     api mn.micronaut.context
     api libs.managed.spring.boot
     implementation libs.spring.boot.autoconfigure
+    implementation libs.jakarta.annotation
 
     testAnnotationProcessor mn.micronaut.inject.java
 
