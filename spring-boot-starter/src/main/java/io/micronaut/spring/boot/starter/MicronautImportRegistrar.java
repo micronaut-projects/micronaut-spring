@@ -21,6 +21,7 @@ import io.micronaut.context.ApplicationContext;
 import io.micronaut.context.ApplicationContextBuilder;
 import io.micronaut.context.Qualifier;
 import io.micronaut.context.annotation.Context;
+import io.micronaut.context.annotation.Infrastructure;
 import io.micronaut.core.naming.Named;
 import io.micronaut.core.reflect.InstantiationUtils;
 import io.micronaut.core.util.StringUtils;
@@ -121,6 +122,9 @@ public class MicronautImportRegistrar implements ImportBeanDefinitionRegistrar, 
                     boolean isContextScope = Context.class.getName().equals(scope);
                     gbd.setPrimary(definition.isPrimary());
                     gbd.setLazyInit(!isContextScope);
+                    gbd.setAutowireCandidate(false);
+                    int role = definition.hasDeclaredAnnotation(Infrastructure.class) ? org.springframework.beans.factory.config.BeanDefinition.ROLE_INFRASTRUCTURE : org.springframework.beans.factory.config.BeanDefinition.ROLE_APPLICATION;
+                    gbd.setRole(role);
                     if (gbd.isSingleton() || isContextScope) {
                         gbd.setScope("singleton");
                     }
@@ -131,6 +135,7 @@ public class MicronautImportRegistrar implements ImportBeanDefinitionRegistrar, 
                     );
                     Qualifier<?> qualifier = definition.getDeclaredQualifier();
                     String beanName = computeBeanName(registry, definition, gbd, qualifier);
+                    gbd.setDescription("Bean named [" + beanName + "] of type [" + beanType.getName() + "] (Imported from Micronaut)");
                     if (!registry.containsBeanDefinition(beanName)) {
                         registry.registerBeanDefinition(
                             beanName,
