@@ -1,24 +1,6 @@
 You can write Spring MVC controllers that are computed into Micronaut controllers at compilation time. The programming model is largely compatible with Spring Web Reactive.
 
-To get started you should modify your dependencies as following:
-
-.Including `spring-web` processing
-[source,groovy,subs="attributes"]
-----
-dependencies {
-
-    ...
-    // additional Spring web dependencies
-    annotationProcessor "io.micronaut.spring:micronaut-spring-web-annotation:{version}"
-    compile("org.springframework.boot:spring-boot-starter-web")
-
-
-    // additional web dependencies for Micronaut
-    compile("io.micronaut:micronaut-http-server:{micronautVersion}")
-    runtime("io.micronaut.spring:micronaut-spring-web:{version}")
-    runtime("io.micronaut:micronaut-http-server-netty:{micronautVersion}")
-}
-----
+See the example project that is part of the guide https://guides.micronaut.io/latest/micronaut-spring-boot.html[Run a Spring Boot Application as a Micronaut Application] for an example Spring Web Reactive applications transformed into a Micronaut application.
 
 Only `@RestController` semantics are supported, which is fine for most Microservice use cases. Special support is provided by the `micronaut-spring-web` dependency to allowing returning a link:{springapi}org/springframework/http/ResponseEntity.html[ResponseEntity].
 

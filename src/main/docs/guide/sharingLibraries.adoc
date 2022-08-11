@@ -1,0 +1,36 @@
+If you have a lot of existing Spring applications it may be useful to share libraries between Micronaut and Spring.
+
+This is a common requirement if you want to say share common injectable components that can be added to classpath.
+
+If you have this use case you can add resolve it by using Spring annotations to define the components using annotations like link:{springapi}org/springframework/context/annotation/Configuration.html[@Configuration], link:{springapi}org/springframework/stereotype/Component.html[@Component] and link:{springapi}org/springframework/context/annotation/Bean.html[@Bean].
+
+For example:
+
+.Example Spring Configuration
+[source, java]
+----
+include::spring-context/src/test/java/io/micronaut/spring/annotation/context/MyConfiguration.java[tags=class, indent=0]
+----
+
+The above configuration can that exposes a bean of type `MyBean` can be imported and used by any Spring application using the link:{springapi}org/springframework/context/annotation/Import.html[@Import] annotation declared as follows:
+
+.Using `@Import`
+[source, java]
+----
+import org.springframework.context.annotation.Import;
+
+@Import(MyConfiguration.class)
+class Application {}
+----
+
+You can additionally use the same configuration in a Micronaut application by use the same declaration as above assuming you have correctly configured Micronaut for Spring. See the example project that is part of the guide https://guides.micronaut.io/latest/micronaut-spring-boot.html[Run a Spring Boot Application as a Micronaut Application] for how to configure Micronaut for Spring.
+
+Micronaut will import all declared beans at compilation time. The only limitation is that `ImportBeanDefinitionRegistrar` that require runtime interfaces like `BeanClassLoaderAware` will fail to import with a compilation error since import processing happens during compilation with Micronaut. When creating shared components try avoid defining `ImportBeanDefinitionRegistrar` types that depend on one of the following interfaces:
+
+* `BeanClassLoaderAware`
+* `BeanFactoryAware`
+* `EnvironmentAware`
+* `ResourceLoaderAware`
+
+
+

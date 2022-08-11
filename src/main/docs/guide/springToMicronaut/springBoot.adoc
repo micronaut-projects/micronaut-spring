@@ -1,21 +1,4 @@
-For additional support for Spring Boot you should add the following dependencies:
-
-.Including `spring-boot` processing
-[source,groovy,subs="attributes"]
-----
-dependencies {
-
-    ...
-    // additional Spring Boot dependencies
-    annotationProcessor "io.micronaut.spring:micronaut-spring-boot-annotation:{version}"
-    compile("org.springframework.boot:spring-boot-starter-web")
-
-    // additional Spring Boot dependencies for Micronaut
-    runtime("io.micronaut.spring:micronaut-spring-boot:{version}")
-}
-----
-
-With the above dependencies in place the following Spring Boot specific annotations are supported:
+The following Spring Boot specific annotations are supported:
 
 
 .Supported Spring Boot Annotations

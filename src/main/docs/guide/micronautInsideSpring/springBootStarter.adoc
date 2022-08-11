@@ -1,0 +1,63 @@
+The easiest way to use Micronaut inside Spring is to use the Micronaut Spring Boot starter, first include the Micronaut BOM in your Spring Boot application's build configuration for Gradle:
+
+.Adding the Micronaut BOM to Gradle
+[source,groovy]
+----
+implementation platform("io.micronaut:micronaut-bom:3.6.0")
+annotationProcessor platform("io.micronaut:micronaut-bom:3.6.0")
+----
+
+or Maven:
+
+.Adding the Micronaut BOM to Maven
+[source,xml]
+----
+<dependencyManagement>
+    <dependencies>
+        <dependency>
+            <groupId>io.micronaut</groupId>
+            <artifactId>micronaut-bom</artifactId>
+            <version>3.6.0</version>
+            <type>pom</type>
+            <scope>import</scope>
+        </dependency>
+    </dependencies>
+</dependencyManagement>
+----
+
+NOTE: if you prefer not to import the BOM that is also possible, but note you will have to declare dependency versions explicitly.
+
+Then add the Micronaut annotation processor to your build configuration:
+
+dependency:micronaut-inject-java[scope="annotationProcessor"]
+
+You will then need to explicitly specify a dependency on a version of the Jakarta Annotations module that uses the `jakarta` namespace instead of the `javax` namespace (versions 2.0.x and above). This is because the Spring Boot BOM automatically downgrades this module's version to one that uses the `javax` namespace which is incompatible with Micronaut:
+
+dependency:jakarta.annotation-api[scope="annotationProcessor", groupId="jakarta.annotation", version="2.1.1"]
+
+dependency:jakarta.annotation-api[scope="compile", groupId="jakarta.annotation", version="2.1.1"]
+
+Finally a dependency on `micronaut-spring-boot-starter` can be added to the build:
+
+dependency:micronaut-spring-boot-starter[scope="compile", groupId="io.micronaut.spring"]
+
+When the Spring Boot application starts app all beans provided by Micronaut will be exposed as Spring Beans as well.
+
+NOTE: You can control which beans are exposed to Spring by using the ann:spring.boot.starter.EnableMicronaut[] annotation on your `Application` class and specifying a api:spring.boot.starter.MicronautBeanFilter[] to include or exclude beans from Micronaut.
+
+==== Using Micronaut Data
+
+Micronaut Data can be used by adding the Micronaut Data annotation processor:
+
+dependency:micronaut-data-processor[scope="annotationProcessor", groupId="io.micronaut.data"]
+
+And module you are interested in, for example Micronaut Data JDBC:
+
+dependency:micronaut-data-jdbc[scope="compile", groupId="io.micronaut.data"]
+
+However it is important to note that you will once again need to specify a version of the Jakarta Persistence API that uses the `jakarta` namespace instead of the `javax` namespace as the Spring Boot BOM forces these to older versions in Spring Boot 2.x:
+
+dependency:jakarta.persistence-api[scope="annotationProcessor", groupId="jakarta.persistence", version="3.1.0"]
+
+dependency:jakarta.persistence-api[scope="compile", groupId="jakarta.persistence", version="3.1.0"]
+
