@@ -90,7 +90,7 @@ public class BeanDefinitionSpringMetadata implements AnnotationMetadata {
     @Override
     public String getSuperClassName() {
         Class<?> st = beanDefinition.getBeanType().getSuperclass();
-        if (st != null) {
+        if (st != null && st != Object.class) {
             return st.getName();
         }
         return null;

@@ -39,12 +39,12 @@ public class MicronautMergedAnnotations implements MergedAnnotations {
 
     @Override
     public <A extends Annotation> boolean isPresent(Class<A> annotationType) {
-        return annotationMetadata.hasAnnotation(annotationType);
+        return annotationMetadata.hasAnnotation(annotationType) || annotationMetadata.hasStereotype(annotationType);
     }
 
     @Override
     public boolean isPresent(String annotationType) {
-        return annotationMetadata.hasAnnotation(annotationType);
+        return annotationMetadata.hasAnnotation(annotationType) || annotationMetadata.hasStereotype(annotationType);
     }
 
     @Override
