@@ -5,6 +5,7 @@ plugins {
 
 repositories {
     mavenCentral()
+    maven { url "https://s01.oss.sonatype.org/content/repositories/snapshots/" }
 }
 
 dependencies {
@@ -15,7 +16,7 @@ dependencies {
     testImplementation mn.spock
     testImplementation libs.junit.jupiter.api
     testRuntimeOnly libs.junit.jupiter.engine
-    
+
 }
 
 tasks.named('test') {
