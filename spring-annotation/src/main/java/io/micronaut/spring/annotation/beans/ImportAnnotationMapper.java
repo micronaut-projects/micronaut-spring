@@ -30,6 +30,7 @@ import io.micronaut.inject.visitor.VisitorContext;
 /**
  * Maps {@code io.micronaut.spring.beans.SpringImport} to Micronaut Framework {@link Import} annotation.
  * @author graemerocher
+ * @since 4.3.0
  */
 @Internal
 public final class ImportAnnotationMapper implements TypedAnnotationMapper<Import> {

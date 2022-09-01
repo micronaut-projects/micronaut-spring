@@ -61,7 +61,7 @@ import io.micronaut.spring.core.type.ClassElementSpringMetadata;
  application.
  *
  * @author graemerocher
- * @since 4.2.0
+ * @since 4.3.0
  */
 @Internal
 public final class ImportAnnotationVisitor implements TypeElementVisitor<Object, Object> {
