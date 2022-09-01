@@ -43,7 +43,7 @@ public final class ImportAnnotationMapper implements TypedAnnotationMapper<Impor
     @Override
     public List<AnnotationValue<?>> map(AnnotationValue<Import> annotation, VisitorContext visitorContext) {
         return Arrays.asList(
-            AnnotationValue.builder("io.micronaut.spring.beans.SpringImport")
+            AnnotationValue.builder(ImportAnnotationVisitor.IMPORT_ANNOTATION)
                 .member(AnnotationMetadata.VALUE_MEMBER, annotation.annotationClassValues(AnnotationMetadata.VALUE_MEMBER))
                 .build(),
             annotation,

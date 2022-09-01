@@ -66,7 +66,7 @@ import io.micronaut.spring.core.type.ClassElementSpringMetadata;
 @Internal
 public final class ImportAnnotationVisitor implements TypeElementVisitor<Object, Object> {
 
-    private static final String IMPORT_ANNOTATION = "io.micronaut.spring.beans.SpringImport";
+    static final String IMPORT_ANNOTATION = "io.micronaut.spring.beans.SpringImport";
 
     @Override
     public void visitClass(ClassElement element, VisitorContext context) {
