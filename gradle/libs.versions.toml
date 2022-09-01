@@ -1,5 +1,5 @@
 [versions]
-managed-spring-boot = '2.7.0'
+managed-spring-boot = '2.7.3'
 managed-spring = '5.3.20'
 
 junit = '5.9.0'
