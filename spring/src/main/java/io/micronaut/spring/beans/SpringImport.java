@@ -26,6 +26,7 @@ import io.micronaut.core.annotation.Internal;
  * This is an internal annotation and should be used directly.
  *
  * @author graemerocher
+ * @since 4.3.0
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Repeatable(SpringImport.List.class)

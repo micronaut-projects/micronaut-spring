@@ -25,6 +25,8 @@ import org.springframework.context.annotation.ImportAware;
 
 /**
  * Handles the import aware interface.
+ * @author graemerocher
+ * @since 4.3.0
  */
 @Singleton
 public class ImportAwareListener implements BeanCreatedEventListener<ImportAware> {
