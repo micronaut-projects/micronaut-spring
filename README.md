@@ -15,9 +15,7 @@ This project consists of various components that make it easier to:
 
 To achieve this the project provides the ability to use a subset of the Spring Annotation-Based programming model to build Micronaut applications. The goal is not necessarily to provide an alternative runtime for Spring, but instead to enable the ability to build libraries that work with both Spring and Micronaut.
 
-[![Micronaut for Spring](https://img.youtube.com/vi/JvzD2SEw0-E/0.jpg)](https://www.youtube.com/watch?v=JvzD2SEw0-E)
-
-See the [User Guide](https://micronaut-projects.github.io/micronaut-spring/latest/guide/index.html) and [Example Project](https://github.com/micronaut-projects/micronaut-guides/pull/839) for more information on how to use this project.
+See the [User Guide](https://micronaut-projects.github.io/micronaut-spring/latest/guide/index.html) and [Example Project](https://guides.micronaut.io/latest/micronaut-spring-boot.html) for more information on how to use this project.
 
 ## Snapshots and Releases
 
