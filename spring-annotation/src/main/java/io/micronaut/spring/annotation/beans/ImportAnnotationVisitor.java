@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.Set;
 
 import io.micronaut.core.annotation.Internal;
+import io.micronaut.core.annotation.NonNull;
 import jakarta.inject.Singleton;
 import org.springframework.beans.factory.BeanClassLoaderAware;
 import org.springframework.beans.factory.BeanFactoryAware;
@@ -121,6 +122,7 @@ public final class ImportAnnotationVisitor implements TypeElementVisitor<Object,
     }
 
     @Override
+    @NonNull
     public VisitorKind getVisitorKind() {
         return VisitorKind.ISOLATING;
     }

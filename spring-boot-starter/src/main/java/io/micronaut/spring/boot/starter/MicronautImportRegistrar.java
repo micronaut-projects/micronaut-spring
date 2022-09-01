@@ -22,6 +22,7 @@ import io.micronaut.context.ApplicationContextBuilder;
 import io.micronaut.context.Qualifier;
 import io.micronaut.context.annotation.Context;
 import io.micronaut.context.annotation.Infrastructure;
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.naming.Named;
 import io.micronaut.core.reflect.InstantiationUtils;
 import io.micronaut.core.util.StringUtils;
@@ -86,7 +87,7 @@ public class MicronautImportRegistrar implements ImportBeanDefinitionRegistrar, 
         MergedAnnotation<EnableMicronaut> enableMicronautAnn = importingClassMetadata.getAnnotations().get(EnableMicronaut.class);
         MicronautBeanFilter beanFilter = new MicronautBeanFilter() {
             @Override
-            public boolean excludes(BeanDefinition<?> definition) {
+            public boolean excludes(@NonNull BeanDefinition<?> definition) {
                 return definition.isAbstract() || definition.isIterable() ||
                     org.springframework.context.ApplicationContext.class.isAssignableFrom(definition.getBeanType());
             }
@@ -99,12 +100,12 @@ public class MicronautImportRegistrar implements ImportBeanDefinitionRegistrar, 
                 MicronautBeanFilter currentFilter = beanFilter;
                 beanFilter = new MicronautBeanFilter() {
                     @Override
-                    public boolean includes(BeanDefinition<?> definition) {
+                    public boolean includes(@NonNull BeanDefinition<?> definition) {
                         return currentFilter.includes(definition) && specificFilter.includes(definition);
                     }
 
                     @Override
-                    public boolean excludes(BeanDefinition<?> definition) {
+                    public boolean excludes(@NonNull BeanDefinition<?> definition) {
                         return currentFilter.excludes(definition) || specificFilter.excludes(definition);
                     }
                 };
