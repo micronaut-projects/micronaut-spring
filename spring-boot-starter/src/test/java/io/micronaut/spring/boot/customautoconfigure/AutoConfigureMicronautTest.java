@@ -3,6 +3,7 @@ package io.micronaut.spring.boot.customautoconfigure;
 import java.util.Map;
 
 import io.micronaut.context.ApplicationContext;
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.http.codec.MediaTypeCodecRegistry;
 import io.micronaut.inject.BeanDefinition;
 import io.micronaut.spring.boot.starter.EnableMicronaut;
@@ -44,7 +45,7 @@ class Application {
 
 class MyFilter implements MicronautBeanFilter {
     @Override
-    public boolean excludes(BeanDefinition<?> definition) {
+    public boolean excludes(@NonNull BeanDefinition<?> definition) {
         return MediaTypeCodecRegistry.class.isAssignableFrom(definition.getBeanType());
     }
 }

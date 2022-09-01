@@ -30,6 +30,8 @@ import org.springframework.core.type.MethodMetadata;
  * Implementation of Spring's {@link AnnotationMetadata} that backs onto a {@link BeanDefinition}.
  *
  * @author graemerocher
+ * @author graemerocher
+ * @since 4.3.0
  */
 public class BeanDefinitionSpringMetadata implements AnnotationMetadata {
     private final BeanDefinition<?> beanDefinition;

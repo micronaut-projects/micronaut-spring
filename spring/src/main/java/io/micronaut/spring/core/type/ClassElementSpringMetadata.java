@@ -33,6 +33,7 @@ import org.springframework.core.type.MethodMetadata;
  * Implementation of {@link AnnotationMetadata} that backs onto a Micronaut {@link ClassElement}.
  *
  * @author graemerocher
+ * @since 4.3.0
  */
 @Internal
 public final class ClassElementSpringMetadata implements AnnotationMetadata {

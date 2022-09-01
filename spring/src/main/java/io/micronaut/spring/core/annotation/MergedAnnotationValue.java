@@ -41,6 +41,8 @@ import org.springframework.core.annotation.MergedAnnotation;
 /**
  * Implementation of {@link MergedAnnotation} that backs onto a Micronaut {@link AnnotationValue}.
  * @param <A> The annotation type
+ * @author graemerocher
+ * @since 4.3.0
  */
 public class MergedAnnotationValue<A extends Annotation> implements MergedAnnotation<A> {
     private final AnnotationMetadata annotationMetadata;

@@ -28,8 +28,9 @@ import io.micronaut.inject.annotation.TypedAnnotationMapper;
 import io.micronaut.inject.visitor.VisitorContext;
 
 /**
- *
+ * Maps {@code io.micronaut.spring.beans.SpringImport} to Micronaut Framework {@link Import} annotation.
  * @author graemerocher
+ * @since 4.3.0
  */
 @Internal
 public final class ImportAnnotationMapper implements TypedAnnotationMapper<Import> {
@@ -42,7 +43,7 @@ public final class ImportAnnotationMapper implements TypedAnnotationMapper<Impor
     @Override
     public List<AnnotationValue<?>> map(AnnotationValue<Import> annotation, VisitorContext visitorContext) {
         return Arrays.asList(
-            AnnotationValue.builder("io.micronaut.spring.beans.SpringImport")
+            AnnotationValue.builder(ImportAnnotationVisitor.IMPORT_ANNOTATION)
                 .member(AnnotationMetadata.VALUE_MEMBER, annotation.annotationClassValues(AnnotationMetadata.VALUE_MEMBER))
                 .build(),
             annotation,

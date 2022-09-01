@@ -37,6 +37,8 @@ import org.springframework.core.OrderComparator;
 
 /**
  * Implements support for Spring's ObjectProvider interface.
+ * @author graemerocher
+ * @since 4.3.0
  */
 public final class ObjectProviderBeanDefinition extends AbstractProviderDefinition<ObjectProvider<Object>> {
     @Override
