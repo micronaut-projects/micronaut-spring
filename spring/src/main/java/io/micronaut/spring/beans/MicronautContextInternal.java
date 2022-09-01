@@ -17,6 +17,8 @@ package io.micronaut.spring.beans;
 
 /**
  * Marker interface for internal components.
+ * @author graemerocher
+ * @since 4.3.0
  */
 public interface MicronautContextInternal {
 }
