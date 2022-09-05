@@ -1,10 +1,7 @@
 plugins {
+    id 'io.micronaut.build.internal.spring-base'
     id 'java-library'
     id 'groovy'
-}
-
-repositories {
-    mavenCentral()
 }
 
 dependencies {
@@ -15,7 +12,7 @@ dependencies {
     testImplementation mn.spock
     testImplementation libs.junit.jupiter.api
     testRuntimeOnly libs.junit.jupiter.engine
-    
+
 }
 
 tasks.named('test') {
