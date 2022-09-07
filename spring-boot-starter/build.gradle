@@ -1,0 +1,33 @@
+plugins {
+    id 'io.micronaut.build.internal.spring-module'
+}
+
+dependencies {
+    api mn.micronaut.aop
+    api mn.micronaut.inject
+    api mn.micronaut.context
+    api libs.managed.spring.boot
+    implementation libs.spring.boot.autoconfigure
+    implementation libs.jakarta.annotation
+
+    testAnnotationProcessor mn.micronaut.inject.java
+
+    testImplementation projects.springWeb
+    testImplementation mn.micronaut.management
+    testImplementation mn.micronaut.http.client
+    testImplementation mn.micronaut.http.server.netty
+    testImplementation libs.spring.boot.autoconfigure
+    testImplementation libs.spring.boot.actuator
+    testImplementation libs.spring.boot.test
+    testImplementation libs.servlet.api
+
+    testRuntimeOnly libs.managed.spring.boot.starter.web
+    testRuntimeOnly libs.spring.boot.starter.tomcat
+
+}
+// TODO temporarily disable binary compatibility checks
+micronautBuild {
+    binaryCompatibility {
+        enabled = false
+    }
+}

@@ -4,10 +4,3 @@ plugins {
     id 'io.micronaut.build.internal.quality-reporting'
 }
 
-subprojects { Project subproject ->
-    tasks.withType(Test) {
-        if (JavaVersion.current().isCompatibleWith(JavaVersion.VERSION_15)) {
-            jvmArgs '--enable-preview'
-        }
-    }
-}

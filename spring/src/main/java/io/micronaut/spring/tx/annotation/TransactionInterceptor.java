@@ -20,6 +20,7 @@ import io.micronaut.aop.InterceptorBean;
 import io.micronaut.aop.MethodInterceptor;
 import io.micronaut.aop.MethodInvocationContext;
 import io.micronaut.context.BeanLocator;
+import io.micronaut.context.annotation.Requires;
 import io.micronaut.context.exceptions.NoSuchBeanException;
 import io.micronaut.core.annotation.AnnotationMetadata;
 import io.micronaut.core.util.StringUtils;
@@ -30,6 +31,7 @@ import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionSystemException;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
 import org.springframework.transaction.interceptor.TransactionAttribute;
@@ -44,6 +46,8 @@ import java.util.concurrent.ConcurrentHashMap;
  * @since 1.0
  */
 @InterceptorBean(Transactional.class)
+// If @EnableTransactionManagement is used then let Spring handle transactions
+@Requires(missingBeans = ProxyTransactionManagementConfiguration.class)
 public class TransactionInterceptor extends TransactionAspectSupport implements MethodInterceptor<Object, Object> {
 
     private final Map<ExecutableMethod, TransactionAttribute> transactionDefinitionMap = new ConcurrentHashMap<>();

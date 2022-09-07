@@ -8,15 +8,15 @@ The following table summarizes the annotations that Micronaut for Spring support
 
 |link:{springapi}org/springframework/stereotype/Component.html[@Component]
 |link:{micronautapi}context/annotation/Bean.html[@Bean]
-| Example `@Component("myBean")`. Requires `micronaut-runtime` dependency.
+| Example `@Component("myBean")`. Requires `micronaut-context` dependency.
 
 |link:{springapi}org/springframework/stereotype/Service.html[@Service]
 |link:{micronautapi}context/annotation/Bean.html[@Bean]
-| Example `@Service("myBean")`. Requires `micronaut-runtime` dependency.
+| Example `@Service("myBean")`. Requires `micronaut-context` dependency.
 
 |link:{springapi}org/springframework/stereotype/Repository.html[@Repository]
 |link:{micronautapi}context/annotation/Bean.html[@Bean]
-| Example `@Repository("myBean")`. Requires `micronaut-runtime` dependency.
+| Example `@Repository("myBean")`. Requires `micronaut-context` dependency.
 
 |link:{springapi}org/springframework/beans/factory/annotation/Autowired.html[@Autowired]
 |`@javax.inject.Inject`
@@ -40,11 +40,15 @@ The following table summarizes the annotations that Micronaut for Spring support
 
 |link:{springapi}org/springframework/context/annotation/Bean.html[@Bean]
 |link:{micronautapi}context/annotation/Bean.html[@Bean]
-|Example `@Bean`. Requires `micronaut-runtime` dependency.
+|Example `@Bean`. Requires `micronaut-context` dependency.
+
+|link:{springapi}org/springframework/context/annotation/Import.html[@Import]
+|link:{micronautapi}context/annotation/Import.html[@Import]
+|Example `@Import(MyConfiguration.class)`. Requires `micronaut-context` dependency.
 
 |link:{springapi}org/springframework/context/annotation/Primary.html[@Primary]
 |link:{micronautapi}context/annotation/Primary.html[@Primary]
-|Example `@Primary`. Requires `micronaut-runtime` dependency.
+|Example `@Primary`. Requires `micronaut-context` dependency.
 
 |link:{springapi}org/springframework/context/event/EventListener.html[@EventListener]
 |link:{micronautapi}runtime/event/annotation/EventListener.html[@EventListener]
@@ -52,11 +56,11 @@ The following table summarizes the annotations that Micronaut for Spring support
 
 |link:{springapi}org/springframework/scheduling/annotation/Async.html[@Async]
 |link:{micronautapi}scheduling/annotation/Async.html[@Async]
-|Example `@Async`. Requires `micronaut-runtime` dependency.
+|Example `@Async`. Requires `micronaut-context` dependency.
 
 |link:{springapi}org/springframework/scheduling/annotation/Scheduled.html[@Scheduled]
 |link:{micronautapi}scheduling/annotation/Scheduled.html[@Scheduled]
-|Example `@Scheduled`. Requires `micronaut-runtime` dependency.
+|Example `@Scheduled`. Requires `micronaut-context` dependency.
 
 |link:{springapi}org/springframework/transaction/annotation/Transactional.html[@Transactional]
 |link:{micronautapi}spring/tx/annotation/TransactionInterceptor.html[TransactionInterceptor]

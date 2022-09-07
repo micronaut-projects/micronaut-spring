@@ -9,6 +9,7 @@ dependencies {
     api mn.micronaut.validation
 
     implementation projects.springContext
+    implementation projects.spring
     implementation mn.micronaut.runtime
     implementation mn.micronaut.cache.core
 

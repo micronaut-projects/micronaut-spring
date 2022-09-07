@@ -4,6 +4,8 @@ managed-spring = '5.3.22'
 
 junit = '5.9.0'
 servlet-api = '4.0.1'
+h2 = '2.1.214'
+jakarta-annotation = '2.1.1'
 
 [libraries]
 managed-spring-boot = { module = 'org.springframework.boot:spring-boot', version.ref = 'managed-spring-boot' }
@@ -23,12 +25,15 @@ spring-boot-actuator = { module = 'org.springframework.boot:spring-boot-actuator
 spring-boot-autoconfigure = { module = 'org.springframework.boot:spring-boot-autoconfigure', version.ref = 'managed-spring-boot' }
 spring-boot-starter-thymeleaf = { module = 'org.springframework.boot:spring-boot-starter-thymeleaf', version.ref = 'managed-spring-boot' }
 spring-boot-starter-tomcat = { module = 'org.springframework.boot:spring-boot-starter-tomcat', version.ref = 'managed-spring-boot' }
+spring-boot-test = { module = 'org.springframework.boot:spring-boot-starter-test', version.ref = 'managed-spring-boot' }
 
 junit-jupiter-api = { module = 'org.junit.jupiter:junit-jupiter-api', version.ref = 'junit' }
 junit-jupiter-engine = { module = 'org.junit.jupiter:junit-jupiter-engine', version.ref = 'junit' }
 
 servlet-api = { module = 'javax.servlet:javax.servlet-api', version.ref = 'servlet-api' }
-
+jakarta-annotation = { module = 'jakarta.annotation:jakarta.annotation-api', version.ref = 'jakarta-annotation' }
 spring-test = { module = 'org.springframework:spring-test', version.ref = 'managed-spring' }
 
 spock-spring = { module = 'org.spockframework:spock-spring' }
+
+h2database = { module = 'com.h2database:h2', version.ref = 'h2' }
