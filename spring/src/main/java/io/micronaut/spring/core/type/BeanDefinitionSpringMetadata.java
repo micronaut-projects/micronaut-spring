@@ -20,6 +20,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Set;
 
+import io.micronaut.core.annotation.Internal;
 import io.micronaut.inject.BeanDefinition;
 import io.micronaut.spring.core.annotation.MicronautMergedAnnotations;
 import org.springframework.core.annotation.MergedAnnotations;
@@ -33,7 +34,8 @@ import org.springframework.core.type.MethodMetadata;
  * @author graemerocher
  * @since 4.3.0
  */
-public class BeanDefinitionSpringMetadata implements AnnotationMetadata {
+@Internal
+public final class BeanDefinitionSpringMetadata implements AnnotationMetadata {
     private final BeanDefinition<?> beanDefinition;
 
     public BeanDefinitionSpringMetadata(BeanDefinition<?> beanDefinition) {

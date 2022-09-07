@@ -22,6 +22,7 @@ import io.micronaut.context.ApplicationContextBuilder;
 import io.micronaut.context.Qualifier;
 import io.micronaut.context.annotation.Context;
 import io.micronaut.context.annotation.Infrastructure;
+import io.micronaut.core.annotation.Internal;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.naming.Named;
 import io.micronaut.core.reflect.InstantiationUtils;
@@ -50,7 +51,8 @@ import org.springframework.core.type.AnnotationMetadata;
  * @author graemerocher
  * @since 4.3.0
  */
-public class MicronautImportRegistrar implements ImportBeanDefinitionRegistrar, EnvironmentAware, BeanFactoryAware {
+@Internal
+public final class MicronautImportRegistrar implements ImportBeanDefinitionRegistrar, EnvironmentAware, BeanFactoryAware {
     private Environment environment;
     private BeanFactory beanFactory;
 

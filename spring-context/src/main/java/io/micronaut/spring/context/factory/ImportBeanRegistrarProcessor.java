@@ -19,6 +19,7 @@ import java.util.List;
 
 import io.micronaut.context.BeanRegistration;
 import io.micronaut.context.annotation.Context;
+import io.micronaut.core.annotation.Internal;
 import io.micronaut.core.annotation.Introspected;
 import io.micronaut.core.annotation.Order;
 import io.micronaut.core.order.Ordered;
@@ -30,9 +31,16 @@ import org.springframework.aop.framework.autoproxy.InfrastructureAdvisorAutoProx
 import org.springframework.context.annotation.AnnotationBeanNameGenerator;
 import org.springframework.context.annotation.ImportBeanDefinitionRegistrar;
 
+/**
+ * Runs any configured ImportBeanDefinitionRegistrar instances.
+ *
+ * @since 4.3.0
+ * @author graemerocher
+ */
 @Context
 @Order(Ordered.HIGHEST_PRECEDENCE)
 @Introspected(classes = InfrastructureAdvisorAutoProxyCreator.class)
+@Internal
 final class ImportBeanRegistrarProcessor {
     private final List<BeanRegistration<ImportBeanDefinitionRegistrar>> registrars;
     private final MicronautBeanFactory beanFactory;

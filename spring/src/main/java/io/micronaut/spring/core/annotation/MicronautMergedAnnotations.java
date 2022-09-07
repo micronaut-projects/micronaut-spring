@@ -23,6 +23,7 @@ import java.util.stream.Stream;
 
 import io.micronaut.core.annotation.AnnotationMetadata;
 import io.micronaut.core.annotation.AnnotationValue;
+import io.micronaut.core.annotation.Internal;
 import org.springframework.core.annotation.MergedAnnotation;
 import org.springframework.core.annotation.MergedAnnotationSelector;
 import org.springframework.core.annotation.MergedAnnotations;
@@ -32,6 +33,7 @@ import org.springframework.core.annotation.MergedAnnotations;
  * @author graemerocher
  * @since 4.3.0
  */
+@Internal
 public class MicronautMergedAnnotations implements MergedAnnotations {
     private final AnnotationMetadata annotationMetadata;
 

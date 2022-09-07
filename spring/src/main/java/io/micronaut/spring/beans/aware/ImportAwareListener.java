@@ -17,6 +17,7 @@ package io.micronaut.spring.beans.aware;
 
 import io.micronaut.context.event.BeanCreatedEvent;
 import io.micronaut.context.event.BeanCreatedEventListener;
+import io.micronaut.core.annotation.Internal;
 import io.micronaut.inject.BeanDefinition;
 import io.micronaut.spring.beans.ImportedBy;
 import io.micronaut.spring.core.type.BeanDefinitionSpringMetadata;
@@ -29,6 +30,7 @@ import org.springframework.context.annotation.ImportAware;
  * @since 4.3.0
  */
 @Singleton
+@Internal
 public class ImportAwareListener implements BeanCreatedEventListener<ImportAware> {
     @Override
     public ImportAware onCreated(BeanCreatedEvent<ImportAware> event) {

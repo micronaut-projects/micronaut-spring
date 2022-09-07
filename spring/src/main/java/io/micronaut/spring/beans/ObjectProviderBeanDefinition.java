@@ -22,6 +22,7 @@ import io.micronaut.context.BeanContext;
 import io.micronaut.context.BeanResolutionContext;
 import io.micronaut.context.DefaultBeanContext;
 import io.micronaut.context.Qualifier;
+import io.micronaut.core.annotation.Internal;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.reflect.InstantiationUtils;
@@ -40,6 +41,7 @@ import org.springframework.core.OrderComparator;
  * @author graemerocher
  * @since 4.3.0
  */
+@Internal
 public final class ObjectProviderBeanDefinition extends AbstractProviderDefinition<ObjectProvider<Object>> {
     @Override
     public boolean isEnabled(BeanContext context, BeanResolutionContext resolutionContext) {

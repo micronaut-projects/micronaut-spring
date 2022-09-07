@@ -33,6 +33,7 @@ import java.util.function.Supplier;
 import io.micronaut.core.annotation.AnnotationClassValue;
 import io.micronaut.core.annotation.AnnotationMetadata;
 import io.micronaut.core.annotation.AnnotationValue;
+import io.micronaut.core.annotation.Internal;
 import io.micronaut.core.reflect.ClassUtils;
 import io.micronaut.core.util.CollectionUtils;
 import org.springframework.core.annotation.AnnotationAttributes;
@@ -44,7 +45,8 @@ import org.springframework.core.annotation.MergedAnnotation;
  * @author graemerocher
  * @since 4.3.0
  */
-public class MergedAnnotationValue<A extends Annotation> implements MergedAnnotation<A> {
+@Internal
+class MergedAnnotationValue<A extends Annotation> implements MergedAnnotation<A> {
     private final AnnotationMetadata annotationMetadata;
     private final AnnotationValue<A> value;
 
