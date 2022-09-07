@@ -2,6 +2,10 @@ plugins {
     id 'io.micronaut.build.internal.module'
 }
 
+repositories {
+    mavenCentral()
+}
+
 dependencies {
     api(platform(libs.boms.spring))
     testImplementation(platform(libs.boms.spring))
