@@ -23,7 +23,7 @@ import io.micronaut.core.annotation.Internal;
 
 /**
  * Allows the spring import annotation to be represented as a repeated annotation.
- * This is an internal annotation and should be used directly.
+ * This is an internal annotation and should not be used directly.
  *
  * @author graemerocher
  * @since 4.3.0
