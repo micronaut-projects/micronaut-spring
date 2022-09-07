@@ -2,7 +2,7 @@ If you have a lot of existing Spring applications it may be useful to share libr
 
 This is a common requirement if you want to say share common injectable components that can be added to classpath.
 
-If you have this use case you can add resolve it by using Spring annotations to define the components using annotations like link:{springapi}org/springframework/context/annotation/Configuration.html[@Configuration], link:{springapi}org/springframework/stereotype/Component.html[@Component] and link:{springapi}org/springframework/context/annotation/Bean.html[@Bean].
+If you have this use case you can resolve it by using Spring annotations to define the components using annotations like link:{springapi}org/springframework/context/annotation/Configuration.html[@configuration], link:{springapi}org/springframework/stereotype/Component.html[@component] and link:{springapi}org/springframework/context/annotation/Bean.html[@bean].
 
 For example:
 
@@ -12,7 +12,7 @@ For example:
 include::spring-context/src/test/java/io/micronaut/spring/annotation/context/MyConfiguration.java[tags=class, indent=0]
 ----
 
-The above configuration can that exposes a bean of type `MyBean` can be imported and used by any Spring application using the link:{springapi}org/springframework/context/annotation/Import.html[@Import] annotation declared as follows:
+The above configuration, which exposes a bean of type `MyBean`, can be imported and used by any Spring application using the link:{springapi}org/springframework/context/annotation/Import.html[@import] annotation declared as follows:
 
 .Using `@Import`
 [source, java]

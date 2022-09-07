@@ -37,7 +37,7 @@ dependency:jakarta.annotation-api[scope="annotationProcessor", groupId="jakarta.
 
 dependency:jakarta.annotation-api[scope="compile", groupId="jakarta.annotation", version="2.1.1"]
 
-Finally a dependency on `micronaut-spring-boot-starter` can be added to the build:
+Finally, a dependency on `micronaut-spring-boot-starter` can be added to the build:
 
 dependency:micronaut-spring-boot-starter[scope="compile", groupId="io.micronaut.spring"]
 
@@ -55,7 +55,7 @@ And module you are interested in, for example Micronaut Data JDBC:
 
 dependency:micronaut-data-jdbc[scope="compile", groupId="io.micronaut.data"]
 
-However it is important to note that you will once again need to specify a version of the Jakarta Persistence API that uses the `jakarta` namespace instead of the `javax` namespace as the Spring Boot BOM forces these to older versions in Spring Boot 2.x:
+However, it is important to note that you will once again need to specify a version of the Jakarta Persistence API that uses the `jakarta` namespace instead of the `javax` namespace as the Spring Boot BOM forces these to older versions in Spring Boot 2.x:
 
 dependency:jakarta.persistence-api[scope="annotationProcessor", groupId="jakarta.persistence", version="3.1.0"]
 
