@@ -47,11 +47,11 @@
                                 
                                 <div class="toc-item" style="margin-left:0"><a href="#releaseHistory"><strong>2</strong><span>Release History</span></a></div>
                                 
-                                <div class="toc-item" style="margin-left:0"><a href="#springToMicronaut"><strong>3</strong><span>Compile Time Spring Annotation Support</span></a></div>
+                                <div class="toc-item" style="margin-left:0"><a href="#springToMicronaut"><strong>3</strong><span>Transforming Spring Applications into Micronaut Applications</span></a></div>
                                 
-                                <div class="toc-item" style="margin-left:0"><a href="#springParentContext"><strong>4</strong><span>Using Micronaut Parent Context</span></a></div>
+                                <div class="toc-item" style="margin-left:0"><a href="#sharingLibraries"><strong>4</strong><span>Sharing Libraries between Spring and Micronaut</span></a></div>
                                 
-                                <div class="toc-item" style="margin-left:0"><a href="#beanPostProcessor"><strong>5</strong><span>Using a Bean Post Processor</span></a></div>
+                                <div class="toc-item" style="margin-left:0"><a href="#micronautInsideSpring"><strong>5</strong><span>Using Micronaut Modules with Spring</span></a></div>
                                 
                                 <div class="toc-item" style="margin-left:0"><a href="#repository"><strong>6</strong><span>Repository</span></a></div>
                                 
@@ -88,7 +88,7 @@
         
         <div class="toc-item" style="margin-left:0px" id="toc-item-releaseHistory"><a href="#releaseHistory"><strong>2</strong><span>Release History</span></a></div>
         
-        <div class="toc-item" style="margin-left:0px" id="toc-item-springToMicronaut"><a href="#springToMicronaut"><strong>3</strong><span>Compile Time Spring Annotation Support</span></a></div>
+        <div class="toc-item" style="margin-left:0px" id="toc-item-springToMicronaut"><a href="#springToMicronaut"><strong>3</strong><span>Transforming Spring Applications into Micronaut Applications</span></a></div>
         
         <div class="toc-item" style="margin-left:10px" id="toc-item-springToMicronautStart"><a href="#springToMicronautStart"><strong>3.1</strong><span>Build Configuration</span></a></div>
         
@@ -106,9 +106,15 @@
         
         <div class="toc-item" style="margin-left:10px" id="toc-item-micronautClient"><a href="#micronautClient"><strong>3.8</strong><span>Using Micronaut's HTTP Client</span></a></div>
         
-        <div class="toc-item" style="margin-left:0px" id="toc-item-springParentContext"><a href="#springParentContext"><strong>4</strong><span>Using Micronaut Parent Context</span></a></div>
+        <div class="toc-item" style="margin-left:0px" id="toc-item-sharingLibraries"><a href="#sharingLibraries"><strong>4</strong><span>Sharing Libraries between Spring and Micronaut</span></a></div>
         
-        <div class="toc-item" style="margin-left:0px" id="toc-item-beanPostProcessor"><a href="#beanPostProcessor"><strong>5</strong><span>Using a Bean Post Processor</span></a></div>
+        <div class="toc-item" style="margin-left:0px" id="toc-item-micronautInsideSpring"><a href="#micronautInsideSpring"><strong>5</strong><span>Using Micronaut Modules with Spring</span></a></div>
+        
+        <div class="toc-item" style="margin-left:10px" id="toc-item-springBootStarter"><a href="#springBootStarter"><strong>5.1</strong><span>Using the Micronaut Spring Boot Starter</span></a></div>
+        
+        <div class="toc-item" style="margin-left:10px" id="toc-item-springParentContext"><a href="#springParentContext"><strong>5.2</strong><span>Using Micronaut Parent Context</span></a></div>
+        
+        <div class="toc-item" style="margin-left:10px" id="toc-item-beanPostProcessor"><a href="#beanPostProcessor"><strong>5.3</strong><span>Using a Bean Post Processor</span></a></div>
         
         <div class="toc-item" style="margin-left:0px" id="toc-item-repository"><a href="#repository"><strong>6</strong><span>Repository</span></a></div>
         
@@ -126,7 +132,7 @@
 <h1 id="introduction"><a class="anchor" href="#introduction"></a>1 Introduction</h1>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-spring/edit/5.0.x/src/main/docs/guide/introduction.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-spring/edit/master/src/main/docs/guide/introduction.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -158,7 +164,7 @@
 <h1 id="releaseHistory"><a class="anchor" href="#releaseHistory"></a>2 Release History</h1>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-spring/edit/5.0.x/src/main/docs/guide/releaseHistory.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-spring/edit/master/src/main/docs/guide/releaseHistory.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -171,10 +177,10 @@
 <p><a href="https://github.com/micronaut-projects/micronaut-spring/releases">https://github.com/micronaut-projects/micronaut-spring/releases</a></p>
 </div>
 
-<h1 id="springToMicronaut"><a class="anchor" href="#springToMicronaut"></a>3 Compile Time Spring Annotation Support</h1>
+<h1 id="springToMicronaut"><a class="anchor" href="#springToMicronaut"></a>3 Transforming Spring Applications into Micronaut Applications</h1>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-spring/edit/5.0.x/src/main/docs/guide/springToMicronaut.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-spring/edit/master/src/main/docs/guide/springToMicronaut.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -224,64 +230,20 @@ If an annotation or interface of Spring is not mentioned in this documentation c
 <h2 id="springToMicronautStart"><a class="anchor" href="#springToMicronautStart"></a>3.1 Build Configuration</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-spring/edit/5.0.x/src/main/docs/guide/springToMicronaut/springToMicronautStart.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-spring/edit/master/src/main/docs/guide/springToMicronaut/springToMicronautStart.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
 
 
 <div class="paragraph">
-<p>Micronaut 1.0.1 or above is required and the following is a minimal build to get this working for Spring (a non-web application):</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">plugins {
-    id "java"
-    id "org.springframework.boot" version "2.1.0.RELEASE"
-    id "io.spring.dependency-management" version "1.0.6.RELEASE"
-    id "net.ltgt.apt" version "0.19"                    // for Java and Groovy applications
-    id "org.jetbrains.kotlin:kapt" version "1.2.61"     // for Kotlin applications
-}
-
-dependencies {
-    // for Java applications
-    annotationProcessor "io.micronaut:micronaut-inject-java:4.0.0-SNAPSHOT"
-    annotationProcessor "io.micronaut:micronaut-validation:4.0.0-SNAPSHOT"
-    annotationProcessor "io.micronaut.spring:micronaut-spring-annotation:5.0.0-SNAPSHOT"
-
-    // for Kotlin applications
-    kapt "io.micronaut:micronaut-inject-java:4.0.0-SNAPSHOT"
-    kapt "io.micronaut:micronaut-validation:4.0.0-SNAPSHOT"
-    kapt "io.micronaut.spring:micronaut-spring-annotation:5.0.0-SNAPSHOT"
-
-    // for Groovy applications
-    compileOnly "io.micronaut:micronaut-inject-groovy:$micronautVersion"
-    compileOnly "io.micronaut:micronaut-validation:$micronautVersion"
-    compileOnly "io.micronaut.spring:micronaut-spring-annotation:$micronautSpringVersion"
-
-    compile "io.micronaut:micronaut-inject:4.0.0-SNAPSHOT"
-    compile("org.springframework.boot:spring-boot-starter")
-    ...
-}</code></pre>
-</div>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-If you are only going to reference Spring annotations and not Spring classes or interfaces then <code>org.springframework.boot:spring-boot-starter</code> can be <code>compileOnly</code>
-</td>
-</tr>
-</table>
+<p>For a build configuration example for Gradle or Maven, see the example project that is part of the guide <a href="https://guides.micronaut.io/latest/micronaut-spring-boot.html">Run a Spring Boot Application as a Micronaut Application</a>.</p>
 </div>
 
 <h2 id="springAnnotations"><a class="anchor" href="#springAnnotations"></a>3.2 Supported Spring Annotations</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-spring/edit/5.0.x/src/main/docs/guide/springToMicronaut/springAnnotations.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-spring/edit/master/src/main/docs/guide/springToMicronaut/springAnnotations.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -308,17 +270,17 @@ If you are only going to reference Spring annotations and not Spring classes or 
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/stereotype/Component.html">@Component</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.micronaut.io/latest/api/io/micronaut/context/annotation/Bean.html">@Bean</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Example <code>@Component("myBean")</code>. Requires <code>micronaut-runtime</code> dependency.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Example <code>@Component("myBean")</code>. Requires <code>micronaut-context</code> dependency.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/stereotype/Service.html">@Service</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.micronaut.io/latest/api/io/micronaut/context/annotation/Bean.html">@Bean</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Example <code>@Service("myBean")</code>. Requires <code>micronaut-runtime</code> dependency.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Example <code>@Service("myBean")</code>. Requires <code>micronaut-context</code> dependency.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/stereotype/Repository.html">@Repository</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.micronaut.io/latest/api/io/micronaut/context/annotation/Bean.html">@Bean</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Example <code>@Repository("myBean")</code>. Requires <code>micronaut-runtime</code> dependency.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Example <code>@Repository("myBean")</code>. Requires <code>micronaut-context</code> dependency.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/beans/factory/annotation/Autowired.html">@Autowired</a></p></td>
@@ -348,12 +310,17 @@ If you are only going to reference Spring annotations and not Spring classes or 
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/context/annotation/Bean.html">@Bean</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.micronaut.io/latest/api/io/micronaut/context/annotation/Bean.html">@Bean</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Example <code>@Bean</code>. Requires <code>micronaut-runtime</code> dependency.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Example <code>@Bean</code>. Requires <code>micronaut-context</code> dependency.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/context/annotation/Import.html">@Import</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.micronaut.io/latest/api/io/micronaut/context/annotation/Import.html">@Import</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Example <code>@Import(MyConfiguration.class)</code>. Requires <code>micronaut-context</code> dependency.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/context/annotation/Primary.html">@Primary</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.micronaut.io/latest/api/io/micronaut/context/annotation/Primary.html">@Primary</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Example <code>@Primary</code>. Requires <code>micronaut-runtime</code> dependency.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Example <code>@Primary</code>. Requires <code>micronaut-context</code> dependency.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/context/event/EventListener.html">@EventListener</a></p></td>
@@ -363,12 +330,12 @@ If you are only going to reference Spring annotations and not Spring classes or 
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/scheduling/annotation/Async.html">@Async</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.micronaut.io/latest/api/io/micronaut/scheduling/annotation/Async.html">@Async</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Example <code>@Async</code>. Requires <code>micronaut-runtime</code> dependency.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Example <code>@Async</code>. Requires <code>micronaut-context</code> dependency.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/scheduling/annotation/Scheduled.html">@Scheduled</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.micronaut.io/latest/api/io/micronaut/scheduling/annotation/Scheduled.html">@Scheduled</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Example <code>@Scheduled</code>. Requires <code>micronaut-runtime</code> dependency.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Example <code>@Scheduled</code>. Requires <code>micronaut-context</code> dependency.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/transaction/annotation/Transactional.html">@Transactional</a></p></td>
@@ -396,7 +363,7 @@ If you are only going to reference Spring annotations and not Spring classes or 
 <h2 id="springInterfaces"><a class="anchor" href="#springInterfaces"></a>3.3 Supported Spring Interfaces</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-spring/edit/5.0.x/src/main/docs/guide/springToMicronaut/springInterfaces.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-spring/edit/master/src/main/docs/guide/springToMicronaut/springInterfaces.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -477,7 +444,7 @@ If you are only going to reference Spring annotations and not Spring classes or 
 <h2 id="springEvents"><a class="anchor" href="#springEvents"></a>3.4 Supported Spring Events</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-spring/edit/5.0.x/src/main/docs/guide/springToMicronaut/springEvents.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-spring/edit/master/src/main/docs/guide/springToMicronaut/springEvents.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -514,7 +481,7 @@ If you are only going to reference Spring annotations and not Spring classes or 
 <h2 id="springMvc"><a class="anchor" href="#springMvc"></a>3.5 Writing Spring MVC Controllers</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-spring/edit/5.0.x/src/main/docs/guide/springToMicronaut/springMvc.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-spring/edit/master/src/main/docs/guide/springToMicronaut/springMvc.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -524,25 +491,7 @@ If you are only going to reference Spring annotations and not Spring classes or 
 <p>You can write Spring MVC controllers that are computed into Micronaut controllers at compilation time. The programming model is largely compatible with Spring Web Reactive.</p>
 </div>
 <div class="paragraph">
-<p>To get started you should modify your dependencies as following:</p>
-</div>
-<div class="listingblock">
-<div class="title">Including <code>spring-web</code> processing</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">dependencies {
-
-    ...
-    // additional Spring web dependencies
-    annotationProcessor "io.micronaut.spring:micronaut-spring-web-annotation:5.0.0-SNAPSHOT"
-    compile("org.springframework.boot:spring-boot-starter-web")
-
-
-    // additional web dependencies for Micronaut
-    compile("io.micronaut:micronaut-http-server:4.0.0-SNAPSHOT")
-    runtime("io.micronaut.spring:micronaut-spring-web:5.0.0-SNAPSHOT")
-    runtime("io.micronaut:micronaut-http-server-netty:4.0.0-SNAPSHOT")
-}</code></pre>
-</div>
+<p>See the example project that is part of the guide <a href="https://guides.micronaut.io/latest/micronaut-spring-boot.html">Run a Spring Boot Application as a Micronaut Application</a> for an example Spring Web Reactive applications transformed into a Micronaut application.</p>
 </div>
 <div class="paragraph">
 <p>Only <code>@RestController</code> semantics are supported, which is fine for most Microservice use cases. Special support is provided by the <code>micronaut-spring-web</code> dependency to allowing returning a <a href="https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/http/ResponseEntity.html">ResponseEntity</a>.</p>
@@ -724,32 +673,14 @@ See the <a href="https://github.com/micronaut-projects/micronaut-guides/pull/839
 <h2 id="springBoot"><a class="anchor" href="#springBoot"></a>3.6 Supported Spring Boot Annotations</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-spring/edit/5.0.x/src/main/docs/guide/springToMicronaut/springBoot.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-spring/edit/master/src/main/docs/guide/springToMicronaut/springBoot.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
 
 
 <div class="paragraph">
-<p>For additional support for Spring Boot you should add the following dependencies:</p>
-</div>
-<div class="listingblock">
-<div class="title">Including <code>spring-boot</code> processing</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">dependencies {
-
-    ...
-    // additional Spring Boot dependencies
-    annotationProcessor "io.micronaut.spring:micronaut-spring-boot-annotation:5.0.0-SNAPSHOT"
-    compile("org.springframework.boot:spring-boot-starter-web")
-
-    // additional Spring Boot dependencies for Micronaut
-    runtime("io.micronaut.spring:micronaut-spring-boot:5.0.0-SNAPSHOT")
-}</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>With the above dependencies in place the following Spring Boot specific annotations are supported:</p>
+<p>The following Spring Boot specific annotations are supported:</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <caption class="title">Table 1. Supported Spring Boot Annotations</caption>
@@ -868,7 +799,7 @@ See the <a href="https://github.com/micronaut-projects/micronaut-guides/pull/839
 <h2 id="springLimitations"><a class="anchor" href="#springLimitations"></a>3.7 Unsupported Spring Features</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-spring/edit/5.0.x/src/main/docs/guide/springToMicronaut/springLimitations.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-spring/edit/master/src/main/docs/guide/springToMicronaut/springLimitations.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -897,7 +828,7 @@ See the <a href="https://github.com/micronaut-projects/micronaut-guides/pull/839
 <h2 id="micronautClient"><a class="anchor" href="#micronautClient"></a>3.8 Using Micronaut's HTTP Client</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-spring/edit/5.0.x/src/main/docs/guide/springToMicronaut/micronautClient.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-spring/edit/master/src/main/docs/guide/springToMicronaut/micronautClient.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -966,10 +897,347 @@ public interface GreetingClient {
 <p>This also means you can define a common interface between client and server of a Spring application and compute the client at compilation name.</p>
 </div>
 
-<h1 id="springParentContext"><a class="anchor" href="#springParentContext"></a>4 Using Micronaut Parent Context</h1>
+<h1 id="sharingLibraries"><a class="anchor" href="#sharingLibraries"></a>4 Sharing Libraries between Spring and Micronaut</h1>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-spring/edit/5.0.x/src/main/docs/guide/springParentContext.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-spring/edit/master/src/main/docs/guide/sharingLibraries.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>If you have a lot of existing Spring applications it may be useful to share libraries between Micronaut and Spring.</p>
+</div>
+<div class="paragraph">
+<p>This is a common requirement if you want to say share common injectable components that can be added to classpath.</p>
+</div>
+<div class="paragraph">
+<p>If you have this use case you can resolve it by using Spring annotations to define the components using annotations like <a href="https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/context/annotation/Configuration.html">@configuration</a>, <a href="https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/stereotype/Component.html">@component</a> and <a href="https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/context/annotation/Bean.html">@bean</a>.</p>
+</div>
+<div class="paragraph">
+<p>For example:</p>
+</div>
+<div class="listingblock">
+<div class="title">Example Spring Configuration</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
+
+@Configuration
+public class MyConfiguration {
+
+    @Bean
+    @Primary
+    public MyBean myBean() {
+        return new MyBean("default");
+    }
+
+
+    @Bean("another")
+    public MyBean anotherBean() {
+        return new MyBean("another");
+    }
+
+
+    public static class MyBean {
+        private final String name;
+
+        MyBean(String name) {
+            this.name = name;
+        }
+
+        public String getName() {
+            return name;
+        }
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The above configuration, which exposes a bean of type <code>MyBean</code>, can be imported and used by any Spring application using the <a href="https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/context/annotation/Import.html">@import</a> annotation declared as follows:</p>
+</div>
+<div class="listingblock">
+<div class="title">Using <code>@Import</code></div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import org.springframework.context.annotation.Import;
+
+@Import(MyConfiguration.class)
+class Application {}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can additionally use the same configuration in a Micronaut application by use the same declaration as above assuming you have correctly configured Micronaut for Spring. See the example project that is part of the guide <a href="https://guides.micronaut.io/latest/micronaut-spring-boot.html">Run a Spring Boot Application as a Micronaut Application</a> for how to configure Micronaut for Spring.</p>
+</div>
+<div class="paragraph">
+<p>Micronaut will import all declared beans at compilation time. The only limitation is that <code>ImportBeanDefinitionRegistrar</code> that require runtime interfaces like <code>BeanClassLoaderAware</code> will fail to import with a compilation error since import processing happens during compilation with Micronaut. When creating shared components try avoid defining <code>ImportBeanDefinitionRegistrar</code> types that depend on one of the following interfaces:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>BeanClassLoaderAware</code></p>
+</li>
+<li>
+<p><code>BeanFactoryAware</code></p>
+</li>
+<li>
+<p><code>EnvironmentAware</code></p>
+</li>
+<li>
+<p><code>ResourceLoaderAware</code></p>
+</li>
+</ul>
+</div>
+
+<h1 id="micronautInsideSpring"><a class="anchor" href="#micronautInsideSpring"></a>5 Using Micronaut Modules with Spring</h1>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-spring/edit/master/src/main/docs/guide/micronautInsideSpring.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>It may be desirable to use Micronaut modules or libraries from a Spring or Spring Boot application. For example you may wish to use the <a href="https://guides.micronaut.io/latest/micronaut-http-client.html">Micronaut HTTP Client</a> or <a href="https://micronaut-projects.github.io/micronaut-data/latest/guide/">Micronaut Data</a> within your Spring application. There are several ways you can integrate Micronaut into a Spring application which are described below.</p>
+</div>
+
+<h2 id="springBootStarter"><a class="anchor" href="#springBootStarter"></a>5.1 Using the Micronaut Spring Boot Starter</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-spring/edit/master/src/main/docs/guide/micronautInsideSpring/springBootStarter.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>The easiest way to use Micronaut inside Spring is to use the Micronaut Spring Boot starter, first include the Micronaut BOM in your Spring Boot application&#8217;s build configuration for Gradle:</p>
+</div>
+<div class="listingblock">
+<div class="title">Adding the Micronaut BOM to Gradle</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">implementation platform("io.micronaut:micronaut-bom:3.6.0")
+annotationProcessor platform("io.micronaut:micronaut-bom:3.6.0")</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>or Maven:</p>
+</div>
+<div class="listingblock">
+<div class="title">Adding the Micronaut BOM to Maven</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;dependencyManagement&gt;
+    &lt;dependencies&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;io.micronaut&lt;/groupId&gt;
+            &lt;artifactId&gt;micronaut-bom&lt;/artifactId&gt;
+            &lt;version&gt;3.6.0&lt;/version&gt;
+            &lt;type&gt;pom&lt;/type&gt;
+            &lt;scope&gt;import&lt;/scope&gt;
+        &lt;/dependency&gt;
+    &lt;/dependencies&gt;
+&lt;/dependencyManagement&gt;</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+if you prefer not to import the BOM that is also possible, but note you will have to declare dependency versions explicitly.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Then add the Micronaut annotation processor to your build configuration:</p>
+</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
+<div class="title"></div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">annotationProcessor(<span class="hljs-string">"io.micronaut:micronaut-inject-java")</span></code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title"></div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;annotationProcessorPaths&gt;
+    &lt;path&gt;
+        &lt;groupId&gt;io.micronaut&lt;/groupId&gt;
+        &lt;artifactId&gt;micronaut-inject-java&lt;/artifactId&gt;
+    &lt;/path&gt;
+&lt;/annotationProcessorPaths&gt;</code></pre>
+</div>
+</div></p>
+</div>
+<div class="paragraph">
+<p>You will then need to explicitly specify a dependency on a version of the Jakarta Annotations module that uses the <code>jakarta</code> namespace instead of the <code>javax</code> namespace (versions 2.0.x and above). This is because the Spring Boot BOM automatically downgrades this module&#8217;s version to one that uses the <code>javax</code> namespace which is incompatible with Micronaut:</p>
+</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
+<div class="title"></div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">annotationProcessor(<span class="hljs-string">"jakarta.annotation:jakarta.annotation-api:2.1.1")</span></code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title"></div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;annotationProcessorPaths&gt;
+    &lt;path&gt;
+        &lt;groupId&gt;jakarta.annotation&lt;/groupId&gt;
+        &lt;artifactId&gt;jakarta.annotation-api&lt;/artifactId&gt;
+        &lt;version&gt;2.1.1&lt;/version&gt;
+    &lt;/path&gt;
+&lt;/annotationProcessorPaths&gt;</code></pre>
+</div>
+</div></p>
+</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
+<div class="title"></div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">implementation(<span class="hljs-string">"jakarta.annotation:jakarta.annotation-api:2.1.1")</span></code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
+    &lt;groupId&gt;jakarta.annotation&lt;/groupId&gt;
+    &lt;artifactId&gt;jakarta.annotation-api&lt;/artifactId&gt;
+    &lt;version&gt;2.1.1&lt;/version&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div></p>
+</div>
+<div class="paragraph">
+<p>Finally, a dependency on <code>micronaut-spring-boot-starter</code> can be added to the build:</p>
+</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
+<div class="title"></div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">implementation(<span class="hljs-string">"io.micronaut.spring:micronaut-spring-boot-starter")</span></code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
+    &lt;groupId&gt;io.micronaut.spring&lt;/groupId&gt;
+    &lt;artifactId&gt;micronaut-spring-boot-starter&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div></p>
+</div>
+<div class="paragraph">
+<p>When the Spring Boot application starts app all beans provided by Micronaut will be exposed as Spring Beans as well.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+You can control which beans are exposed to Spring by using the <a href="../api/io/micronaut/spring/boot/starter/EnableMicronaut.html">@EnableMicronaut</a> annotation on your <code>Application</code> class and specifying a <a href="../api/io/micronaut/spring/boot/starter/MicronautBeanFilter.html">MicronautBeanFilter</a> to include or exclude beans from Micronaut.
+</td>
+</tr>
+</table>
+</div>
+<div class="sect3">
+<h4 id="_using_micronaut_data">Using Micronaut Data</h4>
+<div class="paragraph">
+<p>Micronaut Data can be used by adding the Micronaut Data annotation processor:</p>
+</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
+<div class="title"></div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">annotationProcessor(<span class="hljs-string">"io.micronaut.data:micronaut-data-processor")</span></code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title"></div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;annotationProcessorPaths&gt;
+    &lt;path&gt;
+        &lt;groupId&gt;io.micronaut.data&lt;/groupId&gt;
+        &lt;artifactId&gt;micronaut-data-processor&lt;/artifactId&gt;
+    &lt;/path&gt;
+&lt;/annotationProcessorPaths&gt;</code></pre>
+</div>
+</div></p>
+</div>
+<div class="paragraph">
+<p>And module you are interested in, for example Micronaut Data JDBC:</p>
+</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
+<div class="title"></div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">implementation(<span class="hljs-string">"io.micronaut.data:micronaut-data-jdbc")</span></code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
+    &lt;groupId&gt;io.micronaut.data&lt;/groupId&gt;
+    &lt;artifactId&gt;micronaut-data-jdbc&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div></p>
+</div>
+<div class="paragraph">
+<p>However, it is important to note that you will once again need to specify a version of the Jakarta Persistence API that uses the <code>jakarta</code> namespace instead of the <code>javax</code> namespace as the Spring Boot BOM forces these to older versions in Spring Boot 2.x:</p>
+</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
+<div class="title"></div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">annotationProcessor(<span class="hljs-string">"jakarta.persistence:jakarta.persistence-api:3.1.0")</span></code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title"></div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;annotationProcessorPaths&gt;
+    &lt;path&gt;
+        &lt;groupId&gt;jakarta.persistence&lt;/groupId&gt;
+        &lt;artifactId&gt;jakarta.persistence-api&lt;/artifactId&gt;
+        &lt;version&gt;3.1.0&lt;/version&gt;
+    &lt;/path&gt;
+&lt;/annotationProcessorPaths&gt;</code></pre>
+</div>
+</div></p>
+</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
+<div class="title"></div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">implementation(<span class="hljs-string">"jakarta.persistence:jakarta.persistence-api:3.1.0")</span></code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
+    &lt;groupId&gt;jakarta.persistence&lt;/groupId&gt;
+    &lt;artifactId&gt;jakarta.persistence-api&lt;/artifactId&gt;
+    &lt;version&gt;3.1.0&lt;/version&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div></p>
+</div>
+</div>
+
+<h2 id="springParentContext"><a class="anchor" href="#springParentContext"></a>5.2 Using Micronaut Parent Context</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-spring/edit/master/src/main/docs/guide/micronautInsideSpring/springParentContext.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -1002,10 +1270,10 @@ builder.build().run();</code></pre>
 </div>
 </div>
 
-<h1 id="beanPostProcessor"><a class="anchor" href="#beanPostProcessor"></a>5 Using a Bean Post Processor</h1>
+<h2 id="beanPostProcessor"><a class="anchor" href="#beanPostProcessor"></a>5.3 Using a Bean Post Processor</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-spring/edit/5.0.x/src/main/docs/guide/beanPostProcessor.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-spring/edit/master/src/main/docs/guide/micronautInsideSpring/beanPostProcessor.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -1069,7 +1337,7 @@ class ByAnnotationTypeConfig {
 <h1 id="repository"><a class="anchor" href="#repository"></a>6 Repository</h1>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-spring/edit/5.0.x/src/main/docs/guide/repository.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-spring/edit/master/src/main/docs/guide/repository.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
