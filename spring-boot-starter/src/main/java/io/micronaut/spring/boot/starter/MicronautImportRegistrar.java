@@ -167,8 +167,11 @@ public final class MicronautImportRegistrar implements ImportBeanDefinitionRegis
         gbd.setLazyInit(!isContextScope);
         int role = definition.hasDeclaredAnnotation(Infrastructure.class) ? org.springframework.beans.factory.config.BeanDefinition.ROLE_INFRASTRUCTURE : org.springframework.beans.factory.config.BeanDefinition.ROLE_APPLICATION;
         gbd.setRole(role);
-        if (gbd.isSingleton() || isContextScope) {
+        if (definition.isSingleton() || isContextScope || definition.isIterable()) {
             gbd.setScope("singleton");
+        } else {
+            // perhaps support other scopes in the future
+            gbd.setScope("prototype");
         }
 
         gbd.setBeanClass(beanType);
