@@ -16,6 +16,7 @@
 package io.micronaut.spring.boot.starter;
 
 import java.util.Collection;
+import java.util.Map;
 
 import io.micronaut.context.ApplicationContext;
 import io.micronaut.context.ApplicationContextBuilder;
@@ -40,7 +41,11 @@ import org.springframework.context.EnvironmentAware;
 import org.springframework.context.annotation.AnnotationBeanNameGenerator;
 import org.springframework.context.annotation.ImportBeanDefinitionRegistrar;
 import org.springframework.core.annotation.MergedAnnotation;
+import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.core.env.Environment;
+import org.springframework.core.env.MapPropertySource;
+import org.springframework.core.env.MutablePropertySources;
+import org.springframework.core.env.PropertySource;
 import org.springframework.core.type.AnnotationMetadata;
 
 /**
@@ -75,6 +80,22 @@ public final class MicronautImportRegistrar implements ImportBeanDefinitionRegis
                 builder.args(args.getSourceArgs())
             );
         }
+        if (environment instanceof ConfigurableEnvironment) {
+            ConfigurableEnvironment ce = (ConfigurableEnvironment) environment;
+            MutablePropertySources propertySources = ce.getPropertySources();
+            for (PropertySource<?> propertySource : propertySources) {
+                if (propertySource instanceof MapPropertySource) {
+                    MapPropertySource mps = (MapPropertySource) propertySource;
+                    Map<String, Object> source = mps.getSource();
+                    builder.propertySources(
+                        io.micronaut.context.env.PropertySource.of(
+                            mps.getName(),
+                            source
+                        )
+                    );
+                }
+            }
+        }
         ApplicationContext context = builder
             .banner(false)
             .deduceEnvironment(false)
@@ -90,7 +111,7 @@ public final class MicronautImportRegistrar implements ImportBeanDefinitionRegis
         MicronautBeanFilter beanFilter = new MicronautBeanFilter() {
             @Override
             public boolean excludes(@NonNull BeanDefinition<?> definition) {
-                return definition.isAbstract() || definition.isIterable() ||
+                return definition.isAbstract() ||
                     org.springframework.context.ApplicationContext.class.isAssignableFrom(definition.getBeanType());
             }
         };
@@ -120,32 +141,48 @@ public final class MicronautImportRegistrar implements ImportBeanDefinitionRegis
                 !beanFilter.excludes(definition)) {
                 Class<?> beanType = definition.getBeanType();
                 if (definition.isEnabled(context)) {
-                    String scope = definition.getScopeName().orElse(null);
-                    GenericBeanDefinition gbd = new GenericBeanDefinition();
-                    boolean isContextScope = Context.class.getName().equals(scope);
-                    gbd.setPrimary(definition.isPrimary());
-                    gbd.setLazyInit(!isContextScope);
-                    int role = definition.hasDeclaredAnnotation(Infrastructure.class) ? org.springframework.beans.factory.config.BeanDefinition.ROLE_INFRASTRUCTURE : org.springframework.beans.factory.config.BeanDefinition.ROLE_APPLICATION;
-                    gbd.setRole(role);
-                    if (gbd.isSingleton() || isContextScope) {
-                        gbd.setScope("singleton");
-                    }
-
-                    gbd.setBeanClass(beanType);
-                    gbd.setInstanceSupplier(() ->
-                        context.getBean(definition)
-                    );
-                    Qualifier<?> qualifier = definition.getDeclaredQualifier();
-                    String beanName = computeBeanName(registry, definition, gbd, qualifier);
-                    gbd.setDescription("Bean named [" + beanName + "] of type [" + beanType.getName() + "] (Imported from Micronaut)");
-                    if (!registry.containsBeanDefinition(beanName)) {
-                        registry.registerBeanDefinition(
-                            beanName,
-                            gbd
-                        );
+                    if (definition.isIterable()) {
+                        Collection<? extends BeanDefinition<?>> beanDefinitions = context.getBeanDefinitions(beanType);
+                        for (BeanDefinition<?> beanDefinition : beanDefinitions) {
+                            registerBeanWithContext(
+                                registry,
+                                context,
+                                beanDefinition,
+                                beanType
+                            );
+                        }
+                    } else {
+                        registerBeanWithContext(registry, context, definition, beanType);
                     }
                 }
             }
+        }
+    }
+
+    private static void registerBeanWithContext(BeanDefinitionRegistry registry, ApplicationContext context, BeanDefinition<?> definition, Class<?> beanType) {
+        String scope = definition.getScopeName().orElse(null);
+        GenericBeanDefinition gbd = new GenericBeanDefinition();
+        boolean isContextScope = Context.class.getName().equals(scope);
+        gbd.setPrimary(definition.isPrimary());
+        gbd.setLazyInit(!isContextScope);
+        int role = definition.hasDeclaredAnnotation(Infrastructure.class) ? org.springframework.beans.factory.config.BeanDefinition.ROLE_INFRASTRUCTURE : org.springframework.beans.factory.config.BeanDefinition.ROLE_APPLICATION;
+        gbd.setRole(role);
+        if (gbd.isSingleton() || isContextScope) {
+            gbd.setScope("singleton");
+        }
+
+        gbd.setBeanClass(beanType);
+        gbd.setInstanceSupplier(() ->
+            context.getBean(definition)
+        );
+        Qualifier<?> qualifier = definition.getDeclaredQualifier();
+        String beanName = computeBeanName(registry, definition, gbd, qualifier);
+        gbd.setDescription("Bean named [" + beanName + "] of type [" + beanType.getName() + "] (Imported from Micronaut)");
+        if (!registry.containsBeanDefinition(beanName)) {
+            registry.registerBeanDefinition(
+                beanName,
+                gbd
+            );
         }
     }
 
