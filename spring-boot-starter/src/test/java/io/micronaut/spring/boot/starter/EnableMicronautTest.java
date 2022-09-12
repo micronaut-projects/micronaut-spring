@@ -3,13 +3,16 @@ package io.micronaut.spring.boot.starter;
 import java.util.List;
 
 import io.micronaut.context.ApplicationContext;
+import io.micronaut.context.annotation.Bean;
 import io.micronaut.context.annotation.EachBean;
 import io.micronaut.context.annotation.EachProperty;
 import io.micronaut.context.annotation.Parameter;
 import io.micronaut.http.codec.MediaTypeCodecRegistry;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.core.env.Environment;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -36,6 +39,9 @@ class EnableMicronautTest {
 
     @Autowired
     List<FooBean> fooBeanList;
+
+    @Autowired
+    CommonBeans commonBeans;
 
     @Test
     void testEnableMicronaut() {
@@ -76,5 +82,24 @@ class FooBean {
 
     public FooConfiguration getConfiguration() {
         return configuration;
+    }
+}
+
+@Bean
+class CommonBeans {
+    private final BeanFactory beanFactory;
+    private final Environment env;
+
+    CommonBeans(BeanFactory beanFactory, Environment env) {
+        this.beanFactory = beanFactory;
+        this.env = env;
+    }
+
+    public BeanFactory getBeanFactory() {
+        return beanFactory;
+    }
+
+    public Environment getEnv() {
+        return env;
     }
 }

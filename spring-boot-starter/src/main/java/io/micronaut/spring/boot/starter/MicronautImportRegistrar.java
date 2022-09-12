@@ -96,6 +96,10 @@ public final class MicronautImportRegistrar implements ImportBeanDefinitionRegis
                 }
             }
         }
+        builder.singletons(
+            environment,
+            beanFactory
+        );
         ApplicationContext context = builder
             .banner(false)
             .deduceEnvironment(false)
