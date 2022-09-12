@@ -15,7 +15,9 @@
  */
 package io.micronaut.spring.boot.starter;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 import io.micronaut.context.ApplicationContext;
@@ -82,19 +84,8 @@ public final class MicronautImportRegistrar implements ImportBeanDefinitionRegis
         }
         if (environment instanceof ConfigurableEnvironment) {
             ConfigurableEnvironment ce = (ConfigurableEnvironment) environment;
-            MutablePropertySources propertySources = ce.getPropertySources();
-            for (PropertySource<?> propertySource : propertySources) {
-                if (propertySource instanceof MapPropertySource) {
-                    MapPropertySource mps = (MapPropertySource) propertySource;
-                    Map<String, Object> source = mps.getSource();
-                    builder.propertySources(
-                        io.micronaut.context.env.PropertySource.of(
-                            mps.getName(),
-                            source
-                        )
-                    );
-                }
-            }
+            List<io.micronaut.context.env.PropertySource> cePropertySources = propertySourcesForConfigurableEnvironment(ce);
+            builder.propertySources(cePropertySources.toArray(new io.micronaut.context.env.PropertySource[0]));
         }
         ApplicationContext context = builder
             .banner(false)
@@ -222,5 +213,22 @@ public final class MicronautImportRegistrar implements ImportBeanDefinitionRegis
     @Override
     public void setBeanFactory(BeanFactory beanFactory) throws BeansException {
         this.beanFactory = beanFactory;
+    }
+
+    @NonNull
+    private List<io.micronaut.context.env.PropertySource> propertySourcesForConfigurableEnvironment(@NonNull ConfigurableEnvironment ce) {
+        List<io.micronaut.context.env.PropertySource> result = new ArrayList<>();
+        MutablePropertySources propertySources = ce.getPropertySources();
+        for (PropertySource<?> propertySource : propertySources) {
+            if (propertySource instanceof MapPropertySource) {
+                MapPropertySource mps = (MapPropertySource) propertySource;
+                Map<String, Object> source = mps.getSource();
+                    result.add(io.micronaut.context.env.PropertySource.of(
+                        mps.getName(),
+                        source
+                    ));
+            }
+        }
+        return result;
     }
 }
