@@ -17,6 +17,7 @@ package io.micronaut.spring.boot.starter;
 
 import java.util.Collection;
 import java.util.Map;
+import java.util.stream.Stream;
 
 import io.micronaut.context.ApplicationContext;
 import io.micronaut.context.ApplicationContextBuilder;
@@ -37,10 +38,12 @@ import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.beans.factory.support.BeanNameGenerator;
 import org.springframework.beans.factory.support.GenericBeanDefinition;
 import org.springframework.boot.ApplicationArguments;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.EnvironmentAware;
 import org.springframework.context.annotation.AnnotationBeanNameGenerator;
 import org.springframework.context.annotation.ImportBeanDefinitionRegistrar;
 import org.springframework.core.annotation.MergedAnnotation;
+import org.springframework.core.convert.ConversionService;
 import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.core.env.Environment;
 import org.springframework.core.env.MapPropertySource;
@@ -116,7 +119,13 @@ public final class MicronautImportRegistrar implements ImportBeanDefinitionRegis
             @Override
             public boolean excludes(@NonNull BeanDefinition<?> definition) {
                 return definition.isAbstract() ||
-                    org.springframework.context.ApplicationContext.class.isAssignableFrom(definition.getBeanType());
+                    Stream.of(
+                        org.springframework.context.ApplicationContext.class,
+                        ConversionService.class,
+                        Environment.class,
+                        ApplicationEventPublisher.class,
+                        BeanFactory.class
+                    ).anyMatch(t -> t.isAssignableFrom(definition.getBeanType()));
             }
         };
         if (enableMicronautAnn.isPresent() && enableMicronautAnn.hasNonDefaultValue("filter")) {
