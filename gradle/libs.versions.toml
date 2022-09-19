@@ -1,6 +1,6 @@
 [versions]
 managed-spring-boot = '2.7.3'
-managed-spring = '5.3.22'
+managed-spring = '5.3.23'
 
 junit = '5.9.0'
 servlet-api = '4.0.1'
