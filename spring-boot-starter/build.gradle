@@ -17,6 +17,8 @@ dependencies {
     testImplementation libs.spring.boot.actuator
     testImplementation libs.spring.boot.test
     testImplementation libs.servlet.api
+    testImplementation libs.h2database
+    testImplementation libs.managed.spring.jdbc
 
     testRuntimeOnly libs.managed.spring.boot.starter.web
     testRuntimeOnly libs.spring.boot.starter.tomcat

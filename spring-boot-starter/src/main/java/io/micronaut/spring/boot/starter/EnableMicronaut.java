@@ -37,4 +37,23 @@ public @interface EnableMicronaut {
      * @return The bean filter
      */
     Class<? extends MicronautBeanFilter> filter() default MicronautBeanFilter.class;
+
+    /**
+     * Defines one or more types that represent Spring beans that should be exposed to the Micronaut context.
+     * <p>Note care should be taken that circular dependencies are not introduced between the Spring context and the Micronaut context</p>
+     * @return The exposed bean.
+     */
+    ExposedBean[] exposeToMicronaut() default  {};
+
+    @interface ExposedBean {
+        /**
+         * @return The bean type.
+         */
+        Class<?> beanType();
+
+        /**
+         * @return The name to be used for the bean otherwise the Spring bean name is used.
+         */
+        String name() default "";
+    }
 }

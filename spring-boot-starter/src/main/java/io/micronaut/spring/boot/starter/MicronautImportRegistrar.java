@@ -24,6 +24,7 @@ import java.util.stream.Stream;
 import io.micronaut.context.ApplicationContext;
 import io.micronaut.context.ApplicationContextBuilder;
 import io.micronaut.context.Qualifier;
+import io.micronaut.context.RuntimeBeanDefinition;
 import io.micronaut.context.annotation.Context;
 import io.micronaut.context.annotation.Infrastructure;
 import io.micronaut.core.annotation.Internal;
@@ -32,18 +33,23 @@ import io.micronaut.core.naming.Named;
 import io.micronaut.core.reflect.InstantiationUtils;
 import io.micronaut.core.util.StringUtils;
 import io.micronaut.inject.BeanDefinition;
+import io.micronaut.inject.qualifiers.Qualifiers;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.BeanFactoryAware;
 import org.springframework.beans.factory.ObjectProvider;
+import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
+import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.beans.factory.support.BeanNameGenerator;
 import org.springframework.beans.factory.support.GenericBeanDefinition;
 import org.springframework.boot.ApplicationArguments;
+import org.springframework.boot.autoconfigure.AutoConfigureOrder;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.EnvironmentAware;
 import org.springframework.context.annotation.AnnotationBeanNameGenerator;
 import org.springframework.context.annotation.ImportBeanDefinitionRegistrar;
+import org.springframework.core.Ordered;
 import org.springframework.core.annotation.MergedAnnotation;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.core.env.ConfigurableEnvironment;
@@ -52,6 +58,8 @@ import org.springframework.core.env.MapPropertySource;
 import org.springframework.core.env.MutablePropertySources;
 import org.springframework.core.env.PropertySource;
 import org.springframework.core.type.AnnotationMetadata;
+
+import javax.sql.DataSource;
 
 /**
  * An {@link ImportBeanDefinitionRegistrar} that exposes all Micronaut beans as Spring beans using {@link EnableMicronaut}.
@@ -62,6 +70,7 @@ import org.springframework.core.type.AnnotationMetadata;
  * @since 4.3.0
  */
 @Internal
+@AutoConfigureOrder(Ordered.LOWEST_PRECEDENCE)
 public final class MicronautImportRegistrar implements ImportBeanDefinitionRegistrar, EnvironmentAware, BeanFactoryAware {
     private Environment environment;
     private BeanFactory beanFactory;
@@ -75,6 +84,7 @@ public final class MicronautImportRegistrar implements ImportBeanDefinitionRegis
             // already registered
             return;
         }
+
 
         GenericBeanDefinition genericBeanDefinition = new GenericBeanDefinition();
         String[] activeProfiles = environment != null ? environment.getActiveProfiles() : StringUtils.EMPTY_STRING_ARRAY;
@@ -99,6 +109,10 @@ public final class MicronautImportRegistrar implements ImportBeanDefinitionRegis
             .deduceEnvironment(false)
             .build()
             .start();
+        GenericBeanDefinition ppd = new GenericBeanDefinition();
+        ppd.setBeanClass(MicronautPostProcess.class);
+        ppd.setInstanceSupplier(() -> new MicronautPostProcess(context));
+        registry.registerBeanDefinition("micronautPostProcess", ppd);
         genericBeanDefinition.setInstanceSupplier(() -> context);
         genericBeanDefinition.setDestroyMethodName("stop");
         registry.registerBeanDefinition(
@@ -246,5 +260,39 @@ public final class MicronautImportRegistrar implements ImportBeanDefinitionRegis
             }
         }
         return result;
+    }
+
+    private final class MicronautPostProcess implements BeanFactoryPostProcessor {
+
+        private final ApplicationContext context;
+
+        public MicronautPostProcess(ApplicationContext context) {
+            this.context = context;
+        }
+
+        @Override
+        public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
+            String[] beanNames = beanFactory.getBeanNamesForType(DataSource.class);
+            for (String beanName : beanNames) {
+                if (beanName.equals("dataSource")) {
+                    // the default
+                    context.registerBeanDefinition(
+                        RuntimeBeanDefinition.builder(DataSource.class, () ->
+                            beanFactory.getBean(beanName, DataSource.class)
+                        ).qualifier(Qualifiers.byName("default"))
+                            .singleton(true)
+                            .build()
+                    );
+                } else {
+                    context.registerBeanDefinition(
+                        RuntimeBeanDefinition.builder(DataSource.class, () ->
+                                beanFactory.getBean(beanName, DataSource.class)
+                            ).qualifier(Qualifiers.byName(beanName))
+                            .singleton(true)
+                            .build()
+                    );
+                }
+            }
+        }
     }
 }
