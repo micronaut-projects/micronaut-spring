@@ -45,6 +45,9 @@ public @interface EnableMicronaut {
      */
     ExposedBean[] exposeToMicronaut() default  {};
 
+    /**
+     * Used to allow to expose beans from the Spring to the Micronaut context.
+     */
     @interface ExposedBean {
         /**
          * @return The bean type.
@@ -52,8 +55,13 @@ public @interface EnableMicronaut {
         Class<?> beanType();
 
         /**
-         * @return The name to be used for the bean otherwise the Spring bean name is used.
+         * @return The name of the bean in the Spring context otherwise all beans of the type are searched.
          */
         String name() default "";
+
+        /**
+         * @return The qualifier to use for the Micronaut bean that is registered, defaults to the Spring Bean name.
+         */
+        String qualifier() default "";
     }
 }

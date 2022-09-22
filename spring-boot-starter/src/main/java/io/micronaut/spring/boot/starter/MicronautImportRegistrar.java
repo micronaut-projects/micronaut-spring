@@ -17,9 +17,12 @@ package io.micronaut.spring.boot.starter;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.function.UnaryOperator;
 import java.util.stream.Stream;
+import javax.sql.DataSource;
 
 import io.micronaut.context.ApplicationContext;
 import io.micronaut.context.ApplicationContextBuilder;
@@ -27,12 +30,16 @@ import io.micronaut.context.Qualifier;
 import io.micronaut.context.RuntimeBeanDefinition;
 import io.micronaut.context.annotation.Context;
 import io.micronaut.context.annotation.Infrastructure;
+import io.micronaut.context.annotation.Primary;
 import io.micronaut.core.annotation.Internal;
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.naming.Named;
 import io.micronaut.core.reflect.InstantiationUtils;
+import io.micronaut.core.util.ArrayUtils;
 import io.micronaut.core.util.StringUtils;
 import io.micronaut.inject.BeanDefinition;
+import io.micronaut.inject.annotation.MutableAnnotationMetadata;
 import io.micronaut.inject.qualifiers.Qualifiers;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanFactory;
@@ -59,8 +66,6 @@ import org.springframework.core.env.MutablePropertySources;
 import org.springframework.core.env.PropertySource;
 import org.springframework.core.type.AnnotationMetadata;
 
-import javax.sql.DataSource;
-
 /**
  * An {@link ImportBeanDefinitionRegistrar} that exposes all Micronaut beans as Spring beans using {@link EnableMicronaut}.
  *
@@ -74,6 +79,17 @@ import javax.sql.DataSource;
 public final class MicronautImportRegistrar implements ImportBeanDefinitionRegistrar, EnvironmentAware, BeanFactoryAware {
     private Environment environment;
     private BeanFactory beanFactory;
+
+    private final List<ExposedBeanData> exposedBeans = new ArrayList<>();
+
+    public MicronautImportRegistrar() {
+        exposedBeans.add(new ExposedBeanData(DataSource.class, null, null, (name) -> {
+            if ("dataSource".equals(name)) {
+                return "default";
+            }
+            return name;
+        }));
+    }
 
     @Override
     public void registerBeanDefinitions(
@@ -107,8 +123,8 @@ public final class MicronautImportRegistrar implements ImportBeanDefinitionRegis
         ApplicationContext context = builder
             .banner(false)
             .deduceEnvironment(false)
-            .build()
-            .start();
+            .build();
+        context.start();
         GenericBeanDefinition ppd = new GenericBeanDefinition();
         ppd.setBeanClass(MicronautPostProcess.class);
         ppd.setInstanceSupplier(() -> new MicronautPostProcess(context));
@@ -133,23 +149,39 @@ public final class MicronautImportRegistrar implements ImportBeanDefinitionRegis
                     ).anyMatch(t -> t.isAssignableFrom(definition.getBeanType()));
             }
         };
-        if (enableMicronautAnn.isPresent() && enableMicronautAnn.hasNonDefaultValue("filter")) {
-            Class<?> filter = enableMicronautAnn.getClass("filter");
-            Object filterObject = InstantiationUtils.tryInstantiate(filter).orElse(null);
-            if (filterObject instanceof MicronautBeanFilter) {
-                MicronautBeanFilter specificFilter = (MicronautBeanFilter) filterObject;
-                MicronautBeanFilter currentFilter = beanFilter;
-                beanFilter = new MicronautBeanFilter() {
-                    @Override
-                    public boolean includes(@NonNull BeanDefinition<?> definition) {
-                        return currentFilter.includes(definition) && specificFilter.includes(definition);
-                    }
+        if (enableMicronautAnn.isPresent()) {
+            if (enableMicronautAnn.hasNonDefaultValue("filter")) {
 
-                    @Override
-                    public boolean excludes(@NonNull BeanDefinition<?> definition) {
-                        return currentFilter.excludes(definition) || specificFilter.excludes(definition);
-                    }
-                };
+                Class<?> filter = enableMicronautAnn.getClass("filter");
+                Object filterObject = InstantiationUtils.tryInstantiate(filter).orElse(null);
+                if (filterObject instanceof MicronautBeanFilter) {
+                    MicronautBeanFilter specificFilter = (MicronautBeanFilter) filterObject;
+                    MicronautBeanFilter currentFilter = beanFilter;
+                    beanFilter = new MicronautBeanFilter() {
+                        @Override
+                        public boolean includes(@NonNull BeanDefinition<?> definition) {
+                            return currentFilter.includes(definition) && specificFilter.includes(definition);
+                        }
+
+                        @Override
+                        public boolean excludes(@NonNull BeanDefinition<?> definition) {
+                            return currentFilter.excludes(definition) || specificFilter.excludes(definition);
+                        }
+                    };
+                }
+            }
+
+            EnableMicronaut enableMicronaut = enableMicronautAnn.synthesize();
+            EnableMicronaut.ExposedBean[] exposedBeans = enableMicronaut.exposeToMicronaut();
+            if (ArrayUtils.isNotEmpty(exposedBeans)) {
+                for (EnableMicronaut.ExposedBean exposedBean : exposedBeans) {
+                    this.exposedBeans.add(new ExposedBeanData(
+                        exposedBean.beanType(),
+                        StringUtils.isNotEmpty(exposedBean.name()) ? exposedBean.name() : null,
+                        StringUtils.isNotEmpty(exposedBean.qualifier()) ? exposedBean.qualifier() : null,
+                        null)
+                    );
+                }
             }
         }
 
@@ -272,27 +304,50 @@ public final class MicronautImportRegistrar implements ImportBeanDefinitionRegis
 
         @Override
         public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
-            String[] beanNames = beanFactory.getBeanNamesForType(DataSource.class);
-            for (String beanName : beanNames) {
-                if (beanName.equals("dataSource")) {
-                    // the default
-                    context.registerBeanDefinition(
-                        RuntimeBeanDefinition.builder(DataSource.class, () ->
+            for (ExposedBeanData exposedBean : exposedBeans) {
+                String[] beanNames = beanFactory.getBeanNamesForType(exposedBean.beanType);
+                for (String beanName : beanNames) {
+                    org.springframework.beans.factory.config.BeanDefinition beanDefinition =
+                        beanFactory.getBeanDefinition(beanName);
+                    String qualifier = exposedBean.nameTransformer.apply(beanName);
+                    RuntimeBeanDefinition.Builder<DataSource> builder = RuntimeBeanDefinition.builder(DataSource.class, () ->
                             beanFactory.getBean(beanName, DataSource.class)
-                        ).qualifier(Qualifiers.byName("default"))
-                            .singleton(true)
-                            .build()
-                    );
-                } else {
+                        ).qualifier(Qualifiers.byName(qualifier))
+                        .singleton(beanDefinition.isSingleton());
+
+                    if (beanDefinition.isPrimary()) {
+                        MutableAnnotationMetadata metadata = new MutableAnnotationMetadata();
+                        metadata.addDeclaredAnnotation(Primary.class.getName(), Collections.emptyMap());
+                        builder.annotationMetadata(metadata);
+                    }
                     context.registerBeanDefinition(
-                        RuntimeBeanDefinition.builder(DataSource.class, () ->
-                                beanFactory.getBean(beanName, DataSource.class)
-                            ).qualifier(Qualifiers.byName(beanName))
-                            .singleton(true)
-                            .build()
+                        builder.build()
                     );
                 }
+
             }
+        }
+    }
+
+    private static final class ExposedBeanData {
+        final Class<?> beanType;
+        @Nullable
+        final String beanName;
+        @Nullable
+        final String qualifier;
+
+        @NonNull
+        final UnaryOperator<String> nameTransformer;
+
+        private ExposedBeanData(
+            Class<?> beanType,
+            @Nullable String beanName,
+            @Nullable String qualifier,
+            @Nullable UnaryOperator<String> nameTransformer) {
+            this.beanType = beanType;
+            this.beanName = beanName;
+            this.qualifier = qualifier;
+            this.nameTransformer = nameTransformer != null ? nameTransformer : UnaryOperator.identity();
         }
     }
 }
