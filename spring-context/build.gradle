@@ -15,6 +15,9 @@ dependencies {
     testAnnotationProcessor mn.micronaut.inject.java
     testAnnotationProcessor projects.springAnnotation
 
+    testCompileOnly libs.asm
+    testCompileOnly libs.asm.commons
+
     testImplementation mn.micronaut.runtime
     testImplementation mn.micronaut.inject.java
     testImplementation projects.springAnnotation

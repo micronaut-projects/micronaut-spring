@@ -2,7 +2,7 @@
 managed-spring-boot = '2.7.0'
 managed-spring = '5.3.20'
 
-junit = '5.9.0'
+asm = '9.4'
 servlet-api = '4.0.1'
 
 [libraries]
@@ -24,8 +24,10 @@ spring-boot-autoconfigure = { module = 'org.springframework.boot:spring-boot-aut
 spring-boot-starter-thymeleaf = { module = 'org.springframework.boot:spring-boot-starter-thymeleaf', version.ref = 'managed-spring-boot' }
 spring-boot-starter-tomcat = { module = 'org.springframework.boot:spring-boot-starter-tomcat', version.ref = 'managed-spring-boot' }
 
-junit-jupiter-api = { module = 'org.junit.jupiter:junit-jupiter-api', version.ref = 'junit' }
-junit-jupiter-engine = { module = 'org.junit.jupiter:junit-jupiter-engine', version.ref = 'junit' }
+asm = { module = "org.ow2.asm:asm", version.ref = "asm" }
+asm-commons = { module = "org.ow2.asm:asm-commons", version.ref = "asm" }
+junit-jupiter-api = { module = 'org.junit.jupiter:junit-jupiter-api' }
+junit-jupiter-engine = { module = 'org.junit.jupiter:junit-jupiter-engine' }
 
 servlet-api = { module = 'javax.servlet:javax.servlet-api', version.ref = 'servlet-api' }
 
