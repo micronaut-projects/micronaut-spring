@@ -6,6 +6,7 @@ dependencies {
     api mn.micronaut.aop
     api mn.micronaut.inject
     api mn.micronaut.context
+    api mn.micronaut.runtime
     api libs.managed.spring.boot
     implementation libs.spring.boot.autoconfigure
     implementation libs.jakarta.annotation
