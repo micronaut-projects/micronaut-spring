@@ -2,7 +2,7 @@
 managed-spring-boot = '2.7.6'
 managed-spring = '5.3.23'
 
-junit = '5.9.0'
+junit = '5.9.1'
 servlet-api = '4.0.1'
 h2 = '2.1.214'
 jakarta-annotation = '2.1.1'
