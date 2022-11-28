@@ -4,5 +4,6 @@ plugins {
 
 dependencies {
     api projects.springAnnotation
+    api mn.micronaut.core.processor
     api mn.micronaut.http
 }
