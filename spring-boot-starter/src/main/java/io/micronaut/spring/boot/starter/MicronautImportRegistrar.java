@@ -17,33 +17,46 @@ package io.micronaut.spring.boot.starter;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.function.UnaryOperator;
 import java.util.stream.Stream;
+import javax.sql.DataSource;
 
 import io.micronaut.context.ApplicationContext;
 import io.micronaut.context.ApplicationContextBuilder;
 import io.micronaut.context.Qualifier;
+import io.micronaut.context.RuntimeBeanDefinition;
 import io.micronaut.context.annotation.Context;
 import io.micronaut.context.annotation.Infrastructure;
+import io.micronaut.context.annotation.Primary;
 import io.micronaut.core.annotation.Internal;
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.naming.Named;
 import io.micronaut.core.reflect.InstantiationUtils;
+import io.micronaut.core.util.ArrayUtils;
 import io.micronaut.core.util.StringUtils;
 import io.micronaut.inject.BeanDefinition;
+import io.micronaut.inject.annotation.MutableAnnotationMetadata;
+import io.micronaut.inject.qualifiers.Qualifiers;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.BeanFactoryAware;
 import org.springframework.beans.factory.ObjectProvider;
+import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
+import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.beans.factory.support.BeanNameGenerator;
 import org.springframework.beans.factory.support.GenericBeanDefinition;
 import org.springframework.boot.ApplicationArguments;
+import org.springframework.boot.autoconfigure.AutoConfigureOrder;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.EnvironmentAware;
 import org.springframework.context.annotation.AnnotationBeanNameGenerator;
 import org.springframework.context.annotation.ImportBeanDefinitionRegistrar;
+import org.springframework.core.Ordered;
 import org.springframework.core.annotation.MergedAnnotation;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.core.env.ConfigurableEnvironment;
@@ -62,9 +75,21 @@ import org.springframework.core.type.AnnotationMetadata;
  * @since 4.3.0
  */
 @Internal
+@AutoConfigureOrder(Ordered.LOWEST_PRECEDENCE)
 public final class MicronautImportRegistrar implements ImportBeanDefinitionRegistrar, EnvironmentAware, BeanFactoryAware {
     private Environment environment;
     private BeanFactory beanFactory;
+
+    private final List<ExposedBeanData> exposedBeans = new ArrayList<>();
+
+    public MicronautImportRegistrar() {
+        exposedBeans.add(new ExposedBeanData(DataSource.class, null, null, (name) -> {
+            if ("dataSource".equals(name)) {
+                return "default";
+            }
+            return name;
+        }));
+    }
 
     @Override
     public void registerBeanDefinitions(
@@ -75,6 +100,7 @@ public final class MicronautImportRegistrar implements ImportBeanDefinitionRegis
             // already registered
             return;
         }
+
 
         GenericBeanDefinition genericBeanDefinition = new GenericBeanDefinition();
         String[] activeProfiles = environment != null ? environment.getActiveProfiles() : StringUtils.EMPTY_STRING_ARRAY;
@@ -97,8 +123,12 @@ public final class MicronautImportRegistrar implements ImportBeanDefinitionRegis
         ApplicationContext context = builder
             .banner(false)
             .deduceEnvironment(false)
-            .build()
-            .start();
+            .build();
+        context.start();
+        GenericBeanDefinition ppd = new GenericBeanDefinition();
+        ppd.setBeanClass(MicronautPostProcess.class);
+        ppd.setInstanceSupplier(() -> new MicronautPostProcess(context));
+        registry.registerBeanDefinition("micronautPostProcess", ppd);
         genericBeanDefinition.setInstanceSupplier(() -> context);
         genericBeanDefinition.setDestroyMethodName("stop");
         registry.registerBeanDefinition(
@@ -119,23 +149,39 @@ public final class MicronautImportRegistrar implements ImportBeanDefinitionRegis
                     ).anyMatch(t -> t.isAssignableFrom(definition.getBeanType()));
             }
         };
-        if (enableMicronautAnn.isPresent() && enableMicronautAnn.hasNonDefaultValue("filter")) {
-            Class<?> filter = enableMicronautAnn.getClass("filter");
-            Object filterObject = InstantiationUtils.tryInstantiate(filter).orElse(null);
-            if (filterObject instanceof MicronautBeanFilter) {
-                MicronautBeanFilter specificFilter = (MicronautBeanFilter) filterObject;
-                MicronautBeanFilter currentFilter = beanFilter;
-                beanFilter = new MicronautBeanFilter() {
-                    @Override
-                    public boolean includes(@NonNull BeanDefinition<?> definition) {
-                        return currentFilter.includes(definition) && specificFilter.includes(definition);
-                    }
+        if (enableMicronautAnn.isPresent()) {
+            if (enableMicronautAnn.hasNonDefaultValue("filter")) {
 
-                    @Override
-                    public boolean excludes(@NonNull BeanDefinition<?> definition) {
-                        return currentFilter.excludes(definition) || specificFilter.excludes(definition);
-                    }
-                };
+                Class<?> filter = enableMicronautAnn.getClass("filter");
+                Object filterObject = InstantiationUtils.tryInstantiate(filter).orElse(null);
+                if (filterObject instanceof MicronautBeanFilter) {
+                    MicronautBeanFilter specificFilter = (MicronautBeanFilter) filterObject;
+                    MicronautBeanFilter currentFilter = beanFilter;
+                    beanFilter = new MicronautBeanFilter() {
+                        @Override
+                        public boolean includes(@NonNull BeanDefinition<?> definition) {
+                            return currentFilter.includes(definition) && specificFilter.includes(definition);
+                        }
+
+                        @Override
+                        public boolean excludes(@NonNull BeanDefinition<?> definition) {
+                            return currentFilter.excludes(definition) || specificFilter.excludes(definition);
+                        }
+                    };
+                }
+            }
+
+            EnableMicronaut enableMicronaut = enableMicronautAnn.synthesize();
+            EnableMicronaut.ExposedBean[] exposedBeans = enableMicronaut.exposeToMicronaut();
+            if (ArrayUtils.isNotEmpty(exposedBeans)) {
+                for (EnableMicronaut.ExposedBean exposedBean : exposedBeans) {
+                    this.exposedBeans.add(new ExposedBeanData(
+                        exposedBean.beanType(),
+                        StringUtils.isNotEmpty(exposedBean.name()) ? exposedBean.name() : null,
+                        StringUtils.isNotEmpty(exposedBean.qualifier()) ? exposedBean.qualifier() : null,
+                        null)
+                    );
+                }
             }
         }
 
@@ -246,5 +292,62 @@ public final class MicronautImportRegistrar implements ImportBeanDefinitionRegis
             }
         }
         return result;
+    }
+
+    private final class MicronautPostProcess implements BeanFactoryPostProcessor {
+
+        private final ApplicationContext context;
+
+        public MicronautPostProcess(ApplicationContext context) {
+            this.context = context;
+        }
+
+        @Override
+        public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
+            for (ExposedBeanData exposedBean : exposedBeans) {
+                String[] beanNames = beanFactory.getBeanNamesForType(exposedBean.beanType);
+                for (String beanName : beanNames) {
+                    org.springframework.beans.factory.config.BeanDefinition beanDefinition =
+                        beanFactory.getBeanDefinition(beanName);
+                    String qualifier = exposedBean.nameTransformer.apply(beanName);
+                    RuntimeBeanDefinition.Builder<DataSource> builder = RuntimeBeanDefinition.builder(DataSource.class, () ->
+                            beanFactory.getBean(beanName, DataSource.class)
+                        ).qualifier(Qualifiers.byName(qualifier))
+                        .singleton(beanDefinition.isSingleton());
+
+                    if (beanDefinition.isPrimary()) {
+                        MutableAnnotationMetadata metadata = new MutableAnnotationMetadata();
+                        metadata.addDeclaredAnnotation(Primary.class.getName(), Collections.emptyMap());
+                        builder.annotationMetadata(metadata);
+                    }
+                    context.registerBeanDefinition(
+                        builder.build()
+                    );
+                }
+
+            }
+        }
+    }
+
+    private static final class ExposedBeanData {
+        final Class<?> beanType;
+        @Nullable
+        final String beanName;
+        @Nullable
+        final String qualifier;
+
+        @NonNull
+        final UnaryOperator<String> nameTransformer;
+
+        private ExposedBeanData(
+            Class<?> beanType,
+            @Nullable String beanName,
+            @Nullable String qualifier,
+            @Nullable UnaryOperator<String> nameTransformer) {
+            this.beanType = beanType;
+            this.beanName = beanName;
+            this.qualifier = qualifier;
+            this.nameTransformer = nameTransformer != null ? nameTransformer : UnaryOperator.identity();
+        }
     }
 }
