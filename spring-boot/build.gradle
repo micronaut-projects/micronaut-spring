@@ -12,9 +12,6 @@ dependencies {
     testAnnotationProcessor projects.springBootAnnotation
     testAnnotationProcessor projects.springWebAnnotation
 
-    testCompileOnly libs.asm
-    testCompileOnly libs.asm.commons
-
     testImplementation projects.springWeb
     testImplementation mn.micronaut.management
     testImplementation mn.micronaut.http.client

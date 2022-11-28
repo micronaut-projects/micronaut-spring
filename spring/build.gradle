@@ -15,9 +15,7 @@ dependencies {
     testAnnotationProcessor mn.micronaut.inject.java
     testImplementation mn.micronaut.runtime
     testCompileOnly mn.micronaut.inject.groovy
-    testCompileOnly libs.asm
-    testCompileOnly libs.asm.commons
-
+    
     testImplementation libs.spock.spring
     testImplementation libs.spring.test
 }

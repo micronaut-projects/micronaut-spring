@@ -13,9 +13,6 @@ dependencies {
     compileOnly mn.micronaut.http.server.netty
     compileOnly mn.micronaut.views.core
 
-    testCompileOnly libs.asm
-    testCompileOnly libs.asm.commons
-
     testAnnotationProcessor mn.micronaut.inject.java
     testAnnotationProcessor projects.springAnnotation
     testAnnotationProcessor projects.springWebAnnotation
