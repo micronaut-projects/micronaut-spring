@@ -15,6 +15,7 @@
  */
 package io.micronaut.spring.annotation.context;
 
+// tag::class[]
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -47,3 +48,4 @@ public class MyConfiguration {
         }
     }
 }
+// end::class[]

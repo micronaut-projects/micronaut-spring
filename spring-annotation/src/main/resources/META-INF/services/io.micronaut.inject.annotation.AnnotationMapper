@@ -16,3 +16,4 @@ io.micronaut.spring.annotation.cache.CacheableAnnotationMapper
 io.micronaut.spring.annotation.cache.CachePutAnnotationMapper
 io.micronaut.spring.annotation.cache.CacheEvictAnnotationMapper
 io.micronaut.spring.annotation.tx.TransactionalAnnotationMapper
+io.micronaut.spring.annotation.beans.ImportAnnotationMapper

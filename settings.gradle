@@ -6,7 +6,7 @@ pluginManagement {
 }
 
 plugins {
-    id 'io.micronaut.build.shared.settings' version '6.0.1'
+    id 'io.micronaut.build.shared.settings' version '6.1.0'
 }
 
 rootProject.name = 'spring-parent'
@@ -16,6 +16,7 @@ include 'spring-annotation'
 include 'spring-bom'
 include 'spring-boot-annotation'
 include 'spring-boot'
+include 'spring-boot-starter'
 include 'spring-web-annotation'
 include 'spring-web'
 include 'spring-context'

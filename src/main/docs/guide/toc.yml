@@ -1,7 +1,7 @@
 introduction: Introduction
 releaseHistory: Release History
 springToMicronaut:
-  title: Compile Time Spring Annotation Support
+  title: Transforming Spring Applications into Micronaut Applications
   springToMicronautStart: Build Configuration
   springAnnotations: Supported Spring Annotations
   springInterfaces: Supported Spring Interfaces
@@ -10,8 +10,13 @@ springToMicronaut:
   springBoot: Supported Spring Boot Annotations
   springLimitations: Unsupported Spring Features
   micronautClient: Using Micronaut's HTTP Client
-springParentContext:
-  title: Using Micronaut Parent Context
-beanPostProcessor:
-  title: Using a Bean Post Processor
+sharingLibraries:
+  title: Sharing Libraries between Spring and Micronaut
+micronautInsideSpring:
+  title: Using Micronaut Modules with Spring
+  springBootStarter: Using the Micronaut Spring Boot Starter
+  springParentContext:
+    title: Using Micronaut Parent Context
+  beanPostProcessor:
+    title: Using a Bean Post Processor
 repository: Repository

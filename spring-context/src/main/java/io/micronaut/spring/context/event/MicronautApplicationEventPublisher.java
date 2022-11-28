@@ -17,6 +17,7 @@ package io.micronaut.spring.context.event;
 
 import io.micronaut.context.annotation.Primary;
 import io.micronaut.core.annotation.Internal;
+import io.micronaut.spring.beans.MicronautContextInternal;
 import jakarta.inject.Singleton;
 import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ApplicationEventPublisher;
@@ -29,7 +30,7 @@ import org.springframework.context.ApplicationEventPublisher;
 @Singleton
 @Primary
 @Internal
-public class MicronautApplicationEventPublisher implements ApplicationEventPublisher {
+public class MicronautApplicationEventPublisher implements ApplicationEventPublisher, MicronautContextInternal {
 
     private final io.micronaut.context.event.ApplicationEventPublisher eventPublisher;
 

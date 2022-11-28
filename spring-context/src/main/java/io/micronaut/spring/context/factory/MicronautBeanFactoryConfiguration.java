@@ -18,6 +18,7 @@ package io.micronaut.spring.context.factory;
 import io.micronaut.context.annotation.ConfigurationProperties;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.util.ArgumentUtils;
+import io.micronaut.spring.beans.MicronautContextInternal;
 
 import java.util.Collections;
 import java.util.List;
@@ -29,7 +30,7 @@ import java.util.List;
  * @since 1.0
  */
 @ConfigurationProperties(MicronautBeanFactoryConfiguration.PREFIX)
-public class MicronautBeanFactoryConfiguration {
+public class MicronautBeanFactoryConfiguration implements MicronautContextInternal {
     public static final String PREFIX = "micronaut.spring.context";
 
     private List<Class<?>> beanExcludes = Collections.emptyList();

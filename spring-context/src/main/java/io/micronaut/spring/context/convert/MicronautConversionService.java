@@ -15,6 +15,7 @@
  */
 package io.micronaut.spring.context.convert;
 
+import io.micronaut.spring.beans.MicronautContextInternal;
 import jakarta.inject.Named;
 import jakarta.inject.Singleton;
 import org.springframework.core.convert.ConversionService;
@@ -28,7 +29,7 @@ import org.springframework.core.convert.TypeDescriptor;
  */
 @Singleton
 @Named("conversionService")
-public class MicronautConversionService implements ConversionService {
+public class MicronautConversionService implements ConversionService, MicronautContextInternal {
 
     private final io.micronaut.core.convert.ConversionService<?> conversionService;
 

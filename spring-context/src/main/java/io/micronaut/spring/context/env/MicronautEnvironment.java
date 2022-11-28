@@ -22,6 +22,7 @@ import io.micronaut.core.annotation.Internal;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.util.StringUtils;
+import io.micronaut.spring.beans.MicronautContextInternal;
 import jakarta.inject.Singleton;
 import org.springframework.core.convert.support.ConfigurableConversionService;
 import org.springframework.core.env.*;
@@ -38,7 +39,7 @@ import java.util.*;
 @Singleton
 @Primary
 @Internal
-public class MicronautEnvironment implements ConfigurableEnvironment {
+public class MicronautEnvironment implements ConfigurableEnvironment, MicronautContextInternal {
     private final io.micronaut.context.env.Environment environment;
     private String[] requiredProperties;
     private ConfigurableConversionService conversionService;
