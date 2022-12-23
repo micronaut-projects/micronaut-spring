@@ -51,6 +51,7 @@ import java.lang.annotation.Annotation;
 import java.util.Collection;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * An implementation of Spring's {@link ApplicationContext} interface that delegates to Micronaut.
@@ -233,6 +234,11 @@ public class MicronautApplicationContext implements ManagedApplicationContext, C
     }
 
     @Override
+    public <A extends Annotation> Set<A> findAllAnnotationsOnBean(String beanName, Class<A> annotationType, boolean allowFactoryBeanInit) throws NoSuchBeanDefinitionException {
+        return beanFactory.findAllAnnotationsOnBean(beanName, annotationType, allowFactoryBeanInit);
+    }
+
+    @Override
     public Object getBean(String name) throws BeansException {
         return beanFactory.getBean(name);
     }
@@ -378,6 +384,11 @@ public class MicronautApplicationContext implements ManagedApplicationContext, C
     @Override
     public void addApplicationListener(ApplicationListener<?> listener) {
         beanFactory.getBeanContext().registerSingleton(listener);
+    }
+
+    @Override
+    public void removeApplicationListener(ApplicationListener<?> listener) {
+        beanFactory.getBeanContext().destroyBean(listener);
     }
 
     @Override

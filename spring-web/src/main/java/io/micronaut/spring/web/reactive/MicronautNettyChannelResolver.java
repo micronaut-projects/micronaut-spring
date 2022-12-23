@@ -62,7 +62,7 @@ public class MicronautNettyChannelResolver implements ChannelResolver {
     }
 
     @Override
-    public Optional<HttpContentProcessor<ByteBufHolder>> resolveContentProcessor(HttpRequest<?> request) {
+    public Optional<HttpContentProcessor> resolveContentProcessor(HttpRequest<?> request) {
         if (request instanceof NettyHttpRequest) {
             final NettyHttpRequest<?> nettyHttpRequest = (NettyHttpRequest<?>) request;
             return Optional.of(

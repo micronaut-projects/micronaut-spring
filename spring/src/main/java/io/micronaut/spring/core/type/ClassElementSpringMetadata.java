@@ -16,6 +16,7 @@
 package io.micronaut.spring.core.type;
 
 import java.lang.annotation.Annotation;
+import java.util.Collections;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -49,6 +50,11 @@ public final class ClassElementSpringMetadata implements AnnotationMetadata {
             ElementQuery.ALL_METHODS.annotated(ann -> ann.hasAnnotation(annotationName))
         ).stream().map(MethodMetadataImpl::new)
             .collect(Collectors.toSet());
+    }
+
+    @Override
+    public Set<MethodMetadata> getDeclaredMethods() {
+        return Collections.emptySet();
     }
 
     @Override

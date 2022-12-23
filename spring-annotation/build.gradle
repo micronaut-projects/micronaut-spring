@@ -10,9 +10,10 @@ dependencies {
 
     implementation mn.micronaut.core.processor
     implementation projects.spring
+    implementation projects.springContext
 
     implementation mn.micronaut.runtime
-    implementation mn.micronaut.cache.core
+    implementation(mnCache.micronaut.cache.core)
 
     testAnnotationProcessor mn.micronaut.inject.java
     testImplementation mn.micronaut.inject.groovy

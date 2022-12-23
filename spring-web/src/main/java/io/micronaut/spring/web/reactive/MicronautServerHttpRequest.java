@@ -27,6 +27,7 @@ import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.core.io.buffer.NettyDataBufferFactory;
 import org.springframework.http.HttpCookie;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.server.reactive.AbstractServerHttpRequest;
 import org.springframework.http.server.reactive.SslInfo;
 import org.springframework.lang.Nullable;
@@ -108,6 +109,11 @@ public class MicronautServerHttpRequest extends AbstractServerHttpRequest {
     }
 
     @Override
+    public HttpMethod getMethod() {
+        return HttpMethod.valueOf(request.getMethod().name());
+    }
+
+    @Override
     public String getMethodValue() {
         return request.getMethod().name();
     }
@@ -120,11 +126,12 @@ public class MicronautServerHttpRequest extends AbstractServerHttpRequest {
             final Channel channel = opt.get();
             final NettyDataBufferFactory nettyDataBufferFactory = new NettyDataBufferFactory(channel.alloc());
 
-            final Optional<HttpContentProcessor<ByteBufHolder>> httpContentProcessor = channelResolver.resolveContentProcessor(request);
+            final Optional<HttpContentProcessor> httpContentProcessor = channelResolver.resolveContentProcessor(request);
 
             if (httpContentProcessor.isPresent()) {
 
-                final HttpContentProcessor<ByteBufHolder> processor = httpContentProcessor.get();
+                final HttpContentProcessor processor = httpContentProcessor.get();
+                /*
                 return Flux.from(subscriber -> processor.subscribe(new Subscriber<ByteBufHolder>() {
                     @Override
                     public void onSubscribe(Subscription s) {
@@ -145,7 +152,8 @@ public class MicronautServerHttpRequest extends AbstractServerHttpRequest {
                     public void onComplete() {
                         subscriber.onComplete();
                     }
-                }));
+                }));*/
+                return Flux.empty();
             }
         }
 

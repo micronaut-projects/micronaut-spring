@@ -42,5 +42,5 @@ public interface ChannelResolver {
      * @param request The request
      * @return The processor
      */
-    Optional<HttpContentProcessor<ByteBufHolder>> resolveContentProcessor(HttpRequest<?> request);
+    Optional<HttpContentProcessor> resolveContentProcessor(HttpRequest<?> request);
 }

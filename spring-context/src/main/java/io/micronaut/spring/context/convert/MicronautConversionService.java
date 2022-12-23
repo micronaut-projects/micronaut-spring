@@ -31,13 +31,13 @@ import org.springframework.core.convert.TypeDescriptor;
 @Named("conversionService")
 public class MicronautConversionService implements ConversionService, MicronautContextInternal {
 
-    private final io.micronaut.core.convert.ConversionService<?> conversionService;
+    private final io.micronaut.core.convert.ConversionService conversionService;
 
     /**
      * Default constructor.
      * @param conversionService The target service
      */
-    public MicronautConversionService(io.micronaut.core.convert.ConversionService<?> conversionService) {
+    public MicronautConversionService(io.micronaut.core.convert.ConversionService conversionService) {
         this.conversionService = conversionService;
     }
 

@@ -17,7 +17,6 @@ package io.micronaut.spring.web.reactive;
 
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.server.netty.HttpContentProcessor;
-import io.netty.buffer.ByteBufHolder;
 import io.netty.channel.Channel;
 import jakarta.inject.Singleton;
 
@@ -37,7 +36,7 @@ public class DefaultChannelResolver implements ChannelResolver {
     }
 
     @Override
-    public Optional<HttpContentProcessor<ByteBufHolder>> resolveContentProcessor(HttpRequest<?> request) {
+    public Optional<HttpContentProcessor> resolveContentProcessor(HttpRequest<?> request) {
         return Optional.empty();
     }
 }

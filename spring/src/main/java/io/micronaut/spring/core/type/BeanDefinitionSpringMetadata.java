@@ -48,6 +48,11 @@ public final class BeanDefinitionSpringMetadata implements AnnotationMetadata {
     }
 
     @Override
+    public Set<MethodMetadata> getDeclaredMethods() {
+        return Collections.emptySet();
+    }
+
+    @Override
     public MergedAnnotations getAnnotations() {
         return new MicronautMergedAnnotations(beanDefinition.getAnnotationMetadata());
     }

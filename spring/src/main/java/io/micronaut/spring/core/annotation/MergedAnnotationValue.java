@@ -59,7 +59,9 @@ class MergedAnnotationValue<A extends Annotation> implements MergedAnnotation<A>
     @Override
     public Class<A> getType() {
         return (Class<A>) annotationMetadata.getAnnotationType(value.getAnnotationName())
-                    .orElseGet(() -> ClassUtils.forName(value.getAnnotationName(), getClass().getClassLoader()).orElseThrow(() -> new IllegalStateException("Annotation class not present")));
+                    .orElseGet(() -> (Class<A>) ClassUtils.forName(value.getAnnotationName(), getClass().getClassLoader())
+                            .orElseThrow(() -> new IllegalStateException("Annotation class not present"))
+                    );
     }
 
     @Override

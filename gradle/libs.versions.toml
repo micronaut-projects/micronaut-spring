@@ -7,10 +7,17 @@ servlet-api = '4.0.1'
 h2 = '2.1.214'
 jakarta-annotation = '2.1.1'
 
+micronaut-cache = "4.0.0-SNAPSHOT"
+micronaut-views = "3.7.1"
+
 [libraries]
 managed-spring-boot = { module = 'org.springframework.boot:spring-boot', version.ref = 'managed-spring-boot' }
 managed-spring-boot-starter = { module = 'org.springframework.boot:spring-boot-starter', version.ref = 'managed-spring-boot' }
 managed-spring-boot-starter-web = { module = 'org.springframework.boot:spring-boot-starter-web', version.ref = 'managed-spring-boot' }
+
+
+micronaut-cache = { module = "io.micronaut.cache:micronaut-cache-bom", version.ref = "micronaut-cache" }
+micronaut-views = { module = "io.micronaut.views:micronaut-views-bom", version.ref = "micronaut-views" }
 
 managed-spring = { module = 'org.springframework:spring-core', version.ref = 'managed-spring' }
 managed-spring-context = { module = 'org.springframework:spring-context', version.ref = 'managed-spring' }
