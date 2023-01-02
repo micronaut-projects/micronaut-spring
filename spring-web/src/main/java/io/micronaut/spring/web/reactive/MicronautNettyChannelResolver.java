@@ -23,7 +23,6 @@ import io.micronaut.http.server.HttpServerConfiguration;
 import io.micronaut.http.server.netty.DefaultHttpContentProcessor;
 import io.micronaut.http.server.netty.HttpContentProcessor;
 import io.micronaut.http.server.netty.NettyHttpRequest;
-import io.netty.buffer.ByteBufHolder;
 import io.netty.channel.Channel;
 import jakarta.inject.Singleton;
 

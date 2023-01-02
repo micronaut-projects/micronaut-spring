@@ -19,7 +19,7 @@ dependencies {
     testImplementation(libs.spring.boot.autoconfigure)
     testImplementation(libs.spring.boot.actuator)
     testImplementation(libs.servlet.api)
-
+    testImplementation(mn.micronaut.jackson.databind)
     testRuntimeOnly(libs.managed.spring.boot.starter.web)
     testRuntimeOnly(libs.spring.boot.starter.tomcat)
     testRuntimeOnly(mn.jakarta.annotation.api)

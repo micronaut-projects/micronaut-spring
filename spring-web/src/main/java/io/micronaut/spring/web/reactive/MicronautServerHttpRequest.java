@@ -18,6 +18,8 @@ package io.micronaut.spring.web.reactive;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.cookie.Cookies;
 import io.micronaut.http.server.netty.HttpContentProcessor;
+import io.micronaut.http.server.netty.HttpContentProcessorAsReactiveProcessor;
+import io.micronaut.http.server.netty.NettyHttpRequest;
 import io.netty.buffer.ByteBufHolder;
 import io.netty.channel.Channel;
 import io.netty.handler.ssl.SslHandler;
@@ -113,11 +115,6 @@ public class MicronautServerHttpRequest extends AbstractServerHttpRequest {
         return HttpMethod.valueOf(request.getMethod().name());
     }
 
-    @Override
-    public String getMethodValue() {
-        return request.getMethod().name();
-    }
-
     @SuppressWarnings("SubscriberImplementation")
     @Override
     public reactor.core.publisher.Flux<DataBuffer> getBody() {
@@ -131,16 +128,19 @@ public class MicronautServerHttpRequest extends AbstractServerHttpRequest {
             if (httpContentProcessor.isPresent()) {
 
                 final HttpContentProcessor processor = httpContentProcessor.get();
-                /*
-                return Flux.from(subscriber -> processor.subscribe(new Subscriber<ByteBufHolder>() {
+                NettyHttpRequest<?> nettyRequest = ((NettyHttpRequest<?>) request);
+
+                return Flux.from(subscriber -> HttpContentProcessorAsReactiveProcessor.asPublisher(processor, nettyRequest).subscribe(new Subscriber<Object>() {
                     @Override
                     public void onSubscribe(Subscription s) {
                         subscriber.onSubscribe(s);
                     }
 
                     @Override
-                    public void onNext(ByteBufHolder byteBufHolder) {
-                        subscriber.onNext(nettyDataBufferFactory.wrap(byteBufHolder.content()));
+                    public void onNext(Object o) {
+                        if (o instanceof ByteBufHolder holder) {
+                            subscriber.onNext(nettyDataBufferFactory.wrap(holder.content()));
+                        }
                     }
 
                     @Override
@@ -152,8 +152,7 @@ public class MicronautServerHttpRequest extends AbstractServerHttpRequest {
                     public void onComplete() {
                         subscriber.onComplete();
                     }
-                }));*/
-                return Flux.empty();
+                }));
             }
         }
 

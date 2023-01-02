@@ -19,6 +19,7 @@ dependencies {
 
     testImplementation mn.micronaut.inject.java
     testImplementation mn.micronaut.validation
+    testImplementation mn.micronaut.jackson.databind
     testImplementation mn.micronaut.http.client
     testImplementation mn.micronaut.http.server.netty
 
