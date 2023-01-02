@@ -52,6 +52,14 @@ public final class ClassElementSpringMetadata implements AnnotationMetadata {
     }
 
     @Override
+    public Set<MethodMetadata> getDeclaredMethods() {
+        return classElement.getEnclosedElements(
+                ElementQuery.ALL_METHODS.onlyDeclared()
+            ).stream().map(MethodMetadataImpl::new)
+            .collect(Collectors.toSet());
+    }
+
+    @Override
     public MergedAnnotations getAnnotations() {
         return new MicronautMergedAnnotations(classElement.getAnnotationMetadata());
     }

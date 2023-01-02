@@ -17,11 +17,12 @@ package io.micronaut.spring.core.type;
 
 import java.lang.reflect.Modifier;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import io.micronaut.core.annotation.Internal;
 import io.micronaut.inject.BeanDefinition;
+import io.micronaut.inject.ExecutableMethod;
 import io.micronaut.spring.core.annotation.MicronautMergedAnnotations;
 import org.springframework.core.annotation.MergedAnnotations;
 import org.springframework.core.type.AnnotationMetadata;
@@ -44,7 +45,17 @@ public final class BeanDefinitionSpringMetadata implements AnnotationMetadata {
 
     @Override
     public Set<MethodMetadata> getAnnotatedMethods(String annotationName) {
-        return Collections.emptySet();
+        return beanDefinition.getExecutableMethods().stream()
+            .filter(m -> m.hasDeclaredAnnotation(annotationName))
+            .map(MethodMetadataImpl::new)
+            .collect(Collectors.toSet());
+    }
+
+    @Override
+    public Set<MethodMetadata> getDeclaredMethods() {
+        return beanDefinition.getExecutableMethods().stream()
+            .map(MethodMetadataImpl::new)
+            .collect(Collectors.toSet());
     }
 
     @Override
@@ -110,5 +121,53 @@ public final class BeanDefinitionSpringMetadata implements AnnotationMetadata {
     public String[] getMemberClassNames() {
         Class<?>[] classes = beanDefinition.getBeanType().getClasses();
         return Arrays.stream(classes).map(Class::getName).toArray(String[]::new);
+    }
+
+    private final class MethodMetadataImpl implements MethodMetadata {
+        private final ExecutableMethod<?, ?> executableMethod;
+
+        private MethodMetadataImpl(ExecutableMethod<?, ?> methodElement) {
+            this.executableMethod = methodElement;
+        }
+
+        @Override
+        public String getMethodName() {
+            return executableMethod.getName();
+        }
+
+        @Override
+        public String getDeclaringClassName() {
+            return executableMethod.getDeclaringType().getName();
+        }
+
+        @Override
+        public String getReturnTypeName() {
+            return executableMethod.getReturnType().getType().getName();
+        }
+
+        @Override
+        public boolean isAbstract() {
+            return executableMethod.isAbstract();
+        }
+
+        @Override
+        public boolean isStatic() {
+            return false;
+        }
+
+        @Override
+        public boolean isFinal() {
+            return Modifier.isFinal(executableMethod.getTargetMethod().getModifiers());
+        }
+
+        @Override
+        public boolean isOverridable() {
+            return !isAbstract() && !isFinal() && !Modifier.isPrivate(executableMethod.getTargetMethod().getModifiers());
+        }
+
+        @Override
+        public MergedAnnotations getAnnotations() {
+            return new MicronautMergedAnnotations(executableMethod.getAnnotationMetadata());
+        }
     }
 }

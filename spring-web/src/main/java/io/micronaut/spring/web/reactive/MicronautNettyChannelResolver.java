@@ -23,7 +23,6 @@ import io.micronaut.http.server.HttpServerConfiguration;
 import io.micronaut.http.server.netty.DefaultHttpContentProcessor;
 import io.micronaut.http.server.netty.HttpContentProcessor;
 import io.micronaut.http.server.netty.NettyHttpRequest;
-import io.netty.buffer.ByteBufHolder;
 import io.netty.channel.Channel;
 import jakarta.inject.Singleton;
 
@@ -62,7 +61,7 @@ public class MicronautNettyChannelResolver implements ChannelResolver {
     }
 
     @Override
-    public Optional<HttpContentProcessor<ByteBufHolder>> resolveContentProcessor(HttpRequest<?> request) {
+    public Optional<HttpContentProcessor> resolveContentProcessor(HttpRequest<?> request) {
         if (request instanceof NettyHttpRequest) {
             final NettyHttpRequest<?> nettyHttpRequest = (NettyHttpRequest<?>) request;
             return Optional.of(

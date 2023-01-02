@@ -1,4 +1,5 @@
 plugins {
+    id 'io.micronaut.build.internal.spring-base'
     id 'io.micronaut.build.internal.module'
 }
 
@@ -9,6 +10,6 @@ repositories {
 dependencies {
     api(platform(libs.boms.spring))
     testImplementation(platform(libs.boms.spring))
-    compileOnly 'com.google.code.findbugs:jsr305' // for "warning: unknown enum constant When.MAYBE"
-    testCompileOnly 'com.google.code.findbugs:jsr305' // for "warning: unknown enum constant When.MAYBE"
+    //compileOnly 'com.google.code.findbugs:jsr305' // for "warning: unknown enum constant When.MAYBE"
+    //testCompileOnly 'com.google.code.findbugs:jsr305' // for "warning: unknown enum constant When.MAYBE"
 }

@@ -25,5 +25,8 @@ include 'test-suite'
 enableFeaturePreview 'TYPESAFE_PROJECT_ACCESSORS'
 
 micronautBuild {
+    addSnapshotRepository()
     importMicronautCatalog()
+    importMicronautCatalog("micronaut-cache")
+    importMicronautCatalog("micronaut-views")
 }

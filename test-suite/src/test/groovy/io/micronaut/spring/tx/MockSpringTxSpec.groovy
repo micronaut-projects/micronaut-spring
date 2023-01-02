@@ -23,19 +23,24 @@ class MockSpringTxSpec extends Specification {
 
     void "test spring tx management"() {
         given:
-        TransactionalBean transactionalBean = ApplicationContext.builder().singletons(new MockTransactionManager())
-                          .start().getBean(TransactionalBean)
+        def ctx = ApplicationContext.run()
+        TransactionalBean transactionalBean = ctx.getBean(TransactionalBean)
 
         expect:
         transactionalBean.doSomething() == 'foo'
+
+        cleanup:
+        ctx.close()
     }
 
     void "test meta spring tx management"() {
         given:
-        MetaTransactionalBean transactionalBean = ApplicationContext.builder().singletons(new MockTransactionManager())
-                .start().getBean(MetaTransactionalBean)
+        def ctx = ApplicationContext.run()
+        MetaTransactionalBean transactionalBean = ctx.getBean(MetaTransactionalBean)
 
         expect:
         transactionalBean.doSomething() == 'foo'
+
+        cleanup:ctx.close()
     }
 }

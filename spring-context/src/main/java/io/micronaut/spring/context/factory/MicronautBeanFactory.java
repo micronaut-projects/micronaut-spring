@@ -31,9 +31,9 @@ import io.micronaut.core.util.ArrayUtils;
 import io.micronaut.core.util.StringUtils;
 import io.micronaut.inject.BeanDefinition;
 import io.micronaut.inject.BeanDefinitionReference;
-import io.micronaut.inject.BeanFactory;
 import io.micronaut.inject.DisposableBeanDefinition;
-import io.micronaut.inject.ParametrizedBeanFactory;
+import io.micronaut.inject.InstantiatableBeanDefinition;
+import io.micronaut.inject.ParametrizedInstantiatableBeanDefinition;
 import io.micronaut.inject.qualifiers.Qualifiers;
 import io.micronaut.spring.beans.MicronautContextInternal;
 import io.micronaut.spring.context.aware.SpringAwareListener;
@@ -99,7 +99,7 @@ public class MicronautBeanFactory extends DefaultListableBeanFactory implements 
 
         for (BeanDefinitionReference<?> reference : references) {
             final BeanDefinition<?> definition = reference.load(beanContext);
-            if (definition instanceof ParametrizedBeanFactory || (!(definition instanceof BeanFactory))) {
+            if (definition instanceof ParametrizedInstantiatableBeanDefinition || (!(definition instanceof InstantiatableBeanDefinition))) {
                 // Spring doesn't have a similar concept. Consider these internal / non-public beans.
                 continue;
             }
@@ -460,7 +460,9 @@ public class MicronautBeanFactory extends DefaultListableBeanFactory implements 
                     if (beanClass != null && FactoryBean.class.isAssignableFrom(beanClass)) {
                         if (!BeanFactoryUtils.isFactoryDereference(beanName)) {
                             // If it's a FactoryBean, we want to look at what it creates, not at the factory class.
-                            return super.getTypeForFactoryBean(beanName, mbd);
+                            boolean allowInit = true; // if allowInit is true a full creation of the FactoryBean is used as fallback (through delegation to the superclass's implementation).
+                            ResolvableType resolvableType = super.getTypeForFactoryBean(beanName, mbd, allowInit);
+                            return resolvableType.getRawClass();
                         } else {
                             return beanClass;
                         }
@@ -571,7 +573,7 @@ public class MicronautBeanFactory extends DefaultListableBeanFactory implements 
 
     private String[] beansToNames(Collection<? extends BeanDefinition<?>> beanDefinitions) {
         return beanDefinitions.stream()
-                .filter(bd -> !(bd instanceof ParametrizedBeanFactory))
+                .filter(bd -> !(bd instanceof ParametrizedInstantiatableBeanDefinition))
                 .map(this::computeBeanName).toArray(String[]::new);
     }
 

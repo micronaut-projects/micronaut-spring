@@ -18,6 +18,8 @@ package io.micronaut.spring.web.reactive;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.cookie.Cookies;
 import io.micronaut.http.server.netty.HttpContentProcessor;
+import io.micronaut.http.server.netty.HttpContentProcessorAsReactiveProcessor;
+import io.micronaut.http.server.netty.NettyHttpRequest;
 import io.netty.buffer.ByteBufHolder;
 import io.netty.channel.Channel;
 import io.netty.handler.ssl.SslHandler;
@@ -27,6 +29,7 @@ import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.core.io.buffer.NettyDataBufferFactory;
 import org.springframework.http.HttpCookie;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.server.reactive.AbstractServerHttpRequest;
 import org.springframework.http.server.reactive.SslInfo;
 import org.springframework.lang.Nullable;
@@ -108,8 +111,8 @@ public class MicronautServerHttpRequest extends AbstractServerHttpRequest {
     }
 
     @Override
-    public String getMethodValue() {
-        return request.getMethod().name();
+    public HttpMethod getMethod() {
+        return HttpMethod.valueOf(request.getMethod().name());
     }
 
     @SuppressWarnings("SubscriberImplementation")
@@ -120,20 +123,24 @@ public class MicronautServerHttpRequest extends AbstractServerHttpRequest {
             final Channel channel = opt.get();
             final NettyDataBufferFactory nettyDataBufferFactory = new NettyDataBufferFactory(channel.alloc());
 
-            final Optional<HttpContentProcessor<ByteBufHolder>> httpContentProcessor = channelResolver.resolveContentProcessor(request);
+            final Optional<HttpContentProcessor> httpContentProcessor = channelResolver.resolveContentProcessor(request);
 
             if (httpContentProcessor.isPresent()) {
 
-                final HttpContentProcessor<ByteBufHolder> processor = httpContentProcessor.get();
-                return Flux.from(subscriber -> processor.subscribe(new Subscriber<ByteBufHolder>() {
+                final HttpContentProcessor processor = httpContentProcessor.get();
+                NettyHttpRequest<?> nettyRequest = ((NettyHttpRequest<?>) request);
+
+                return Flux.from(subscriber -> HttpContentProcessorAsReactiveProcessor.asPublisher(processor, nettyRequest).subscribe(new Subscriber<Object>() {
                     @Override
                     public void onSubscribe(Subscription s) {
                         subscriber.onSubscribe(s);
                     }
 
                     @Override
-                    public void onNext(ByteBufHolder byteBufHolder) {
-                        subscriber.onNext(nettyDataBufferFactory.wrap(byteBufHolder.content()));
+                    public void onNext(Object o) {
+                        if (o instanceof ByteBufHolder holder) {
+                            subscriber.onNext(nettyDataBufferFactory.wrap(holder.content()));
+                        }
                     }
 
                     @Override

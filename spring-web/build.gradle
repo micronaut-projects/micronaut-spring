@@ -11,7 +11,7 @@ dependencies {
     implementation mn.micronaut.http
 
     compileOnly mn.micronaut.http.server.netty
-    compileOnly 'io.micronaut.views:micronaut-views-core'
+    compileOnly(mnViews.micronaut.views.core)
 
     testAnnotationProcessor mn.micronaut.inject.java
     testAnnotationProcessor projects.springAnnotation
@@ -19,10 +19,12 @@ dependencies {
 
     testImplementation mn.micronaut.inject.java
     testImplementation mn.micronaut.validation
+    testImplementation mn.micronaut.jackson.databind
     testImplementation mn.micronaut.http.client
     testImplementation mn.micronaut.http.server.netty
 
-    testRuntimeOnly 'io.micronaut.views:micronaut-views-thymeleaf'
+    testRuntimeOnly(mnViews.micronaut.views.thymeleaf)
+
     testRuntimeOnly libs.spring.boot.starter.thymeleaf
 }
 

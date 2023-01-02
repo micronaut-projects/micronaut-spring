@@ -1,21 +1,19 @@
 plugins {
-    id 'io.micronaut.build.internal.spring-module'
+    id("io.micronaut.build.internal.spring-module")
 }
-
 dependencies {
-    api libs.managed.spring
-    api libs.managed.spring.tx
-    api libs.managed.spring.context
-    api mn.micronaut.inject
-    api mn.micronaut.aop
+    api(libs.managed.spring)
+    api(libs.managed.spring.tx)
+    api(libs.managed.spring.context)
+    implementation(mn.micronaut.core.processor)
+    api(mn.micronaut.inject)
+    api(mn.micronaut.aop)
+    compileOnly(libs.managed.spring.jdbc)
+    compileOnly(mnTest.micronaut.test.core)
+    testAnnotationProcessor(mn.micronaut.inject.java)
+    testImplementation(mn.micronaut.runtime)
+    testCompileOnly(mn.micronaut.inject.groovy)
 
-    compileOnly libs.managed.spring.jdbc
-    compileOnly mn.micronaut.test.core
-
-    testAnnotationProcessor mn.micronaut.inject.java
-    testImplementation mn.micronaut.runtime
-    testCompileOnly mn.micronaut.inject.groovy
-
-    testImplementation libs.spock.spring
-    testImplementation libs.spring.test
+    testImplementation(libs.spock.spring)
+    testImplementation(libs.spring.test)
 }
