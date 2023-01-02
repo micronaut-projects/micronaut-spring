@@ -17,14 +17,12 @@ package io.micronaut.spring.core.type;
 
 import java.lang.reflect.Modifier;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 import io.micronaut.core.annotation.Internal;
 import io.micronaut.inject.BeanDefinition;
 import io.micronaut.inject.ExecutableMethod;
-import io.micronaut.inject.ast.MethodElement;
 import io.micronaut.spring.core.annotation.MicronautMergedAnnotations;
 import org.springframework.core.annotation.MergedAnnotations;
 import org.springframework.core.type.AnnotationMetadata;

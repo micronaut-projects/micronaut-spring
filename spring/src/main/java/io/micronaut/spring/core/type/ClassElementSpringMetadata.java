@@ -16,7 +16,6 @@
 package io.micronaut.spring.core.type;
 
 import java.lang.annotation.Annotation;
-import java.util.Collections;
 import java.util.Set;
 import java.util.stream.Collectors;
 
