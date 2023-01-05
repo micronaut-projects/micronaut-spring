@@ -82,15 +82,6 @@ public final class MicronautImportRegistrar implements ImportBeanDefinitionRegis
 
     private final List<ExposedBeanData> exposedBeans = new ArrayList<>();
 
-    public MicronautImportRegistrar() {
-        exposedBeans.add(new ExposedBeanData(DataSource.class, null, null, (name) -> {
-            if ("dataSource".equals(name)) {
-                return "default";
-            }
-            return name;
-        }));
-    }
-
     @Override
     public void registerBeanDefinitions(
         AnnotationMetadata importingClassMetadata,

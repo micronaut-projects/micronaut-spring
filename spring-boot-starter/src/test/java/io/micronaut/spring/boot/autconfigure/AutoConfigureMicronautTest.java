@@ -23,9 +23,6 @@ public class AutoConfigureMicronautTest {
     DataSource dataSource;
 
     @Autowired
-    ReceiveDatasource datasource;
-
-    @Autowired
     ApplicationContext context;
 
     @Autowired
@@ -45,7 +42,3 @@ class Application {
 
 }
 
-@Singleton
-class ReceiveDatasource {
-    @Inject DataSource dataSource;
-}
