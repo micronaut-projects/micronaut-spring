@@ -1,5 +1,4 @@
 [versions]
-managed-spring-boot = '2.7.6'
 managed-spring = '5.3.24'
 micronaut = "3.8.1"
 micronaut-docs = "2.0.0"
@@ -7,6 +6,7 @@ micronaut-test = "3.8.0"
 groovy = "3.0.13"
 spock = "2.1-groovy-3.0"
 
+managed-spring-boot = '2.7.7'
 
 junit = '5.9.1'
 servlet-api = '4.0.1'
