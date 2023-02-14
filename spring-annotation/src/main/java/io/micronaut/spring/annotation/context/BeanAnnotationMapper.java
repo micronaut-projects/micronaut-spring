@@ -47,13 +47,13 @@ public class BeanAnnotationMapper extends AbstractSpringAnnotationMapper {
         List<AnnotationValue<?>> newAnnotations = new ArrayList<>(3);
         final AnnotationValueBuilder<Bean> beanAnn = AnnotationValue.builder(Bean.class);
 
-        final Optional<String> destroyMethod = annotation.get("destroyMethod", String.class);
+        final Optional<String> destroyMethod = annotation.stringValue("destroyMethod");
         destroyMethod.ifPresent(s -> beanAnn.member("preDestroy", s));
         newAnnotations.add(beanAnn.build());
         newAnnotations.add(AnnotationValue.builder(DefaultScope.class)
                 .value(Singleton.class)
                 .build());
-        final String beanName = annotation.getValue(String.class).orElse(annotation.get("name", String.class).orElse(null));
+        final String beanName = annotation.getValue(String.class).orElse(annotation.stringValue("name").orElse(null));
 
         if (StringUtils.isNotEmpty(beanName)) {
             newAnnotations.add(AnnotationValue.builder(AnnotationUtil.NAMED).value(beanName).build());
