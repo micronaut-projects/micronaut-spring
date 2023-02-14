@@ -42,7 +42,7 @@ public class RequestBodyAnnotationMapping extends AbstractSpringAnnotationMapper
     @Override
     protected List<AnnotationValue<?>> mapInternal(AnnotationValue<Annotation> annotation, VisitorContext visitorContext) {
         List<AnnotationValue<?>> mappedAnnotations = new ArrayList<>();
-        final boolean required = annotation.get("required", boolean.class).orElse(true);
+        final boolean required = annotation.booleanValue("required").orElse(true);
         final AnnotationValueBuilder<?> builder = AnnotationValue.builder(Body.class);
         final AnnotationValueBuilder<Bindable> bindableBuilder = AnnotationValue.builder(Bindable.class);
         mappedAnnotations.add(builder.build());

@@ -19,6 +19,7 @@ import io.micronaut.cache.annotation.Cacheable;
 import io.micronaut.core.annotation.AnnotationValue;
 import io.micronaut.core.annotation.AnnotationValueBuilder;
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.util.ArrayUtils;
 import io.micronaut.inject.visitor.VisitorContext;
 import io.micronaut.spring.annotation.AbstractSpringAnnotationMapper;
 
@@ -35,9 +36,12 @@ import java.util.List;
 public class CacheableAnnotationMapper extends AbstractSpringAnnotationMapper {
     @Override
     protected List<AnnotationValue<?>> mapInternal(AnnotationValue<Annotation> annotation, VisitorContext visitorContext) {
-        final String[] cacheNames = annotation.getValue(String[].class).orElseGet(() -> annotation.get("cacheNames", String[].class).orElse(null));
+        String[] cacheNames = annotation.stringValues();
+        if (ArrayUtils.isEmpty(cacheNames)) {
+            cacheNames = annotation.stringValues("cacheNames");
+        }
 
-        if (cacheNames != null) {
+        if (ArrayUtils.isNotEmpty(cacheNames)) {
             final AnnotationValueBuilder<?> builder = buildAnnotation()
                     .member("value", cacheNames)
                     .member("cacheNames", cacheNames);

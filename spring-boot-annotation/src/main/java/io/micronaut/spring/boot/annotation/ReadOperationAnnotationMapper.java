@@ -17,6 +17,7 @@ package io.micronaut.spring.boot.annotation;
 
 import io.micronaut.core.annotation.AnnotationValue;
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.util.ArrayUtils;
 import io.micronaut.http.annotation.Produces;
 import io.micronaut.inject.visitor.VisitorContext;
 import io.micronaut.spring.annotation.AbstractSpringAnnotationMapper;
@@ -34,12 +35,12 @@ import java.util.List;
 public class ReadOperationAnnotationMapper extends AbstractSpringAnnotationMapper {
     @Override
     protected List<AnnotationValue<?>> mapInternal(AnnotationValue<Annotation> annotation, VisitorContext visitorContext) {
-        final String[] produces = annotation.get("produces", String[].class).orElse(null);
+        final String[] produces = annotation.stringValues("produces");
         final AnnotationValue<?> readOp = AnnotationValue.builder("io.micronaut.management.endpoint.annotation." + operationName()).build();
         List<AnnotationValue<?>> annotationValues = new ArrayList<>(2);
 
         annotationValues.add(readOp);
-        if (produces != null) {
+        if (ArrayUtils.isNotEmpty(produces)) {
             final AnnotationValue<Produces> producesAnn = AnnotationValue.builder(Produces.class).member("value", produces).build();
             annotationValues.add(producesAnn);
         }

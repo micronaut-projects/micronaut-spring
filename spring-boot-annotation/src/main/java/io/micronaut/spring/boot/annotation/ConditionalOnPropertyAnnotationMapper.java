@@ -47,9 +47,9 @@ public class ConditionalOnPropertyAnnotationMapper extends AbstractSpringAnnotat
             propertyNames = annotation.stringValues("name");
         }
         if (propertyNames != null) {
-            final String prefix = annotation.get("prefix", String.class).orElse(null);
-            final boolean matchIfMissing = annotation.get("matchIfMissing", boolean.class).orElse(false);
-            final String havingValue = annotation.get("havingValue", String.class).orElse(null);
+            final String prefix = annotation.stringValue("prefix").orElse(null);
+            final boolean matchIfMissing = annotation.booleanValue("matchIfMissing").orElse(false);
+            final String havingValue = annotation.stringValue("havingValue").orElse(null);
             List<AnnotationValue<?>> annotationValues = new ArrayList<>(propertyNames.length);
             for (String propertyName : propertyNames) {
                 if (prefix != null) {

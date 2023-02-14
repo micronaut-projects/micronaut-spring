@@ -1,6 +1,16 @@
 repositories {
     mavenCentral()
-    maven { url "https://s01.oss.sonatype.org/content/repositories/snapshots/" }
+    mavenLocal {
+        content {
+            includeGroup("io.micronaut")
+        }
+    }
+    maven {
+        url "https://s01.oss.sonatype.org/content/repositories/snapshots/"
+        content {
+            excludeGroup("io.micronaut")
+        }
+    }
 }
 
 configurations.all {

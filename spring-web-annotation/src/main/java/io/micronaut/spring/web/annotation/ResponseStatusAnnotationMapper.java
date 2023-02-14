@@ -40,7 +40,7 @@ public class ResponseStatusAnnotationMapper extends AbstractSpringAnnotationMapp
     @Override
     protected List<AnnotationValue<?>> mapInternal(AnnotationValue<Annotation> annotation, VisitorContext visitorContext) {
         try {
-            final String code = annotation.getValue(String.class).orElse(annotation.get("code", String.class).orElse(null));
+            final String code = annotation.stringValue().orElse(annotation.stringValue("code").orElse(null));
             final HttpStatus status = HttpStatus.valueOf(code);
 
             return Collections.singletonList(

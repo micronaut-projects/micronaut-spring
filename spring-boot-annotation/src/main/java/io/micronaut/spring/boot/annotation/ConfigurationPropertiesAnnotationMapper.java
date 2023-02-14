@@ -41,7 +41,7 @@ public class ConfigurationPropertiesAnnotationMapper extends AbstractSpringAnnot
 
     @Override
     protected List<AnnotationValue<?>> mapInternal(AnnotationValue<Annotation> annotation, VisitorContext visitorContext) {
-        String prefix = annotation.get("prefix", String.class).orElseGet(() -> annotation.getValue(String.class).orElse(null));
+        String prefix = annotation.stringValue("prefix").orElseGet(() -> annotation.stringValue().orElse(null));
         if (prefix != null) {
             prefix = NameUtils.hyphenate(prefix, true);
             return Arrays.asList(

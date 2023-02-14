@@ -47,9 +47,9 @@ public abstract class WebBindAnnotationMapper<T extends Annotation> extends Abst
     protected List<AnnotationValue<?>> mapInternal(AnnotationValue<Annotation> annotation, VisitorContext visitorContext) {
         List<AnnotationValue<?>> mappedAnnotations = new ArrayList<>();
 
-        final String name = annotation.getValue(String.class).orElseGet(() -> annotation.get("name", String.class).orElse(null));
-        final String defaultValue = annotation.get("defaultValue", String.class).orElse(null);
-        final boolean required = annotation.get("required", boolean.class).orElse(true);
+        final String name = annotation.stringValue().orElseGet(() -> annotation.stringValue("name").orElse(null));
+        final String defaultValue = annotation.stringValue("defaultValue").orElse(null);
+        final boolean required = annotation.booleanValue("required").orElse(true);
 
         final AnnotationValueBuilder<?> builder = AnnotationValue.builder(annotationType());
         final AnnotationValueBuilder<Bindable> bindableBuilder = AnnotationValue.builder(Bindable.class);

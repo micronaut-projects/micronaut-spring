@@ -47,12 +47,12 @@ public class RequestMappingAnnotationMapper extends AbstractSpringAnnotationMapp
         List<AnnotationValue<?>> annotations = new ArrayList<>();
 
         final String path = computePath(annotation);
-        final Optional<HttpMethod> method = annotation.get("method", HttpMethod.class);
+        final Optional<HttpMethod> method = annotation.enumValue("method", HttpMethod.class);
 
         annotations.add(newBuilder(method.orElse(null), annotation).value(path).build());
 
-        final String[] consumes = annotation.get("consumes", String[].class).orElse(null);
-        final String[] produces = annotation.get("produces", String[].class).orElse(null);
+        final String[] consumes = annotation.stringValues("consumes");
+        final String[] produces = annotation.stringValues("produces");
 
         if (ArrayUtils.isNotEmpty(consumes)) {
             annotations.add(AnnotationValue.builder(Consumes.class).member("value", consumes).build());
@@ -113,6 +113,6 @@ public class RequestMappingAnnotationMapper extends AbstractSpringAnnotationMapp
     }
 
     private String computePath(AnnotationValue<Annotation> annotation) {
-        return annotation.getValue(String.class).orElseGet(() -> annotation.get("path", String.class).orElse("/"));
+        return annotation.stringValue().orElseGet(() -> annotation.stringValue("path").orElse("/"));
     }
 }
