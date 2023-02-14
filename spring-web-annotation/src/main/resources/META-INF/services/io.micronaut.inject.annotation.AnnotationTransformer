@@ -1,0 +1,7 @@
+io.micronaut.spring.web.annotation.RequestMappingAnnotationTransformer
+io.micronaut.spring.web.annotation.PutMappingAnnotationTransformer
+io.micronaut.spring.web.annotation.PostMappingAnnotationTransformer
+io.micronaut.spring.web.annotation.PatchMappingAnnotationTransformer
+io.micronaut.spring.web.annotation.DeleteMappingAnnotationTransformer
+io.micronaut.spring.web.annotation.GetMappingAnnotationTransformer
+

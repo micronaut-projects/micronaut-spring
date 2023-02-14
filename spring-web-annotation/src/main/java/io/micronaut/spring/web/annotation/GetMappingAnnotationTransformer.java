@@ -28,7 +28,7 @@ import java.lang.annotation.Annotation;
  * @author graemerocher
  * @since 1.0
  */
-public class GetMappingAnnotationMapper extends RequestMappingAnnotationMapper {
+public class GetMappingAnnotationTransformer extends RequestMappingAnnotationTransformer {
 
     @Override
     public String getName() {

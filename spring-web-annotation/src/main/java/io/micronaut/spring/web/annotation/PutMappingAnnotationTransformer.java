@@ -18,26 +18,25 @@ package io.micronaut.spring.web.annotation;
 import io.micronaut.core.annotation.AnnotationValue;
 import io.micronaut.core.annotation.AnnotationValueBuilder;
 import io.micronaut.http.HttpMethod;
-import io.micronaut.http.annotation.Post;
+import io.micronaut.http.annotation.Put;
 
 import java.lang.annotation.Annotation;
 
 /**
- * Maps Spring PostMapping to Micronaut.
+ * Maps Spring PutMapping to Micronaut.
  *
  * @author graemerocher
  * @since 1.0
  */
-public class PostMappingAnnotationMapper extends RequestMappingAnnotationMapper {
-
+public class PutMappingAnnotationTransformer extends RequestMappingAnnotationTransformer {
     @Override
     public String getName() {
-        return "org.springframework.web.bind.annotation.PostMapping";
+        return "org.springframework.web.bind.annotation.PutMapping";
     }
 
     @Override
     protected AnnotationValueBuilder<?> newBuilder(HttpMethod httpMethod, AnnotationValue<Annotation> annotation) {
-        return AnnotationValue.builder(Post.class);
+        return AnnotationValue.builder(Put.class);
     }
 
     @Override

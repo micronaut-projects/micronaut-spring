@@ -17,7 +17,6 @@ package io.micronaut.spring.annotation;
 
 import io.micronaut.core.annotation.AnnotationValue;
 import io.micronaut.core.annotation.NonNull;
-import io.micronaut.core.version.VersionUtils;
 import io.micronaut.inject.annotation.NamedAnnotationMapper;
 import io.micronaut.inject.visitor.VisitorContext;
 
@@ -38,12 +37,7 @@ public abstract class AbstractSpringAnnotationMapper implements NamedAnnotationM
             return Collections.emptyList();
         }
 
-        if (VersionUtils.isAtLeastMicronautVersion("1.0.1")) {
-            return mapInternal(annotation, visitorContext);
-        } else {
-            visitorContext.info("Annotation mapper [" + getClass().getName() + "] requires Micronaut 1.0.1 or above. Please upgrade to continue.", null);
-            return Collections.emptyList();
-        }
+        return mapInternal(annotation, visitorContext);
     }
 
     /**

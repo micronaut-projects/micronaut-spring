@@ -28,7 +28,6 @@ import java.lang.annotation.Annotation;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * Maps ConditionalOnBean to Micronaut Requires.

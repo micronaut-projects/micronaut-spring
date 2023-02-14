@@ -1,0 +1,147 @@
+[
+  {
+    "type": "io.micronaut.spring.web.annotation.DeleteMappingAnnotationMapper",
+    "member": "Constructor io.micronaut.spring.web.annotation.DeleteMappingAnnotationMapper()",
+    "reason": "Compilation time only module"
+  },
+  {
+    "type": "io.micronaut.spring.web.annotation.DeleteMappingAnnotationMapper",
+    "member": "Implemented interface io.micronaut.core.naming.Named",
+    "reason": "Compilation time only module"
+  },
+  {
+    "type": "io.micronaut.spring.web.annotation.DeleteMappingAnnotationMapper",
+    "member": "Implemented interface io.micronaut.inject.annotation.AnnotationMapper",
+    "reason": "Compilation time only module"
+  },
+  {
+    "type": "io.micronaut.spring.web.annotation.DeleteMappingAnnotationMapper",
+    "member": "Implemented interface io.micronaut.inject.annotation.NamedAnnotationMapper",
+    "reason": "Compilation time only module"
+  },
+
+  {
+    "type": "io.micronaut.spring.web.annotation.GetMappingAnnotationMapper",
+    "member": "Constructor io.micronaut.spring.web.annotation.GetMappingAnnotationMapper()",
+    "reason": "Compilation time only module"
+  },
+  {
+    "type": "io.micronaut.spring.web.annotation.GetMappingAnnotationMapper",
+    "member": "Implemented interface io.micronaut.core.naming.Named",
+    "reason": "Compilation time only module"
+  },
+  {
+    "type": "io.micronaut.spring.web.annotation.GetMappingAnnotationMapper",
+    "member": "Implemented interface io.micronaut.inject.annotation.AnnotationMapper",
+    "reason": "Compilation time only module"
+  },
+  {
+    "type": "io.micronaut.spring.web.annotation.GetMappingAnnotationMapper",
+    "member": "Implemented interface io.micronaut.inject.annotation.NamedAnnotationMapper",
+    "reason": "Compilation time only module"
+  },
+
+  {
+    "type": "io.micronaut.spring.web.annotation.PatchMappingAnnotationMapper",
+    "member": "Constructor io.micronaut.spring.web.annotation.PatchMappingAnnotationMapper()",
+    "reason": "Compilation time only module"
+  },
+  {
+    "type": "io.micronaut.spring.web.annotation.PatchMappingAnnotationMapper",
+    "member": "Constructor io.micronaut.spring.web.annotation.DeleteMappingAnnotationMapper()",
+    "reason": "Compilation time only module"
+  },
+  {
+    "type": "io.micronaut.spring.web.annotation.PatchMappingAnnotationMapper",
+    "member": "Implemented interface io.micronaut.core.naming.Named",
+    "reason": "Compilation time only module"
+  },
+  {
+    "type": "io.micronaut.spring.web.annotation.PatchMappingAnnotationMapper",
+    "member": "Implemented interface io.micronaut.inject.annotation.AnnotationMapper",
+    "reason": "Compilation time only module"
+  },
+  {
+    "type": "io.micronaut.spring.web.annotation.PatchMappingAnnotationMapper",
+    "member": "Implemented interface io.micronaut.inject.annotation.NamedAnnotationMapper",
+    "reason": "Compilation time only module"
+  },
+
+  {
+    "type": "io.micronaut.spring.web.annotation.PostMappingAnnotationMapper",
+    "member": "Constructor io.micronaut.spring.web.annotation.DeleteMappingAnnotationMapper()",
+    "reason": "Compilation time only module"
+  },
+  {
+    "type": "io.micronaut.spring.web.annotation.PostMappingAnnotationMapper",
+    "member": "Implemented interface io.micronaut.core.naming.Named",
+    "reason": "Compilation time only module"
+  },
+  {
+    "type": "io.micronaut.spring.web.annotation.PostMappingAnnotationMapper",
+    "member": "Implemented interface io.micronaut.inject.annotation.AnnotationMapper",
+    "reason": "Compilation time only module"
+  },
+  {
+    "type": "io.micronaut.spring.web.annotation.PostMappingAnnotationMapper",
+    "member": "Constructor io.micronaut.spring.web.annotation.PostMappingAnnotationMapper()",
+    "reason": "Compilation time only module"
+  },
+  {
+    "type": "io.micronaut.spring.web.annotation.PostMappingAnnotationMapper",
+    "member": "Implemented interface io.micronaut.inject.annotation.NamedAnnotationMapper",
+    "reason": "Compilation time only module"
+  },
+
+  {
+    "type": "io.micronaut.spring.web.annotation.PutMappingAnnotationMapper",
+    "member": "Constructor io.micronaut.spring.web.annotation.DeleteMappingAnnotationMapper()",
+    "reason": "Compilation time only module"
+  },
+  {
+    "type": "io.micronaut.spring.web.annotation.PutMappingAnnotationMapper",
+    "member": "Implemented interface io.micronaut.core.naming.Named",
+    "reason": "Compilation time only module"
+  },
+  {
+    "type": "io.micronaut.spring.web.annotation.PutMappingAnnotationMapper",
+    "member": "Implemented interface io.micronaut.inject.annotation.AnnotationMapper",
+    "reason": "Compilation time only module"
+  },
+  {
+    "type": "io.micronaut.spring.web.annotation.PutMappingAnnotationMapper",
+    "member": "Implemented interface io.micronaut.inject.annotation.NamedAnnotationMapper",
+    "reason": "Compilation time only module"
+  },
+  {
+    "type": "io.micronaut.spring.web.annotation.PutMappingAnnotationMapper",
+    "member": "Constructor io.micronaut.spring.web.annotation.PutMappingAnnotationMapper()",
+    "reason": "Compilation time only module"
+  },
+
+  {
+    "type": "io.micronaut.spring.web.annotation.RequestMappingAnnotationMapper",
+    "member": "Constructor io.micronaut.spring.web.annotation.DeleteMappingAnnotationMapper()",
+    "reason": "Compilation time only module"
+  },
+  {
+    "type": "io.micronaut.spring.web.annotation.RequestMappingAnnotationMapper",
+    "member": "Implemented interface io.micronaut.core.naming.Named",
+    "reason": "Compilation time only module"
+  },
+  {
+    "type": "io.micronaut.spring.web.annotation.RequestMappingAnnotationMapper",
+    "member": "Implemented interface io.micronaut.inject.annotation.AnnotationMapper",
+    "reason": "Compilation time only module"
+  },
+  {
+    "type": "io.micronaut.spring.web.annotation.RequestMappingAnnotationMapper",
+    "member": "Implemented interface io.micronaut.inject.annotation.NamedAnnotationMapper",
+    "reason": "Compilation time only module"
+  },
+  {
+    "type": "io.micronaut.spring.web.annotation.RequestMappingAnnotationMapper",
+    "member": "Constructor io.micronaut.spring.web.annotation.RequestMappingAnnotationMapper()",
+    "reason": "Compilation time only module"
+  }
+]
