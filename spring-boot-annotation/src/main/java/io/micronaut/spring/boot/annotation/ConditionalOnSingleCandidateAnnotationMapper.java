@@ -17,6 +17,7 @@ package io.micronaut.spring.boot.annotation;
 
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.AnnotationClassValue;
+import io.micronaut.core.annotation.AnnotationMetadata;
 import io.micronaut.core.annotation.AnnotationValue;
 import io.micronaut.inject.visitor.VisitorContext;
 import io.micronaut.spring.annotation.AbstractSpringAnnotationMapper;
@@ -35,8 +36,8 @@ import java.util.List;
 public class ConditionalOnSingleCandidateAnnotationMapper extends AbstractSpringAnnotationMapper {
     @Override
     protected List<AnnotationValue<?>> mapInternal(AnnotationValue<Annotation> annotation, VisitorContext visitorContext) {
-        final AnnotationClassValue annotationClassValue = annotation.getValue(AnnotationClassValue.class).orElseGet(() ->
-                annotation.get("type", String.class).map(AnnotationClassValue::new).orElse(null)
+        final AnnotationClassValue annotationClassValue = annotation.annotationClassValue(AnnotationMetadata.VALUE_MEMBER).orElseGet(() ->
+                annotation.stringValue("type").map(AnnotationClassValue::new).orElse(null)
         );
         if (annotationClassValue != null) {
 

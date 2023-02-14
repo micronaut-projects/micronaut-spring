@@ -18,25 +18,25 @@ package io.micronaut.spring.web.annotation;
 import io.micronaut.core.annotation.AnnotationValue;
 import io.micronaut.core.annotation.AnnotationValueBuilder;
 import io.micronaut.http.HttpMethod;
-import io.micronaut.http.annotation.Delete;
+import io.micronaut.http.annotation.Patch;
 
 import java.lang.annotation.Annotation;
 
 /**
- * Maps Spring DeleteMapping to Micronaut.
+ * Maps Spring PatchMapping to Micronaut.
  *
  * @author graemerocher
  * @since 1.0
  */
-public class DeleteMappingAnnotationMapper extends RequestMappingAnnotationMapper {
+public class PatchMappingAnnotationTransformer extends RequestMappingAnnotationTransformer {
     @Override
     public String getName() {
-        return "org.springframework.web.bind.annotation.DeleteMapping";
+        return "org.springframework.web.bind.annotation.PatchMapping";
     }
 
     @Override
     protected AnnotationValueBuilder<?> newBuilder(HttpMethod httpMethod, AnnotationValue<Annotation> annotation) {
-        return AnnotationValue.builder(Delete.class);
+        return AnnotationValue.builder(Patch.class);
     }
 
     @Override

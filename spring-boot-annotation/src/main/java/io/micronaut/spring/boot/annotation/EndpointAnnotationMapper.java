@@ -34,10 +34,10 @@ import java.util.Optional;
 public class EndpointAnnotationMapper extends AbstractSpringAnnotationMapper {
     @Override
     protected List<AnnotationValue<?>> mapInternal(AnnotationValue<Annotation> annotation, VisitorContext visitorContext) {
-        final Optional<String> id = annotation.get("id", String.class);
+        final Optional<String> id = annotation.stringValue("id");
         if (id.isPresent()) {
             final AnnotationValueBuilder<?> builder = AnnotationValue.builder("io.micronaut.management.endpoint.annotation.Endpoint");
-            final Boolean enableByDefault = annotation.get("enableByDefault", boolean.class).orElse(true);
+            final Boolean enableByDefault = annotation.booleanValue("enableByDefault").orElse(true);
             builder.value(id.get());
             builder.member("id", id.get());
             builder.member("defaultEnabled", enableByDefault);

@@ -393,10 +393,11 @@ class MergedAnnotationValue<A extends Annotation> implements MergedAnnotation<A>
             v = convertValue(factory, adaptations, adapts, v, enumMembers.get(attribute));
             newMap.put(attribute.toString(), v);
         });
-        Map<String, Object> defaultValues = annotationMetadata.getDefaultValues(thisValue.getAnnotationName());
+        Map<CharSequence, Object> defaultValues = annotationMetadata.getDefaultValues(thisValue.getAnnotationName());
         defaultValues.forEach((key, v) -> {
-            v = convertValue(factory, adaptations, adapts, v, enumMembers.get(key));
-            newMap.putIfAbsent(key, v);
+            String k = key.toString();
+            v = convertValue(factory, adaptations, adapts, v, enumMembers.get(k));
+            newMap.putIfAbsent(k, v);
         });
         return newMap;
     }

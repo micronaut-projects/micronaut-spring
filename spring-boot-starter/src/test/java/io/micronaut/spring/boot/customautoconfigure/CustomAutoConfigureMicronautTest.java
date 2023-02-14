@@ -13,7 +13,6 @@ import io.micronaut.spring.boot.starter.MicronautBeanFilter;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.ListableBeanFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -23,9 +22,9 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
-public class AutoConfigureMicronautTest {
+public class CustomAutoConfigureMicronautTest {
     @Autowired
-    ReceiveDatasource datasource;
+    CustomReceiveDatasource datasource;
 
     @Autowired
     ApplicationContext context;
@@ -58,7 +57,7 @@ class MyFilter implements MicronautBeanFilter {
     }
 }
 @Singleton
-class ReceiveDatasource {
+class CustomReceiveDatasource {
     @Inject
     DataSource dataSource;
 }

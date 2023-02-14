@@ -22,8 +22,8 @@ import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.util.ArrayUtils;
 import io.micronaut.http.HttpMethod;
 import io.micronaut.http.annotation.*;
+import io.micronaut.inject.annotation.NamedAnnotationTransformer;
 import io.micronaut.inject.visitor.VisitorContext;
-import io.micronaut.spring.annotation.AbstractSpringAnnotationMapper;
 
 import java.lang.annotation.Annotation;
 import java.util.ArrayList;
@@ -36,35 +36,10 @@ import java.util.Optional;
  * @author graemerocher
  * @since 1.0
  */
-public class RequestMappingAnnotationMapper extends AbstractSpringAnnotationMapper {
+public class RequestMappingAnnotationTransformer implements NamedAnnotationTransformer {
     @Override
     public String getName() {
         return "org.springframework.web.bind.annotation.RequestMapping";
-    }
-
-    @Override
-    protected List<AnnotationValue<?>> mapInternal(AnnotationValue<Annotation> annotation, VisitorContext visitorContext) {
-        List<AnnotationValue<?>> annotations = new ArrayList<>();
-
-        final String path = computePath(annotation);
-        final Optional<HttpMethod> method = annotation.get("method", HttpMethod.class);
-
-        annotations.add(newBuilder(method.orElse(null), annotation).value(path).build());
-
-        final String[] consumes = annotation.get("consumes", String[].class).orElse(null);
-        final String[] produces = annotation.get("produces", String[].class).orElse(null);
-
-        if (ArrayUtils.isNotEmpty(consumes)) {
-            annotations.add(AnnotationValue.builder(Consumes.class).member("value", consumes).build());
-        }
-        if (ArrayUtils.isNotEmpty(produces)) {
-            annotations.add(AnnotationValue.builder(Produces.class).member("value", produces).build());
-        }
-
-        if (isHttpMethodMapping(method.orElse(null))) {
-            annotations.add(AnnotationValue.builder(HttpMethodMapping.class).value(path).build());
-        }
-        return annotations;
     }
 
     /**
@@ -113,6 +88,31 @@ public class RequestMappingAnnotationMapper extends AbstractSpringAnnotationMapp
     }
 
     private String computePath(AnnotationValue<Annotation> annotation) {
-        return annotation.getValue(String.class).orElseGet(() -> annotation.get("path", String.class).orElse("/"));
+        return annotation.stringValue().orElseGet(() -> annotation.stringValue("path").orElse("/"));
+    }
+
+    @Override
+    public List<AnnotationValue<?>> transform(AnnotationValue<Annotation> annotation, VisitorContext visitorContext) {
+        List<AnnotationValue<?>> annotations = new ArrayList<>();
+
+        final String path = computePath(annotation);
+        final Optional<HttpMethod> method = annotation.enumValue("method", HttpMethod.class);
+
+        annotations.add(newBuilder(method.orElse(null), annotation).value(path).build());
+
+        final String[] consumes = annotation.stringValues("consumes");
+        final String[] produces = annotation.stringValues("produces");
+
+        if (ArrayUtils.isNotEmpty(consumes)) {
+            annotations.add(AnnotationValue.builder(Consumes.class).member("value", consumes).build());
+        }
+        if (ArrayUtils.isNotEmpty(produces)) {
+            annotations.add(AnnotationValue.builder(Produces.class).member("value", produces).build());
+        }
+
+        if (isHttpMethodMapping(method.orElse(null))) {
+            annotations.add(AnnotationValue.builder(HttpMethodMapping.class).value(path).build());
+        }
+        return annotations;
     }
 }

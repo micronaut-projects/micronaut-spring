@@ -20,6 +20,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.function.UnaryOperator;
 import java.util.stream.Stream;
 import javax.sql.DataSource;
@@ -175,12 +176,13 @@ public final class MicronautImportRegistrar implements ImportBeanDefinitionRegis
             EnableMicronaut.ExposedBean[] exposedBeans = enableMicronaut.exposeToMicronaut();
             if (ArrayUtils.isNotEmpty(exposedBeans)) {
                 for (EnableMicronaut.ExposedBean exposedBean : exposedBeans) {
-                    this.exposedBeans.add(new ExposedBeanData(
+                    ExposedBeanData exposedBeanData = new ExposedBeanData(
                         exposedBean.beanType(),
                         StringUtils.isNotEmpty(exposedBean.name()) ? exposedBean.name() : null,
                         StringUtils.isNotEmpty(exposedBean.qualifier()) ? exposedBean.qualifier() : null,
-                        null)
-                    );
+                        null);
+                    this.exposedBeans.remove(exposedBeanData);
+                    this.exposedBeans.add(exposedBeanData);
                 }
             }
         }
@@ -348,6 +350,23 @@ public final class MicronautImportRegistrar implements ImportBeanDefinitionRegis
             this.beanName = beanName;
             this.qualifier = qualifier;
             this.nameTransformer = nameTransformer != null ? nameTransformer : UnaryOperator.identity();
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) {
+                return true;
+            }
+            if (o == null || getClass() != o.getClass()) {
+                return false;
+            }
+            ExposedBeanData that = (ExposedBeanData) o;
+            return beanType.equals(that.beanType) && Objects.equals(beanName, that.beanName) && Objects.equals(qualifier, that.qualifier);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(beanType, beanName, qualifier);
         }
     }
 }

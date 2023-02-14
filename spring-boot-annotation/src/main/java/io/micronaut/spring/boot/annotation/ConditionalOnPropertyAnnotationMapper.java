@@ -16,8 +16,10 @@
 package io.micronaut.spring.boot.annotation;
 
 import io.micronaut.context.annotation.Requires;
+import io.micronaut.core.annotation.AnnotationMetadata;
 import io.micronaut.core.annotation.AnnotationValue;
 import io.micronaut.core.annotation.AnnotationValueBuilder;
+import io.micronaut.core.util.ArrayUtils;
 import io.micronaut.inject.visitor.VisitorContext;
 import io.micronaut.spring.annotation.AbstractSpringAnnotationMapper;
 
@@ -40,11 +42,14 @@ public class ConditionalOnPropertyAnnotationMapper extends AbstractSpringAnnotat
 
     @Override
     protected List<AnnotationValue<?>> mapInternal(AnnotationValue<Annotation> annotation, VisitorContext visitorContext) {
-        final String[] propertyNames = annotation.getValue(String[].class).orElseGet(() -> annotation.get("name", String[].class).orElse(null));
+        String[] propertyNames = annotation.stringValues(AnnotationMetadata.VALUE_MEMBER);
+        if (ArrayUtils.isEmpty(propertyNames)) {
+            propertyNames = annotation.stringValues("name");
+        }
         if (propertyNames != null) {
-            final String prefix = annotation.get("prefix", String.class).orElse(null);
-            final boolean matchIfMissing = annotation.get("matchIfMissing", boolean.class).orElse(false);
-            final String havingValue = annotation.get("havingValue", String.class).orElse(null);
+            final String prefix = annotation.stringValue("prefix").orElse(null);
+            final boolean matchIfMissing = annotation.booleanValue("matchIfMissing").orElse(false);
+            final String havingValue = annotation.stringValue("havingValue").orElse(null);
             List<AnnotationValue<?>> annotationValues = new ArrayList<>(propertyNames.length);
             for (String propertyName : propertyNames) {
                 if (prefix != null) {

@@ -1,13 +1,7 @@
 io.micronaut.spring.web.annotation.RequestParamAnnotationMapper
 io.micronaut.spring.web.annotation.RestControllerAnnotationMapper
-io.micronaut.spring.web.annotation.RequestMappingAnnotationMapper
 io.micronaut.spring.web.annotation.CookieValueAnnotationMapper
 io.micronaut.spring.web.annotation.RequestHeaderAnnotationMapper
-io.micronaut.spring.web.annotation.PutMappingAnnotationMapper
-io.micronaut.spring.web.annotation.PostMappingAnnotationMapper
-io.micronaut.spring.web.annotation.PatchMappingAnnotationMapper
-io.micronaut.spring.web.annotation.DeleteMappingAnnotationMapper
-io.micronaut.spring.web.annotation.GetMappingAnnotationMapper
 io.micronaut.spring.web.annotation.RequestBodyAnnotationMapping
 io.micronaut.spring.web.annotation.ResponseStatusAnnotationMapper
 io.micronaut.spring.web.annotation.ExceptionHandlerAnnotationMapper

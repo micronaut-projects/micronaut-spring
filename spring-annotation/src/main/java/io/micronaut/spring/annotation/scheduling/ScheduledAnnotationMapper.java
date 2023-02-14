@@ -40,16 +40,16 @@ public class ScheduledAnnotationMapper extends AbstractSpringAnnotationMapper {
     @Override
     protected List<AnnotationValue<?>> mapInternal(AnnotationValue<Annotation> annotation, VisitorContext visitorContext) {
         final AnnotationValueBuilder<?> builder = AnnotationValue.builder(Scheduled.class);
-        annotation.get("cron", String.class).ifPresent(s -> builder.member("cron", s));
+        annotation.stringValue("cron").ifPresent(s -> builder.member("cron", s));
 
         // members that take numbers needed "ms" appending
-        annotation.get("fixedDelay", String.class).ifPresent(s -> builder.member("fixedDelay", s + "ms"));
-        annotation.get("fixedRate", String.class).ifPresent(s -> builder.member("fixedRate", s + "ms"));
-        annotation.get("initialDelay", String.class).ifPresent(s -> builder.member("initialDelay", s + "ms"));
+        annotation.stringValue("fixedDelay").ifPresent(s -> builder.member("fixedDelay", s + "ms"));
+        annotation.stringValue("fixedRate").ifPresent(s -> builder.member("fixedRate", s + "ms"));
+        annotation.stringValue("initialDelay").ifPresent(s -> builder.member("initialDelay", s + "ms"));
 
-        annotation.get("fixedDelayString", String.class).ifPresent(s -> builder.member("fixedDelay", s));
-        annotation.get("fixedRateString", String.class).ifPresent(s -> builder.member("fixedRate", s));
-        annotation.get("initialDelayString", String.class).ifPresent(s -> builder.member("initialDelay", s));
+        annotation.stringValue("fixedDelayString").ifPresent(s -> builder.member("fixedDelay", s));
+        annotation.stringValue("fixedRateString").ifPresent(s -> builder.member("fixedRate", s));
+        annotation.stringValue("initialDelayString").ifPresent(s -> builder.member("initialDelay", s));
 
         final AnnotationValue<?> scheduledAnn = builder
                 .build();
