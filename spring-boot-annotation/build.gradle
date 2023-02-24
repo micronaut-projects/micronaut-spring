@@ -13,4 +13,5 @@ dependencies {
     testImplementation libs.managed.spring.boot
     testImplementation libs.spring.boot.autoconfigure
     testImplementation libs.spring.boot.actuator
+    testImplementation mn.micronaut.inject.java.test
 }
