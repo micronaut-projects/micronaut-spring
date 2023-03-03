@@ -18,7 +18,7 @@ dependencies {
     testImplementation mn.micronaut.inject.java
     testImplementation projects.springAnnotation
     testImplementation mn.micronaut.inject.java.test
-    testImplementation("org.springframework:spring-jdbc:6.0.4") {
+    testImplementation("org.springframework:spring-jdbc:6.0.6") {
         because 'not defined in toml because it hit a bug with version catalogs'
     }
     testImplementation libs.h2database
