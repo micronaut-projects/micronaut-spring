@@ -112,13 +112,16 @@ public final class ImportAnnotationVisitor implements TypeElementVisitor<Object,
 
     private void handleImportRegistrar(ClassElement originatingElement, ClassElement typeToImport, VisitorContext context) {
         // add the registrar as a bean
-        originatingElement
-            .addAssociatedBean(typeToImport)
-            .scope(AnnotationValue.builder(Singleton.class).build())
-            .annotate(ImportedBy.class, builder -> builder.member(
-                AnnotationMetadata.VALUE_MEMBER,
-                new AnnotationClassValue<>(originatingElement.getName())
-        ));
+        if (typeToImport.isPublic()) {
+            originatingElement
+                .addAssociatedBean(typeToImport)
+                .scope(AnnotationValue.builder(Singleton.class).build())
+                .annotate(ImportedBy.class, builder -> builder.member(
+                    AnnotationMetadata.VALUE_MEMBER,
+                    new AnnotationClassValue<>(originatingElement.getName())
+                ));
+        }
+
     }
 
     @Override
