@@ -3,16 +3,15 @@ plugins {
 }
 
 dependencies {
-    api(projects.springContext)
+    api(projects.micronautSpringContext)
     api(libs.managed.spring.boot)
-
     compileOnly(libs.spring.boot.autoconfigure)
 
     testAnnotationProcessor(mn.micronaut.inject.java)
-    testAnnotationProcessor(projects.springBootAnnotation)
-    testAnnotationProcessor(projects.springWebAnnotation)
+    testAnnotationProcessor(projects.micronautSpringBootAnnotation)
+    testAnnotationProcessor(projects.micronautSpringWebAnnotation)
 
-    testImplementation(projects.springWeb)
+    testImplementation(projects.micronautSpringWeb)
     testImplementation(mn.micronaut.management)
     testImplementation(mn.micronaut.http.client)
     testImplementation(mn.micronaut.http.server.netty)

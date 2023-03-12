@@ -6,7 +6,7 @@ pluginManagement {
 }
 
 plugins {
-    id 'io.micronaut.build.shared.settings' version '6.2.2'
+    id 'io.micronaut.build.shared.settings' version '6.3.5'
 }
 
 rootProject.name = 'spring-parent'
@@ -25,8 +25,10 @@ include 'test-suite'
 enableFeaturePreview 'TYPESAFE_PROJECT_ACCESSORS'
 
 micronautBuild {
+    useStandardizedProjectNames = true
     addSnapshotRepository()
     importMicronautCatalog()
     importMicronautCatalog("micronaut-cache")
     importMicronautCatalog("micronaut-views")
+    importMicronautCatalog("micronaut-validation")
 }

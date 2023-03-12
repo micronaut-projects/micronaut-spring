@@ -8,15 +8,15 @@ dependencies {
     api libs.managed.spring.context
     api mn.micronaut.aop
     api mn.micronaut.inject
-    api projects.spring
+    api projects.micronautSpring
     implementation(mnCache.micronaut.cache.core)
 
     testAnnotationProcessor mn.micronaut.inject.java
-    testAnnotationProcessor projects.springAnnotation
+    testAnnotationProcessor projects.micronautSpringAnnotation
     testImplementation mn.micronaut.jackson.databind
     testImplementation mn.micronaut.runtime
     testImplementation mn.micronaut.inject.java
-    testImplementation projects.springAnnotation
+    testImplementation projects.micronautSpringAnnotation
     testImplementation mn.micronaut.inject.java.test
     testImplementation("org.springframework:spring-jdbc:6.0.4") {
         because 'not defined in toml because it hit a bug with version catalogs'
