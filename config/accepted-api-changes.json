@@ -143,5 +143,45 @@
     "type": "io.micronaut.spring.web.annotation.RequestMappingAnnotationMapper",
     "member": "Constructor io.micronaut.spring.web.annotation.RequestMappingAnnotationMapper()",
     "reason": "Compilation time only module"
+  },
+  {
+    "type": "io.micronaut.spring.context.aop.SpringConfigurationAdvice",
+    "member": "Implemented interface java.lang.annotation.Annotation",
+    "reason": "Internal runtime class moved from processors"
+  },
+  {
+    "type": "io.micronaut.spring.context.aop.$SpringConfigurationInterceptor$Definition$Reference",
+    "member": "Field $ANNOTATION_METADATA",
+    "reason": "Internal runtime class moved from processors"
+  },
+  {
+    "type": "io.micronaut.spring.context.aop.$SpringConfigurationInterceptor$Definition$Reference",
+    "member": "Constructor io.micronaut.spring.context.aop.$SpringConfigurationInterceptor$Definition$Reference()",
+    "reason": "Internal runtime class moved from processors"
+  },
+  {
+    "type": "io.micronaut.spring.context.aop.$SpringConfigurationInterceptor$Definition$Reference",
+    "member": "Implemented interface io.micronaut.core.annotation.AnnotationSource",
+    "reason": "Internal runtime class moved from processors"
+  },
+  {
+    "type": "io.micronaut.spring.context.aop.$SpringConfigurationInterceptor$Definition$Reference",
+    "member": "Implemented interface io.micronaut.inject.BeanContextConditional",
+    "reason": "Internal runtime class moved from processors"
+  },
+  {
+    "type": "io.micronaut.spring.context.aop.$SpringConfigurationInterceptor$Definition$Reference",
+    "member": "Implemented interface io.micronaut.core.annotation.AnnotationMetadataProvider",
+    "reason": "Internal runtime class moved from processors"
+  },
+  {
+    "type": "io.micronaut.spring.context.aop.$SpringConfigurationInterceptor$Definition$Reference",
+    "member": "Implemented interface io.micronaut.inject.BeanType",
+    "reason": "Internal runtime class moved from processors"
+  },
+  {
+    "type": "io.micronaut.spring.context.aop.$SpringConfigurationInterceptor$Definition$Reference",
+    "member": "Implemented interface io.micronaut.inject.BeanDefinitionReference",
+    "reason": "Internal runtime class moved from processors"
   }
 ]

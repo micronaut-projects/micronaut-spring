@@ -4,7 +4,7 @@ plugins {
 
 dependencies {
     api(platform(libs.boms.spring))
-    api projects.springContext
+    api projects.micronautSpringContext
     api libs.spring.web
     api mn.reactor
 
@@ -14,11 +14,11 @@ dependencies {
     compileOnly(mnViews.micronaut.views.core)
 
     testAnnotationProcessor mn.micronaut.inject.java
-    testAnnotationProcessor projects.springAnnotation
-    testAnnotationProcessor projects.springWebAnnotation
+    testAnnotationProcessor projects.micronautSpringAnnotation
+    testAnnotationProcessor projects.micronautSpringWebAnnotation
 
     testImplementation mn.micronaut.inject.java
-    testImplementation mn.micronaut.validation
+    testImplementation mnValidation.micronaut.validation
     testImplementation mn.micronaut.jackson.databind
     testImplementation mn.micronaut.http.client
     testImplementation mn.micronaut.http.server.netty
