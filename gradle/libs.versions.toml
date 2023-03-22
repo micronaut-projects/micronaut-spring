@@ -12,9 +12,9 @@ spock = "2.3-groovy-4.0"
 h2 = '2.1.214'
 jakarta-annotation = '2.1.1'
 
-micronaut-cache = "4.0.0-SNAPSHOT"
 micronaut-views = "3.8.1"
 micronaut-validation = "4.0.0-SNAPSHOT"
+micronaut-cache = "4.0.0-M1"
 
 [libraries]
 managed-spring-boot = { module = 'org.springframework.boot:spring-boot', version.ref = 'managed-spring-boot' }
