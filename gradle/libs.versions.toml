@@ -4,7 +4,7 @@ managed-spring = '6.0.6'
 
 junit = '5.9.1'
 servlet-api = '6.0.0'
-micronaut = "4.0.0-SNAPSHOT"
+micronaut = "4.0.0-M1"
 micronaut-docs = "2.0.0"
 micronaut-test = "4.0.0-SNAPSHOT"
 groovy = "4.0.7"
@@ -12,9 +12,9 @@ spock = "2.3-groovy-4.0"
 h2 = '2.1.214'
 jakarta-annotation = '2.1.1'
 
-micronaut-cache = "4.0.0-SNAPSHOT"
-micronaut-views = "3.8.1"
-micronaut-validation = "4.0.0-SNAPSHOT"
+micronaut-cache = "4.0.0-M1"
+micronaut-views = "4.0.0-M1"
+micronaut-validation = "4.0.0-M2"
 
 [libraries]
 managed-spring-boot = { module = 'org.springframework.boot:spring-boot', version.ref = 'managed-spring-boot' }
