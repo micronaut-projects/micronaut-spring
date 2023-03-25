@@ -14,7 +14,7 @@ jakarta-annotation = '2.1.1'
 
 micronaut-cache = "4.0.0-M1"
 micronaut-views = "4.0.0-M1"
-micronaut-validation = "4.0.0-M2"
+micronaut-validation = "4.0.0-SNAPSHOT"
 
 [libraries]
 managed-spring-boot = { module = 'org.springframework.boot:spring-boot', version.ref = 'managed-spring-boot' }
