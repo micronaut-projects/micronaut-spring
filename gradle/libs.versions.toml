@@ -13,7 +13,7 @@ h2 = '2.1.214'
 jakarta-annotation = '2.1.1'
 
 micronaut-cache = "4.0.0-M1"
-micronaut-views = "4.0.0-M1"
+micronaut-views = "4.0.0-SNAPSHOT"
 micronaut-validation = "4.0.0-M2"
 
 [libraries]
