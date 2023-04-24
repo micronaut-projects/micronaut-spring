@@ -52,6 +52,7 @@ import java.util.Optional;
  * @since 1.0
  */
 public class MicronautServerHttpRequest extends AbstractServerHttpRequest {
+
     private final HttpRequest<?> request;
     private final ChannelResolver channelResolver;
 
@@ -63,7 +64,7 @@ public class MicronautServerHttpRequest extends AbstractServerHttpRequest {
     public MicronautServerHttpRequest(
             HttpRequest<?> request,
             ChannelResolver channelResolver) {
-        super(request.getUri(), null, initHeaders(request));
+        super(HttpMethod.valueOf(request.getMethod().name()), request.getUri(), null, initHeaders(request));
         this.request = request;
         this.channelResolver = channelResolver;
     }
