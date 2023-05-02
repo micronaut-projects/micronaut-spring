@@ -18,13 +18,11 @@ package io.micronaut.spring.web.reactive;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.cookie.Cookies;
 import io.micronaut.http.server.netty.HttpContentProcessor;
-import io.micronaut.http.server.netty.HttpContentProcessorAsReactiveProcessor;
 import io.micronaut.http.server.netty.NettyHttpRequest;
-import io.netty.buffer.ByteBufHolder;
 import io.netty.channel.Channel;
+import io.netty.handler.codec.http.HttpContent;
 import io.netty.handler.ssl.SslHandler;
-import org.reactivestreams.Subscriber;
-import org.reactivestreams.Subscription;
+import org.reactivestreams.Publisher;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.core.io.buffer.NettyDataBufferFactory;
 import org.springframework.http.HttpCookie;
@@ -131,29 +129,16 @@ public class MicronautServerHttpRequest extends AbstractServerHttpRequest {
                 final HttpContentProcessor processor = httpContentProcessor.get();
                 NettyHttpRequest<?> nettyRequest = ((NettyHttpRequest<?>) request);
 
-                return Flux.from(subscriber -> HttpContentProcessorAsReactiveProcessor.asPublisher(processor, nettyRequest).subscribe(new Subscriber<Object>() {
-                    @Override
-                    public void onSubscribe(Subscription s) {
-                        subscriber.onSubscribe(s);
-                    }
-
-                    @Override
-                    public void onNext(Object o) {
-                        if (o instanceof ByteBufHolder holder) {
-                            subscriber.onNext(nettyDataBufferFactory.wrap(holder.content()));
-                        }
-                    }
-
-                    @Override
-                    public void onError(Throwable t) {
-                        subscriber.onError(t);
-                    }
-
-                    @Override
-                    public void onComplete() {
-                        subscriber.onComplete();
-                    }
-                }));
+                Publisher<HttpContent> bytes;
+                try {
+                    // todo: this will break again soon, then it should be:
+                    // Flux.from(nettyRequest.rootBody().rawContent(configuration).asPublisher())
+                    //      .map(b -> nettyDataBufferFactory.wrap((ByteBuf) b))
+                    return Flux.from(nettyRequest.rootBody().processMulti(processor).asPublisher())
+                        .map(c -> nettyDataBufferFactory.wrap(((HttpContent) c).content()));
+                } catch (Throwable e) {
+                    return Flux.error(e);
+                }
             }
         }
 
