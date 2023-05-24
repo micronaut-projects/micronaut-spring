@@ -8,7 +8,6 @@ micronaut = "4.0.0-M5"
 micronaut-docs = "2.0.0"
 micronaut-test = "4.0.0-M4"
 groovy = "4.0.12"
-micronaut-test = "4.0.0-M4"
 spock = "2.3-groovy-4.0"
 h2 = '2.1.214'
 jakarta-annotation = '2.1.1'
