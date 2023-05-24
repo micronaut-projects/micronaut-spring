@@ -1,22 +1,26 @@
 [versions]
-managed-spring-boot = '3.0.5'
-managed-spring = '6.0.8'
+managed-spring-boot = "3.1.0"
+managed-spring = "6.0.9"
 
-junit = '5.9.1'
-servlet-api = '6.0.0'
-micronaut = "4.0.0-M2"
+junit = "5.9.1"
+servlet-api = "6.0.0"
+micronaut = "4.0.0-M5"
 micronaut-docs = "2.0.0"
-micronaut-test = "4.0.0-M2"
-groovy = "4.0.11"
+micronaut-test = "4.0.0-M4"
+groovy = "4.0.12"
+micronaut-test = "4.0.0-M4"
 spock = "2.3-groovy-4.0"
 h2 = '2.1.214'
 jakarta-annotation = '2.1.1'
 
-micronaut-cache = "4.0.0-M1"
-micronaut-views = "4.0.0-M1"
-micronaut-validation = "4.0.0-M4"
+micronaut-cache = "4.0.0-M2"
+micronaut-views = "4.0.0-M2"
+micronaut-validation = "4.0.0-M7"
 
 [libraries]
+# Core
+micronaut-core = { module = 'io.micronaut:micronaut-core-bom', version.ref = 'micronaut' }
+
 managed-spring-boot = { module = 'org.springframework.boot:spring-boot', version.ref = 'managed-spring-boot' }
 managed-spring-boot-starter = { module = 'org.springframework.boot:spring-boot-starter', version.ref = 'managed-spring-boot' }
 managed-spring-boot-starter-web = { module = 'org.springframework.boot:spring-boot-starter-web', version.ref = 'managed-spring-boot' }
