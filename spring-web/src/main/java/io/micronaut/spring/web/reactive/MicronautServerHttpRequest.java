@@ -15,16 +15,20 @@
  */
 package io.micronaut.spring.web.reactive;
 
+import java.security.cert.Certificate;
+import java.security.cert.X509Certificate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import javax.net.ssl.SSLSession;
+
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.cookie.Cookies;
-import io.micronaut.http.server.netty.HttpContentProcessor;
-import io.micronaut.http.server.netty.HttpContentProcessorAsReactiveProcessor;
+import io.micronaut.http.server.HttpServerConfiguration;
 import io.micronaut.http.server.netty.NettyHttpRequest;
-import io.netty.buffer.ByteBufHolder;
+import io.netty.buffer.ByteBuf;
 import io.netty.channel.Channel;
 import io.netty.handler.ssl.SslHandler;
-import org.reactivestreams.Subscriber;
-import org.reactivestreams.Subscription;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.core.io.buffer.NettyDataBufferFactory;
 import org.springframework.http.HttpCookie;
@@ -38,13 +42,6 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import reactor.core.publisher.Flux;
 
-import javax.net.ssl.SSLSession;
-import java.security.cert.Certificate;
-import java.security.cert.X509Certificate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
 /**
  * Micronaut implementation of {@link org.springframework.http.server.reactive.ServerHttpRequest}.
  *
@@ -52,20 +49,25 @@ import java.util.Optional;
  * @since 1.0
  */
 public class MicronautServerHttpRequest extends AbstractServerHttpRequest {
+
     private final HttpRequest<?> request;
     private final ChannelResolver channelResolver;
+    private final HttpServerConfiguration serverConfiguration;
 
     /**
      * Default constructor.
-     * @param request The request to adapt
-     * @param channelResolver The channel resolver
+     *
+     * @param request             The request to adapt
+     * @param channelResolver     The channel resolver
+     * @param serverConfiguration The server configuration
      */
     public MicronautServerHttpRequest(
-            HttpRequest<?> request,
-            ChannelResolver channelResolver) {
-        super(request.getUri(), null, initHeaders(request));
+        HttpRequest<?> request,
+        ChannelResolver channelResolver, HttpServerConfiguration serverConfiguration) {
+        super(HttpMethod.valueOf(request.getMethod().name()), request.getUri(), null, initHeaders(request));
         this.request = request;
         this.channelResolver = channelResolver;
+        this.serverConfiguration = serverConfiguration;
     }
 
     private static HttpHeaders initHeaders(HttpRequest<?> request) {
@@ -123,36 +125,12 @@ public class MicronautServerHttpRequest extends AbstractServerHttpRequest {
             final Channel channel = opt.get();
             final NettyDataBufferFactory nettyDataBufferFactory = new NettyDataBufferFactory(channel.alloc());
 
-            final Optional<HttpContentProcessor> httpContentProcessor = channelResolver.resolveContentProcessor(request);
-
-            if (httpContentProcessor.isPresent()) {
-
-                final HttpContentProcessor processor = httpContentProcessor.get();
-                NettyHttpRequest<?> nettyRequest = ((NettyHttpRequest<?>) request);
-
-                return Flux.from(subscriber -> HttpContentProcessorAsReactiveProcessor.asPublisher(processor, nettyRequest).subscribe(new Subscriber<Object>() {
-                    @Override
-                    public void onSubscribe(Subscription s) {
-                        subscriber.onSubscribe(s);
-                    }
-
-                    @Override
-                    public void onNext(Object o) {
-                        if (o instanceof ByteBufHolder holder) {
-                            subscriber.onNext(nettyDataBufferFactory.wrap(holder.content()));
-                        }
-                    }
-
-                    @Override
-                    public void onError(Throwable t) {
-                        subscriber.onError(t);
-                    }
-
-                    @Override
-                    public void onComplete() {
-                        subscriber.onComplete();
-                    }
-                }));
+            NettyHttpRequest<?> nettyRequest = ((NettyHttpRequest<?>) request);
+            try {
+                return Flux.from(nettyRequest.rootBody().rawContent(serverConfiguration).asPublisher())
+                    .map(b -> nettyDataBufferFactory.wrap((ByteBuf) b));
+            } catch (Throwable e) {
+                return Flux.error(e);
             }
         }
 

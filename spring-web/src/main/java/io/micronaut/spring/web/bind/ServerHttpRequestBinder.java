@@ -15,10 +15,12 @@
  */
 package io.micronaut.spring.web.bind;
 
+import io.micronaut.core.annotation.Internal;
 import io.micronaut.core.convert.ArgumentConversionContext;
 import io.micronaut.core.type.Argument;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.bind.binders.TypedRequestArgumentBinder;
+import io.micronaut.http.server.HttpServerConfiguration;
 import io.micronaut.spring.web.reactive.ChannelResolver;
 import io.micronaut.spring.web.reactive.MicronautServerHttpRequest;
 import jakarta.inject.Singleton;
@@ -33,16 +35,21 @@ import java.util.Optional;
  * @since 1.0
  */
 @Singleton
+@Internal
 public class ServerHttpRequestBinder implements TypedRequestArgumentBinder<ServerHttpRequest> {
 
     private final ChannelResolver channelResolver;
+    private final HttpServerConfiguration serverConfiguration;
 
     /**
      * The channel resolver.
-     * @param channelResolver The channel resolver
+     *
+     * @param channelResolver     The channel resolver
+     * @param serverConfiguration The server configuration
      */
-    public ServerHttpRequestBinder(ChannelResolver channelResolver) {
+    public ServerHttpRequestBinder(ChannelResolver channelResolver, HttpServerConfiguration serverConfiguration) {
         this.channelResolver = channelResolver;
+        this.serverConfiguration = serverConfiguration;
     }
 
     @Override
@@ -54,7 +61,8 @@ public class ServerHttpRequestBinder implements TypedRequestArgumentBinder<Serve
     public BindingResult<ServerHttpRequest> bind(ArgumentConversionContext<ServerHttpRequest> context, HttpRequest<?> source) {
         return () -> Optional.of(new MicronautServerHttpRequest(
                 source,
-                channelResolver
+                channelResolver,
+                serverConfiguration
         ));
     }
 }
