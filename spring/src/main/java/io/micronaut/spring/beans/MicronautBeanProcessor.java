@@ -108,7 +108,7 @@ public class MicronautBeanProcessor implements BeanFactoryPostProcessor, Disposa
 
         micronautBeanQualifierTypes
                 .forEach(micronautBeanQualifierType -> {
-            Qualifier<Object> micronautBeanQualifier = Qualifiers.byStereotype((Class<? extends Annotation>) micronautBeanQualifierType);
+            Qualifier<Object> micronautBeanQualifier = micronautBeanQualifierType.isAnnotation() ? Qualifiers.byStereotype((Class<? extends Annotation>) micronautBeanQualifierType) : Qualifiers.byType(micronautBeanQualifierType);
             micronautContext.getBeanDefinitions(micronautBeanQualifier)
                     .forEach(definition -> {
                         final BeanDefinitionBuilder beanDefinitionBuilder = BeanDefinitionBuilder
