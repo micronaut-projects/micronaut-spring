@@ -111,8 +111,9 @@ loadScripts(document, 'script');</script>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(io.micronaut.http.HttpRequest,io.micronaut.spring.web.reactive.ChannelResolver)" class="member-name-link">MicronautServerHttpRequest</a><wbr>(io.micronaut.http.HttpRequest&lt;?&gt;&nbsp;request,
- <a href="ChannelResolver.html" title="interface in io.micronaut.spring.web.reactive">ChannelResolver</a>&nbsp;channelResolver)</code></div>
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(io.micronaut.http.HttpRequest,io.micronaut.spring.web.reactive.ChannelResolver,io.micronaut.http.server.HttpServerConfiguration)" class="member-name-link">MicronautServerHttpRequest</a><wbr>(io.micronaut.http.HttpRequest&lt;?&gt;&nbsp;request,
+ <a href="ChannelResolver.html" title="interface in io.micronaut.spring.web.reactive">ChannelResolver</a>&nbsp;channelResolver,
+ io.micronaut.http.server.HttpServerConfiguration&nbsp;serverConfiguration)</code></div>
 <div class="col-last even-row-color">
 <div class="block">Default constructor.</div>
 </div>
@@ -172,15 +173,17 @@ loadScripts(document, 'script');</script>
 <h2>Constructor Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="&lt;init&gt;(io.micronaut.http.HttpRequest,io.micronaut.spring.web.reactive.ChannelResolver)">
+<section class="detail" id="&lt;init&gt;(io.micronaut.http.HttpRequest,io.micronaut.spring.web.reactive.ChannelResolver,io.micronaut.http.server.HttpServerConfiguration)">
 <h3>MicronautServerHttpRequest</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">MicronautServerHttpRequest</span><wbr><span class="parameters">(io.micronaut.http.HttpRequest&lt;?&gt;&nbsp;request,
- <a href="ChannelResolver.html" title="interface in io.micronaut.spring.web.reactive">ChannelResolver</a>&nbsp;channelResolver)</span></div>
+ <a href="ChannelResolver.html" title="interface in io.micronaut.spring.web.reactive">ChannelResolver</a>&nbsp;channelResolver,
+ io.micronaut.http.server.HttpServerConfiguration&nbsp;serverConfiguration)</span></div>
 <div class="block">Default constructor.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>request</code> - The request to adapt</dd>
 <dd><code>channelResolver</code> - The channel resolver</dd>
+<dd><code>serverConfiguration</code> - The server configuration</dd>
 </dl>
 </section>
 </li>
