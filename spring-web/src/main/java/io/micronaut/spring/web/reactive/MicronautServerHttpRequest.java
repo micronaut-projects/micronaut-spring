@@ -15,14 +15,20 @@
  */
 package io.micronaut.spring.web.reactive;
 
+import java.security.cert.Certificate;
+import java.security.cert.X509Certificate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import javax.net.ssl.SSLSession;
+
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.cookie.Cookies;
-import io.micronaut.http.server.netty.HttpContentProcessor;
+import io.micronaut.http.server.HttpServerConfiguration;
 import io.micronaut.http.server.netty.NettyHttpRequest;
+import io.netty.buffer.ByteBuf;
 import io.netty.channel.Channel;
-import io.netty.handler.codec.http.HttpContent;
 import io.netty.handler.ssl.SslHandler;
-import org.reactivestreams.Publisher;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.core.io.buffer.NettyDataBufferFactory;
 import org.springframework.http.HttpCookie;
@@ -36,13 +42,6 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import reactor.core.publisher.Flux;
 
-import javax.net.ssl.SSLSession;
-import java.security.cert.Certificate;
-import java.security.cert.X509Certificate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
 /**
  * Micronaut implementation of {@link org.springframework.http.server.reactive.ServerHttpRequest}.
  *
@@ -53,18 +52,22 @@ public class MicronautServerHttpRequest extends AbstractServerHttpRequest {
 
     private final HttpRequest<?> request;
     private final ChannelResolver channelResolver;
+    private final HttpServerConfiguration serverConfiguration;
 
     /**
      * Default constructor.
-     * @param request The request to adapt
-     * @param channelResolver The channel resolver
+     *
+     * @param request             The request to adapt
+     * @param channelResolver     The channel resolver
+     * @param serverConfiguration The server configuration
      */
     public MicronautServerHttpRequest(
-            HttpRequest<?> request,
-            ChannelResolver channelResolver) {
+        HttpRequest<?> request,
+        ChannelResolver channelResolver, HttpServerConfiguration serverConfiguration) {
         super(HttpMethod.valueOf(request.getMethod().name()), request.getUri(), null, initHeaders(request));
         this.request = request;
         this.channelResolver = channelResolver;
+        this.serverConfiguration = serverConfiguration;
     }
 
     private static HttpHeaders initHeaders(HttpRequest<?> request) {
@@ -122,23 +125,12 @@ public class MicronautServerHttpRequest extends AbstractServerHttpRequest {
             final Channel channel = opt.get();
             final NettyDataBufferFactory nettyDataBufferFactory = new NettyDataBufferFactory(channel.alloc());
 
-            final Optional<HttpContentProcessor> httpContentProcessor = channelResolver.resolveContentProcessor(request);
-
-            if (httpContentProcessor.isPresent()) {
-
-                final HttpContentProcessor processor = httpContentProcessor.get();
-                NettyHttpRequest<?> nettyRequest = ((NettyHttpRequest<?>) request);
-
-                Publisher<HttpContent> bytes;
-                try {
-                    // todo: this will break again soon, then it should be:
-                    // Flux.from(nettyRequest.rootBody().rawContent(configuration).asPublisher())
-                    //      .map(b -> nettyDataBufferFactory.wrap((ByteBuf) b))
-                    return Flux.from(nettyRequest.rootBody().processMulti(processor).asPublisher())
-                        .map(c -> nettyDataBufferFactory.wrap(((HttpContent) c).content()));
-                } catch (Throwable e) {
-                    return Flux.error(e);
-                }
+            NettyHttpRequest<?> nettyRequest = ((NettyHttpRequest<?>) request);
+            try {
+                return Flux.from(nettyRequest.rootBody().rawContent(serverConfiguration).asPublisher())
+                    .map(b -> nettyDataBufferFactory.wrap((ByteBuf) b));
+            } catch (Throwable e) {
+                return Flux.error(e);
             }
         }
 
