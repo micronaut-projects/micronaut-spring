@@ -20,7 +20,7 @@ import io.micronaut.core.async.publisher.Publishers;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.MutableHttpResponse;
 import io.micronaut.http.annotation.Filter;
-import io.micronaut.http.filter.OncePerRequestHttpServerFilter;
+import io.micronaut.http.filter.HttpServerFilter;
 import io.micronaut.http.filter.ServerFilterChain;
 import io.micronaut.spring.web.bind.ModelRequestArgumentBinder;
 import io.micronaut.views.ModelAndView;
@@ -40,7 +40,7 @@ import java.util.Optional;
 @Filter("/**")
 @Requires(classes = {ModelAndView.class, Model.class})
 @Requires(beans = ViewsRenderer.class)
-public class ModelAndViewServerFilter extends OncePerRequestHttpServerFilter {
+public class ModelAndViewServerFilter implements HttpServerFilter {
 
     private final ViewsFilter viewsFilter;
 
@@ -58,7 +58,7 @@ public class ModelAndViewServerFilter extends OncePerRequestHttpServerFilter {
     }
 
     @Override
-    protected Publisher<MutableHttpResponse<?>> doFilterOnce(HttpRequest<?> request, ServerFilterChain chain) {
+    public Publisher<MutableHttpResponse<?>> doFilter(HttpRequest<?> request, ServerFilterChain chain) {
         final Publisher<MutableHttpResponse<?>> responsePublisher = chain.proceed(request);
         return Publishers.map(responsePublisher, mutableHttpResponse -> {
             final Optional<Model> attribute = request.getAttribute(ModelRequestArgumentBinder.ATTRIBUTE, Model.class);
