@@ -72,9 +72,7 @@ loadScripts(document, 'script');</script>
 <h1 title="Class ModelAndViewServerFilter" class="title">Class ModelAndViewServerFilter</h1>
 </div>
 <div class="inheritance" title="Inheritance Tree"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">java.lang.Object</a>
-<div class="inheritance">io.micronaut.http.filter.OncePerRequestHttpServerFilter
 <div class="inheritance">io.micronaut.spring.web.ModelAndViewServerFilter</div>
-</div>
 </div>
 <section class="class-description" id="class-description">
 <dl class="notes">
@@ -85,7 +83,8 @@ loadScripts(document, 'script');</script>
 <div class="type-signature"><span class="annotations">@Filter("/**")
 @Requires(classes={io.micronaut.views.ModelAndView.class,org.springframework.ui.Model.class}) @Requires(beans=io.micronaut.views.ViewsRenderer.class)
 </span><span class="modifiers">public class </span><span class="element-name type-name-label">ModelAndViewServerFilter</span>
-<span class="extends-implements">extends io.micronaut.http.filter.OncePerRequestHttpServerFilter</span></div>
+<span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>
+implements io.micronaut.http.filter.HttpServerFilter</span></div>
 <div class="block">Makes it possible to use Spring MVC views API.</div>
 <dl class="notes">
 <dt>Since:</dt>
@@ -131,8 +130,8 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected org.reactivestreams.Publisher&lt;io.micronaut.http.MutableHttpResponse&lt;?&gt;&gt;</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#doFilterOnce(io.micronaut.http.HttpRequest,io.micronaut.http.filter.ServerFilterChain)" class="member-name-link">doFilterOnce</a><wbr>(io.micronaut.http.HttpRequest&lt;?&gt;&nbsp;request,
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>org.reactivestreams.Publisher&lt;io.micronaut.http.MutableHttpResponse&lt;?&gt;&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#doFilter(io.micronaut.http.HttpRequest,io.micronaut.http.filter.ServerFilterChain)" class="member-name-link">doFilter</a><wbr>(io.micronaut.http.HttpRequest&lt;?&gt;&nbsp;request,
  io.micronaut.http.filter.ServerFilterChain&nbsp;chain)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
@@ -141,9 +140,6 @@ loadScripts(document, 'script');</script>
 </div>
 </div>
 </div>
-<div class="inherited-list">
-<h3 id="methods-inherited-from-class-io.micronaut.http.filter.OncePerRequestHttpServerFilter">Methods inherited from class&nbsp;io.micronaut.http.filter.OncePerRequestHttpServerFilter</h3>
-<code>doFilter, getKey</code></div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-java.lang.Object">Methods inherited from class&nbsp;java.lang.<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></h3>
 <code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#clone()" title="class or interface in java.lang" class="external-link">clone</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#equals(java.lang.Object)" title="class or interface in java.lang" class="external-link">equals</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#finalize()" title="class or interface in java.lang" class="external-link">finalize</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#getClass()" title="class or interface in java.lang" class="external-link">getClass</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#hashCode()" title="class or interface in java.lang" class="external-link">hashCode</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#notify()" title="class or interface in java.lang" class="external-link">notify</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#notifyAll()" title="class or interface in java.lang" class="external-link">notifyAll</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#toString()" title="class or interface in java.lang" class="external-link">toString</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait()" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long)" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long,int)" title="class or interface in java.lang" class="external-link">wait</a></code></div>
@@ -184,16 +180,20 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="getOrder()">
 <h3>getOrder</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">getOrder</span>()</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code>getOrder</code>&nbsp;in interface&nbsp;<code>io.micronaut.core.order.Ordered</code></dd>
+</dl>
 </section>
 </li>
 <li>
-<section class="detail" id="doFilterOnce(io.micronaut.http.HttpRequest,io.micronaut.http.filter.ServerFilterChain)">
-<h3>doFilterOnce</h3>
-<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">org.reactivestreams.Publisher&lt;io.micronaut.http.MutableHttpResponse&lt;?&gt;&gt;</span>&nbsp;<span class="element-name">doFilterOnce</span><wbr><span class="parameters">(io.micronaut.http.HttpRequest&lt;?&gt;&nbsp;request,
+<section class="detail" id="doFilter(io.micronaut.http.HttpRequest,io.micronaut.http.filter.ServerFilterChain)">
+<h3>doFilter</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">org.reactivestreams.Publisher&lt;io.micronaut.http.MutableHttpResponse&lt;?&gt;&gt;</span>&nbsp;<span class="element-name">doFilter</span><wbr><span class="parameters">(io.micronaut.http.HttpRequest&lt;?&gt;&nbsp;request,
  io.micronaut.http.filter.ServerFilterChain&nbsp;chain)</span></div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code>doFilterOnce</code>&nbsp;in class&nbsp;<code>io.micronaut.http.filter.OncePerRequestHttpServerFilter</code></dd>
+<dd><code>doFilter</code>&nbsp;in interface&nbsp;<code>io.micronaut.http.filter.HttpServerFilter</code></dd>
 </dl>
 </section>
 </li>
