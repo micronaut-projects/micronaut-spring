@@ -20,7 +20,7 @@ import io.micronaut.http.HttpRequest;
 import io.micronaut.http.MutableHttpHeaders;
 import io.micronaut.http.MutableHttpResponse;
 import io.micronaut.http.annotation.Filter;
-import io.micronaut.http.filter.OncePerRequestHttpServerFilter;
+import io.micronaut.http.filter.HttpServerFilter;
 import io.micronaut.http.filter.ServerFilterChain;
 import org.reactivestreams.Publisher;
 import org.springframework.http.HttpEntity;
@@ -37,9 +37,9 @@ import java.util.Map;
  * @since 1.0
  */
 @Filter("/**")
-public class ResponseEntityServerFilter extends OncePerRequestHttpServerFilter {
+public class ResponseEntityServerFilter implements HttpServerFilter {
     @Override
-    protected Publisher<MutableHttpResponse<?>> doFilterOnce(HttpRequest<?> request, ServerFilterChain chain) {
+    public Publisher<MutableHttpResponse<?>> doFilter(HttpRequest<?> request, ServerFilterChain chain) {
         final Publisher<MutableHttpResponse<?>> responsePublisher = chain.proceed(request);
         return Publishers.map(responsePublisher, mutableHttpResponse -> {
             final Object body = mutableHttpResponse.body();
