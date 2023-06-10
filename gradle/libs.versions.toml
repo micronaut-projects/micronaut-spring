@@ -4,7 +4,7 @@ managed-spring = "6.0.9"
 
 junit = "5.9.1"
 servlet-api = "6.0.0"
-micronaut = "4.0.0-M6"
+micronaut = "4.0.0-M7"
 micronaut-docs = "2.0.0"
 micronaut-test = "4.0.0-M5"
 groovy = "4.0.12"
