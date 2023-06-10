@@ -125,9 +125,9 @@ implements io.micronaut.inject.annotation.NamedAnnotationMapper</span></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#map(io.micronaut.core.annotation.AnnotationValue,io.micronaut.inject.visitor.VisitorContext)" class="member-name-link">map</a><wbr>(io.micronaut.core.annotation.AnnotationValue&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/annotation/Annotation.html" title="class or interface in java.lang.annotation" class="external-link">Annotation</a>&gt;&nbsp;annotation,
  io.micronaut.inject.visitor.VisitorContext&nbsp;visitorContext)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>protected abstract <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;io.micronaut.core.annotation.AnnotationValue&lt;?&gt;&gt;</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#mapInternal(io.micronaut.core.annotation.AnnotationValue,io.micronaut.inject.visitor.VisitorContext)" class="member-name-link">mapInternal</a><wbr>(io.micronaut.core.annotation.AnnotationValue&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/annotation/Annotation.html" title="class or interface in java.lang.annotation" class="external-link">Annotation</a>&gt;&nbsp;annotation,
- io.micronaut.inject.visitor.VisitorContext&nbsp;visitorContext)</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>protected abstract @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;io.micronaut.core.annotation.AnnotationValue&lt;?&gt;&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#mapInternal(io.micronaut.core.annotation.AnnotationValue,io.micronaut.inject.visitor.VisitorContext)" class="member-name-link">mapInternal</a><wbr>(@NonNull io.micronaut.core.annotation.AnnotationValue&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/annotation/Annotation.html" title="class or interface in java.lang.annotation" class="external-link">Annotation</a>&gt;&nbsp;annotation,
+ @NonNull io.micronaut.inject.visitor.VisitorContext&nbsp;visitorContext)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Internal map implemenation that subclasses should implement.</div>
 </div>
@@ -180,10 +180,10 @@ implements io.micronaut.inject.annotation.NamedAnnotationMapper</span></div>
 <section class="detail" id="mapInternal(io.micronaut.core.annotation.AnnotationValue,io.micronaut.inject.visitor.VisitorContext)">
 <h3>mapInternal</h3>
 <div class="member-signature"><span class="annotations">@NonNull
-</span><span class="modifiers">protected abstract</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;io.micronaut.core.annotation.AnnotationValue&lt;?&gt;&gt;</span>&nbsp;<span class="element-name">mapInternal</span><wbr><span class="parameters">(@NonNull
- io.micronaut.core.annotation.AnnotationValue&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/annotation/Annotation.html" title="class or interface in java.lang.annotation" class="external-link">Annotation</a>&gt;&nbsp;annotation,
+</span><span class="modifiers">protected abstract</span>&nbsp;<span class="return-type">@NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;io.micronaut.core.annotation.AnnotationValue&lt;?&gt;&gt;</span>&nbsp;<span class="element-name">mapInternal</span><wbr><span class="parameters">(@NonNull
+ @NonNull io.micronaut.core.annotation.AnnotationValue&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/annotation/Annotation.html" title="class or interface in java.lang.annotation" class="external-link">Annotation</a>&gt;&nbsp;annotation,
  @NonNull
- io.micronaut.inject.visitor.VisitorContext&nbsp;visitorContext)</span></div>
+ @NonNull io.micronaut.inject.visitor.VisitorContext&nbsp;visitorContext)</span></div>
 <div class="block">Internal map implemenation that subclasses should implement.</div>
 <dl class="notes">
 <dt>Parameters:</dt>

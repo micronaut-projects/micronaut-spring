@@ -125,12 +125,12 @@ implements io.micronaut.inject.annotation.NamedAnnotationTransformer</span></div
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getName()" class="member-name-link">getName</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected boolean</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isHttpMethodMapping(io.micronaut.http.HttpMethod)" class="member-name-link">isHttpMethodMapping</a><wbr>(io.micronaut.http.HttpMethod&nbsp;method)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isHttpMethodMapping(io.micronaut.http.HttpMethod)" class="member-name-link">isHttpMethodMapping</a><wbr>(@Nullable io.micronaut.http.HttpMethod&nbsp;method)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Whether the given method is an HTTP method mapping.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected io.micronaut.core.annotation.AnnotationValueBuilder&lt;?&gt;</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#newBuilder(io.micronaut.http.HttpMethod,io.micronaut.core.annotation.AnnotationValue)" class="member-name-link">newBuilder</a><wbr>(io.micronaut.http.HttpMethod&nbsp;httpMethod,
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected @NonNull io.micronaut.core.annotation.AnnotationValueBuilder&lt;?&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#newBuilder(io.micronaut.http.HttpMethod,io.micronaut.core.annotation.AnnotationValue)" class="member-name-link">newBuilder</a><wbr>(@Nullable io.micronaut.http.HttpMethod&nbsp;httpMethod,
  io.micronaut.core.annotation.AnnotationValue&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/annotation/Annotation.html" title="class or interface in java.lang.annotation" class="external-link">Annotation</a>&gt;&nbsp;annotation)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Construct a new builder for the given http method.</div>
@@ -184,7 +184,7 @@ implements io.micronaut.inject.annotation.NamedAnnotationTransformer</span></div
 <section class="detail" id="isHttpMethodMapping(io.micronaut.http.HttpMethod)">
 <h3>isHttpMethodMapping</h3>
 <div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isHttpMethodMapping</span><wbr><span class="parameters">(@Nullable
- io.micronaut.http.HttpMethod&nbsp;method)</span></div>
+ @Nullable io.micronaut.http.HttpMethod&nbsp;method)</span></div>
 <div class="block">Whether the given method is an HTTP method mapping.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -198,8 +198,8 @@ implements io.micronaut.inject.annotation.NamedAnnotationTransformer</span></div
 <section class="detail" id="newBuilder(io.micronaut.http.HttpMethod,io.micronaut.core.annotation.AnnotationValue)">
 <h3>newBuilder</h3>
 <div class="member-signature"><span class="annotations">@NonNull
-</span><span class="modifiers">protected</span>&nbsp;<span class="return-type">io.micronaut.core.annotation.AnnotationValueBuilder&lt;?&gt;</span>&nbsp;<span class="element-name">newBuilder</span><wbr><span class="parameters">(@Nullable
- io.micronaut.http.HttpMethod&nbsp;httpMethod,
+</span><span class="modifiers">protected</span>&nbsp;<span class="return-type">@NonNull io.micronaut.core.annotation.AnnotationValueBuilder&lt;?&gt;</span>&nbsp;<span class="element-name">newBuilder</span><wbr><span class="parameters">(@Nullable
+ @Nullable io.micronaut.http.HttpMethod&nbsp;httpMethod,
  io.micronaut.core.annotation.AnnotationValue&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/annotation/Annotation.html" title="class or interface in java.lang.annotation" class="external-link">Annotation</a>&gt;&nbsp;annotation)</span></div>
 <div class="block">Construct a new builder for the given http method.</div>
 <dl class="notes">
