@@ -24,9 +24,3 @@ dependencies {
     testRuntimeOnly libs.spring.boot.starter.tomcat
 
 }
-// TODO temporarily disable binary compatibility checks
-micronautBuild {
-    binaryCompatibility {
-        enabled = false
-    }
-}
