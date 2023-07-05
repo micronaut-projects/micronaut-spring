@@ -9,7 +9,7 @@ micronaut-docs = "2.0.0"
 micronaut-test = "4.0.0-M5"
 groovy = "4.0.12"
 spock = "2.3-groovy-4.0"
-h2 = '2.1.214'
+h2 = '2.2.220'
 jakarta-annotation = '2.1.1'
 
 micronaut-cache = "4.0.0-M5"
