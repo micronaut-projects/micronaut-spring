@@ -3,8 +3,8 @@ The easiest way to use Micronaut inside Spring is to use the Micronaut Spring Bo
 .Adding the Micronaut BOM to Gradle
 [source,groovy]
 ----
-implementation platform("io.micronaut:micronaut-bom:3.6.0")
-annotationProcessor platform("io.micronaut:micronaut-bom:3.6.0")
+implementation platform("io.micronaut.platform:micronaut-platform:4.0.0")
+annotationProcessor platform("io.micronaut.platform:micronaut-platform:4.0.0")
 ----
 
 or Maven:
@@ -15,9 +15,9 @@ or Maven:
 <dependencyManagement>
     <dependencies>
         <dependency>
-            <groupId>io.micronaut</groupId>
-            <artifactId>micronaut-bom</artifactId>
-            <version>3.6.0</version>
+            <groupId>io.micronaut.platform</groupId>
+            <artifactId>micronaut-platform</artifactId>
+            <version>4.0.0</version>
             <type>pom</type>
             <scope>import</scope>
         </dependency>
