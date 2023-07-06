@@ -1019,8 +1019,8 @@ class Application {}</code></pre>
 <div class="listingblock">
 <div class="title">Adding the Micronaut BOM to Gradle</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">implementation platform("io.micronaut:micronaut-bom:3.6.0")
-annotationProcessor platform("io.micronaut:micronaut-bom:3.6.0")</code></pre>
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">implementation platform("io.micronaut.platform:micronaut-platform:4.0.0")
+annotationProcessor platform("io.micronaut.platform:micronaut-platform:4.0.0")</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1032,9 +1032,9 @@ annotationProcessor platform("io.micronaut:micronaut-bom:3.6.0")</code></pre>
 <pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;dependencyManagement&gt;
     &lt;dependencies&gt;
         &lt;dependency&gt;
-            &lt;groupId&gt;io.micronaut&lt;/groupId&gt;
-            &lt;artifactId&gt;micronaut-bom&lt;/artifactId&gt;
-            &lt;version&gt;3.6.0&lt;/version&gt;
+            &lt;groupId&gt;io.micronaut.platform&lt;/groupId&gt;
+            &lt;artifactId&gt;micronaut-platform&lt;/artifactId&gt;
+            &lt;version&gt;4.0.0&lt;/version&gt;
             &lt;type&gt;pom&lt;/type&gt;
             &lt;scope&gt;import&lt;/scope&gt;
         &lt;/dependency&gt;
