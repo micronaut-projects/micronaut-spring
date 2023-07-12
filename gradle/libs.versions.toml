@@ -14,7 +14,7 @@ jakarta-annotation = '2.1.1'
 
 micronaut-cache = "4.0.0-M5"
 micronaut-views = "4.0.0-M7"
-micronaut-validation = "4.0.0-M11"
+micronaut-validation = "4.0.0-M12"
 
 [libraries]
 # Core
