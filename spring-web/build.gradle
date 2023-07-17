@@ -30,11 +30,3 @@ dependencies {
 
 //compileTestJava.options.fork = true
 //compileTestJava.options.forkOptions.jvmArgs = ['-Xdebug', '-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=5005']
-
-micronautBuild {
-    binaryCompatibility {
-        enabled = true
-        // TODO required for now. Remove after Micronaut 4 release
-        baselineVersion = "5.0.0-M6"
-    }
-}
