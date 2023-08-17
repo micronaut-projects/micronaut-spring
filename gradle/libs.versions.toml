@@ -12,7 +12,7 @@ spock = "2.3-groovy-4.0"
 h2 = '2.2.220'
 jakarta-annotation = '2.1.1'
 
-micronaut-cache = "4.0.1"
+micronaut-cache = "4.0.2"
 micronaut-views = "4.0.1"
 micronaut-validation = "4.0.1"
 
