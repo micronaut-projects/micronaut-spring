@@ -1,0 +1,52 @@
+Micronaut Data supports Spring Data annotations. To use them add the following dependency:
+
+dependency:micronaut-data-processor[scope="annotationProcessor", groupId="io.micronaut.data"]
+
+The following table summarizes the Spring Data annotations that Micronaut Data supports and the Micronaut annotation that they map to at compilation time:
+
+.Supported Spring Data Annotations
+|===
+|Spring Data Annotation|Micronaut Data Annotation|Notes
+
+|link:{springdataapi}org/springframework/data/annotation/CreatedDate.html[@CreatedDate]
+|link:{micronautdataapi}data/annotation/DateCreated.html[@DateCreated]
+| Example `@CreatedDate private long createdDate`.
+
+|link:{springdataapi}org/springframework/data/annotation/Id.html[@Id]
+|link:{micronautdataapi}data/annotation/Id.html[@Id]
+| Example `@Id private long id`.
+
+|link:{springdataapi}org/springframework/data/annotation/LastModifiedDate.html[@LastModifiedDate]
+|link:{micronautdataapi}data/annotation/DateUpdated.html[@DateUpdated]
+| Example `@LastModifiedDate private long modifiedDate`.
+
+|link:{springdataapi}org/springframework/data/annotation/PersistenceConstructor.html[@PersistenceConstructor]
+|link:{micronautapi}core/annotation/Creator.html[@Creator]
+| Example `@PersistenceConstructor public User(String name, Integer age)`.
+
+|link:{springdataapi}org/springframework/data/annotation/Persistent.html[@Persistent]
+|link:{micronautdataapi}data/annotation/MappedEntity.html[@MappedEntity]
+| Example `@Persistent public class User`.
+
+|link:{springapi}org/springframework/stereotype/Repository.html[@Repository]
+|link:{micronautdataapi}data/annotation/Repository.html[@Repository]
+| Example `@Repository interface PersonRepository extends CrudRepository`.
+
+|link:{springapi}org/springframework/transaction/event/TransactionalEventListener.html[@TransactionalEventListener]
+|link:{micronautdataapi}transaction/annotation/TransactionalEventListener.html[@TransactionalEventListener]
+| Example `@TransactionalEventListener public void handleEvent(MyEvent event)`.
+
+|link:{springapi}org/springframework/transaction/annotation/Transactional.html[@Transactional]
+|link:{micronautdataapi}transaction/annotation/Transactional.html[@Transactional]
+| Example `@Transactional @Service public class MyService`.
+
+|link:{springdataapi}org/springframework/data/annotation/Transient.html[@Transient]
+|link:{micronautdataapi}data/annotation/Transient.html[@Transient]
+| Example `@Transient private String ssn`.
+
+|link:{springdataapi}org/springframework/data/annotation/Version.html[@Version]
+|link:{micronautdataapi}data/annotation/Version.html[@Version]
+| Example `@Version private long version`.
+|===
+
+

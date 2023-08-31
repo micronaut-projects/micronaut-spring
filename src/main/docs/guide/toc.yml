@@ -4,6 +4,7 @@ springToMicronaut:
   title: Transforming Spring Applications into Micronaut Applications
   springToMicronautStart: Build Configuration
   springAnnotations: Supported Spring Annotations
+  springDataAnnotations: Supported Spring Data Annotations
   springInterfaces: Supported Spring Interfaces
   springEvents: Supported Spring Events
   springMvc: Writing Spring MVC Controllers
