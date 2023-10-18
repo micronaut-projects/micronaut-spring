@@ -16,12 +16,12 @@
 package io.micronaut.spring.annotation.context
 
 import io.micronaut.context.annotation.EachProperty
+import io.micronaut.context.annotation.Requires
 import io.micronaut.scheduling.executor.ExecutorConfiguration
 import io.micronaut.spring.context.MicronautApplicationContext
 import jakarta.inject.Named
 import jakarta.inject.Singleton
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.context.ApplicationContext
 import spock.lang.Shared
 import spock.lang.Specification
@@ -30,6 +30,7 @@ class QualifierSpec extends Specification {
 
     @Shared
     Map<String, Object> config = [
+            'spec.name':'QualifierSpec',
             'foo.bar.one.name':'one',
             'foo.bar.two.name':'two',
     ]
@@ -105,6 +106,7 @@ class QualifierSpec extends Specification {
         ctx.close()
     }
 
+    @Requires(property = 'spec.name', value = 'QualifierSpec')
     @Singleton
     static class FooService {
         @Autowired
@@ -116,18 +118,21 @@ class QualifierSpec extends Specification {
 
     }
 
+    @Requires(property = 'spec.name', value = 'QualifierSpec')
     @Singleton
     @Named("bar1")
     static class Bar1 implements Foo {
 
     }
 
+    @Requires(property = 'spec.name', value = 'QualifierSpec')
     @Singleton
     @Named("bar2")
     static class Bar2 implements Foo {
 
     }
 
+    @Requires(property = 'spec.name', value = 'QualifierSpec')
     @EachProperty('foo.bar')
     static class FooBarProperties {
         String name

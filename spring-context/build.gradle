@@ -1,5 +1,3 @@
-import org.gradle.internal.jvm.Jvm
-
 plugins {
     id 'io.micronaut.build.internal.spring-module'
 }
@@ -22,8 +20,4 @@ dependencies {
         because 'not defined in toml because it hit a bug with version catalogs'
     }
     testImplementation libs.h2database
-
-    if (!JavaVersion.current().isJava9Compatible()) {
-        testImplementation files(Jvm.current().toolsJar)
-    }
 }
