@@ -71,12 +71,13 @@ class QualifierSpec extends Specification {
         ApplicationContext ctx = startContext()
 
         when:
-        List<String> names = ctx.getBeanNamesForType(ExecutorConfiguration)
+        def configs = ctx.getBeansOfType(ExecutorConfiguration)
 
         then:
-        names.size() == 2
+        configs.values().name ==~ ['io', 'scheduled'] + (Runtime.version().feature() == 17 ? [] : ['virtual'])
 
         when:
+        List<String> names = ctx.getBeanNamesForType(ExecutorConfiguration)
         ctx.beanFactory.getSingleton(names.first())
 
         then:
