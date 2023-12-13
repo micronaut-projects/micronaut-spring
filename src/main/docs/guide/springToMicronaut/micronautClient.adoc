@@ -9,3 +9,5 @@ include::spring-web/src/test/java/io/micronaut/spring/web/annotation/GreetingCli
 ----
 
 This also means you can define a common interface between client and server of a Spring application and compute the client at compilation name.
+
+TIP: if you are using low-level HTTP clients see the guide for https://guides.micronaut.io/latest/spring-boot-to-micronaut-uri-components-builder-vs-uri-builder.html[Building URIs - Spring Boot to Micronaut Framework] that compares Spring's `UriComponentsBuilder` to Micronaut Framework's `UriBuilder`.
