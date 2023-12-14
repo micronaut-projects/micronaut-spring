@@ -49,4 +49,6 @@ The following table summarizes the Spring Data annotations that Micronaut Data s
 | Example `@Version private long version`.
 |===
 
+TIP: See the guide for https://guides.micronaut.io/latest/spring-boot-micronaut-data.html[Micronaut Data from a Spring Boot Application] to learn more.
+
 

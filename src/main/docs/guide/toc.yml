@@ -20,4 +20,5 @@ micronautInsideSpring:
     title: Using Micronaut Parent Context
   beanPostProcessor:
     title: Using a Bean Post Processor
+springGuides: Guides
 repository: Repository
