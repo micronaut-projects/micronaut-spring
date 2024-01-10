@@ -54,7 +54,9 @@
                                 
                                 <div class="toc-item" style="margin-left:0"><a href="#micronautInsideSpring"><strong>5</strong><span>Using Micronaut Modules with Spring</span></a></div>
                                 
-                                <div class="toc-item" style="margin-left:0"><a href="#repository"><strong>6</strong><span>Repository</span></a></div>
+                                <div class="toc-item" style="margin-left:0"><a href="#springGuides"><strong>6</strong><span>Guides</span></a></div>
+                                
+                                <div class="toc-item" style="margin-left:0"><a href="#repository"><strong>7</strong><span>Repository</span></a></div>
                                 
                             </div>
                         </div>
@@ -119,7 +121,9 @@
         
         <div class="toc-item" style="margin-left:10px" id="toc-item-beanPostProcessor"><a href="#beanPostProcessor"><strong>5.3</strong><span>Using a Bean Post Processor</span></a></div>
         
-        <div class="toc-item" style="margin-left:0px" id="toc-item-repository"><a href="#repository"><strong>6</strong><span>Repository</span></a></div>
+        <div class="toc-item" style="margin-left:0px" id="toc-item-springGuides"><a href="#springGuides"><strong>6</strong><span>Guides</span></a></div>
+        
+        <div class="toc-item" style="margin-left:0px" id="toc-item-repository"><a href="#repository"><strong>7</strong><span>Repository</span></a></div>
         
         </div>
     </div>
@@ -129,7 +133,7 @@
         <h1>Micronaut for Spring</h1>
         <p></p>
         <p>Extensions to integrate Micronaut and Spring</p>
-        <p><strong>Version:</strong> <select style='max-width: 200px' onChange='window.document.location.href=this.options[this.selectedIndex].value;'><option value='https://micronaut-projects.github.io/micronaut-spring/snapshot/guide/index.html'>SNAPSHOT</option><option value='https://micronaut-projects.github.io/micronaut-spring/latest/guide/index.html'>LATEST</option><option selected='selected' value='https://micronaut-projects.github.io/micronaut-spring/5.3.0/guide/index.html'>5.3.0</option><option value='https://micronaut-projects.github.io/micronaut-spring/5.2.0/guide/index.html'>5.2.0</option><option value='https://micronaut-projects.github.io/micronaut-spring/5.1.1/guide/index.html'>5.1.1</option><option value='https://micronaut-projects.github.io/micronaut-spring/5.1.0/guide/index.html'>5.1.0</option><option value='https://micronaut-projects.github.io/micronaut-spring/5.0.2/guide/index.html'>5.0.2</option><option value='https://micronaut-projects.github.io/micronaut-spring/5.0.1/guide/index.html'>5.0.1</option><option value='https://micronaut-projects.github.io/micronaut-spring/5.0.0/guide/index.html'>5.0.0</option><option value='https://micronaut-projects.github.io/micronaut-spring/5.0.0-M7/guide/index.html'>5.0.0-M7</option><option value='https://micronaut-projects.github.io/micronaut-spring/5.0.0-M6/guide/index.html'>5.0.0-M6</option><option value='https://micronaut-projects.github.io/micronaut-spring/5.0.0-M4/guide/index.html'>5.0.0-M4</option><option value='https://micronaut-projects.github.io/micronaut-spring/5.0.0-M3/guide/index.html'>5.0.0-M3</option><option value='https://micronaut-projects.github.io/micronaut-spring/5.0.0-M2/guide/index.html'>5.0.0-M2</option><option value='https://micronaut-projects.github.io/micronaut-spring/5.0.0-M1/guide/index.html'>5.0.0-M1</option><option value='https://micronaut-projects.github.io/micronaut-spring/4.5.1/guide/index.html'>4.5.1</option><option value='https://micronaut-projects.github.io/micronaut-spring/4.5.0/guide/index.html'>4.5.0</option><option value='https://micronaut-projects.github.io/micronaut-spring/4.4.1/guide/index.html'>4.4.1</option><option value='https://micronaut-projects.github.io/micronaut-spring/4.4.0/guide/index.html'>4.4.0</option><option value='https://micronaut-projects.github.io/micronaut-spring/4.3.1/guide/index.html'>4.3.1</option><option value='https://micronaut-projects.github.io/micronaut-spring/4.3.0/guide/index.html'>4.3.0</option><option value='https://micronaut-projects.github.io/micronaut-spring/4.2.2/guide/index.html'>4.2.2</option><option value='https://micronaut-projects.github.io/micronaut-spring/4.2.1/guide/index.html'>4.2.1</option><option value='https://micronaut-projects.github.io/micronaut-spring/4.2.0/guide/index.html'>4.2.0</option><option value='https://micronaut-projects.github.io/micronaut-spring/4.1.1/guide/index.html'>4.1.1</option><option value='https://micronaut-projects.github.io/micronaut-spring/4.1.0/guide/index.html'>4.1.0</option><option value='https://micronaut-projects.github.io/micronaut-spring/4.0.1/guide/index.html'>4.0.1</option><option value='https://micronaut-projects.github.io/micronaut-spring/4.0.0/guide/index.html'>4.0.0</option><option value='https://micronaut-projects.github.io/micronaut-spring/4.0.0-RC2/guide/index.html'>4.0.0-RC2</option><option value='https://micronaut-projects.github.io/micronaut-spring/4.0.0-RC1/guide/index.html'>4.0.0-RC1</option><option value='https://micronaut-projects.github.io/micronaut-spring/3.1.1/guide/index.html'>3.1.1</option><option value='https://micronaut-projects.github.io/micronaut-spring/3.1.0/guide/index.html'>3.1.0</option></select> </p>
+        <p><strong>Version:</strong> <select style='max-width: 200px' onChange='window.document.location.href=this.options[this.selectedIndex].value;'><option value='https://micronaut-projects.github.io/micronaut-spring/snapshot/guide/index.html'>SNAPSHOT</option><option value='https://micronaut-projects.github.io/micronaut-spring/latest/guide/index.html'>LATEST</option><option selected='selected' value='https://micronaut-projects.github.io/micronaut-spring/5.3.1/guide/index.html'>5.3.1</option><option value='https://micronaut-projects.github.io/micronaut-spring/5.3.0/guide/index.html'>5.3.0</option><option value='https://micronaut-projects.github.io/micronaut-spring/5.2.0/guide/index.html'>5.2.0</option><option value='https://micronaut-projects.github.io/micronaut-spring/5.1.1/guide/index.html'>5.1.1</option><option value='https://micronaut-projects.github.io/micronaut-spring/5.1.0/guide/index.html'>5.1.0</option><option value='https://micronaut-projects.github.io/micronaut-spring/5.0.2/guide/index.html'>5.0.2</option><option value='https://micronaut-projects.github.io/micronaut-spring/5.0.1/guide/index.html'>5.0.1</option><option value='https://micronaut-projects.github.io/micronaut-spring/5.0.0/guide/index.html'>5.0.0</option><option value='https://micronaut-projects.github.io/micronaut-spring/5.0.0-M7/guide/index.html'>5.0.0-M7</option><option value='https://micronaut-projects.github.io/micronaut-spring/5.0.0-M6/guide/index.html'>5.0.0-M6</option><option value='https://micronaut-projects.github.io/micronaut-spring/5.0.0-M4/guide/index.html'>5.0.0-M4</option><option value='https://micronaut-projects.github.io/micronaut-spring/5.0.0-M3/guide/index.html'>5.0.0-M3</option><option value='https://micronaut-projects.github.io/micronaut-spring/5.0.0-M2/guide/index.html'>5.0.0-M2</option><option value='https://micronaut-projects.github.io/micronaut-spring/5.0.0-M1/guide/index.html'>5.0.0-M1</option><option value='https://micronaut-projects.github.io/micronaut-spring/4.5.1/guide/index.html'>4.5.1</option><option value='https://micronaut-projects.github.io/micronaut-spring/4.5.0/guide/index.html'>4.5.0</option><option value='https://micronaut-projects.github.io/micronaut-spring/4.4.1/guide/index.html'>4.4.1</option><option value='https://micronaut-projects.github.io/micronaut-spring/4.4.0/guide/index.html'>4.4.0</option><option value='https://micronaut-projects.github.io/micronaut-spring/4.3.1/guide/index.html'>4.3.1</option><option value='https://micronaut-projects.github.io/micronaut-spring/4.3.0/guide/index.html'>4.3.0</option><option value='https://micronaut-projects.github.io/micronaut-spring/4.2.2/guide/index.html'>4.2.2</option><option value='https://micronaut-projects.github.io/micronaut-spring/4.2.1/guide/index.html'>4.2.1</option><option value='https://micronaut-projects.github.io/micronaut-spring/4.2.0/guide/index.html'>4.2.0</option><option value='https://micronaut-projects.github.io/micronaut-spring/4.1.1/guide/index.html'>4.1.1</option><option value='https://micronaut-projects.github.io/micronaut-spring/4.1.0/guide/index.html'>4.1.0</option><option value='https://micronaut-projects.github.io/micronaut-spring/4.0.1/guide/index.html'>4.0.1</option><option value='https://micronaut-projects.github.io/micronaut-spring/4.0.0/guide/index.html'>4.0.0</option><option value='https://micronaut-projects.github.io/micronaut-spring/4.0.0-RC2/guide/index.html'>4.0.0-RC2</option><option value='https://micronaut-projects.github.io/micronaut-spring/4.0.0-RC1/guide/index.html'>4.0.0-RC1</option><option value='https://micronaut-projects.github.io/micronaut-spring/3.1.1/guide/index.html'>3.1.1</option></select> </p>
     </div>
     
 <h1 id="introduction"><a class="anchor" href="#introduction"></a>1 Introduction</h1>
@@ -196,7 +200,7 @@
 <p>Unlike traditional runtime reflection based frameworks Micronaut uses Ahead of Time (AOT) compilation, hence there is no runtime overhead to supporting an additional set of annotations (in this case Spring&#8217;s annotation programming model).</p>
 </div>
 <div class="paragraph">
-<p>As part of this project an  <a href="https://github.com/micronaut-projects/micronaut-guides/pull/839">Example Application</a> is provided that includes no dependencies on Micronaut itself in the source code (only Spring dependencies) but is computed into a Micronaut application at compilation time.</p>
+<p>As part of this project an <a href="https://guides.micronaut.io/latest/micronaut-spring-boot.html">Example Application</a> is provided that includes no dependencies on Micronaut itself in the source code (only Spring dependencies) but is computed into a Micronaut application at compilation time.</p>
 </div>
 <div class="paragraph">
 <p>The value in this as follows:</p>
@@ -213,6 +217,9 @@
 <p>Existing tooling like IntelliJ IDEA and STS 4.0 "Just Work" with Micronaut</p>
 </li>
 </ul>
+</div>
+<div class="paragraph">
+<p>In addition, the guide for <a href="https://guides.micronaut.io/latest/spring-boot-to-micronaut-application-class.html">Application Class - Spring Boot to Micronaut Framework</a> compares the application class of a Spring Boot application to that of a Micronaut Framework application.</p>
 </div>
 <div class="paragraph">
 <p>Note that Spring is huge and only a subset of Spring is supported, but enough to build real applications and libraries that work with either Micronaut or Spring. The following documentation covers the annotations and Spring interfaces that are supported.</p>
@@ -464,6 +471,18 @@ If an annotation or interface of Spring is not mentioned in this documentation c
 </tr>
 </tbody>
 </table>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+See the guide for <a href="https://guides.micronaut.io/latest/spring-boot-micronaut-data.html">Micronaut Data from a Spring Boot Application</a> to learn more.
+</td>
+</tr>
+</table>
+</div>
 
 <h2 id="springInterfaces"><a class="anchor" href="#springInterfaces"></a>3.4 Supported Spring Interfaces</h2>
 
@@ -1001,6 +1020,18 @@ public interface GreetingClient {
 <div class="paragraph">
 <p>This also means you can define a common interface between client and server of a Spring application and compute the client at compilation name.</p>
 </div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+if you are using low-level HTTP clients see the guide for <a href="https://guides.micronaut.io/latest/spring-boot-to-micronaut-uri-components-builder-vs-uri-builder.html">Building URIs - Spring Boot to Micronaut Framework</a> that compares Spring&#8217;s <code>UriComponentsBuilder</code> to Micronaut Framework&#8217;s <code>UriBuilder</code>.
+</td>
+</tr>
+</table>
+</div>
 
 <h1 id="sharingLibraries"><a class="anchor" href="#sharingLibraries"></a>4 Sharing Libraries between Spring and Micronaut</h1>
 
@@ -1439,7 +1470,23 @@ class ByAnnotationTypeConfig {
 </div>
 </div>
 
-<h1 id="repository"><a class="anchor" href="#repository"></a>6 Repository</h1>
+<h1 id="springGuides"><a class="anchor" href="#springGuides"></a>6 Guides</h1>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-spring/edit/master/src/main/docs/guide/springGuides.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>See the following list of guides to learn more about working with Spring in the Micronaut Framework:</p>
+</div>
+<div class="paragraph">
+<p><a href="https://guides.micronaut.io/latest/tag-spring-boot.html" class="bare">https://guides.micronaut.io/latest/tag-spring-boot.html</a></p>
+</div>
+
+<h1 id="repository"><a class="anchor" href="#repository"></a>7 Repository</h1>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-spring/edit/master/src/main/docs/guide/repository.adoc"'>
