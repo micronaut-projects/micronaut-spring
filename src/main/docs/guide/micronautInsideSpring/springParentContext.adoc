@@ -15,6 +15,6 @@ SpringApplicationBuilder builder = new SpringApplicationBuilder();
 MicronautApplicationContext context = new MicronautApplicationContext();
 context.start();
 builder.parent(context);
-builder.sources(Application);
+builder.sources(Application.class);
 builder.build().run();
 ----
