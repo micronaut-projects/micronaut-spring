@@ -5,11 +5,12 @@ be added to the Spring Application Context.  `MicronautBeanProcessor` requires
 a constructor parameter which represents a list of the types of
 Micronaut beans which should be added to the Spring Application Context.  The
 processor may be used in any Spring application.  As an example, a Grails 3
-application could take advantage of `MicronautBeanProcessor` to add all of the
+application could take advantage of `MicronautBeanProcessor` to add all the
 Micronaut HTTP Client beans to the Spring Application Context with something
 like the folowing:
 
-```groovy
+[source,groovy]
+----
 // grails-app/conf/spring/resources.groovy
 import io.micronaut.spring.beans.MicronautBeanProcessor
 import io.micronaut.http.client.annotation.Client
@@ -17,11 +18,12 @@ import io.micronaut.http.client.annotation.Client
 beans = {
     httpClientBeanProcessor MicronautBeanProcessor, Client
 }
-```
+----
 
 Multiple types may be specified:
 
-```groovy
+[source,groovy]
+----
 // grails-app/conf/spring/resources.groovy
 import io.micronaut.spring.beans.MicronautBeanProcessor
 import io.micronaut.http.client.annotation.Client
@@ -30,7 +32,7 @@ import com.sample.Widget
 beans = {
     httpClientBeanProcessor MicronautBeanProcessor, [Client, Widget]
 }
-```
+----
 
 In a non-Grails application something similar may be specified using
 any of Spring's bean definition styles:

@@ -25,7 +25,7 @@ class Application {}
 
 You can additionally use the same configuration in a Micronaut application by use the same declaration as above assuming you have correctly configured Micronaut for Spring. See the example project that is part of the guide https://guides.micronaut.io/latest/micronaut-spring-boot.html[Run a Spring Boot Application as a Micronaut Application] for how to configure Micronaut for Spring.
 
-Micronaut will import all declared beans at compilation time. The only limitation is that `ImportBeanDefinitionRegistrar` that require runtime interfaces like `BeanClassLoaderAware` will fail to import with a compilation error since import processing happens during compilation with Micronaut. When creating shared components try avoid defining `ImportBeanDefinitionRegistrar` types that depend on one of the following interfaces:
+Micronaut will import all declared beans at compilation time. The only limitation is that `ImportBeanDefinitionRegistrar` that require runtime interfaces like `BeanClassLoaderAware` will fail to import with a compilation error since import processing happens during compilation with Micronaut. When creating shared components try to avoid defining `ImportBeanDefinitionRegistrar` types that depend on one of the following interfaces:
 
 * `BeanClassLoaderAware`
 * `BeanFactoryAware`

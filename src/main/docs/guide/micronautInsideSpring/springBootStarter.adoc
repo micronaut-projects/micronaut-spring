@@ -45,7 +45,7 @@ When the Spring Boot application starts app all beans provided by Micronaut will
 
 NOTE: You can control which beans are exposed to Spring by using the ann:spring.boot.starter.EnableMicronaut[] annotation on your `Application` class and specifying a api:spring.boot.starter.MicronautBeanFilter[] to include or exclude beans from Micronaut.
 
-==== Using Micronaut Data
+== Using Micronaut Data
 
 Micronaut Data can be used by adding the Micronaut Data annotation processor:
 
