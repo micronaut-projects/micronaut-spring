@@ -2,15 +2,20 @@ plugins {
     id("io.micronaut.build.internal.spring-module")
 }
 dependencies {
+
+    compileOnly(libs.managed.spring.jdbc)
+    compileOnly(mnTest.micronaut.test.core)
+
     api(libs.managed.spring)
     api(libs.managed.spring.tx)
     api(libs.managed.spring.context)
-    implementation(mn.micronaut.core.processor)
     api(mn.micronaut.inject)
     api(mn.micronaut.aop)
-    compileOnly(libs.managed.spring.jdbc)
-    compileOnly(mnTest.micronaut.test.core)
+
+    implementation(mn.micronaut.core.processor)
+
     testAnnotationProcessor(mn.micronaut.inject.java)
+
     testCompileOnly(mn.micronaut.inject.groovy)
 
     testImplementation(libs.spock.spring)

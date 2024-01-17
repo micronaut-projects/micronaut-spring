@@ -24,7 +24,6 @@ dependencies {
     testImplementation mn.micronaut.http.server.netty
 
     testRuntimeOnly(mnViews.micronaut.views.thymeleaf)
-
     testRuntimeOnly libs.spring.boot.starter.thymeleaf
 }
 

@@ -30,4 +30,5 @@ micronautBuild {
     importMicronautCatalog("micronaut-cache")
     importMicronautCatalog("micronaut-views")
     importMicronautCatalog("micronaut-validation")
+    importMicronautCatalog("micronaut-servlet")
 }
