@@ -19,7 +19,13 @@ import io.micronaut.core.annotation.Nullable;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.annotation.Header;
 import io.micronaut.http.client.annotation.Client;
-import org.springframework.web.bind.annotation.*;
+import io.micronaut.http.client.multipart.MultipartBody;
+
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @Client("/")
 public interface GreetingClient {
@@ -45,4 +51,7 @@ public interface GreetingClient {
 
     @GetMapping("/greeting-status{?name}")
     HttpResponse<Greeting> greetWithStatus(@Nullable String name);
+
+    @PostMapping(value = "/multipart-request", consumes = MediaType.TEXT_PLAIN_VALUE, produces = MediaType.MULTIPART_FORM_DATA_VALUE)
+    String multipartRequest(@RequestBody MultipartBody body);
 }

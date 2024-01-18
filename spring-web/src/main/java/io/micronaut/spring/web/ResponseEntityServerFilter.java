@@ -38,15 +38,15 @@ import java.util.Map;
  */
 @Filter("/**")
 public class ResponseEntityServerFilter implements HttpServerFilter {
+
     @Override
     public Publisher<MutableHttpResponse<?>> doFilter(HttpRequest<?> request, ServerFilterChain chain) {
         final Publisher<MutableHttpResponse<?>> responsePublisher = chain.proceed(request);
         return Publishers.map(responsePublisher, mutableHttpResponse -> {
             final Object body = mutableHttpResponse.body();
-            if (body instanceof HttpEntity) {
-                HttpEntity entity = (HttpEntity) body;
-                if (entity instanceof ResponseEntity) {
-                    mutableHttpResponse.status(((ResponseEntity) entity).getStatusCodeValue());
+            if (body instanceof HttpEntity<?> entity) {
+                if (entity instanceof ResponseEntity<?> responseEntity) {
+                    mutableHttpResponse.status(responseEntity.getStatusCode().value());
                 }
                 final HttpHeaders headers = entity.getHeaders();
                 final MutableHttpHeaders micronautHeaders = mutableHttpResponse.getHeaders();
@@ -59,10 +59,9 @@ public class ResponseEntityServerFilter implements HttpServerFilter {
                 }
                 final Object b = entity.getBody();
                 if (b != null) {
-                    ((MutableHttpResponse<Object>) mutableHttpResponse).body(b);
+                    mutableHttpResponse.body(b);
                 }
-            } else if (body instanceof HttpHeaders) {
-                HttpHeaders httpHeaders = (HttpHeaders) body;
+            } else if (body instanceof HttpHeaders httpHeaders) {
                 mutableHttpResponse.body(null);
                 httpHeaders.forEach((s, strings) -> {
                     final MutableHttpHeaders headers = mutableHttpResponse.getHeaders();

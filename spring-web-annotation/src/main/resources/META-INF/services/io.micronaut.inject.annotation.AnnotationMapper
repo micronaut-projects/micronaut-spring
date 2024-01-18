@@ -1,4 +1,5 @@
 io.micronaut.spring.web.annotation.RequestParamAnnotationMapper
+io.micronaut.spring.web.annotation.RequestPartAnnotationMapper
 io.micronaut.spring.web.annotation.RestControllerAnnotationMapper
 io.micronaut.spring.web.annotation.CookieValueAnnotationMapper
 io.micronaut.spring.web.annotation.RequestHeaderAnnotationMapper

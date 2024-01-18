@@ -94,6 +94,10 @@ The following Spring MVC annotations are supported:
 |link:{micronautapi}http/annotation/Body.html[@Body]
 |Example: `@RequestBody`
 
+|link:{springapi}org/springframework/web/bind/annotation/RequestPart.html[@RequestPart]
+|link:{micronautapi}http/annotation/Part.html[@Part]
+|Example: `@RequestPart("my-part)`
+
 |link:{springapi}org/springframework/web/bind/annotation/RequestParam.html[@RequestParam]
 |link:{micronautapi}http/annotation/QueryValue.html[@QueryValue]
 |Example: `@RequestParam("myParam")`
