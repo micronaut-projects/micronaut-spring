@@ -45,7 +45,7 @@ The following Spring Boot specific annotations are supported:
 
 With support for `@Configuration` and the majority of Spring Boot conditions it is possible to build auto configurations that work with both Spring Boot and Micronaut.
 
-In addition the following Spring Boot Actuator annotations are supported:
+In addition, the following Spring Boot Actuator annotations are supported:
 
 
 .Supported Spring Boot Actuator Annotations

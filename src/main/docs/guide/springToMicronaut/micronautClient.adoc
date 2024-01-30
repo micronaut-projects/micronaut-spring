@@ -1,6 +1,6 @@
 Since annotations values are mapped at compilation time, this also impacts the authoring of Micronaut's compile-time declarative HTTP client.
 
-You can essentially use Spring annotations to a define a compilation-time HTTP client:
+You can essentially use Spring annotations to a defined a compilation-time HTTP client:
 
 .Spring `@Client` Implementation
 [source,java]

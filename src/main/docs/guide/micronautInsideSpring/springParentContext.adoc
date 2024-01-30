@@ -11,10 +11,11 @@ The following example shows how to Configure your Spring Boot application with a
 .Using the Micronaut Parent Context
 [source,java]
 ----
-SpringApplicationBuilder builder = new SpringApplicationBuilder();
-MicronautApplicationContext context = new MicronautApplicationContext();
+var builder = new SpringApplicationBuilder();
+var context = new MicronautApplicationContext();
 context.start();
-builder.parent(context);
-builder.sources(Application);
-builder.build().run();
+builder.parent(context)
+    .sources(Application.class)
+    .build()
+    .run();
 ----
