@@ -15,10 +15,8 @@
  */
 package io.micronaut.spring.tx;
 
-import org.junit.jupiter.api.Assertions;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
-
 
 @MetaAnnotation
 public class MetaTransactionalBean {
@@ -26,7 +24,9 @@ public class MetaTransactionalBean {
     public String doSomething() {
         // should not throw
         final TransactionStatus transactionStatus = TransactionAspectSupport.currentTransactionStatus();
-        Assertions.assertNotNull(transactionStatus);
+        if (transactionStatus == null) {
+            throw new IllegalStateException("transactionStatus can't be null");
+        }
         return "foo";
     }
 }

@@ -3,20 +3,23 @@ plugins {
 }
 
 dependencies {
+
     api mn.micronaut.aop
     api mn.micronaut.inject
     api mn.micronaut.context
     api libs.managed.spring.boot
+
     implementation libs.spring.boot.autoconfigure
-    implementation libs.jakarta.annotation
+    implementation mn.jakarta.annotation.api
 
     testAnnotationProcessor mn.micronaut.inject.java
+
+    testCompileOnly mnServlet.servlet.api
 
     testImplementation mn.micronaut.http
     testImplementation libs.spring.boot.autoconfigure
     testImplementation libs.spring.boot.actuator
     testImplementation libs.spring.boot.test
-    testImplementation libs.servlet.api
     testImplementation libs.h2database
     testImplementation libs.managed.spring.jdbc
 

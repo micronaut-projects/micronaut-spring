@@ -7,11 +7,11 @@ plugins {
 dependencies {
     testAnnotationProcessor(projects.micronautSpringAnnotation)
     testAnnotationProcessor(mn.micronaut.inject.java)
+
     testCompileOnly(mn.micronaut.inject.groovy)
+
     testImplementation(projects.micronautSpring)
     testImplementation(mnTest.micronaut.test.spock)
-    testImplementation(libs.junit.jupiter.api)
-    testRuntimeOnly(libs.junit.jupiter.engine)
 }
 
 tasks.withType<Test> {

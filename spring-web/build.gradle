@@ -3,7 +3,7 @@ plugins {
 }
 
 dependencies {
-    api(platform(libs.boms.spring))
+    api platform(libs.boms.spring)
     api projects.micronautSpringContext
     api libs.spring.web
     api mn.reactor
@@ -24,9 +24,5 @@ dependencies {
     testImplementation mn.micronaut.http.server.netty
 
     testRuntimeOnly(mnViews.micronaut.views.thymeleaf)
-
     testRuntimeOnly libs.spring.boot.starter.thymeleaf
 }
-
-//compileTestJava.options.fork = true
-//compileTestJava.options.forkOptions.jvmArgs = ['-Xdebug', '-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=5005']

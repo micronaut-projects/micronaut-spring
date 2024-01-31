@@ -433,9 +433,8 @@ class MergedAnnotationValue<A extends Annotation> implements MergedAnnotation<A>
             AnnotationValue<?> av = (AnnotationValue<?>) value;
             if (adapts.contains(Adapt.ANNOTATION_TO_MAP)) {
                 value = asMap(factory, av, adaptations);
-            } else {
-                // TODO: synthesize annotation from value?
             }
+            // TODO: else synthesize annotation from value?
         }
         return value;
     }
