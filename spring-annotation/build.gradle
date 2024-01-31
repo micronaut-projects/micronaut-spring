@@ -22,4 +22,3 @@ dependencies {
     testImplementation libs.managed.spring.tx
 }
 
-//compileTestGroovy.options.fork = true
