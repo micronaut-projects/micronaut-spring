@@ -872,7 +872,7 @@ See the <a href="https://github.com/micronaut-projects/micronaut-guides/pull/839
 <p>With support for <code>@Configuration</code> and the majority of Spring Boot conditions it is possible to build auto configurations that work with both Spring Boot and Micronaut.</p>
 </div>
 <div class="paragraph">
-<p>In addition the following Spring Boot Actuator annotations are supported:</p>
+<p>In addition, the following Spring Boot Actuator annotations are supported:</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <caption class="title">Table 2. Supported Spring Boot Actuator Annotations</caption>
@@ -941,7 +941,7 @@ See the <a href="https://github.com/micronaut-projects/micronaut-guides/pull/839
 <p><strong>AspectJ</strong> - Spring&#8217;s AOP implementation is not supported, you can however use <a href="https://docs.micronaut.io/latest/guide/index.html#aop">Micronaut AOP</a> which is compilation time and reflection free.</p>
 </li>
 <li>
-<p><strong>Spring Expression Language (SpEL)</strong> - SpEL expressions are not supported, property placeholders are however.</p>
+<p><strong>Spring Expression Language (SpEL)</strong> - SpEL expressions are not supported, property placeholders are, however.</p>
 </li>
 <li>
 <p><strong>The Servlet API</strong> - Any reference to the Servlet API is not supported</p>
@@ -962,7 +962,7 @@ See the <a href="https://github.com/micronaut-projects/micronaut-guides/pull/839
 <p>Since annotations values are mapped at compilation time, this also impacts the authoring of Micronaut&#8217;s compile-time declarative HTTP client.</p>
 </div>
 <div class="paragraph">
-<p>You can essentially use Spring annotations to a define a compilation-time HTTP client:</p>
+<p>You can essentially use Spring annotations to a defined a compilation-time HTTP client:</p>
 </div>
 <div class="listingblock">
 <div class="title">Spring <code>@Client</code> Implementation</div>
@@ -1107,7 +1107,7 @@ class Application {}</code></pre>
 <p>You can additionally use the same configuration in a Micronaut application by use the same declaration as above assuming you have correctly configured Micronaut for Spring. See the example project that is part of the guide <a href="https://guides.micronaut.io/latest/micronaut-spring-boot.html">Run a Spring Boot Application as a Micronaut Application</a> for how to configure Micronaut for Spring.</p>
 </div>
 <div class="paragraph">
-<p>Micronaut will import all declared beans at compilation time. The only limitation is that <code>ImportBeanDefinitionRegistrar</code> that require runtime interfaces like <code>BeanClassLoaderAware</code> will fail to import with a compilation error since import processing happens during compilation with Micronaut. When creating shared components try avoid defining <code>ImportBeanDefinitionRegistrar</code> types that depend on one of the following interfaces:</p>
+<p>Micronaut will import all declared beans at compilation time. The only limitation is that <code>ImportBeanDefinitionRegistrar</code> that require runtime interfaces like <code>BeanClassLoaderAware</code> will fail to import with a compilation error since import processing happens during compilation with Micronaut. When creating shared components try to avoid defining <code>ImportBeanDefinitionRegistrar</code> types that depend on one of the following interfaces:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -1136,7 +1136,7 @@ class Application {}</code></pre>
 
 
 <div class="paragraph">
-<p>It may be desirable to use Micronaut modules or libraries from a Spring or Spring Boot application. For example you may wish to use the <a href="https://guides.micronaut.io/latest/micronaut-http-client.html">Micronaut HTTP Client</a> or <a href="https://micronaut-projects.github.io/micronaut-data/latest/guide/">Micronaut Data</a> within your Spring application. There are several ways you can integrate Micronaut into a Spring application which are described below.</p>
+<p>It may be desirable to use Micronaut modules or libraries from a Spring or Spring Boot application. For example, you may wish to use the <a href="https://guides.micronaut.io/latest/micronaut-http-client.html">Micronaut HTTP Client</a> or <a href="https://micronaut-projects.github.io/micronaut-data/latest/guide/">Micronaut Data</a> within your Spring application. There are several ways you can integrate Micronaut into a Spring application which are described below.</p>
 </div>
 
 <h2 id="springBootStarter"><a class="anchor" href="#springBootStarter"></a>5.1 Using the Micronaut Spring Boot Starter</h2>
@@ -1285,8 +1285,9 @@ You can control which beans are exposed to Spring by using the <a href="../api/i
 </tr>
 </table>
 </div>
-<div class="sect3">
-<h4 id="_using_micronaut_data">Using Micronaut Data</h4>
+<div class="sect1">
+<h2 id="_using_micronaut_data">Using Micronaut Data</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>Micronaut Data can be used by adding the Micronaut Data annotation processor:</p>
 </div>
@@ -1369,6 +1370,7 @@ You can control which beans are exposed to Spring by using the <a href="../api/i
 </div></p>
 </div>
 </div>
+</div>
 
 <h2 id="springParentContext"><a class="anchor" href="#springParentContext"></a>5.2 Using Micronaut Parent Context</h2>
 
@@ -1397,12 +1399,13 @@ You can control which beans are exposed to Spring by using the <a href="../api/i
 <div class="listingblock">
 <div class="title">Using the Micronaut Parent Context</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">SpringApplicationBuilder builder = new SpringApplicationBuilder();
-MicronautApplicationContext context = new MicronautApplicationContext();
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">var builder = new SpringApplicationBuilder();
+var context = new MicronautApplicationContext();
 context.start();
-builder.parent(context);
-builder.sources(Application);
-builder.build().run();</code></pre>
+builder.parent(context)
+    .sources(Application.class)
+    .build()
+    .run();</code></pre>
 </div>
 </div>
 
@@ -1423,7 +1426,7 @@ be added to the Spring Application Context.  <code>MicronautBeanProcessor</code>
 a constructor parameter which represents a list of the types of
 Micronaut beans which should be added to the Spring Application Context.  The
 processor may be used in any Spring application.  As an example, a Grails 3
-application could take advantage of <code>MicronautBeanProcessor</code> to add all of the
+application could take advantage of <code>MicronautBeanProcessor</code> to add all the
 Micronaut HTTP Client beans to the Spring Application Context with something
 like the folowing:</p>
 </div>
