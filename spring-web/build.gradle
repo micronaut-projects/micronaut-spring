@@ -3,7 +3,7 @@ plugins {
 }
 
 dependencies {
-    api(platform(libs.boms.spring))
+    api platform(libs.boms.spring)
     api projects.micronautSpringContext
     api libs.spring.web
     api mn.reactor
