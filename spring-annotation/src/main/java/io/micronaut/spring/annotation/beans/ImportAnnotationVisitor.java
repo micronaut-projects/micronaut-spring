@@ -58,8 +58,7 @@ import io.micronaut.spring.beans.ImportedBy;
 import io.micronaut.spring.core.type.ClassElementSpringMetadata;
 
 /**
- * Handles the import importDeclaration allowing importing of additional Spring beans into a Micronaut
- application.
+ * Handles the import importDeclaration allowing importing of additional Spring beans into a Micronaut application.
  *
  * @author graemerocher
  * @since 4.3.0
@@ -80,7 +79,9 @@ public final class ImportAnnotationVisitor implements TypeElementVisitor<Object,
                     for (AnnotationClassValue<?> a : acv) {
                         String className = a.getName();
                         context.getClassElement(className).ifPresent(typeToImport -> {
-                            handleImport(element, context, typeToImport);
+                            if (typeToImport.isPublic()) {
+                                handleImport(element, context, typeToImport);
+                            }
                         });
                     }
                 }
