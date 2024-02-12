@@ -74,17 +74,21 @@ public final class ImportAnnotationVisitor implements TypeElementVisitor<Object,
         if (annType != null && element.hasStereotype(annType)) {
             List<AnnotationValue<? extends Annotation>> values = element.getAnnotationValuesByType(annType);
             if (!values.isEmpty()) {
-                for (AnnotationValue<?> av : values) {
-                    AnnotationClassValue<?>[] acv = av.annotationClassValues(AnnotationMetadata.VALUE_MEMBER);
-                    for (AnnotationClassValue<?> a : acv) {
-                        String className = a.getName();
-                        context.getClassElement(className).ifPresent(typeToImport -> {
-                            if (typeToImport.isPublic()) {
-                                handleImport(element, context, typeToImport);
-                            }
-                        });
+                visitValues(element, context, values);
+            }
+        }
+    }
+
+    private void visitValues(ClassElement element, VisitorContext context, List<AnnotationValue<? extends Annotation>> values) {
+        for (AnnotationValue<?> av : values) {
+            AnnotationClassValue<?>[] acv = av.annotationClassValues(AnnotationMetadata.VALUE_MEMBER);
+            for (AnnotationClassValue<?> a : acv) {
+                String className = a.getName();
+                context.getClassElement(className).ifPresent(typeToImport -> {
+                    if (typeToImport.isPublic()) {
+                        handleImport(element, context, typeToImport);
                     }
-                }
+                });
             }
         }
     }
