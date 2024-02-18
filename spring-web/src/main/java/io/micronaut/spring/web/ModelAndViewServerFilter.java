@@ -70,7 +70,7 @@ public class ModelAndViewServerFilter implements HttpServerFilter {
                     final String view = body.toString();
                     final Model model = attribute.get();
                     final MutableHttpResponse<Object> res = (MutableHttpResponse<Object>) mutableHttpResponse;
-                    res.body(new ModelAndView(
+                    res.body(new ModelAndView<>(
                             view,
                             model.asMap()
                     ));
@@ -82,10 +82,9 @@ public class ModelAndViewServerFilter implements HttpServerFilter {
                 if (modelMap.isPresent()) {
                     final String view = body.toString();
                     Object o = modelMap.get();
-                    if (o instanceof Model) {
-                        final Model model = (Model) o;
+                    if (o instanceof Model model) {
                         final MutableHttpResponse<Object> res = (MutableHttpResponse<Object>) mutableHttpResponse;
-                        res.body(new ModelAndView(
+                        res.body(new ModelAndView<>(
                                 view,
                                 model
                         ));

@@ -18,6 +18,7 @@ package io.micronaut.spring.web.annotation
 import io.micronaut.http.HttpResponse
 import io.micronaut.http.HttpStatus
 import io.micronaut.http.client.exceptions.HttpClientResponseException
+import io.micronaut.http.client.multipart.MultipartBody
 import io.micronaut.test.extensions.spock.annotation.MicronautTest
 import jakarta.inject.Inject
 import spock.lang.Specification
@@ -64,5 +65,19 @@ class RestControllerSpec extends Specification {
 
         then:
         greeting != null
+    }
+
+    void "test RequestPart argument"() {
+
+        when:
+        def json = """{"prop1": "val1", "prop2": 12}"""
+        def fileContent = "this is file content"
+        def response = greetingClient.multipartRequest(MultipartBody.builder()
+                .addPart("json", json)
+                .addPart("myFile", "myFileName", fileContent.bytes)
+                .build())
+
+        then:
+        response == json + '#' + fileContent
     }
 }
