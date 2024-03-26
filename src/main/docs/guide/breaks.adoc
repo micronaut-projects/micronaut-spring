@@ -1,0 +1,9 @@
+This section documents breaking changes between Micronaut Spring versions:
+
+=== Micronaut Spring 6.0.0
+
+==== Deprecations
+
+- The Internal class method `io.micronaut.spring.context.aware.SpringAwareListener.onBeanCreated(Object, Object)` deprecated previously has been removed.
+`onBeanCreated(BeanDefinition, Object, String)` is used instead.
+
