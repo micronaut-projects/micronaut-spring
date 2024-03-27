@@ -124,19 +124,6 @@ public class SpringAwareListener implements BeanInitializedEventListener<Object>
     /**
      * Execute when a bean is created.
      *
-     * @param o
-     * @param bean           The bean.
-     * @return The result
-     * @deprecated Use {@link #onBeanCreated(BeanDefinition, Object, String)}
-     */
-    @Deprecated
-    public Object onBeanCreated(Object o, Object bean) {
-        return onBeanCreated(null, bean, null);
-    }
-
-    /**
-     * Execute when a bean is created.
-     *
      * @param beanDefinition The bean definition
      * @param bean           The bean.
      * @param beanName       The bean name

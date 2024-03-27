@@ -21,4 +21,5 @@ micronautInsideSpring:
   beanPostProcessor:
     title: Using a Bean Post Processor
 springGuides: Guides
+breaks: Breaking Changes
 repository: Repository
