@@ -56,7 +56,9 @@
                                 
                                 <div class="toc-item" style="margin-left:0"><a href="#springGuides"><strong>6</strong><span>Guides</span></a></div>
                                 
-                                <div class="toc-item" style="margin-left:0"><a href="#repository"><strong>7</strong><span>Repository</span></a></div>
+                                <div class="toc-item" style="margin-left:0"><a href="#breaks"><strong>7</strong><span>Breaking Changes</span></a></div>
+                                
+                                <div class="toc-item" style="margin-left:0"><a href="#repository"><strong>8</strong><span>Repository</span></a></div>
                                 
                             </div>
                         </div>
@@ -123,7 +125,9 @@
         
         <div class="toc-item" style="margin-left:0px" id="toc-item-springGuides"><a href="#springGuides"><strong>6</strong><span>Guides</span></a></div>
         
-        <div class="toc-item" style="margin-left:0px" id="toc-item-repository"><a href="#repository"><strong>7</strong><span>Repository</span></a></div>
+        <div class="toc-item" style="margin-left:0px" id="toc-item-breaks"><a href="#breaks"><strong>7</strong><span>Breaking Changes</span></a></div>
+        
+        <div class="toc-item" style="margin-left:0px" id="toc-item-repository"><a href="#repository"><strong>8</strong><span>Repository</span></a></div>
         
         </div>
     </div>
@@ -133,7 +137,7 @@
         <h1>Micronaut for Spring</h1>
         <p></p>
         <p>Extensions to integrate Micronaut and Spring</p>
-        <p><strong>Version:</strong> 5.5.1-SNAPSHOT </p>
+        <p><strong>Version:</strong> 6.0.0-SNAPSHOT </p>
     </div>
     
 <h1 id="introduction"><a class="anchor" href="#introduction"></a>1 Introduction</h1>
@@ -1503,7 +1507,34 @@ class ByAnnotationTypeConfig {
 <p><a href="https://guides.micronaut.io/latest/tag-spring-boot.html" class="bare">https://guides.micronaut.io/latest/tag-spring-boot.html</a></p>
 </div>
 
-<h1 id="repository"><a class="anchor" href="#repository"></a>7 Repository</h1>
+<h1 id="breaks"><a class="anchor" href="#breaks"></a>7 Breaking Changes</h1>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-spring/edit/master/src/main/docs/guide/breaks.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>This section documents breaking changes between Micronaut Spring versions:</p>
+</div>
+<div class="sect2">
+<h3 id="_micronaut_spring_6_0_0">Micronaut Spring 6.0.0</h3>
+<div class="sect3">
+<h4 id="_deprecations">Deprecations</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>The Internal class method <code>io.micronaut.spring.context.aware.SpringAwareListener.onBeanCreated(Object, Object)</code> deprecated previously has been removed.
+<code>onBeanCreated(BeanDefinition, Object, String)</code> is used instead.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+<h1 id="repository"><a class="anchor" href="#repository"></a>8 Repository</h1>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-spring/edit/master/src/main/docs/guide/repository.adoc"'>
