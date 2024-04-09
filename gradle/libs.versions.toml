@@ -5,7 +5,7 @@ managed-spring = "6.1.5"
 groovy = "4.0.18"
 h2 = '2.2.224'
 
-micronaut = "4.4.0"
+micronaut = "4.4.1"
 micronaut-docs = "2.0.0"
 micronaut-test = "4.2.0"
 micronaut-cache = "4.2.2"
