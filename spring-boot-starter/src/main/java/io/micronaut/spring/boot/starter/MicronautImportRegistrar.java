@@ -130,6 +130,7 @@ public final class MicronautImportRegistrar implements ImportBeanDefinitionRegis
         ppd.setBeanClass(MicronautPostProcess.class);
         ppd.setInstanceSupplier(() -> new MicronautPostProcess(context));
         registry.registerBeanDefinition("micronautPostProcess", ppd);
+        genericBeanDefinition.setBeanClass(context.getClass());
         genericBeanDefinition.setInstanceSupplier(() -> context);
         genericBeanDefinition.setDestroyMethodName("stop");
         registry.registerBeanDefinition(
