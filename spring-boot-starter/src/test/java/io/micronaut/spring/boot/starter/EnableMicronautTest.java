@@ -1,6 +1,8 @@
 package io.micronaut.spring.boot.starter;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 import io.micronaut.context.ApplicationContext;
 import io.micronaut.context.annotation.Bean;
@@ -15,6 +17,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.env.Environment;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -51,6 +54,11 @@ class EnableMicronautTest {
         assertEquals("default", fooBean.getConfiguration().getName());
         assertEquals(3, fooBeanList.size());
         assertTrue(context.isRunning());
+        assertFalse(
+            Arrays.stream(context.getBeanDefinitionsNames())
+                  .map(context::getType)
+                  .anyMatch(Objects::isNull)
+        );
     }
 }
 
