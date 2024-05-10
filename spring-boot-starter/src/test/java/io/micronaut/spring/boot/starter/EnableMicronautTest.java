@@ -55,9 +55,10 @@ class EnableMicronautTest {
         assertEquals(3, fooBeanList.size());
         assertTrue(context.isRunning());
         assertFalse(
-            Arrays.stream(context.getBeanDefinitionNames())
-                  .map(context::getType)
-                  .anyMatch(Objects::isNull)
+            context.getBeanDefinitions()
+                   .stream()
+                   .map(bean -> bean.getBeanType())
+                   .anyMatch(Objects::isNull)
         );
     }
 }
