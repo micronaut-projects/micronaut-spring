@@ -127,8 +127,8 @@ public class MicronautServerHttpRequest extends AbstractServerHttpRequest {
 
             NettyHttpRequest<?> nettyRequest = ((NettyHttpRequest<?>) request);
             try {
-                return Flux.from(nettyRequest.rootBody().rawContent(serverConfiguration).asPublisher())
-                    .map(b -> nettyDataBufferFactory.wrap((ByteBuf) b));
+                return Flux.from(nettyRequest.byteBody().toByteBufferPublisher())
+                    .map(b -> nettyDataBufferFactory.wrap((ByteBuf) b.asNativeBuffer()));
             } catch (Throwable e) {
                 return Flux.error(e);
             }
