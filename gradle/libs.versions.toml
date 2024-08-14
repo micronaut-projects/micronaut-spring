@@ -3,7 +3,7 @@ managed-spring-boot = "3.3.2"
 managed-spring = "6.1.10"
 
 groovy = "4.0.18"
-h2 = '2.2.224'
+h2 = '2.3.232'
 
 micronaut = "4.5.3"
 micronaut-docs = "2.0.0"
