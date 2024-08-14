@@ -401,6 +401,18 @@ If an annotation or interface of Spring is not mentioned in this documentation c
 </div>
 </div></p>
 </div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+For Kotlin, add the <code>micronaut-data-processor</code> dependency in <a href="https://docs.micronaut.io/4.4.3/guide/#kaptOrKsp">kapt or ksp scope</a>, and for Groovy add <code>micronaut-data-processor</code> in compileOnly scope.
+</td>
+</tr>
+</table>
+</div>
 <div class="paragraph">
 <p>The following table summarizes the Spring Data annotations that Micronaut Data supports and the Micronaut annotation that they map to at compilation time:</p>
 </div>
@@ -1382,6 +1394,19 @@ You can control which beans are exposed to Spring by using the <a href="../api/i
 &lt;/dependency&gt;</code></pre>
 </div>
 </div></p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The annotation processors noted above have different dependency requirements for different language-based projects.
+For Java add annotation processors in annotationProcessor scope, for Kotlin, add them in <a href="https://docs.micronaut.io/4.4.3/guide/#kaptOrKsp">kapt or ksp scope</a>, and for Groovy add them in compileOnly scope
+</td>
+</tr>
+</table>
 </div>
 </div>
 </div>
