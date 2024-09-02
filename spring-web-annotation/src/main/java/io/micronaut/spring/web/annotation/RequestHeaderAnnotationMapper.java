@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2020 original authors
+ * Copyright 2017-2024 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,22 +15,46 @@
  */
 package io.micronaut.spring.web.annotation;
 
+import io.micronaut.core.annotation.AnnotationValue;
+import io.micronaut.core.annotation.Nullable;
 import io.micronaut.http.annotation.Header;
+import io.micronaut.inject.visitor.VisitorContext;
+import io.micronaut.spring.annotation.AbstractSpringAnnotationMapper;
+
+import java.lang.annotation.Annotation;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
- * Maps Spring RequestHeader to Micronaut.
+ * Maps Spring RequestMapping to Micronaut.
  *
  * @author graemerocher
  * @since 1.0
  */
-public class RequestHeaderAnnotationMapper extends WebBindAnnotationMapper<Header> {
-    @Override
-    Class<Header> annotationType() {
-        return Header.class;
-    }
-
+public class RequestHeaderAnnotationMapper extends AbstractSpringAnnotationMapper {
     @Override
     public String getName() {
         return "org.springframework.web.bind.annotation.RequestHeader";
+    }
+
+    @Override
+    protected List<AnnotationValue<?>> mapInternal(AnnotationValue<Annotation> annotation, VisitorContext visitorContext) {
+
+        var annotations = new ArrayList<AnnotationValue<?>>();
+
+        var builder = AnnotationValue.builder(Header.class);
+        var name = annotation.stringValue().orElse(annotation.stringValue("name").orElse(null));
+        if (name != null) {
+            builder.member("value", name);
+        }
+        annotation.stringValue("defaultValue").ifPresent(defaultValue -> builder.member("defaultValue", defaultValue));
+        annotations.add(builder.build());
+
+        var isRequired = annotation.booleanValue("required").orElse(true);
+        if (!isRequired) {
+            annotations.add(AnnotationValue.builder(Nullable.class).build());
+        }
+
+        return annotations;
     }
 }
