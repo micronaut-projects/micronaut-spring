@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2020 original authors
+ * Copyright 2017-2024 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,11 +15,9 @@
  */
 package io.micronaut.spring.web.annotation;
 
-import io.micronaut.core.annotation.AnnotationUtil;
 import io.micronaut.core.annotation.AnnotationValue;
-import io.micronaut.core.annotation.AnnotationValueBuilder;
-import io.micronaut.core.bind.annotation.Bindable;
-import io.micronaut.http.annotation.Body;
+import io.micronaut.core.annotation.Nullable;
+import io.micronaut.http.annotation.PathVariable;
 import io.micronaut.inject.visitor.VisitorContext;
 import io.micronaut.spring.annotation.AbstractSpringAnnotationMapper;
 
@@ -28,28 +26,28 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Maps Spring RequestBody to Micronaut.
+ * Maps Spring RequestMapping to Micronaut.
  *
  * @author graemerocher
  * @since 1.0
  */
-public class RequestBodyAnnotationMapping extends AbstractSpringAnnotationMapper {
+public class PathVariableAnnotationMapper extends AbstractSpringAnnotationMapper {
     @Override
     public String getName() {
-        return "org.springframework.web.bind.annotation.RequestBody";
+        return "org.springframework.web.bind.annotation.PathVariable";
     }
 
     @Override
     protected List<AnnotationValue<?>> mapInternal(AnnotationValue<Annotation> annotation, VisitorContext visitorContext) {
-        List<AnnotationValue<?>> mappedAnnotations = new ArrayList<>();
-        final boolean required = annotation.booleanValue("required").orElse(true);
-        final AnnotationValueBuilder<?> builder = AnnotationValue.builder(Body.class);
-        final AnnotationValueBuilder<Bindable> bindableBuilder = AnnotationValue.builder(Bindable.class);
-        mappedAnnotations.add(builder.build());
-        mappedAnnotations.add(bindableBuilder.build());
-        if (!required) {
-            mappedAnnotations.add(AnnotationValue.builder(AnnotationUtil.NULLABLE).build());
+        var annotations = new ArrayList<AnnotationValue<?>>();
+
+        annotations.add(AnnotationValue.builder(PathVariable.class).member("value", annotation.stringValue().orElse("")).build());
+
+        var isRequired = annotation.booleanValue("required").orElse(true);
+        if (!isRequired) {
+            annotations.add(AnnotationValue.builder(Nullable.class).build());
         }
-        return mappedAnnotations;
+
+        return annotations;
     }
 }
