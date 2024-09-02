@@ -4,4 +4,3 @@ io.micronaut.spring.web.annotation.PostMappingAnnotationTransformer
 io.micronaut.spring.web.annotation.PatchMappingAnnotationTransformer
 io.micronaut.spring.web.annotation.DeleteMappingAnnotationTransformer
 io.micronaut.spring.web.annotation.GetMappingAnnotationTransformer
-

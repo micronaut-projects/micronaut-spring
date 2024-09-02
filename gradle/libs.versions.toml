@@ -1,17 +1,17 @@
 [versions]
-managed-spring-boot = "3.3.2"
-managed-spring = "6.1.10"
+managed-spring-boot = "3.3.3"
+managed-spring = "6.1.12"
 
 groovy = "4.0.18"
 h2 = '2.3.232'
 
 micronaut = "4.6.2"
 micronaut-docs = "2.0.0"
-micronaut-test = "4.2.0"
+micronaut-test = "4.4.0"
 micronaut-cache = "4.3.0"
 micronaut-views = "5.4.4"
 micronaut-validation = "4.6.1"
-micronaut-servlet = "4.8.0"
+micronaut-servlet = "4.10.1"
 
 [libraries]
 # Micronaut
