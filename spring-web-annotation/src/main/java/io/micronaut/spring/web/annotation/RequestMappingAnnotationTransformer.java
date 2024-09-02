@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2020 original authors
+ * Copyright 2017-2024 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,14 +21,23 @@ import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.util.ArrayUtils;
 import io.micronaut.http.HttpMethod;
-import io.micronaut.http.annotation.*;
+import io.micronaut.http.annotation.Consumes;
+import io.micronaut.http.annotation.Delete;
+import io.micronaut.http.annotation.Get;
+import io.micronaut.http.annotation.Head;
+import io.micronaut.http.annotation.HttpMethodMapping;
+import io.micronaut.http.annotation.Options;
+import io.micronaut.http.annotation.Patch;
+import io.micronaut.http.annotation.Post;
+import io.micronaut.http.annotation.Produces;
+import io.micronaut.http.annotation.Put;
+import io.micronaut.http.annotation.Trace;
 import io.micronaut.inject.annotation.NamedAnnotationTransformer;
 import io.micronaut.inject.visitor.VisitorContext;
 
 import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * Maps Spring RequestMapping to Micronaut.
@@ -62,26 +71,17 @@ public class RequestMappingAnnotationTransformer implements NamedAnnotationTrans
             AnnotationValue<Annotation> annotation) {
 
         if (httpMethod != null) {
-            switch (httpMethod) {
-                case TRACE:
-                    return AnnotationValue.builder(Trace.class);
-                case DELETE:
-                    return AnnotationValue.builder(Delete.class);
-                case GET:
-                    return AnnotationValue.builder(Get.class);
-                case HEAD:
-                    return AnnotationValue.builder(Head.class);
-                case POST:
-                    return AnnotationValue.builder(Post.class);
-                case PUT:
-                    return AnnotationValue.builder(Put.class);
-                case PATCH:
-                    return AnnotationValue.builder(Patch.class);
-                case OPTIONS:
-                    return AnnotationValue.builder(Options.class);
-                default:
-                    return AnnotationValue.builder("io.micronaut.http.annotation.UriMapping");
-            }
+            return switch (httpMethod) {
+                case TRACE -> AnnotationValue.builder(Trace.class);
+                case DELETE -> AnnotationValue.builder(Delete.class);
+                case GET -> AnnotationValue.builder(Get.class);
+                case HEAD -> AnnotationValue.builder(Head.class);
+                case POST -> AnnotationValue.builder(Post.class);
+                case PUT -> AnnotationValue.builder(Put.class);
+                case PATCH -> AnnotationValue.builder(Patch.class);
+                case OPTIONS -> AnnotationValue.builder(Options.class);
+                default -> AnnotationValue.builder("io.micronaut.http.annotation.UriMapping");
+            };
         } else {
             return AnnotationValue.builder("io.micronaut.http.annotation.UriMapping");
         }
@@ -93,12 +93,12 @@ public class RequestMappingAnnotationTransformer implements NamedAnnotationTrans
 
     @Override
     public List<AnnotationValue<?>> transform(AnnotationValue<Annotation> annotation, VisitorContext visitorContext) {
-        List<AnnotationValue<?>> annotations = new ArrayList<>();
+        var annotations = new ArrayList<AnnotationValue<?>>();
 
         final String path = computePath(annotation);
-        final Optional<HttpMethod> method = annotation.enumValue("method", HttpMethod.class);
+        var method = annotation.enumValue("method", HttpMethod.class).orElse(null);
 
-        annotations.add(newBuilder(method.orElse(null), annotation).value(path).build());
+        annotations.add(newBuilder(method, annotation).value(path).build());
 
         final String[] consumes = annotation.stringValues("consumes");
         final String[] produces = annotation.stringValues("produces");
@@ -110,7 +110,7 @@ public class RequestMappingAnnotationTransformer implements NamedAnnotationTrans
             annotations.add(AnnotationValue.builder(Produces.class).member("value", produces).build());
         }
 
-        if (isHttpMethodMapping(method.orElse(null))) {
+        if (isHttpMethodMapping(method)) {
             annotations.add(AnnotationValue.builder(HttpMethodMapping.class).value(path).build());
         }
         return annotations;
