@@ -73,9 +73,7 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="inheritance" title="Inheritance Tree"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">java.lang.Object</a>
 <div class="inheritance"><a href="../../annotation/AbstractSpringAnnotationMapper.html" title="class in io.micronaut.spring.annotation">io.micronaut.spring.annotation.AbstractSpringAnnotationMapper</a>
-<div class="inheritance"><a href="WebBindAnnotationMapper.html" title="class in io.micronaut.spring.web.annotation">io.micronaut.spring.web.annotation.WebBindAnnotationMapper</a>&lt;io.micronaut.http.annotation.Part&gt;
 <div class="inheritance">io.micronaut.spring.web.annotation.RequestPartAnnotationMapper</div>
-</div>
 </div>
 </div>
 <section class="class-description" id="class-description">
@@ -85,11 +83,13 @@ loadScripts(document, 'script');</script>
 </dl>
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">RequestPartAnnotationMapper</span>
-<span class="extends-implements">extends <a href="WebBindAnnotationMapper.html" title="class in io.micronaut.spring.web.annotation">WebBindAnnotationMapper</a>&lt;io.micronaut.http.annotation.Part&gt;</span></div>
-<div class="block">Maps Spring RequestParam to Micronaut.</div>
+<span class="extends-implements">extends <a href="../../annotation/AbstractSpringAnnotationMapper.html" title="class in io.micronaut.spring.annotation">AbstractSpringAnnotationMapper</a></span></div>
+<div class="block">Maps Spring RequestMapping to Micronaut.</div>
 <dl class="notes">
 <dt>Since:</dt>
-<dd>5.4.1</dd>
+<dd>1.0</dd>
+<dt>Author:</dt>
+<dd>graemerocher</dd>
 </dl>
 </section>
 <section class="summary">
@@ -121,12 +121,15 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getName()" class="member-name-link">getName</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;io.micronaut.core.annotation.AnnotationValue&lt;?&gt;&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#mapInternal(io.micronaut.core.annotation.AnnotationValue,io.micronaut.inject.visitor.VisitorContext)" class="member-name-link">mapInternal</a><wbr>(io.micronaut.core.annotation.AnnotationValue&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/annotation/Annotation.html" title="class or interface in java.lang.annotation" class="external-link">Annotation</a>&gt;&nbsp;annotation,
+ io.micronaut.inject.visitor.VisitorContext&nbsp;visitorContext)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Internal map implemenation that subclasses should implement.</div>
 </div>
 </div>
 </div>
-<div class="inherited-list">
-<h3 id="methods-inherited-from-class-io.micronaut.spring.web.annotation.WebBindAnnotationMapper">Methods inherited from class&nbsp;io.micronaut.spring.web.annotation.<a href="WebBindAnnotationMapper.html" title="class in io.micronaut.spring.web.annotation">WebBindAnnotationMapper</a></h3>
-<code><a href="WebBindAnnotationMapper.html#mapInternal(io.micronaut.core.annotation.AnnotationValue,io.micronaut.inject.visitor.VisitorContext)">mapInternal</a></code></div>
+</div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-io.micronaut.spring.annotation.AbstractSpringAnnotationMapper">Methods inherited from class&nbsp;io.micronaut.spring.annotation.<a href="../../annotation/AbstractSpringAnnotationMapper.html" title="class in io.micronaut.spring.annotation">AbstractSpringAnnotationMapper</a></h3>
 <code><a href="../../annotation/AbstractSpringAnnotationMapper.html#map(io.micronaut.core.annotation.AnnotationValue,io.micronaut.inject.visitor.VisitorContext)">map</a></code></div>
@@ -162,6 +165,24 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="getName()">
 <h3>getName</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getName</span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="mapInternal(io.micronaut.core.annotation.AnnotationValue,io.micronaut.inject.visitor.VisitorContext)">
+<h3>mapInternal</h3>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;io.micronaut.core.annotation.AnnotationValue&lt;?&gt;&gt;</span>&nbsp;<span class="element-name">mapInternal</span><wbr><span class="parameters">(io.micronaut.core.annotation.AnnotationValue&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/annotation/Annotation.html" title="class or interface in java.lang.annotation" class="external-link">Annotation</a>&gt;&nbsp;annotation,
+ io.micronaut.inject.visitor.VisitorContext&nbsp;visitorContext)</span></div>
+<div class="block"><span class="descfrm-type-label">Description copied from class:&nbsp;<code><a href="../../annotation/AbstractSpringAnnotationMapper.html#mapInternal(io.micronaut.core.annotation.AnnotationValue,io.micronaut.inject.visitor.VisitorContext)">AbstractSpringAnnotationMapper</a></code></span></div>
+<div class="block">Internal map implemenation that subclasses should implement.</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="../../annotation/AbstractSpringAnnotationMapper.html#mapInternal(io.micronaut.core.annotation.AnnotationValue,io.micronaut.inject.visitor.VisitorContext)">mapInternal</a></code>&nbsp;in class&nbsp;<code><a href="../../annotation/AbstractSpringAnnotationMapper.html" title="class in io.micronaut.spring.annotation">AbstractSpringAnnotationMapper</a></code></dd>
+<dt>Parameters:</dt>
+<dd><code>annotation</code> - The annotation</dd>
+<dd><code>visitorContext</code> - The visitor context</dd>
+<dt>Returns:</dt>
+<dd>A list of annotations</dd>
+</dl>
 </section>
 </li>
 </ul>
