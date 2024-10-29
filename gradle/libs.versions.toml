@@ -1,11 +1,11 @@
 [versions]
-managed-spring-boot = "3.3.4"
+managed-spring-boot = "3.3.5"
 managed-spring = "6.1.14"
 
 groovy = "4.0.18"
 h2 = '2.3.232'
 
-micronaut = "4.7.0"
+micronaut = "4.7.1"
 micronaut-docs = "2.0.0"
 micronaut-test = "4.4.0"
 micronaut-cache = "4.3.1"
