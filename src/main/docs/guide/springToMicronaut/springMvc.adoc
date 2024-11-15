@@ -58,6 +58,30 @@ The following Spring MVC annotations are supported:
 |link:{micronautapi}http/annotation/Controller.html[@Controller]
 |Example `@RestController`
 
+|link:{springapi}org/springframework/web/service/annotation/HttpExchange.html[@HttpExchange]
+|link:{micronautapi}http/annotation/UriMapping.html[@UriMapping]
+|Example: `@HttpExchange("/foo/bar")`
+
+    |link:{springapi}org/springframework/web/service/annotation/GetExchange.html[@GetExchange]
+|link:{micronautapi}http/annotation/Get.html[@Get]
+|Example: `@GetExchange("/foo/bar")`
+
+|link:{springapi}org/springframework/web/service/annotation/PostExchange.html[@PostExchange]
+|link:{micronautapi}http/annotation/Post.html[@Post]
+|Example: `@PostExchange("/foo/bar")`
+
+|link:{springapi}org/springframework/web/service/annotation/DeleteExchange.html[@DeleteExchange]
+|link:{micronautapi}http/annotation/Delete.html[@Delete]
+|Example: `@DeleteExchange("/foo/bar")`
+
+|link:{springapi}org/springframework/web/service/annotation/PatchExchange.html[@PatchExchange]
+|link:{micronautapi}http/annotation/Patch.html[@Patch]
+|Example: `@PatchExchange("/foo/bar")`
+
+|link:{springapi}org/springframework/web/service/annotation/PutExchange.html[@PutExchange]
+|link:{micronautapi}http/annotation/Put.html[@Put]
+|Example: `@PutExchange("/foo/bar")`
+
 |link:{springapi}org/springframework/web/bind/annotation/RequestMapping.html[@RequestMapping]
 |link:{micronautapi}http/annotation/UriMapping.html[@UriMapping]
 |Example: `@RequestMapping("/foo/bar")`
