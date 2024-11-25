@@ -50,6 +50,10 @@ The following table summarizes the annotations that Micronaut for Spring support
 |link:{micronautapi}context/annotation/Primary.html[@Primary]
 |Example `@Primary`. Requires `micronaut-context` dependency.
 
+|link:{springapi}org/springframework/context/annotation/Fallback.html[@Fallback]
+|link:{micronautapi}context/annotation/Secondary.html[@Secondary]
+|Example `@Fallback`. Requires `micronaut-context` dependency.
+
 |link:{springapi}org/springframework/context/event/EventListener.html[@EventListener]
 |link:{micronautapi}runtime/event/annotation/EventListener.html[@EventListener]
 |Example `@EventListener`. Requires `micronaut-inject` dependency.
