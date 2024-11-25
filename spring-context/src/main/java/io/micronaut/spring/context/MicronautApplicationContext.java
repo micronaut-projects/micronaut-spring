@@ -442,6 +442,11 @@ public class MicronautApplicationContext implements ManagedApplicationContext, C
     }
 
     @Override
+    public boolean isClosed() {
+        return !this.micronautContext.isRunning();
+    }
+
+    @Override
     public boolean isActive() {
         return isRunning();
     }
