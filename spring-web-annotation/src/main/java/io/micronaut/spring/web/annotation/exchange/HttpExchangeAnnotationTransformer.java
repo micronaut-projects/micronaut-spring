@@ -13,14 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.spring.web.annotation;
+package io.micronaut.spring.web.annotation.exchange;
 
 import io.micronaut.core.annotation.AnnotationValue;
 import io.micronaut.core.annotation.AnnotationValueBuilder;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.util.ArrayUtils;
-import io.micronaut.http.HttpMethod;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.http.annotation.Consumes;
 import io.micronaut.http.annotation.Delete;
 import io.micronaut.http.annotation.Get;
@@ -41,16 +41,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Maps Spring RequestMapping to Micronaut.
+ * Maps Spring HttpExchange to Micronaut.
  *
- * @author graemerocher
- * @since 1.0
+ * @since 5.10.0
  */
-public class RequestMappingAnnotationTransformer implements NamedAnnotationTransformer {
+public class HttpExchangeAnnotationTransformer implements NamedAnnotationTransformer {
 
     @Override
     public String getName() {
-        return "org.springframework.web.bind.annotation.RequestMapping";
+        return "org.springframework.web.service.annotation.HttpExchange";
     }
 
     /**
@@ -58,30 +57,28 @@ public class RequestMappingAnnotationTransformer implements NamedAnnotationTrans
      * @param method The method, can be null
      * @return True if it is
      */
-    protected boolean isHttpMethodMapping(@Nullable HttpMethod method) {
+    protected boolean isHttpMethodMapping(@Nullable String method) {
         return method != null;
     }
 
     /**
      * Construct a new builder for the given http method.
-     * @param httpMethod The method
-     * @param annotation The annotation
+     * @param method HTTP method
      * @return The builder
      */
-    protected @NonNull AnnotationValueBuilder<?> newBuilder(
-        @Nullable HttpMethod httpMethod,
-        AnnotationValue<Annotation> annotation) {
+    @NonNull
+    protected AnnotationValueBuilder<?> newBuilder(String method) {
 
-        if (httpMethod != null) {
-            return switch (httpMethod) {
-                case TRACE -> AnnotationValue.builder(Trace.class);
-                case DELETE -> AnnotationValue.builder(Delete.class);
-                case GET -> AnnotationValue.builder(Get.class);
-                case HEAD -> AnnotationValue.builder(Head.class);
-                case POST -> AnnotationValue.builder(Post.class);
-                case PUT -> AnnotationValue.builder(Put.class);
-                case PATCH -> AnnotationValue.builder(Patch.class);
-                case OPTIONS -> AnnotationValue.builder(Options.class);
+        if (method != null) {
+            return switch (method.toUpperCase()) {
+                case "GET" -> AnnotationValue.builder(Get.class);
+                case "POST" -> AnnotationValue.builder(Post.class);
+                case "PATCH" -> AnnotationValue.builder(Patch.class);
+                case "PUT" -> AnnotationValue.builder(Put.class);
+                case "DELETE" -> AnnotationValue.builder(Delete.class);
+                case "HEAD" -> AnnotationValue.builder(Head.class);
+                case "OPTIONS" -> AnnotationValue.builder(Options.class);
+                case "TRACE" -> AnnotationValue.builder(Trace.class);
                 default -> AnnotationValue.builder(UriMapping.class);
             };
         } else {
@@ -90,7 +87,7 @@ public class RequestMappingAnnotationTransformer implements NamedAnnotationTrans
     }
 
     private String computePath(AnnotationValue<Annotation> annotation) {
-        return annotation.stringValue().orElseGet(() -> annotation.stringValue("path").orElse(UriMapping.DEFAULT_URI));
+        return annotation.stringValue().orElseGet(() -> annotation.stringValue("url").orElse(UriMapping.DEFAULT_URI));
     }
 
     @Override
@@ -98,18 +95,18 @@ public class RequestMappingAnnotationTransformer implements NamedAnnotationTrans
         var annotations = new ArrayList<AnnotationValue<?>>();
 
         final String path = computePath(annotation);
-        var method = annotation.enumValue("method", HttpMethod.class).orElse(null);
+        var method = annotation.stringValue("method").orElse(null);
 
-        annotations.add(newBuilder(method, annotation).value(path).build());
+        annotations.add(newBuilder(method).value(path).build());
 
-        final String[] consumes = annotation.stringValues("consumes");
-        if (ArrayUtils.isNotEmpty(consumes)) {
-            annotations.add(AnnotationValue.builder(Consumes.class).member("value", consumes).build());
+        var contentType = annotation.stringValue("contentType").orElse(null);
+        if (StringUtils.isNotEmpty(contentType)) {
+            annotations.add(AnnotationValue.builder(Consumes.class).member("contentType", contentType).build());
         }
 
-        final String[] produces = annotation.stringValues("produces");
-        if (ArrayUtils.isNotEmpty(produces)) {
-            annotations.add(AnnotationValue.builder(Produces.class).member("value", produces).build());
+        final String[] accept = annotation.stringValues("accept");
+        if (ArrayUtils.isNotEmpty(accept)) {
+            annotations.add(AnnotationValue.builder(Produces.class).member("value", accept).build());
         }
 
         if (isHttpMethodMapping(method)) {
