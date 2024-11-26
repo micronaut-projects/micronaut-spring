@@ -17,7 +17,7 @@ package io.micronaut.spring.web.annotation;
 
 import io.micronaut.core.annotation.AnnotationValue;
 import io.micronaut.core.annotation.Nullable;
-import io.micronaut.http.annotation.QueryValue;
+import io.micronaut.http.annotation.RequestAttribute;
 import io.micronaut.inject.visitor.VisitorContext;
 import io.micronaut.spring.annotation.AbstractSpringAnnotationMapper;
 
@@ -31,22 +31,22 @@ import java.util.List;
  * @author graemerocher
  * @since 1.0
  */
-public class RequestParamAnnotationMapper extends AbstractSpringAnnotationMapper {
+public class RequestAttributeAnnotationMapper extends AbstractSpringAnnotationMapper {
     @Override
     public String getName() {
-        return "org.springframework.web.bind.annotation.RequestParam";
+        return "org.springframework.web.bind.annotation.RequestAttribute";
     }
 
     @Override
     protected List<AnnotationValue<?>> mapInternal(AnnotationValue<Annotation> annotation, VisitorContext visitorContext) {
         var annotations = new ArrayList<AnnotationValue<?>>();
 
-        var builder = AnnotationValue.builder(QueryValue.class);
+        var builder = AnnotationValue.builder(RequestAttribute.class);
         var name = annotation.stringValue().orElse(annotation.stringValue("name").orElse(null));
         if (name != null) {
             builder.member("value", name);
         }
-        annotation.stringValue("defaultValue").ifPresent(defaultValue -> builder.member("defaultValue", defaultValue));
+
         annotations.add(builder.build());
 
         var isRequired = annotation.booleanValue("required").orElse(true);

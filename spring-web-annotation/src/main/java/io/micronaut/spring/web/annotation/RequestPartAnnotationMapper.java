@@ -15,22 +15,44 @@
  */
 package io.micronaut.spring.web.annotation;
 
+import io.micronaut.core.annotation.AnnotationValue;
+import io.micronaut.core.annotation.Nullable;
 import io.micronaut.http.annotation.Part;
+import io.micronaut.inject.visitor.VisitorContext;
+import io.micronaut.spring.annotation.AbstractSpringAnnotationMapper;
+
+import java.lang.annotation.Annotation;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
- * Maps Spring RequestParam to Micronaut.
+ * Maps Spring RequestMapping to Micronaut.
  *
- * @since 5.4.1
+ * @author graemerocher
+ * @since 1.0
  */
-public class RequestPartAnnotationMapper extends WebBindAnnotationMapper<Part> {
-
+public class RequestPartAnnotationMapper extends AbstractSpringAnnotationMapper {
     @Override
     public String getName() {
         return "org.springframework.web.bind.annotation.RequestPart";
     }
 
     @Override
-    Class<Part> annotationType() {
-        return Part.class;
+    protected List<AnnotationValue<?>> mapInternal(AnnotationValue<Annotation> annotation, VisitorContext visitorContext) {
+        var annotations = new ArrayList<AnnotationValue<?>>();
+
+        var builder = AnnotationValue.builder(Part.class);
+        var name = annotation.stringValue().orElse(annotation.stringValue("name").orElse(null));
+        if (name != null) {
+            builder.member("value", name);
+        }
+        annotations.add(builder.build());
+
+        var isRequired = annotation.booleanValue("required").orElse(true);
+        if (!isRequired) {
+            annotations.add(AnnotationValue.builder(Nullable.class).build());
+        }
+
+        return annotations;
     }
 }

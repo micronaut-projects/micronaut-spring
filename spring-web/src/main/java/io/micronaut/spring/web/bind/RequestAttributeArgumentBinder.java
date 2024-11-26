@@ -48,7 +48,7 @@ public class RequestAttributeArgumentBinder implements AnnotatedRequestArgumentB
                 annotationMetadata.getValue(RequestAttribute.class, "name", String.class).orElse(context.getArgument().getName())
         );
 
-        return new BindingResult<Object>() {
+        return new BindingResult<>() {
             @Override
             public Optional<Object> getValue() {
                 return source.getAttributes().get(name, context);

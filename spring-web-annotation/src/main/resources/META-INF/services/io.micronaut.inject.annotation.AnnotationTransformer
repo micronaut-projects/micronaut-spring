@@ -4,4 +4,9 @@ io.micronaut.spring.web.annotation.PostMappingAnnotationTransformer
 io.micronaut.spring.web.annotation.PatchMappingAnnotationTransformer
 io.micronaut.spring.web.annotation.DeleteMappingAnnotationTransformer
 io.micronaut.spring.web.annotation.GetMappingAnnotationTransformer
-
+io.micronaut.spring.web.annotation.exchange.HttpExchangeAnnotationTransformer
+io.micronaut.spring.web.annotation.exchange.PutExchangeAnnotationTransformer
+io.micronaut.spring.web.annotation.exchange.PostExchangeAnnotationTransformer
+io.micronaut.spring.web.annotation.exchange.PatchExchangeAnnotationTransformer
+io.micronaut.spring.web.annotation.exchange.DeleteExchangeAnnotationTransformer
+io.micronaut.spring.web.annotation.exchange.GetExchangeAnnotationTransformer

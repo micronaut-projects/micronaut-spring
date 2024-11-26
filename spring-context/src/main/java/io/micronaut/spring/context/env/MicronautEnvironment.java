@@ -222,6 +222,11 @@ public class MicronautEnvironment implements ConfigurableEnvironment, MicronautC
     }
 
     @Override
+    public void setEscapeCharacter(Character escapeCharacter) {
+        throw new UnsupportedOperationException("Method setEscapeCharacter not supported");
+    }
+
+    @Override
     public void setIgnoreUnresolvableNestedPlaceholders(boolean ignoreUnresolvableNestedPlaceholders) {
         throw new UnsupportedOperationException("Method setIgnoreUnresolvableNestedPlaceholders not supported");
     }
