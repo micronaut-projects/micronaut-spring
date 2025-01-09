@@ -12,6 +12,7 @@ micronaut-cache = "5.0.0"
 micronaut-views = "5.6.0"
 micronaut-validation = "4.8.0"
 micronaut-servlet = "4.12.0"
+sonatype-scan = "3.0.0"
 
 [libraries]
 # Micronaut
@@ -43,5 +44,5 @@ spring-boot-test = { module = 'org.springframework.boot:spring-boot-starter-test
 spring-test = { module = 'org.springframework:spring-test', version.ref = 'managed-spring' }
 
 spock-spring = { module = 'org.spockframework:spock-spring' }
-
+sonatype-scan = { module = "org.sonatype.gradle.plugins:scan-gradle-plugin", version.ref = "sonatype-scan" }
 h2database = { module = 'com.h2database:h2', version.ref = 'h2' }
