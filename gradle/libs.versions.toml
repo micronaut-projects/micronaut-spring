@@ -1,6 +1,6 @@
 [versions]
 managed-spring-boot = "3.4.2"
-managed-spring = "6.2.2"
+managed-spring = "6.2.3"
 
 groovy = "4.0.25"
 h2 = '2.3.232'
