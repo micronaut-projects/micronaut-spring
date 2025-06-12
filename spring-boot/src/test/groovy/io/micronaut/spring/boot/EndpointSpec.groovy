@@ -20,14 +20,18 @@ import io.micronaut.test.extensions.spock.annotation.MicronautTest
 import jakarta.inject.Inject
 import some.other.pkg.FeaturesClient
 import some.other.pkg.FeaturesEndpoint
+import some.other.pkg.FeaturesWebClient
 import spock.lang.Specification
 
 @MicronautTest
 @Property(name = "endpoints.features.sensitive", value = "false")
+@Property(name = "endpoints.web-features.sensitive", value = "false")
 class EndpointSpec extends Specification {
 
     @Inject
     FeaturesClient client
+    @Inject
+    FeaturesWebClient webEndpointClient
 
     void "test endpoint"() {
 
@@ -52,6 +56,34 @@ class EndpointSpec extends Specification {
         when:
         client.deleteFeature("stuff")
         features = client.features()
+
+        then:
+        features.size() == 1
+    }
+
+    void "test web endpoint"() {
+
+        when:
+        def features = webEndpointClient.features()
+
+        then:
+        features
+        features.default.enabled
+
+        when:
+        def status = webEndpointClient.saveFeature("stuff", new FeaturesEndpoint.Feature())
+        features = webEndpointClient.features()
+
+
+        then:
+        status
+        features.size() == 2
+        features.stuff.enabled == false
+        webEndpointClient.features("stuff") != null
+
+        when:
+        webEndpointClient.deleteFeature("stuff")
+        features = webEndpointClient.features()
 
         then:
         features.size() == 1

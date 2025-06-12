@@ -8,6 +8,7 @@ io.micronaut.spring.boot.annotation.ConditionalOnWebApplicationAnnotationMapper
 io.micronaut.spring.boot.annotation.ConditionalOnNotWebApplicationAnnotationMapper
 io.micronaut.spring.boot.annotation.ConditionalOnSingleCandidateAnnotationMapper
 io.micronaut.spring.boot.annotation.EndpointAnnotationMapper
+io.micronaut.spring.boot.annotation.WebEndpointAnnotationMapper
 io.micronaut.spring.boot.annotation.ReadOperationAnnotationMapper
 io.micronaut.spring.boot.annotation.WriteOperationAnnotationMapper
 io.micronaut.spring.boot.annotation.DeleteOperationAnnotationMapper
