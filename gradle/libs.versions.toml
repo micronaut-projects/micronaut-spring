@@ -2,17 +2,16 @@
 managed-spring-boot = "3.5.4"
 managed-spring = "6.2.10"
 
-groovy = "4.0.25"
-h2 = '2.3.232'
+h2 = "2.3.232"
 
 micronaut = "4.9.10"
 micronaut-docs = "2.0.0"
-micronaut-test = "4.7.0"
+micronaut-test = "4.8.1"
 micronaut-cache = "5.3.0"
-micronaut-views = "5.7.0"
-micronaut-validation = "4.9.0"
-micronaut-servlet = "5.3.1"
-sonatype-scan = "3.0.0"
+micronaut-views = "5.8.0"
+micronaut-validation = "4.10.0"
+micronaut-servlet = "5.5.0"
+sonatype-scan = "3.1.3"
 
 [libraries]
 # Micronaut
