@@ -19,12 +19,13 @@ dependencies {
     testImplementation(libs.spring.boot.autoconfigure)
     testImplementation(libs.spring.boot.actuator)
     testImplementation(libs.spring.boot.test)
-    testImplementation(libs.h2database)
     testImplementation(libs.managed.spring.jdbc)
+    testImplementation(mnSql.h2)
 
     testRuntimeOnly(libs.managed.spring.boot.starter.web)
     testRuntimeOnly(libs.spring.boot.starter.tomcat)
 }
+
 micronautBuild {
     testFramework =  io.micronaut.build.TestFramework.JUNIT5
 }

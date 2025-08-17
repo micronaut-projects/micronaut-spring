@@ -1,6 +1,7 @@
 plugins {
     id("io.micronaut.build.internal.spring-module")
 }
+
 dependencies {
 
     compileOnly(libs.managed.spring.jdbc)

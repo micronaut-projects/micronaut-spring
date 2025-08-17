@@ -1,0 +1,23 @@
+plugins {
+    id("io.micronaut.build.internal.spring-module")
+}
+
+dependencies {
+    api(platform(libs.boms.spring))
+    api(mn.micronaut.inject)
+    api(mn.micronaut.aop)
+    api(mnValidation.micronaut.validation)
+
+    implementation(mnValidation.micronaut.validation.processor)
+    implementation(mn.micronaut.core.processor)
+    implementation(projects.micronautSpring)
+    implementation(projects.micronautSpringContext)
+    implementation(mn.micronaut.runtime)
+    implementation(mnCache.micronaut.cache.core)
+
+    testAnnotationProcessor(mn.micronaut.inject.java)
+
+    testImplementation(mn.micronaut.inject.groovy)
+    testImplementation(projects.micronautSpring)
+    testImplementation(libs.managed.spring.tx)
+}
