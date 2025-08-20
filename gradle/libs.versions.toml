@@ -1,5 +1,5 @@
 [versions]
-managed-spring-boot = "3.5.0"
+managed-spring-boot = "3.5.4"
 managed-spring = "6.2.10"
 
 groovy = "4.0.25"
