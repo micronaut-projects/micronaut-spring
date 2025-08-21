@@ -9,7 +9,7 @@ micronaut-sql = "6.2.1"
 micronaut-cache = "5.3.0"
 micronaut-views = "5.7.0"
 micronaut-validation = "4.9.0"
-micronaut-servlet = "5.3.1"
+micronaut-servlet = "5.5.0"
 micronaut-shared-settings = "7.5.0"
 sonatype-scan = "3.1.3"
 
