@@ -1,7 +1,7 @@
 plugins {
     id("io.micronaut.build.internal.spring-base")
-    id("java-library")
-    id("groovy")
+    `java-library`
+    groovy
 }
 
 dependencies {
@@ -14,6 +14,6 @@ dependencies {
     testImplementation(mnTest.micronaut.test.spock)
 }
 
-tasks.withType<Test> {
+tasks.test {
     useJUnitPlatform()
 }

@@ -1,0 +1,9 @@
+plugins {
+    id("io.micronaut.build.internal.spring-module")
+}
+
+dependencies {
+    api(projects.micronautSpringAnnotation)
+    api(mn.micronaut.core.processor)
+    api(mn.micronaut.http)
+}
