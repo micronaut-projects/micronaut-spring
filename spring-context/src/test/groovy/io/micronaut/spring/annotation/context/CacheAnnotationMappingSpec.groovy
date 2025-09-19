@@ -19,7 +19,6 @@ import io.micronaut.annotation.processing.test.AbstractTypeElementSpec
 import io.micronaut.cache.annotation.CachePut
 import io.micronaut.cache.annotation.Cacheable
 import io.micronaut.context.ApplicationContext
-import io.micronaut.inject.BeanDefinition
 import org.springframework.cache.annotation.CacheEvict
 
 class CacheAnnotationMappingSpec extends AbstractTypeElementSpec {
@@ -44,12 +43,12 @@ class MyBean {
     String testCache() {
         return null;
     }
-    
+
     @CacheEvict("test")
     public String testCacheEvict() {
         return null;
     }
-    
+
     @CachePut("test")
     String testCachePut() {
         return null;

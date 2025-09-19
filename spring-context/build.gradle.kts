@@ -8,11 +8,12 @@ dependencies {
     api(mn.micronaut.inject)
     api(projects.micronautSpring)
 
-    implementation(mnCache.micronaut.cache.core)
+    implementation(mn.micronaut.context)
 
     testAnnotationProcessor(mn.micronaut.inject.java)
     testAnnotationProcessor(projects.micronautSpringAnnotation)
 
+    testImplementation(mnCache.micronaut.cache.core)
     testImplementation(mn.micronaut.jackson.databind)
     testImplementation(mn.micronaut.runtime)
     testImplementation(mn.micronaut.inject.java)
