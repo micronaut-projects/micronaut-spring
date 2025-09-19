@@ -17,8 +17,6 @@ package io.micronaut.spring.annotation.context
 
 import io.micronaut.context.env.Environment
 import io.micronaut.spring.context.MicronautApplicationContext
-import io.micronaut.spring.context.factory.MicronautBeanFactory
-import org.springframework.beans.factory.BeanFactory
 import org.springframework.beans.factory.config.ConfigurableBeanFactory
 import spock.lang.Specification
 

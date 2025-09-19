@@ -2,7 +2,6 @@ package io.micronaut.spring.annotation.context
 
 import io.micronaut.annotation.processing.test.AbstractTypeElementSpec
 import io.micronaut.context.ApplicationContext
-import io.micronaut.inject.BeanDefinition
 import io.micronaut.spring.context.aop.SpringConfigurationInterceptor
 
 class ConfigurationAnnotationMappingSpec extends AbstractTypeElementSpec {
