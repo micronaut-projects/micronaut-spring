@@ -2,7 +2,7 @@
 managed-spring-boot = "3.5.4"
 managed-spring = "6.2.11"
 
-micronaut = "4.9.10"
+micronaut = "4.9.11"
 micronaut-docs = "2.0.0"
 micronaut-test = "4.8.1"
 micronaut-sql = "6.2.1"
