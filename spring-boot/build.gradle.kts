@@ -4,10 +4,10 @@ plugins {
 
 dependencies {
 
+    compileOnly(libs.spring.boot.autoconfigure)
+
     api(projects.micronautSpringContext)
     api(libs.managed.spring.boot)
-
-    compileOnly(libs.spring.boot.autoconfigure)
 
     testAnnotationProcessor(mn.micronaut.inject.java)
     testAnnotationProcessor(projects.micronautSpringBootAnnotation)

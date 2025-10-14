@@ -1,9 +1,6 @@
 package io.micronaut.spring.core.type
 
 import io.micronaut.annotation.processing.test.AbstractTypeElementSpec
-import io.micronaut.context.annotation.Bean
-import io.micronaut.core.util.StringUtils
-import io.micronaut.inject.ast.ClassElement
 import org.springframework.context.annotation.Configuration
 import org.springframework.stereotype.Component
 import org.springframework.stereotype.Indexed

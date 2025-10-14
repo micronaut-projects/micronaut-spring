@@ -2,6 +2,7 @@ io.micronaut.spring.annotation.context.ProfileAnnotationMapper
 io.micronaut.spring.annotation.context.QualifierAnnotationMapper
 io.micronaut.spring.annotation.context.BeanAnnotationMapper
 io.micronaut.spring.annotation.context.ComponentAnnotationMapper
+io.micronaut.spring.annotation.context.FallbackAnnotationMapper
 io.micronaut.spring.annotation.context.RepositoryAnnotationMapper
 io.micronaut.spring.annotation.context.ServiceAnnotationMapper
 io.micronaut.spring.annotation.context.ConfigurationAnnotationMapper

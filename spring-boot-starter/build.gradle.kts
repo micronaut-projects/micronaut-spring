@@ -1,0 +1,31 @@
+plugins {
+    id("io.micronaut.build.internal.spring-module")
+}
+
+dependencies {
+    api(mn.micronaut.aop)
+    api(mn.micronaut.inject)
+    api(mn.micronaut.context)
+    api(libs.managed.spring.boot)
+
+    implementation(libs.spring.boot.autoconfigure)
+    implementation(mn.jakarta.annotation.api)
+
+    testAnnotationProcessor(mn.micronaut.inject.java)
+
+    testCompileOnly(mnServlet.servlet.api)
+
+    testImplementation(mn.micronaut.http)
+    testImplementation(libs.spring.boot.autoconfigure)
+    testImplementation(libs.spring.boot.actuator)
+    testImplementation(libs.spring.boot.test)
+    testImplementation(libs.managed.spring.jdbc)
+    testImplementation(mnSql.h2)
+
+    testRuntimeOnly(libs.managed.spring.boot.starter.web)
+    testRuntimeOnly(libs.spring.boot.starter.tomcat)
+}
+
+micronautBuild {
+    testFramework =  io.micronaut.build.TestFramework.JUNIT5
+}

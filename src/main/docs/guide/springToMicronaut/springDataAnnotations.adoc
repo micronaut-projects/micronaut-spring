@@ -2,6 +2,8 @@ Micronaut Data supports Spring Data annotations. To use them add the following d
 
 dependency:micronaut-data-processor[scope="annotationProcessor", groupId="io.micronaut.data"]
 
+NOTE: For Kotlin, add the `micronaut-data-processor` dependency in https://docs.micronaut.io/4.4.3/guide/#kaptOrKsp[kapt or ksp scope], and for Groovy add `micronaut-data-processor` in compileOnly scope.
+
 The following table summarizes the Spring Data annotations that Micronaut Data supports and the Micronaut annotation that they map to at compilation time:
 
 .Supported Spring Data Annotations

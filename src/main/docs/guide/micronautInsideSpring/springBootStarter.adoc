@@ -61,3 +61,5 @@ dependency:jakarta.persistence-api[scope="annotationProcessor", groupId="jakarta
 
 dependency:jakarta.persistence-api[scope="compile", groupId="jakarta.persistence", version="3.1.0"]
 
+NOTE: The annotation processors noted above have different dependency requirements for different language-based projects.
+For Java add annotation processors in annotationProcessor scope, for Kotlin, add them in https://docs.micronaut.io/4.4.3/guide/#kaptOrKsp[kapt or ksp scope], and for Groovy add them in compileOnly scope

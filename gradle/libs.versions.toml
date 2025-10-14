@@ -1,17 +1,16 @@
 [versions]
-managed-spring-boot = "3.2.4"
-managed-spring = "6.1.5"
+managed-spring-boot = "3.5.6"
+managed-spring = "6.2.11"
 
-groovy = "4.0.18"
-h2 = '2.2.224'
-
-micronaut = "4.4.1"
+micronaut = "4.10.4"
 micronaut-docs = "2.0.0"
-micronaut-test = "4.2.0"
-micronaut-cache = "4.3.0"
-micronaut-views = "5.1.0"
-micronaut-validation = "4.5.0"
-micronaut-servlet = "4.6.0"
+micronaut-test = "4.9.0"
+micronaut-sql = "6.3.0"
+micronaut-cache = "5.3.0"
+micronaut-views = "5.9.0"
+micronaut-validation = "4.11.0"
+micronaut-servlet = "5.5.1"
+micronaut-shared-settings = "7.6.4"
 
 [libraries]
 # Micronaut
@@ -20,6 +19,7 @@ micronaut-cache = { module = "io.micronaut.cache:micronaut-cache-bom", version.r
 micronaut-views = { module = "io.micronaut.views:micronaut-views-bom", version.ref = "micronaut-views" }
 micronaut-validation = { module = "io.micronaut.validation:micronaut-validation-bom", version.ref = "micronaut-validation" }
 micronaut-servlet = { module = "io.micronaut.servlet:micronaut-servlet-bom", version.ref = "micronaut-servlet" }
+micronaut-sql = { module = "io.micronaut.sql:micronaut-sql-bom", version.ref = "micronaut-sql" }
 
 managed-spring-boot = { module = 'org.springframework.boot:spring-boot', version.ref = 'managed-spring-boot' }
 managed-spring-boot-starter = { module = 'org.springframework.boot:spring-boot-starter', version.ref = 'managed-spring-boot' }
@@ -44,4 +44,4 @@ spring-test = { module = 'org.springframework:spring-test', version.ref = 'manag
 
 spock-spring = { module = 'org.spockframework:spock-spring' }
 
-h2database = { module = 'com.h2database:h2', version.ref = 'h2' }
+micronaut-shared-settings = { module = "io.micronaut.build.shared.settings:io.micronaut.build.shared.settings.gradle.plugin", version.ref = "micronaut-shared-settings" }

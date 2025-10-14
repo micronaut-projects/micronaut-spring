@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2019 original authors
+ * Copyright 2017-2024 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -46,6 +46,16 @@ class RestControllerSpec extends Specification {
         then:
         response.status() == HttpStatus.NO_CONTENT
         response.header("Foo") == "Bar"
+        !response.header("myHeader")
+
+        when:
+        var myHeaderValue = "myHeaderValue"
+        response = greetingClient.deletePost(myHeaderValue)
+
+        then:
+        response.status() == HttpStatus.NO_CONTENT
+        response.header("Foo") == "Bar"
+        response.header("myHeader") == myHeaderValue
     }
 
     void "test request controller validation"() {
@@ -79,5 +89,31 @@ class RestControllerSpec extends Specification {
 
         then:
         response == json + '#' + fileContent
+
+        when:
+        def notRequiredPart = "this is not required part"
+        response = greetingClient.multipartRequest(MultipartBody.builder()
+                .addPart("json", json)
+                .addPart("notRequiredPart", notRequiredPart)
+                .addPart("myFile", "myFileName", fileContent.bytes)
+                .build())
+
+        then:
+        response == json + '#' + notRequiredPart + '#' + fileContent
+    }
+
+    void "test optional pathVar"() {
+
+        when:
+        def responseForNull = greetingClient.withOptVar(null)
+
+        then:
+        responseForNull == 'optVar is null!'
+
+        when:
+        def response = greetingClient.withOptVar("This is path var")
+
+        then:
+        response == 'Hello, This is path var!'
     }
 }
