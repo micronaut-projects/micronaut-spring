@@ -26,4 +26,5 @@ dependencies {
 
     testRuntimeOnly(mnViews.micronaut.views.thymeleaf)
     testRuntimeOnly(libs.spring.boot.starter.thymeleaf)
+    testImplementation(mnTest.junit.jupiter.api)
 }
