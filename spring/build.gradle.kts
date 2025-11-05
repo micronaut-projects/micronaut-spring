@@ -1,5 +1,6 @@
 plugins {
     id("io.micronaut.build.internal.spring-module")
+    id ("io.micronaut.build.internal.java-base")
 }
 
 dependencies {
