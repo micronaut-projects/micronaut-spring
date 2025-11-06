@@ -1,7 +1,7 @@
 plugins {
-    id("io.micronaut.build.internal.spring-base")
-    `java-library`
     groovy
+    id("io.micronaut.build.internal.java-base")
+
 }
 
 dependencies {

@@ -27,3 +27,4 @@ dependencies {
     testRuntimeOnly(mnViews.micronaut.views.thymeleaf)
     testRuntimeOnly(libs.spring.boot.starter.thymeleaf)
 }
+
