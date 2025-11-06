@@ -1,5 +1,3 @@
-import org.gradle.api.internal.tasks.testing.TestFramework
-
 plugins {
     id("io.micronaut.build.internal.spring-module")
 }
