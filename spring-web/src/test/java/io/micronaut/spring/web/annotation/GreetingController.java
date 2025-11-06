@@ -42,8 +42,6 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.concurrent.atomic.AtomicLong;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 @RestController
 @Validated
 public class GreetingController {
@@ -65,10 +63,9 @@ public class GreetingController {
 
     @PostMapping("/request")
     public Flux<String> request(ServerHttpRequest request, HttpMethod method) {
-        assertEquals("/request", request.getPath().value());
-        assertEquals(HttpMethod.POST, request.getMethod());
-        assertEquals(HttpMethod.POST, method);
-        assertEquals("Bar", request.getHeaders().getFirst("Foo"));
+        assert "/request".equals(request.getPath().value());
+        assert HttpMethod.POST.equals(request.getMethod());
+        assert "Bar".equals(request.getHeaders().getFirst("Foo"));
         return request.getBody().map(dataBuffer -> {
             var bytes = new byte[dataBuffer.readableByteCount()];
             dataBuffer.read(bytes);

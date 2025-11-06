@@ -30,8 +30,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicLong;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 @RestController
 @RequestMapping("/exchange")
 public class ExchangeGreetingController implements ExchangeGreetingApi {
@@ -84,10 +82,10 @@ public class ExchangeGreetingController implements ExchangeGreetingApi {
 
     @PostExchange("/request")
     public Flux<String> request(ServerHttpRequest request, HttpMethod method) {
-        assertEquals("/exchange/request", request.getPath().value());
-        assertEquals(HttpMethod.POST, request.getMethod());
-        assertEquals(HttpMethod.POST, method);
-        assertEquals("Bar", request.getHeaders().getFirst("Foo"));
+        assert "/exchange/request".equals(request.getPath().value());
+        assert HttpMethod.POST.equals(request.getMethod());
+        assert HttpMethod.POST.equals(method);
+        assert "Bar".equals(request.getHeaders().getFirst("Foo"));
         return request.getBody().map(dataBuffer -> {
             var bytes = new byte[dataBuffer.readableByteCount()];
             dataBuffer.read(bytes);
