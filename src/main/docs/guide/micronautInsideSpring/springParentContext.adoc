@@ -6,6 +6,27 @@ You can also use any Micronaut feature from a regular Spring Boot or Spring appl
 
 You can also use any compilation time tools from Micronaut with Spring such as Micronaut's support for https://docs.micronaut.io/latest/guide/index.html#openapi[Swagger].
 
+== Dependency
+
+To use the Spring parent context feature (or other Spring integration features), add the following dependency to your build configuration:
+
+.Gradle
+[source,groovy]
+----
+implementation("io.micronaut.spring:micronaut-spring-context")
+----
+
+.Maven
+[source,xml]
+----
+<!-- https://mvnrepository.com/artifact/io.micronaut.spring/micronaut-spring-context -->
+<dependency>
+    <groupId>io.micronaut.spring</groupId>
+    <artifactId>micronaut-spring-context</artifactId>
+    <version>5.12.0</version>
+</dependency>
+----
+
 The following example shows how to Configure your Spring Boot application with a Micronaut powered parent application context using `SpringApplicationBuilder`:
 
 .Using the Micronaut Parent Context
