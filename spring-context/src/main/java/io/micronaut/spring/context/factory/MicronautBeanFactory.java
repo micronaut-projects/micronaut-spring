@@ -23,7 +23,7 @@ import io.micronaut.context.exceptions.NoSuchBeanException;
 import io.micronaut.core.annotation.AnnotationMetadata;
 import io.micronaut.core.annotation.AnnotationUtil;
 import io.micronaut.core.annotation.Internal;
-import io.micronaut.core.annotation.NonNull;
+import org.jspecify.annotations.NonNull;
 import io.micronaut.core.naming.NameResolver;
 import io.micronaut.core.reflect.InstantiationUtils;
 import io.micronaut.core.util.ArgumentUtils;

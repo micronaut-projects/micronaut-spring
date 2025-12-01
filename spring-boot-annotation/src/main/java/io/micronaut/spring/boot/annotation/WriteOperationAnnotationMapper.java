@@ -15,7 +15,7 @@
  */
 package io.micronaut.spring.boot.annotation;
 
-import io.micronaut.core.annotation.NonNull;
+import org.jspecify.annotations.NonNull;
 
 /**
  * Maps Actuator WriteOperation to Micronaut Write.

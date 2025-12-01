@@ -5,7 +5,7 @@ import java.util.Map;
 import javax.sql.DataSource;
 
 import io.micronaut.context.ApplicationContext;
-import io.micronaut.core.annotation.NonNull;
+import org.jspecify.annotations.NonNull;
 import io.micronaut.http.codec.MediaTypeCodecRegistry;
 import io.micronaut.inject.BeanDefinition;
 import io.micronaut.spring.boot.starter.EnableMicronaut;

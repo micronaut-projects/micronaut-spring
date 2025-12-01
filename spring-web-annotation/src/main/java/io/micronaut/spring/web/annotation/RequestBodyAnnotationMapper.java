@@ -16,7 +16,7 @@
 package io.micronaut.spring.web.annotation;
 
 import io.micronaut.core.annotation.AnnotationValue;
-import io.micronaut.core.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import io.micronaut.core.bind.annotation.Bindable;
 import io.micronaut.http.annotation.Body;
 import io.micronaut.inject.visitor.VisitorContext;

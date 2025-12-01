@@ -18,7 +18,7 @@ package io.micronaut.spring.annotation.cache;
 import io.micronaut.cache.annotation.CacheInvalidate;
 import io.micronaut.core.annotation.AnnotationValue;
 import io.micronaut.core.annotation.AnnotationValueBuilder;
-import io.micronaut.core.annotation.NonNull;
+import org.jspecify.annotations.NonNull;
 
 import java.lang.annotation.Annotation;
 
