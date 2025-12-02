@@ -16,7 +16,7 @@
 package io.micronaut.spring.context.factory;
 
 import io.micronaut.context.annotation.ConfigurationProperties;
-import io.micronaut.core.annotation.NonNull;
+import org.jspecify.annotations.NonNull;
 import io.micronaut.core.util.ArgumentUtils;
 import io.micronaut.spring.beans.MicronautContextInternal;
 

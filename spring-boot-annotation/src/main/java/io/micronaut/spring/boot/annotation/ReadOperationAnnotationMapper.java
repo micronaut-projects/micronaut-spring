@@ -16,7 +16,7 @@
 package io.micronaut.spring.boot.annotation;
 
 import io.micronaut.core.annotation.AnnotationValue;
-import io.micronaut.core.annotation.NonNull;
+import org.jspecify.annotations.NonNull;
 import io.micronaut.core.util.ArrayUtils;
 import io.micronaut.http.annotation.Produces;
 import io.micronaut.inject.visitor.VisitorContext;

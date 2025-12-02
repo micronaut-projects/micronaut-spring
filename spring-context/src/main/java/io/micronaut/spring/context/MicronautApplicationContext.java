@@ -18,7 +18,7 @@ package io.micronaut.spring.context;
 import io.micronaut.context.ApplicationContextBuilder;
 import io.micronaut.context.annotation.Secondary;
 import io.micronaut.context.event.StartupEvent;
-import io.micronaut.core.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import io.micronaut.core.reflect.GenericTypeUtils;
 import io.micronaut.inject.BeanDefinition;
 import io.micronaut.runtime.event.annotation.EventListener;
