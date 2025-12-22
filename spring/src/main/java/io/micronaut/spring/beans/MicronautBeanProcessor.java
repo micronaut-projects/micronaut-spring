@@ -15,7 +15,7 @@
  */
 package io.micronaut.spring.beans;
 
-import io.micronaut.context.DefaultApplicationContext;
+import io.micronaut.context.ApplicationContext;
 import io.micronaut.context.DefaultBeanContext;
 import io.micronaut.context.Qualifier;
 import io.micronaut.context.env.DefaultEnvironment;
@@ -68,7 +68,7 @@ public class MicronautBeanProcessor implements BeanFactoryPostProcessor, Disposa
     public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
         if (environment != null) {
             String[] profiles = getProfiles();
-            micronautContext = new DefaultApplicationContext(profiles) {
+            micronautContext = new ApplicationContext(profiles) {
                 DefaultEnvironment env = new DefaultEnvironment(() -> Arrays.asList(profiles)) {
                     @Override
                     public io.micronaut.context.env.Environment start() {
@@ -102,7 +102,7 @@ public class MicronautBeanProcessor implements BeanFactoryPostProcessor, Disposa
                 }
             };
         } else {
-            micronautContext = new DefaultApplicationContext();
+            micronautContext = new ApplicationContext();
         }
         micronautContext.start();
 
