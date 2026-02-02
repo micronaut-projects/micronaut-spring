@@ -95,10 +95,19 @@ public class MicronautBeanFactory extends DefaultListableBeanFactory implements 
         this.springAwareListener = awareListener;
         this.configuration = configuration;
         this.beanExcludes = configuration.getBeanExcludes();
-        final Collection<BeanDefinitionReference<?>> references = beanContext.getBeanDefinitionReferences();
+        final Collection<BeanDefinitionReference<Object>> references = beanContext.getBeanDefinitionReferences();
 
         for (BeanDefinitionReference<?> reference : references) {
-            final BeanDefinition<?> definition = reference.load(beanContext);
+            final BeanDefinition<?> definition;
+            try {
+                definition = reference.load(beanContext);
+            } catch (NoClassDefFoundError | io.micronaut.context.exceptions.BeanInstantiationException e) {
+                // TODO: Remove when micronaut-views 6.x is released with Micronaut 5 compatibility
+                if (logger.isWarnEnabled()) {
+                    logger.warn("Skipping bean [" + reference.getName() + "] due to incompatible dependencies: " + e.getMessage());
+                }
+                continue;
+            }
             if (definition instanceof ParametrizedInstantiatableBeanDefinition || (!(definition instanceof InstantiatableBeanDefinition))) {
                 // Spring doesn't have a similar concept. Consider these internal / non-public beans.
                 continue;
@@ -554,7 +563,7 @@ public class MicronautBeanFactory extends DefaultListableBeanFactory implements 
     public @NonNull
     String[] getBeanNamesForAnnotation(@NonNull Class<? extends Annotation> annotationType) {
         final String[] beanNamesForAnnotation = super.getBeanNamesForAnnotation(annotationType);
-        final Collection<BeanDefinition<?>> beanDefinitions = beanContext.getBeanDefinitions(Qualifiers.byStereotype(annotationType));
+        final Collection<BeanDefinition<Object>> beanDefinitions = beanContext.getBeanDefinitions(Qualifiers.byStereotype(annotationType));
         return ArrayUtils.concat(beansToNames(beanDefinitions), beanNamesForAnnotation);
     }
 

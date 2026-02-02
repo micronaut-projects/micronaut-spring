@@ -141,7 +141,7 @@ public class MicronautEnvironment implements ConfigurableEnvironment, MicronautC
      * The target environment.
      * @return The environment
      */
-    public @NonNull io.micronaut.context.env.Environment getEnvironment() {
+    public io.micronaut.context.env.@NonNull Environment getEnvironment() {
         return environment;
     }
 

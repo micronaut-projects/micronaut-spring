@@ -188,8 +188,8 @@ public final class MicronautImportRegistrar implements ImportBeanDefinitionRegis
             }
         }
 
-        Collection<BeanDefinition<?>> allBeanDefinitions = context.getAllBeanDefinitions();
-        for (BeanDefinition<?> definition : allBeanDefinitions) {
+        Collection<BeanDefinition<Object>> allBeanDefinitions = context.getAllBeanDefinitions();
+        for (BeanDefinition<Object> definition : allBeanDefinitions) {
             if (beanFilter.includes(definition) &&
                 !beanFilter.excludes(definition)) {
                 Class<?> beanType = definition.getBeanType();
