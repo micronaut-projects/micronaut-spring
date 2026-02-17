@@ -8,8 +8,8 @@ micronaut-test = "4.10.2"
 micronaut-sql = "6.3.3"
 micronaut-cache = "5.3.0"
 micronaut-views = "5.9.0"
-micronaut-servlet = "5.5.1"
 micronaut-validation = "4.12.0"
+micronaut-servlet = "5.6.0"
 micronaut-shared-settings = "7.6.4"
 
 [libraries]
