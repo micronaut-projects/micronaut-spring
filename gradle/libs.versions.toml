@@ -1,5 +1,5 @@
 [versions]
-managed-spring-boot = "3.5.6"
+managed-spring-boot = "3.5.10"
 managed-spring = "6.2.11"
 
 micronaut = "4.10.4"
