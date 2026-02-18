@@ -22,9 +22,9 @@ import io.micronaut.http.MutableHttpResponse;
 import io.micronaut.http.annotation.Filter;
 import io.micronaut.http.filter.HttpServerFilter;
 import io.micronaut.http.filter.ServerFilterChain;
+import io.micronaut.http.filter.ServerFilterPhase;
 import io.micronaut.spring.web.bind.ModelRequestArgumentBinder;
 import io.micronaut.views.ModelAndView;
-import io.micronaut.views.ViewsFilter;
 import io.micronaut.views.ViewsRenderer;
 import org.reactivestreams.Publisher;
 import org.springframework.ui.Model;
@@ -42,19 +42,15 @@ import java.util.Optional;
 @Requires(beans = ViewsRenderer.class)
 public class ModelAndViewServerFilter implements HttpServerFilter {
 
-    private final ViewsFilter viewsFilter;
-
     /**
      * Default constructor.
-     * @param viewsFilter The views filter
      */
-    public ModelAndViewServerFilter(ViewsFilter viewsFilter) {
-        this.viewsFilter = viewsFilter;
+    public ModelAndViewServerFilter() {
     }
 
     @Override
     public int getOrder() {
-        return viewsFilter.getOrder() + 10;
+        return ServerFilterPhase.RENDERING.order() + 10;
     }
 
     @Override

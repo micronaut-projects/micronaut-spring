@@ -98,16 +98,11 @@ public class MicronautBeanFactory extends DefaultListableBeanFactory implements 
         final Collection<BeanDefinitionReference<Object>> references = beanContext.getBeanDefinitionReferences();
 
         for (BeanDefinitionReference<?> reference : references) {
-            final BeanDefinition<?> definition;
-            try {
-                definition = reference.load(beanContext);
-            } catch (NoClassDefFoundError | io.micronaut.context.exceptions.BeanInstantiationException e) {
-                // TODO: Remove when micronaut-views 6.x is released with Micronaut 5 compatibility
-                if (logger.isWarnEnabled()) {
-                    logger.warn("Skipping bean [" + reference.getName() + "] due to incompatible dependencies: " + e.getMessage());
-                }
+            // Check if bean type is present and enabled before loading
+            if (!reference.isPresent() || !reference.isEnabled(beanContext)) {
                 continue;
             }
+            final BeanDefinition<?> definition = reference.load(beanContext);
             if (definition instanceof ParametrizedInstantiatableBeanDefinition || (!(definition instanceof InstantiatableBeanDefinition))) {
                 // Spring doesn't have a similar concept. Consider these internal / non-public beans.
                 continue;
