@@ -8,7 +8,7 @@ micronaut-test = "5.0.0-M6"
 micronaut-sql = "7.0.0-M7"
 micronaut-cache = "6.0.0-M2"
 micronaut-validation = "5.0.0-M1"
-micronaut-servlet = "6.0.0-M1"
+micronaut-servlet = "6.0.0-M2"
 micronaut-shared-settings = "8.0.0-M17"
 
 [libraries]
