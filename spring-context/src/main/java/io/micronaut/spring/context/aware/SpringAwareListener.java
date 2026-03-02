@@ -179,23 +179,6 @@ public class SpringAwareListener implements BeanInitializedEventListener<Object>
             beanPostProcessors.addAll(processors);
         }
     }
-
-    /**
-     * Explicitly adds a BeanPostProcessor to the list of processors.
-     * Used when BeanPostProcessors are registered at runtime (e.g. via ImportBeanDefinitionRegistrar)
-     * and are not discoverable via {@code BeanContext.getBeansOfType()} in Micronaut 5.
-     *
-     * @param processor The processor to add
-     */
-    public void addBeanPostProcessor(BeanPostProcessor processor) {
-        if (beanPostProcessors == null) {
-            initProcessors();
-        }
-        if (!beanPostProcessors.contains(processor)) {
-            beanPostProcessors.add(processor);
-        }
-    }
-
     /**
      * Reset the bean processors.
      */

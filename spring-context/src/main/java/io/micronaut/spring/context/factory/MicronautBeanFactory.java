@@ -859,9 +859,7 @@ public class MicronautBeanFactory extends DefaultListableBeanFactory implements 
             builder.qualifier(Qualifiers.byName(beanName));
             beanContext.registerBeanDefinition(builder.build());
             if (BeanPostProcessor.class.isAssignableFrom(beanClass)) {
-                SpringAwareListener listener = beanContext.getBean(SpringAwareListener.class);
-                BeanPostProcessor instance = (BeanPostProcessor) beanContext.getBean(beanClass, Qualifiers.byName(beanName));
-                listener.addBeanPostProcessor(instance);
+                beanContext.getBean(SpringAwareListener.class).resetPostProcessors();
             }
         }
     }
