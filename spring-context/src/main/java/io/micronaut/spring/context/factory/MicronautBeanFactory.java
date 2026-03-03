@@ -23,6 +23,7 @@ import io.micronaut.context.exceptions.NoSuchBeanException;
 import io.micronaut.core.annotation.AnnotationMetadata;
 import io.micronaut.core.annotation.AnnotationUtil;
 import io.micronaut.core.annotation.Internal;
+import io.micronaut.core.reflect.ReflectionUtils;
 import org.jspecify.annotations.NonNull;
 import io.micronaut.core.naming.NameResolver;
 import io.micronaut.core.reflect.InstantiationUtils;
@@ -846,6 +847,7 @@ public class MicronautBeanFactory extends DefaultListableBeanFactory implements 
                     () -> InstantiationUtils.instantiate(beanClass)
                 );
             }
+            builder = builder.exposedTypes(ReflectionUtils.getAllClassesInHierarchy(beanClass).toArray(Class<?>[]::new));
             String scope = abstractBeanDefinition.getScope();
             if (scope != null) {
                 if ("prototype".equals(scope)) {
