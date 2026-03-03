@@ -23,6 +23,7 @@ import io.micronaut.context.exceptions.NoSuchBeanException;
 import io.micronaut.core.annotation.AnnotationMetadata;
 import io.micronaut.core.annotation.AnnotationUtil;
 import io.micronaut.core.annotation.Internal;
+import io.micronaut.core.reflect.ReflectionUtils;
 import org.jspecify.annotations.NonNull;
 import io.micronaut.core.naming.NameResolver;
 import io.micronaut.core.reflect.InstantiationUtils;
@@ -95,9 +96,13 @@ public class MicronautBeanFactory extends DefaultListableBeanFactory implements 
         this.springAwareListener = awareListener;
         this.configuration = configuration;
         this.beanExcludes = configuration.getBeanExcludes();
-        final Collection<BeanDefinitionReference<?>> references = beanContext.getBeanDefinitionReferences();
+        final Collection<BeanDefinitionReference<Object>> references = beanContext.getBeanDefinitionReferences();
 
         for (BeanDefinitionReference<?> reference : references) {
+            // Check if bean type is present and enabled before loading
+            if (!reference.isPresent() || !reference.isEnabled(beanContext)) {
+                continue;
+            }
             final BeanDefinition<?> definition = reference.load(beanContext);
             if (definition instanceof ParametrizedInstantiatableBeanDefinition || (!(definition instanceof InstantiatableBeanDefinition))) {
                 // Spring doesn't have a similar concept. Consider these internal / non-public beans.
@@ -554,7 +559,7 @@ public class MicronautBeanFactory extends DefaultListableBeanFactory implements 
     public @NonNull
     String[] getBeanNamesForAnnotation(@NonNull Class<? extends Annotation> annotationType) {
         final String[] beanNamesForAnnotation = super.getBeanNamesForAnnotation(annotationType);
-        final Collection<BeanDefinition<?>> beanDefinitions = beanContext.getBeanDefinitions(Qualifiers.byStereotype(annotationType));
+        final Collection<BeanDefinition<Object>> beanDefinitions = beanContext.getBeanDefinitions(Qualifiers.byStereotype(annotationType));
         return ArrayUtils.concat(beansToNames(beanDefinitions), beanNamesForAnnotation);
     }
 
@@ -842,6 +847,7 @@ public class MicronautBeanFactory extends DefaultListableBeanFactory implements 
                     () -> InstantiationUtils.instantiate(beanClass)
                 );
             }
+            builder = builder.exposedTypes(ReflectionUtils.getAllClassesInHierarchy(beanClass).toArray(Class<?>[]::new));
             String scope = abstractBeanDefinition.getScope();
             if (scope != null) {
                 if ("prototype".equals(scope)) {
@@ -855,8 +861,7 @@ public class MicronautBeanFactory extends DefaultListableBeanFactory implements 
             builder.qualifier(Qualifiers.byName(beanName));
             beanContext.registerBeanDefinition(builder.build());
             if (BeanPostProcessor.class.isAssignableFrom(beanClass)) {
-                beanContext.getBean(SpringAwareListener.class)
-                    .resetPostProcessors();
+                beanContext.getBean(SpringAwareListener.class).resetPostProcessors();
             }
         }
     }

@@ -15,11 +15,10 @@
  */
 package io.micronaut.spring.beans;
 
-import io.micronaut.context.DefaultApplicationContext;
-import io.micronaut.context.DefaultBeanContext;
+import io.micronaut.context.ApplicationContext;
+import io.micronaut.context.ApplicationContextBuilder;
 import io.micronaut.context.Qualifier;
-import io.micronaut.context.env.DefaultEnvironment;
-import io.micronaut.core.convert.ArgumentConversionContext;
+import io.micronaut.context.env.PropertySource;
 import io.micronaut.core.util.ArrayUtils;
 import io.micronaut.inject.qualifiers.Qualifiers;
 import org.springframework.beans.BeansException;
@@ -29,12 +28,15 @@ import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.context.EnvironmentAware;
+import org.springframework.core.env.ConfigurableEnvironment;
+import org.springframework.core.env.EnumerablePropertySource;
 import org.springframework.core.env.Environment;
 
 import java.lang.annotation.Annotation;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * Adds Micronaut beans to a Spring application context.  This processor will
@@ -50,7 +52,7 @@ public class MicronautBeanProcessor implements BeanFactoryPostProcessor, Disposa
     private static final String MICRONAUT_CONTEXT_PROPERTY_NAME = "micronautContext";
     private static final String MICRONAUT_SINGLETON_PROPERTY_NAME = "micronautSingleton";
 
-    protected DefaultBeanContext micronautContext;
+    protected ApplicationContext micronautContext;
     protected final List<Class<?>> micronautBeanQualifierTypes;
     private Environment environment;
 
@@ -66,44 +68,48 @@ public class MicronautBeanProcessor implements BeanFactoryPostProcessor, Disposa
 
     @Override
     public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
+        ApplicationContextBuilder builder = ApplicationContext.builder();
+
         if (environment != null) {
             String[] profiles = getProfiles();
-            micronautContext = new DefaultApplicationContext(profiles) {
-                DefaultEnvironment env = new DefaultEnvironment(() -> Arrays.asList(profiles)) {
-                    @Override
-                    public io.micronaut.context.env.Environment start() {
-                        return this;
-                    }
+            builder.environments(profiles);
 
-                    @Override
-                    public io.micronaut.context.env.Environment stop() {
-                        return this;
-                    }
+            if (environment instanceof ConfigurableEnvironment configurableEnv) {
+                builder.propertySourcesLocator(env -> {
+                    List<PropertySource> propertySources = new ArrayList<>();
+                    int order = 0;
+                    for (org.springframework.core.env.PropertySource<?> springSource : configurableEnv.getPropertySources()) {
+                        if (springSource instanceof EnumerablePropertySource<?> enumerableSource) {
+                            final int currentOrder = order++;
+                            propertySources.add(new PropertySource() {
+                                @Override
+                                public String getName() {
+                                    return springSource.getName();
+                                }
 
-                    @Override
-                    public boolean containsProperty(String name) {
-                        return environment.containsProperty(name);
-                    }
+                                @Override
+                                public Object get(String key) {
+                                    return enumerableSource.getProperty(key);
+                                }
 
-                    @Override
-                    public boolean containsProperties(String name) {
-                        return environment.containsProperty(name);
-                    }
+                                @Override
+                                public Iterator<String> iterator() {
+                                    return Arrays.asList(enumerableSource.getPropertyNames()).iterator();
+                                }
 
-                    @Override
-                    public <T> Optional<T> getProperty(String name, ArgumentConversionContext<T> conversionContext) {
-                        return Optional.ofNullable(environment.getProperty(name, conversionContext.getArgument().getType()));
+                                @Override
+                                public int getOrder() {
+                                    return currentOrder;
+                                }
+                            });
+                        }
                     }
-                };
-
-                @Override
-                public io.micronaut.context.env.Environment getEnvironment() {
-                    return env;
-                }
-            };
-        } else {
-            micronautContext = new DefaultApplicationContext();
+                    return propertySources;
+                });
+            }
         }
+
+        micronautContext = builder.build();
         micronautContext.start();
 
         micronautBeanQualifierTypes
@@ -141,4 +147,3 @@ public class MicronautBeanProcessor implements BeanFactoryPostProcessor, Disposa
         this.environment = environment;
     }
 }
-

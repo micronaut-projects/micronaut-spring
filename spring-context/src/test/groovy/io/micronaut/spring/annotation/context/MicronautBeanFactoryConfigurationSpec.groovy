@@ -15,7 +15,7 @@
  */
 package io.micronaut.spring.annotation.context
 
-import com.fasterxml.jackson.databind.ObjectMapper
+import tools.jackson.databind.ObjectMapper
 import io.micronaut.context.ApplicationContext
 import io.micronaut.spring.context.MicronautApplicationContext
 import org.springframework.beans.factory.NoSuchBeanDefinitionException

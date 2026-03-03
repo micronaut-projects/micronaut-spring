@@ -183,5 +183,10 @@
     "type": "io.micronaut.spring.context.aop.$SpringConfigurationInterceptor$Definition$Reference",
     "member": "Implemented interface io.micronaut.inject.BeanDefinitionReference",
     "reason": "Internal runtime class moved from processors"
+  },
+  {
+    "type": "io.micronaut.spring.beans.MicronautBeanProcessor",
+    "member": "Field micronautContext",
+    "reason": "Changed from DefaultBeanContext to ApplicationContext for Micronaut 5 compatibility (DefaultEnvironment is now sealed)"
   }
 ]

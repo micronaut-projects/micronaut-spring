@@ -15,7 +15,7 @@
  */
 package io.micronaut.spring.beans;
 
-import io.micronaut.context.DefaultApplicationContext;
+import io.micronaut.context.ApplicationContext;
 import io.micronaut.context.exceptions.BeanInstantiationException;
 import org.springframework.beans.factory.FactoryBean;
 
@@ -31,7 +31,7 @@ import java.util.Optional;
 class MicronautSpringBeanFactory implements FactoryBean {
 
     private Class micronautBeanType;
-    private DefaultApplicationContext micronautContext;
+    private ApplicationContext micronautContext;
     private boolean isMicronautSingleton;
 
     /**
@@ -44,7 +44,7 @@ class MicronautSpringBeanFactory implements FactoryBean {
     /**
      * @param micronautContext The Micronaut application context
      */
-    public void setMicronautContext(DefaultApplicationContext micronautContext) {
+    public void setMicronautContext(ApplicationContext micronautContext) {
         this.micronautContext = micronautContext;
     }
 
