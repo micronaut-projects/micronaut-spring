@@ -19,7 +19,7 @@ dependencies {
     testImplementation(libs.spring.boot.autoconfigure)
     testImplementation(libs.spring.boot.actuator)
     testImplementation(libs.spring.boot.test)
-    testImplementation(libs.managed.spring.jdbc)
+    testImplementation(libs.managed.spring.boot.starter.jdbc)
     testImplementation(mnSql.h2)
 
     testRuntimeOnly(libs.managed.spring.boot.starter.web)

@@ -39,6 +39,7 @@ import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.context.*;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.core.ResolvableType;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.core.io.ProtocolResolver;
 import org.springframework.core.io.Resource;
@@ -159,6 +160,14 @@ public class MicronautApplicationContext implements ManagedApplicationContext, C
     }
 
     @Override
+    public void pause() {
+    }
+
+    @Override
+    public void restart() {
+    }
+
+    @Override
     public boolean containsBeanDefinition(String beanName) {
         return beanFactory.containsBeanDefinition(beanName);
     }
@@ -181,6 +190,11 @@ public class MicronautApplicationContext implements ManagedApplicationContext, C
     @Override
     public <T> ObjectProvider<T> getBeanProvider(ResolvableType requiredType, boolean allowEagerInit) {
         return beanFactory.getBeanProvider(requiredType, allowEagerInit);
+    }
+
+    @Override
+    public <T> ObjectProvider<T> getBeanProvider(ParameterizedTypeReference<T> requiredType) {
+        return beanFactory.getBeanProvider(ResolvableType.forType(requiredType.getType()));
     }
 
     @Override

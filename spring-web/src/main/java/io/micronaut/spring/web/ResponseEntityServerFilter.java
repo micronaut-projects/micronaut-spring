@@ -27,8 +27,6 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 
-import java.util.List;
-import java.util.Map;
 
 /**
  * A filter that adds support for {@link ResponseEntity} as a return type.
@@ -50,15 +48,13 @@ public class ResponseEntityServerFilter implements HttpServerFilter {
                 }
                 final HttpHeaders headers = entity.getHeaders();
                 final MutableHttpHeaders micronautHeaders = mutableHttpResponse.getHeaders();
-                for (Map.Entry<String, List<String>> entry : headers.entrySet()) {
-                    final String key = entry.getKey();
-                    final List<String> value = entry.getValue();
+                headers.forEach((key, value) -> {
                     for (String v : value) {
                         if (v != null) {
                             micronautHeaders.add(key, v);
                         }
                     }
-                }
+                });
                 final Object b = entity.getBody();
                 if (b != null) {
                     mutableHttpResponse.body(b);

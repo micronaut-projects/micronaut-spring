@@ -90,7 +90,7 @@ public class TransactionInterceptor extends TransactionAspectSupport implements 
             try {
                 retVal = context.proceed();
             } catch (Throwable ex) {
-                completeTransactionAfterThrowing(transactionInfo, ex);
+                completeTransactionAfterThrowing(transactionInfo, context::proceed, ex);
                 throw ex;
             } finally {
                 cleanupTransactionInfo(transactionInfo);
