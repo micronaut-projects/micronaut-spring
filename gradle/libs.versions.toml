@@ -1,6 +1,6 @@
 [versions]
 managed-spring-boot = "4.0.3"
-managed-spring = "7.0.5"
+managed-spring = "7.0.6"
 micronaut = "5.0.0-M15"
 micronaut-views = "6.0.0-M1"
 micronaut-test = "5.0.0-M6"
