@@ -12,6 +12,7 @@ dependencies {
 
     testImplementation(projects.micronautSpring)
     testImplementation(mnTest.micronaut.test.spock)
+    testRuntimeOnly(mnTest.junit.platform.launcher)
 }
 
 tasks.test {
