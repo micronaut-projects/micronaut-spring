@@ -15,7 +15,7 @@
     <script>hljs.initHighlightingOnLoad();</script>
     <link rel="stylesheet" href="../css/multi-language-sample.css"/>
     <script src="../js/docs.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.5.13/clipboard.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.11/clipboard.min.js"></script>
     <script type="text/javascript">
         function addJsClass(el) {
             var classes = document.body.className.split(" ");
@@ -23,7 +23,9 @@
             document.body.className = classes.join(" ");
         }
     </script>
-
+    <style type="text/css">
+        .lang-java { display: block }; .lang-python { display: block }; .lang-kotlin { display: block }; .lang-groovy { display: block }; 
+    </style>
 </head>
 
 <body class="body" id="docs" onload="addJsClass();" onhashchange="highlightMenu()">
@@ -56,7 +58,9 @@
                                 
                                 <div class="toc-item" style="margin-left:0"><a href="#springGuides"><strong>6</strong><span>Guides</span></a></div>
                                 
-                                <div class="toc-item" style="margin-left:0"><a href="#repository"><strong>7</strong><span>Repository</span></a></div>
+                                <div class="toc-item" style="margin-left:0"><a href="#breaks"><strong>7</strong><span>Breaking Changes</span></a></div>
+                                
+                                <div class="toc-item" style="margin-left:0"><a href="#repository"><strong>8</strong><span>Repository</span></a></div>
                                 
                             </div>
                         </div>
@@ -123,7 +127,9 @@
         
         <div class="toc-item" style="margin-left:0px" id="toc-item-springGuides"><a href="#springGuides"><strong>6</strong><span>Guides</span></a></div>
         
-        <div class="toc-item" style="margin-left:0px" id="toc-item-repository"><a href="#repository"><strong>7</strong><span>Repository</span></a></div>
+        <div class="toc-item" style="margin-left:0px" id="toc-item-breaks"><a href="#breaks"><strong>7</strong><span>Breaking Changes</span></a></div>
+        
+        <div class="toc-item" style="margin-left:0px" id="toc-item-repository"><a href="#repository"><strong>8</strong><span>Repository</span></a></div>
         
         </div>
     </div>
@@ -133,13 +139,13 @@
         <h1>Micronaut for Spring</h1>
         <p></p>
         <p>Extensions to integrate Micronaut and Spring</p>
-        <p><strong>Version:</strong> 5.12.2-SNAPSHOT </p>
+        <p><strong>Version:</strong> 6.0.0-SNAPSHOT </p>
     </div>
     
 <h1 id="introduction"><a class="anchor" href="#introduction"></a>1 Introduction</h1>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-spring/edit/5.12.x/src/main/docs/guide/introduction.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-spring/edit/6.0.x/src/main/docs/guide/introduction.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -171,7 +177,7 @@
 <h1 id="releaseHistory"><a class="anchor" href="#releaseHistory"></a>2 Release History</h1>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-spring/edit/5.12.x/src/main/docs/guide/releaseHistory.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-spring/edit/6.0.x/src/main/docs/guide/releaseHistory.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -187,7 +193,7 @@
 <h1 id="springToMicronaut"><a class="anchor" href="#springToMicronaut"></a>3 Transforming Spring Applications into Micronaut Applications</h1>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-spring/edit/5.12.x/src/main/docs/guide/springToMicronaut.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-spring/edit/6.0.x/src/main/docs/guide/springToMicronaut.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -240,7 +246,7 @@ If an annotation or interface of Spring is not mentioned in this documentation c
 <h2 id="springToMicronautStart"><a class="anchor" href="#springToMicronautStart"></a>3.1 Build Configuration</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-spring/edit/5.12.x/src/main/docs/guide/springToMicronaut/springToMicronautStart.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-spring/edit/6.0.x/src/main/docs/guide/springToMicronaut/springToMicronautStart.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -253,7 +259,7 @@ If an annotation or interface of Spring is not mentioned in this documentation c
 <h2 id="springAnnotations"><a class="anchor" href="#springAnnotations"></a>3.2 Supported Spring Annotations</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-spring/edit/5.12.x/src/main/docs/guide/springToMicronaut/springAnnotations.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-spring/edit/6.0.x/src/main/docs/guide/springToMicronaut/springAnnotations.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -378,7 +384,7 @@ If an annotation or interface of Spring is not mentioned in this documentation c
 <h2 id="springDataAnnotations"><a class="anchor" href="#springDataAnnotations"></a>3.3 Supported Spring Data Annotations</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-spring/edit/5.12.x/src/main/docs/guide/springToMicronaut/springDataAnnotations.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-spring/edit/6.0.x/src/main/docs/guide/springToMicronaut/springDataAnnotations.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -404,7 +410,8 @@ If an annotation or interface of Spring is not mentioned in this documentation c
     &lt;/path&gt;
 &lt;/annotationProcessorPaths&gt;</code></pre>
 </div>
-</div></p>
+</div>
+</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -504,7 +511,7 @@ See the guide for <a href="https://guides.micronaut.io/latest/spring-boot-micron
 <h2 id="springInterfaces"><a class="anchor" href="#springInterfaces"></a>3.4 Supported Spring Interfaces</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-spring/edit/5.12.x/src/main/docs/guide/springToMicronaut/springInterfaces.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-spring/edit/6.0.x/src/main/docs/guide/springToMicronaut/springInterfaces.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -585,7 +592,7 @@ See the guide for <a href="https://guides.micronaut.io/latest/spring-boot-micron
 <h2 id="springEvents"><a class="anchor" href="#springEvents"></a>3.5 Supported Spring Events</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-spring/edit/5.12.x/src/main/docs/guide/springToMicronaut/springEvents.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-spring/edit/6.0.x/src/main/docs/guide/springToMicronaut/springEvents.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -622,7 +629,7 @@ See the guide for <a href="https://guides.micronaut.io/latest/spring-boot-micron
 <h2 id="springMvc"><a class="anchor" href="#springMvc"></a>3.6 Writing Spring MVC Controllers</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-spring/edit/5.12.x/src/main/docs/guide/springToMicronaut/springMvc.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-spring/edit/6.0.x/src/main/docs/guide/springToMicronaut/springMvc.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -849,7 +856,7 @@ See the <a href="https://github.com/micronaut-projects/micronaut-guides/pull/839
 <h2 id="springBoot"><a class="anchor" href="#springBoot"></a>3.7 Supported Spring Boot Annotations</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-spring/edit/5.12.x/src/main/docs/guide/springToMicronaut/springBoot.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-spring/edit/6.0.x/src/main/docs/guide/springToMicronaut/springBoot.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -975,7 +982,7 @@ See the <a href="https://github.com/micronaut-projects/micronaut-guides/pull/839
 <h2 id="springLimitations"><a class="anchor" href="#springLimitations"></a>3.8 Unsupported Spring Features</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-spring/edit/5.12.x/src/main/docs/guide/springToMicronaut/springLimitations.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-spring/edit/6.0.x/src/main/docs/guide/springToMicronaut/springLimitations.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -1004,7 +1011,7 @@ See the <a href="https://github.com/micronaut-projects/micronaut-guides/pull/839
 <h2 id="micronautClient"><a class="anchor" href="#micronautClient"></a>3.9 Using Micronaut's HTTP Client</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-spring/edit/5.12.x/src/main/docs/guide/springToMicronaut/micronautClient.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-spring/edit/6.0.x/src/main/docs/guide/springToMicronaut/micronautClient.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -1101,7 +1108,7 @@ if you are using low-level HTTP clients see the guide for <a href="https://guide
 <h1 id="sharingLibraries"><a class="anchor" href="#sharingLibraries"></a>4 Sharing Libraries between Spring and Micronaut</h1>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-spring/edit/5.12.x/src/main/docs/guide/sharingLibraries.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-spring/edit/6.0.x/src/main/docs/guide/sharingLibraries.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -1194,7 +1201,7 @@ class Application {}</code></pre>
 <h1 id="micronautInsideSpring"><a class="anchor" href="#micronautInsideSpring"></a>5 Using Micronaut Modules with Spring</h1>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-spring/edit/5.12.x/src/main/docs/guide/micronautInsideSpring.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-spring/edit/6.0.x/src/main/docs/guide/micronautInsideSpring.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -1207,7 +1214,7 @@ class Application {}</code></pre>
 <h2 id="springBootStarter"><a class="anchor" href="#springBootStarter"></a>5.1 Using the Micronaut Spring Boot Starter</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-spring/edit/5.12.x/src/main/docs/guide/micronautInsideSpring/springBootStarter.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-spring/edit/6.0.x/src/main/docs/guide/micronautInsideSpring/springBootStarter.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -1274,7 +1281,8 @@ if you prefer not to import the BOM that is also possible, but note you will hav
     &lt;/path&gt;
 &lt;/annotationProcessorPaths&gt;</code></pre>
 </div>
-</div></p>
+</div>
+</p>
 </div>
 <div class="paragraph">
 <p>You will then need to explicitly specify a dependency on a version of the Jakarta Annotations module that uses the <code>jakarta</code> namespace instead of the <code>javax</code> namespace (versions 2.0.x and above). This is because the Spring Boot BOM automatically downgrades this module&#8217;s version to one that uses the <code>javax</code> namespace which is incompatible with Micronaut:</p>
@@ -1297,7 +1305,8 @@ if you prefer not to import the BOM that is also possible, but note you will hav
     &lt;/path&gt;
 &lt;/annotationProcessorPaths&gt;</code></pre>
 </div>
-</div></p>
+</div>
+</p>
 </div>
 <div class="paragraph">
 <p>        <div class="listingblock multi-language-sample">
@@ -1314,7 +1323,8 @@ if you prefer not to import the BOM that is also possible, but note you will hav
     &lt;version&gt;2.1.1&lt;/version&gt;
 &lt;/dependency&gt;</code></pre>
 </div>
-</div></p>
+</div>
+</p>
 </div>
 <div class="paragraph">
 <p>Finally, a dependency on <code>micronaut-spring-boot-starter</code> can be added to the build:</p>
@@ -1333,7 +1343,8 @@ if you prefer not to import the BOM that is also possible, but note you will hav
     &lt;artifactId&gt;micronaut-spring-boot-starter&lt;/artifactId&gt;
 &lt;/dependency&gt;</code></pre>
 </div>
-</div></p>
+</div>
+</p>
 </div>
 <div class="paragraph">
 <p>When the Spring Boot application starts app all beans provided by Micronaut will be exposed as Spring Beans as well.</p>
@@ -1373,7 +1384,8 @@ You can control which beans are exposed to Spring by using the <a href="../api/i
     &lt;/path&gt;
 &lt;/annotationProcessorPaths&gt;</code></pre>
 </div>
-</div></p>
+</div>
+</p>
 </div>
 <div class="paragraph">
 <p>And module you are interested in, for example Micronaut Data JDBC:</p>
@@ -1392,7 +1404,8 @@ You can control which beans are exposed to Spring by using the <a href="../api/i
     &lt;artifactId&gt;micronaut-data-jdbc&lt;/artifactId&gt;
 &lt;/dependency&gt;</code></pre>
 </div>
-</div></p>
+</div>
+</p>
 </div>
 <div class="paragraph">
 <p>However, it is important to note that you will once again need to specify a version of the Jakarta Persistence API that uses the <code>jakarta</code> namespace instead of the <code>javax</code> namespace as the Spring Boot BOM forces these to older versions in Spring Boot 2.x:</p>
@@ -1415,7 +1428,8 @@ You can control which beans are exposed to Spring by using the <a href="../api/i
     &lt;/path&gt;
 &lt;/annotationProcessorPaths&gt;</code></pre>
 </div>
-</div></p>
+</div>
+</p>
 </div>
 <div class="paragraph">
 <p>        <div class="listingblock multi-language-sample">
@@ -1432,7 +1446,8 @@ You can control which beans are exposed to Spring by using the <a href="../api/i
     &lt;version&gt;3.1.0&lt;/version&gt;
 &lt;/dependency&gt;</code></pre>
 </div>
-</div></p>
+</div>
+</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -1453,7 +1468,7 @@ For Java add annotation processors in annotationProcessor scope, for Kotlin, add
 <h2 id="springParentContext"><a class="anchor" href="#springParentContext"></a>5.2 Using Micronaut Parent Context</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-spring/edit/5.12.x/src/main/docs/guide/micronautInsideSpring/springParentContext.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-spring/edit/6.0.x/src/main/docs/guide/micronautInsideSpring/springParentContext.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -1490,7 +1505,7 @@ builder.parent(context)
 <h2 id="beanPostProcessor"><a class="anchor" href="#beanPostProcessor"></a>5.3 Using a Bean Post Processor</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-spring/edit/5.12.x/src/main/docs/guide/micronautInsideSpring/beanPostProcessor.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-spring/edit/6.0.x/src/main/docs/guide/micronautInsideSpring/beanPostProcessor.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -1554,7 +1569,7 @@ class ByAnnotationTypeConfig {
 <h1 id="springGuides"><a class="anchor" href="#springGuides"></a>6 Guides</h1>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-spring/edit/5.12.x/src/main/docs/guide/springGuides.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-spring/edit/6.0.x/src/main/docs/guide/springGuides.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -1567,10 +1582,37 @@ class ByAnnotationTypeConfig {
 <p><a href="https://guides.micronaut.io/latest/tag-spring-boot.html" class="bare">https://guides.micronaut.io/latest/tag-spring-boot.html</a></p>
 </div>
 
-<h1 id="repository"><a class="anchor" href="#repository"></a>7 Repository</h1>
+<h1 id="breaks"><a class="anchor" href="#breaks"></a>7 Breaking Changes</h1>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-spring/edit/5.12.x/src/main/docs/guide/repository.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-spring/edit/6.0.x/src/main/docs/guide/breaks.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>This section documents breaking changes between Micronaut Spring versions:</p>
+</div>
+<div class="sect2">
+<h3 id="_micronaut_spring_6_0_0">Micronaut Spring 6.0.0</h3>
+<div class="sect3">
+<h4 id="_deprecations">Deprecations</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>The Internal class method <code>io.micronaut.spring.context.aware.SpringAwareListener.onBeanCreated(Object, Object)</code> deprecated previously has been removed.
+<code>onBeanCreated(BeanDefinition, Object, String)</code> is used instead.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+<h1 id="repository"><a class="anchor" href="#repository"></a>8 Repository</h1>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-spring/edit/6.0.x/src/main/docs/guide/repository.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
