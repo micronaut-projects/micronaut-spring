@@ -25,10 +25,19 @@ import io.micronaut.core.util.StringUtils;
 import io.micronaut.spring.beans.MicronautContextInternal;
 import jakarta.inject.Singleton;
 import org.springframework.core.convert.support.ConfigurableConversionService;
-import org.springframework.core.env.*;
+import org.springframework.core.env.ConfigurableEnvironment;
+import org.springframework.core.env.MissingRequiredPropertiesException;
+import org.springframework.core.env.MutablePropertySources;
+import org.springframework.core.env.Profiles;
 import org.springframework.util.Assert;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
 
 /**
  * Implementation of the {@link Environment} interface for Micronaut.
