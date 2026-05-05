@@ -23,7 +23,6 @@ io.micronaut.spring.core.annotation
 io.micronaut.spring.core.env
 io.micronaut.spring.core.event
 io.micronaut.spring.core.type
-io.micronaut.spring.info
 io.micronaut.spring.tx.annotation
 io.micronaut.spring.tx.test
 io.micronaut.spring.web
