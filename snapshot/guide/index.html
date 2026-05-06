@@ -1486,6 +1486,29 @@ For Java add annotation processors in annotationProcessor scope, for Kotlin, add
 <div class="paragraph">
 <p>You can also use any compilation time tools from Micronaut with Spring such as Micronaut&#8217;s support for <a href="https://docs.micronaut.io/latest/guide/index.html#openapi">Swagger</a>.</p>
 </div>
+<div class="sect1">
+<h2 id="_dependency">Dependency</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>To use the Spring parent context feature (or other Spring integration features), add the following dependency to your build configuration:</p>
+</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
+<div class="title"></div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">implementation(<span class="hljs-string">"io.micronaut.spring:micronaut-spring-context")</span></code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
+    &lt;groupId&gt;io.micronaut.spring&lt;/groupId&gt;
+    &lt;artifactId&gt;micronaut-spring-context&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div>
+</p>
+</div>
 <div class="paragraph">
 <p>The following example shows how to Configure your Spring Boot application with a Micronaut powered parent application context using <code>SpringApplicationBuilder</code>:</p>
 </div>
@@ -1499,6 +1522,8 @@ builder.parent(context)
     .sources(Application.class)
     .build()
     .run();</code></pre>
+</div>
+</div>
 </div>
 </div>
 
@@ -1520,8 +1545,7 @@ a constructor parameter which represents a list of the types of
 Micronaut beans which should be added to the Spring Application Context.  The
 processor may be used in any Spring application.  As an example, a Grails 3
 application could take advantage of <code>MicronautBeanProcessor</code> to add all the
-Micronaut HTTP Client beans to the Spring Application Context with something
-like the folowing:</p>
+Micronaut HTTP Client beans to the Spring Application Context with something like the folowing:</p>
 </div>
 <div class="listingblock">
 <div class="content">
