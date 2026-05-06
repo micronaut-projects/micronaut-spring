@@ -6,8 +6,7 @@ a constructor parameter which represents a list of the types of
 Micronaut beans which should be added to the Spring Application Context.  The
 processor may be used in any Spring application.  As an example, a Grails 3
 application could take advantage of `MicronautBeanProcessor` to add all the
-Micronaut HTTP Client beans to the Spring Application Context with something
-like the folowing:
+Micronaut HTTP Client beans to the Spring Application Context with something like the folowing:
 
 [source,groovy]
 ----
