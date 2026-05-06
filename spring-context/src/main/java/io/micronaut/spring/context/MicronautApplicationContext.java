@@ -64,7 +64,7 @@ import java.util.Set;
  * An implementation of Spring's {@link ApplicationContext} interface that delegates to Micronaut.
  *
  * <p>This can either be created manually via {@link #MicronautApplicationContext(ApplicationContextBuilder)} or looked up as a
- * bean when running from Micronaut. The {@link ApplicationContextAware} interface is supported.</p>
+ * bean when running from Micronaut. The {@link org.springframework.context.ApplicationContextAware} interface is supported.</p>
  *
  * @author graemerocher
  * @since 1.0

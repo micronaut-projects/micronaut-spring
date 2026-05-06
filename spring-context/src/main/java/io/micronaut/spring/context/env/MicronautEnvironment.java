@@ -40,7 +40,7 @@ import java.util.Optional;
 import java.util.Set;
 
 /**
- * Implementation of the {@link Environment} interface for Micronaut.
+ * Implementation of the {@link org.springframework.core.env.Environment} interface for Micronaut.
  *
  * @author graemerocher
  * @since 1.0
