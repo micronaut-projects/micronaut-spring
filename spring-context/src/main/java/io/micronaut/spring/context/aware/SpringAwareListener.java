@@ -179,6 +179,7 @@ public class SpringAwareListener implements BeanInitializedEventListener<Object>
             beanPostProcessors.addAll(processors);
         }
     }
+
     /**
      * Reset the bean processors.
      */
