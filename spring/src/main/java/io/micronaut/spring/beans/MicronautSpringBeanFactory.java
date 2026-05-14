@@ -36,6 +36,8 @@ class MicronautSpringBeanFactory implements FactoryBean<Object> {
     private boolean isMicronautSingleton;
 
     /**
+     * Sets the type of bean this factory will create.
+     *
      * @param micronautBeanType The type of bean this factory will create
      */
     public void setMicronautBeanType(Class<?> micronautBeanType) {
@@ -43,6 +45,8 @@ class MicronautSpringBeanFactory implements FactoryBean<Object> {
     }
 
     /**
+     * Sets the Micronaut application context.
+     *
      * @param micronautContext The Micronaut application context
      */
     public void setMicronautContext(ApplicationContext micronautContext) {
@@ -50,6 +54,7 @@ class MicronautSpringBeanFactory implements FactoryBean<Object> {
     }
 
     /**
+     * Sets whether the Micronaut bean is a singleton.
      *
      * @param isMicronautSingleton indicates if the Micronaut bean is a singleton
      */

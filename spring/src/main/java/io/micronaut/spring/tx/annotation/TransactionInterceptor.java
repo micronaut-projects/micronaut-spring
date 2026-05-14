@@ -109,6 +109,8 @@ public class TransactionInterceptor extends TransactionAspectSupport implements 
     }
 
     /**
+     * Resolves the transaction attribute.
+     *
      * @param targetMethod           The target method
      * @param annotationMetadata     The annotation metadata
      * @param transactionManagerName The transaction manager

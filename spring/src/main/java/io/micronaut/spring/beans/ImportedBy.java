@@ -30,6 +30,8 @@ import java.lang.annotation.Target;
 @Target({ElementType.TYPE, ElementType.METHOD})
 public @interface ImportedBy {
     /**
+     * Returns the type that imported this bean.
+     *
      * @return The type that imported this bean.
      */
     Class<?> value();

@@ -43,6 +43,8 @@ public class PropertyResolverAdapter implements PropertyResolver {
     }
 
     /**
+     * Returns the Micronaut property resolver.
+     *
      * @return The micronaut property resolver
      */
     public io.micronaut.core.value.PropertyResolver getPropertyResolver() {

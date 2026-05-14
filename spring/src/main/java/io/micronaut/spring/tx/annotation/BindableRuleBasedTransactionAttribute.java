@@ -58,6 +58,8 @@ public class BindableRuleBasedTransactionAttribute extends DefaultTransactionAtt
     }
 
     /**
+     * Returns the exceptions to not rollback for.
+     *
      * @return An unmodifiable set of exceptions to not rollback for.
      */
     public final Set<Class<? extends Throwable>> getNoRollbackFor() {
@@ -65,6 +67,8 @@ public class BindableRuleBasedTransactionAttribute extends DefaultTransactionAtt
     }
 
     /**
+     * Returns the exceptions to rollback for.
+     *
      * @return An unmodifiable set of exceptions to rollback for.
      */
     public final Set<Class<? extends Throwable>> getRollbackFor() {
