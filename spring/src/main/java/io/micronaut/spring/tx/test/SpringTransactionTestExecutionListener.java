@@ -23,6 +23,7 @@ import io.micronaut.test.annotation.TransactionMode;
 import io.micronaut.test.context.TestContext;
 import io.micronaut.test.context.TestExecutionListener;
 import io.micronaut.test.extensions.AbstractMicronautExtension;
+import org.jspecify.annotations.Nullable;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
@@ -41,7 +42,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class SpringTransactionTestExecutionListener implements TestExecutionListener {
 
     private final PlatformTransactionManager transactionManager;
-    private TransactionStatus tx;
+    private @Nullable TransactionStatus tx;
     private final AtomicInteger counter = new AtomicInteger();
     private final AtomicInteger setupCounter = new AtomicInteger();
     private final boolean rollback;
@@ -103,12 +104,16 @@ public class SpringTransactionTestExecutionListener implements TestExecutionList
 
     private void afterTestExecution(boolean rollback) {
         if (counter.decrementAndGet() == 0) {
-            if (rollback) {
-                transactionManager.rollback(tx);
-            } else {
-                transactionManager.commit(tx);
+            TransactionStatus transactionStatus = tx;
+            if (transactionStatus == null) {
+                throw new IllegalStateException("No active transaction");
             }
+            if (rollback) {
+                transactionManager.rollback(transactionStatus);
+            } else {
+                transactionManager.commit(transactionStatus);
+            }
+            tx = null;
         }
     }
 }
-

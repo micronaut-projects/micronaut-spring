@@ -36,6 +36,7 @@ import io.micronaut.core.annotation.AnnotationValue;
 import io.micronaut.core.annotation.Internal;
 import io.micronaut.core.reflect.ClassUtils;
 import io.micronaut.core.util.CollectionUtils;
+import org.jspecify.annotations.Nullable;
 import org.springframework.core.annotation.AnnotationAttributes;
 import org.springframework.core.annotation.MergedAnnotation;
 
@@ -90,12 +91,12 @@ class MergedAnnotationValue<A extends Annotation> implements MergedAnnotation<A>
     }
 
     @Override
-    public Object getSource() {
+    public @Nullable Object getSource() {
         return null;
     }
 
     @Override
-    public MergedAnnotation<?> getMetaSource() {
+    public @Nullable MergedAnnotation<?> getMetaSource() {
         if (isMetaPresent()) {
             String metaAnnotationName = annotationMetadata.getAnnotationNameByStereotype(value.getAnnotationName()).orElse(null);
             if (metaAnnotationName != null) {
@@ -360,7 +361,16 @@ class MergedAnnotationValue<A extends Annotation> implements MergedAnnotation<A>
 
     @Override
     public MergedAnnotation<A> filterAttributes(Predicate<String> predicate) {
-        return null;
+        Map<CharSequence, Object> filteredValues = new LinkedHashMap<>();
+        value.getValues().forEach((attribute, attributeValue) -> {
+            if (predicate.test(attribute.toString())) {
+                filteredValues.put(attribute, attributeValue);
+            }
+        });
+        return new MergedAnnotationValue<>(
+            annotationMetadata,
+            new AnnotationValue<>(value.getAnnotationName(), filteredValues)
+        );
     }
 
     @Override
@@ -390,7 +400,7 @@ class MergedAnnotationValue<A extends Annotation> implements MergedAnnotation<A>
         Map<String, Class<? extends Enum>> enumMembers = computeEnumMembers(thisValue);
         Set<Adapt> adapts = CollectionUtils.setOf(adaptations);
         values.forEach((attribute, v) -> {
-            v = convertValue(factory, adaptations, adapts, v, enumMembers.get(attribute));
+            v = convertValue(factory, adaptations, adapts, v, enumMembers.get(attribute.toString()));
             newMap.put(attribute.toString(), v);
         });
         Map<CharSequence, Object> defaultValues = annotationMetadata.getDefaultValues(thisValue.getAnnotationName());
@@ -418,7 +428,7 @@ class MergedAnnotationValue<A extends Annotation> implements MergedAnnotation<A>
         return Collections.emptyMap();
     }
 
-    private <T extends Map<String, Object>> Object convertValue(Function<MergedAnnotation<?>, T> factory, Adapt[] adaptations, Set<Adapt> adapts, Object value, Class<? extends Enum> aClass) {
+    private <T extends Map<String, Object>> Object convertValue(Function<MergedAnnotation<?>, T> factory, Adapt[] adaptations, Set<Adapt> adapts, Object value, @Nullable Class<? extends Enum> aClass) {
         if (aClass != null && value instanceof String) {
             return Enum.valueOf(aClass, value.toString());
         }
@@ -427,7 +437,9 @@ class MergedAnnotationValue<A extends Annotation> implements MergedAnnotation<A>
             if (adapts.contains(Adapt.CLASS_TO_STRING)) {
                 value = acv.getName();
             } else {
-                value = acv.getType().orElse(null);
+                value = acv.getType()
+                    .<Object>map(type -> type)
+                    .orElseGet(() -> new TypeNotPresentException(acv.getName(), null));
             }
         } else if (value instanceof AnnotationValue) {
             AnnotationValue<?> av = (AnnotationValue<?>) value;
@@ -441,7 +453,11 @@ class MergedAnnotationValue<A extends Annotation> implements MergedAnnotation<A>
 
     @Override
     public A synthesize() throws NoSuchElementException {
-        return annotationMetadata.synthesize(getType());
+        A synthesized = annotationMetadata.synthesize(getType());
+        if (synthesized == null) {
+            throw new NoSuchElementException("Annotation [" + value.getAnnotationName() + "] cannot be synthesized");
+        }
+        return synthesized;
     }
 
     @Override

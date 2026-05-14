@@ -24,6 +24,7 @@ import java.util.stream.Stream;
 import io.micronaut.core.annotation.AnnotationMetadata;
 import io.micronaut.core.annotation.AnnotationValue;
 import io.micronaut.core.annotation.Internal;
+import org.jspecify.annotations.Nullable;
 import org.springframework.core.annotation.MergedAnnotation;
 import org.springframework.core.annotation.MergedAnnotationSelector;
 import org.springframework.core.annotation.MergedAnnotations;
@@ -71,13 +72,13 @@ public class MicronautMergedAnnotations implements MergedAnnotations {
     }
 
     @Override
-    public <A extends Annotation> MergedAnnotation<A> get(Class<A> annotationType, Predicate<? super MergedAnnotation<A>> predicate) {
+    public <A extends Annotation> MergedAnnotation<A> get(Class<A> annotationType, @Nullable Predicate<? super MergedAnnotation<A>> predicate) {
         AnnotationValue<A> av = annotationMetadata.getAnnotation(annotationType);
         return resolveAnnotationValueToMergedAnnotation(predicate, av);
     }
 
     @Override
-    public <A extends Annotation> MergedAnnotation<A> get(Class<A> annotationType, Predicate<? super MergedAnnotation<A>> predicate, MergedAnnotationSelector<A> selector) {
+    public <A extends Annotation> MergedAnnotation<A> get(Class<A> annotationType, @Nullable Predicate<? super MergedAnnotation<A>> predicate, @Nullable MergedAnnotationSelector<A> selector) {
         AnnotationValue<A> av = annotationMetadata.getAnnotation(annotationType);
         return resolveAnnotationValueToMergedAnnotation(predicate, av);
     }
@@ -92,12 +93,12 @@ public class MicronautMergedAnnotations implements MergedAnnotations {
     }
 
     @Override
-    public <A extends Annotation> MergedAnnotation<A> get(String annotationType, Predicate<? super MergedAnnotation<A>> predicate) {
+    public <A extends Annotation> MergedAnnotation<A> get(String annotationType, @Nullable Predicate<? super MergedAnnotation<A>> predicate) {
         AnnotationValue<A> av = annotationMetadata.getAnnotation(annotationType);
         return resolveAnnotationValueToMergedAnnotation(predicate, av);
     }
 
-    private <A extends Annotation> MergedAnnotation<A> resolveAnnotationValueToMergedAnnotation(Predicate<? super MergedAnnotation<A>> predicate, AnnotationValue<A> av) {
+    private <A extends Annotation> MergedAnnotation<A> resolveAnnotationValueToMergedAnnotation(@Nullable Predicate<? super MergedAnnotation<A>> predicate, @Nullable AnnotationValue<A> av) {
         if (av != null) {
             MergedAnnotationValue<A> ma = new MergedAnnotationValue<>(annotationMetadata, av);
             if (predicate != null && !predicate.test(ma)) {
@@ -109,7 +110,7 @@ public class MicronautMergedAnnotations implements MergedAnnotations {
     }
 
     @Override
-    public <A extends Annotation> MergedAnnotation<A> get(String annotationType, Predicate<? super MergedAnnotation<A>> predicate, MergedAnnotationSelector<A> selector) {
+    public <A extends Annotation> MergedAnnotation<A> get(String annotationType, @Nullable Predicate<? super MergedAnnotation<A>> predicate, @Nullable MergedAnnotationSelector<A> selector) {
         AnnotationValue<A> av = annotationMetadata.getAnnotation(annotationType);
         return resolveAnnotationValueToMergedAnnotation(predicate, av);
     }

@@ -26,6 +26,7 @@ import io.micronaut.core.annotation.AnnotationMetadata;
 import io.micronaut.core.util.StringUtils;
 import io.micronaut.inject.ExecutableMethod;
 import io.micronaut.inject.qualifiers.Qualifiers;
+import org.jspecify.annotations.Nullable;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionSystemException;
@@ -67,7 +68,7 @@ public class TransactionInterceptor extends TransactionAspectSupport implements 
     }
 
     @Override
-    public final Object intercept(MethodInvocationContext<Object, Object> context) {
+    public final @Nullable Object intercept(MethodInvocationContext<Object, Object> context) {
         if (context.hasStereotype(Transactional.class)) {
             String transactionManagerName = context.stringValue(Transactional.class).orElse(null);
             if (StringUtils.isEmpty(transactionManagerName)) {
@@ -116,7 +117,7 @@ public class TransactionInterceptor extends TransactionAspectSupport implements 
     protected TransactionAttribute resolveTransactionAttribute(
             ExecutableMethod<Object, Object> targetMethod,
             AnnotationMetadata annotationMetadata,
-            String transactionManagerName) {
+            @Nullable String transactionManagerName) {
         return transactionDefinitionMap.computeIfAbsent(targetMethod, method -> {
 
             BindableRuleBasedTransactionAttribute attribute = new BindableRuleBasedTransactionAttribute();
@@ -139,7 +140,7 @@ public class TransactionInterceptor extends TransactionAspectSupport implements 
         });
     }
 
-    private PlatformTransactionManager resolveTransactionManager(String transactionManagerName) {
+    private PlatformTransactionManager resolveTransactionManager(@Nullable String transactionManagerName) {
         try {
             if (transactionManagerName != null) {
                 return this.transactionManagerMap.computeIfAbsent(transactionManagerName, s ->

@@ -21,6 +21,7 @@ import io.micronaut.context.Qualifier;
 import io.micronaut.context.env.PropertySource;
 import io.micronaut.core.util.ArrayUtils;
 import io.micronaut.inject.qualifiers.Qualifiers;
+import org.jspecify.annotations.Nullable;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
@@ -52,9 +53,9 @@ public class MicronautBeanProcessor implements BeanFactoryPostProcessor, Disposa
     private static final String MICRONAUT_CONTEXT_PROPERTY_NAME = "micronautContext";
     private static final String MICRONAUT_SINGLETON_PROPERTY_NAME = "micronautSingleton";
 
-    protected ApplicationContext micronautContext;
+    protected @Nullable ApplicationContext micronautContext;
     protected final List<Class<?>> micronautBeanQualifierTypes;
-    private Environment environment;
+    private @Nullable Environment environment;
 
     /**
      *
@@ -70,11 +71,12 @@ public class MicronautBeanProcessor implements BeanFactoryPostProcessor, Disposa
     public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
         ApplicationContextBuilder builder = ApplicationContext.builder();
 
-        if (environment != null) {
-            String[] profiles = getProfiles();
+        Environment currentEnvironment = environment;
+        if (currentEnvironment != null) {
+            String[] profiles = getProfiles(currentEnvironment);
             builder.environments(profiles);
 
-            if (environment instanceof ConfigurableEnvironment configurableEnv) {
+            if (currentEnvironment instanceof ConfigurableEnvironment configurableEnv) {
                 builder.propertySourcesLocator(env -> {
                     List<PropertySource> propertySources = new ArrayList<>();
                     int order = 0;
@@ -88,7 +90,7 @@ public class MicronautBeanProcessor implements BeanFactoryPostProcessor, Disposa
                                 }
 
                                 @Override
-                                public Object get(String key) {
+                                public @Nullable Object get(String key) {
                                     return enumerableSource.getProperty(key);
                                 }
 
@@ -127,7 +129,7 @@ public class MicronautBeanProcessor implements BeanFactoryPostProcessor, Disposa
         });
     }
 
-    private String[] getProfiles() {
+    private static String[] getProfiles(Environment environment) {
         if (ArrayUtils.isNotEmpty(environment.getActiveProfiles())) {
             return environment.getActiveProfiles();
         } else {
@@ -137,8 +139,9 @@ public class MicronautBeanProcessor implements BeanFactoryPostProcessor, Disposa
 
     @Override
     public void destroy() throws Exception {
-        if (micronautContext != null) {
-            micronautContext.close();
+        ApplicationContext context = micronautContext;
+        if (context != null) {
+            context.close();
         }
     }
 

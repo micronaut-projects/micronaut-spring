@@ -33,7 +33,7 @@ import java.util.Set;
 public class BindableRuleBasedTransactionAttribute extends DefaultTransactionAttribute {
 
     private final Set<Class<? extends Throwable>> noRollbackFor = new HashSet<>();
-    private Set<Class<? extends Throwable>> rollbackFor = null;
+    private final Set<Class<? extends Throwable>> rollbackFor = new HashSet<>();
 
     /**
      * Configures the exceptions to not rollback for.
@@ -53,9 +53,6 @@ public class BindableRuleBasedTransactionAttribute extends DefaultTransactionAtt
      */
     public final void setRollbackFor(Class<? extends Throwable>... exceptions) {
         if (ArrayUtils.isNotEmpty(exceptions)) {
-            if (rollbackFor == null) {
-                rollbackFor = new HashSet<>();
-            }
             rollbackFor.addAll(Arrays.asList(exceptions));
         }
     }
@@ -71,10 +68,7 @@ public class BindableRuleBasedTransactionAttribute extends DefaultTransactionAtt
      * @return An unmodifiable set of exceptions to rollback for.
      */
     public final Set<Class<? extends Throwable>> getRollbackFor() {
-        if (rollbackFor != null) {
-            return Collections.unmodifiableSet(rollbackFor);
-        }
-        return Collections.emptySet();
+        return Collections.unmodifiableSet(rollbackFor);
     }
 
     @Override
@@ -89,7 +83,7 @@ public class BindableRuleBasedTransactionAttribute extends DefaultTransactionAtt
             }
         }
 
-        if (rollbackFor != null) {
+        if (!rollbackFor.isEmpty()) {
             for (Class<? extends Throwable> aClass : rollbackFor) {
                 if (aClass.isInstance(ex)) {
                     return true;

@@ -17,6 +17,7 @@ package io.micronaut.spring.core.env;
 
 import io.micronaut.context.env.PropertyPlaceholderResolver;
 import io.micronaut.core.naming.NameUtils;
+import org.jspecify.annotations.Nullable;
 import org.springframework.core.env.PropertyResolver;
 
 /**
@@ -54,18 +55,18 @@ public class PropertyResolverAdapter implements PropertyResolver {
     }
 
     @Override
-    public String getProperty(String key) {
+    public @Nullable String getProperty(String key) {
         return propertyResolver.getProperty(NameUtils.hyphenate(key), String.class).orElse(null);
     }
 
     @Override
     public String getProperty(String key, String defaultValue) {
-        return getProperty(NameUtils.hyphenate(key), String.class, null);
+        return getProperty(NameUtils.hyphenate(key), String.class, defaultValue);
     }
 
     @Override
-    public <T> T getProperty(String key, Class<T> targetType) {
-        return getProperty(NameUtils.hyphenate(key), targetType, null);
+    public <T> @Nullable T getProperty(String key, Class<T> targetType) {
+        return propertyResolver.getProperty(NameUtils.hyphenate(key), targetType).orElse(null);
     }
 
     @Override
@@ -80,16 +81,13 @@ public class PropertyResolverAdapter implements PropertyResolver {
 
     @Override
     public <T> T getRequiredProperty(String key, Class<T> targetType) throws IllegalStateException {
-        T v = getProperty(NameUtils.hyphenate(key), targetType, null);
-        if (v == null) {
-            throw new IllegalStateException("Property [" + key + "] not found");
-        }
-        return v;
+        return propertyResolver.getProperty(NameUtils.hyphenate(key), targetType)
+            .orElseThrow(() -> new IllegalStateException("Property [" + key + "] not found"));
     }
 
     @Override
     public String resolvePlaceholders(String text) {
-        return placeholderResolver.resolvePlaceholders(text).orElse(null);
+        return placeholderResolver.resolvePlaceholders(text).orElse(text);
     }
 
     @Override

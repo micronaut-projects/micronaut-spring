@@ -24,6 +24,7 @@ import io.micronaut.core.annotation.Internal;
 import io.micronaut.inject.BeanDefinition;
 import io.micronaut.inject.ExecutableMethod;
 import io.micronaut.spring.core.annotation.MicronautMergedAnnotations;
+import org.jspecify.annotations.Nullable;
 import org.springframework.core.annotation.MergedAnnotations;
 import org.springframework.core.type.AnnotationMetadata;
 import org.springframework.core.type.MethodMetadata;
@@ -94,7 +95,7 @@ public final class BeanDefinitionSpringMetadata implements AnnotationMetadata {
     }
 
     @Override
-    public String getEnclosingClassName() {
+    public @Nullable String getEnclosingClassName() {
         Class<?> ec = beanDefinition.getBeanType().getEnclosingClass();
         if (ec != null) {
             return ec.getName();
@@ -103,7 +104,7 @@ public final class BeanDefinitionSpringMetadata implements AnnotationMetadata {
     }
 
     @Override
-    public String getSuperClassName() {
+    public @Nullable String getSuperClassName() {
         Class<?> st = beanDefinition.getBeanType().getSuperclass();
         if (st != null && st != Object.class) {
             return st.getName();
@@ -123,7 +124,7 @@ public final class BeanDefinitionSpringMetadata implements AnnotationMetadata {
         return Arrays.stream(classes).map(Class::getName).toArray(String[]::new);
     }
 
-    private final class MethodMetadataImpl implements MethodMetadata {
+    private static final class MethodMetadataImpl implements MethodMetadata {
         private final ExecutableMethod<?, ?> executableMethod;
 
         private MethodMetadataImpl(ExecutableMethod<?, ?> methodElement) {
