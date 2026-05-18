@@ -439,7 +439,7 @@ class MergedAnnotationValue<A extends Annotation> implements MergedAnnotation<A>
             } else {
                 value = acv.getType()
                     .<Object>map(type -> type)
-                    .orElseGet(() -> new TypeNotPresentException(acv.getName(), null));
+                    .orElseThrow(() -> new TypeNotPresentException(acv.getName(), null));
             }
         } else if (value instanceof AnnotationValue) {
             AnnotationValue<?> av = (AnnotationValue<?>) value;
