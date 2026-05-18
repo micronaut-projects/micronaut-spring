@@ -29,6 +29,7 @@ import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * Integrates Spring's transaction management if it is available.
@@ -42,7 +43,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class SpringTransactionTestExecutionListener implements TestExecutionListener {
 
     private final PlatformTransactionManager transactionManager;
-    private @Nullable TransactionStatus tx;
+    private final AtomicReference<@Nullable TransactionStatus> tx = new AtomicReference<>();
     private final AtomicInteger counter = new AtomicInteger();
     private final AtomicInteger setupCounter = new AtomicInteger();
     private final boolean rollback;
@@ -98,13 +99,13 @@ public class SpringTransactionTestExecutionListener implements TestExecutionList
     @Override
     public void beforeTestExecution(TestContext testContext) {
         if (counter.getAndIncrement() == 0) {
-            tx = transactionManager.getTransaction(new DefaultTransactionDefinition());
+            tx.set(transactionManager.getTransaction(new DefaultTransactionDefinition()));
         }
     }
 
     private void afterTestExecution(boolean rollback) {
         if (counter.decrementAndGet() == 0) {
-            TransactionStatus transactionStatus = tx;
+            TransactionStatus transactionStatus = tx.getAndSet(null);
             if (transactionStatus == null) {
                 throw new IllegalStateException("No active transaction");
             }
@@ -113,7 +114,6 @@ public class SpringTransactionTestExecutionListener implements TestExecutionList
             } else {
                 transactionManager.commit(transactionStatus);
             }
-            tx = null;
         }
     }
 }
