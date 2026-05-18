@@ -428,7 +428,7 @@ class MergedAnnotationValue<A extends Annotation> implements MergedAnnotation<A>
         return Collections.emptyMap();
     }
 
-    private <T extends Map<String, Object>> Object convertValue(Function<MergedAnnotation<?>, T> factory, Adapt[] adaptations, Set<Adapt> adapts, Object value, @Nullable Class<? extends Enum> aClass) {
+    private <T extends Map<String, Object>> @Nullable Object convertValue(Function<MergedAnnotation<?>, T> factory, Adapt[] adaptations, Set<Adapt> adapts, Object value, @Nullable Class<? extends Enum> aClass) {
         if (aClass != null && value instanceof String) {
             return Enum.valueOf(aClass, value.toString());
         }
@@ -437,9 +437,7 @@ class MergedAnnotationValue<A extends Annotation> implements MergedAnnotation<A>
             if (adapts.contains(Adapt.CLASS_TO_STRING)) {
                 value = acv.getName();
             } else {
-                value = acv.getType()
-                    .<Object>map(type -> type)
-                    .orElseThrow(() -> new TypeNotPresentException(acv.getName(), null));
+                value = acv.getType().orElse(null);
             }
         } else if (value instanceof AnnotationValue) {
             AnnotationValue<?> av = (AnnotationValue<?>) value;
