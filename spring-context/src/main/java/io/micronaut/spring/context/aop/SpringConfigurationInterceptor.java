@@ -50,14 +50,18 @@ public class SpringConfigurationInterceptor implements MethodInterceptor<Object,
                 if (o == null) {
                     o = context.proceed();
                     if (o == null) {
-                        throw new BeanCreationException("Bean factor method [" + method + "] returned null");
+                        throw new BeanCreationException("Bean factory method [" + method + "] returned null");
                     }
                     computedSingletons.put(method, o);
                 }
                 return o;
             }
         }
-        return context.proceed();
+        Object o = context.proceed();
+        if (o == null) {
+            throw new BeanCreationException("Bean factory method [" + context.getExecutableMethod() + "] returned null");
+        }
+        return o;
     }
 
 }

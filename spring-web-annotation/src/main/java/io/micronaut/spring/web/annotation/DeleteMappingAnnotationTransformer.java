@@ -19,6 +19,7 @@ import io.micronaut.core.annotation.AnnotationValue;
 import io.micronaut.core.annotation.AnnotationValueBuilder;
 import io.micronaut.http.HttpMethod;
 import io.micronaut.http.annotation.Delete;
+import org.jspecify.annotations.Nullable;
 
 import java.lang.annotation.Annotation;
 
@@ -35,12 +36,12 @@ public class DeleteMappingAnnotationTransformer extends RequestMappingAnnotation
     }
 
     @Override
-    protected AnnotationValueBuilder<?> newBuilder(HttpMethod httpMethod, AnnotationValue<Annotation> annotation) {
+    protected AnnotationValueBuilder<?> newBuilder(@Nullable HttpMethod httpMethod, AnnotationValue<Annotation> annotation) {
         return AnnotationValue.builder(Delete.class);
     }
 
     @Override
-    protected boolean isHttpMethodMapping(HttpMethod method) {
+    protected boolean isHttpMethodMapping(@Nullable HttpMethod method) {
         return true;
     }
 }

@@ -29,6 +29,7 @@ import io.micronaut.http.server.netty.NettyHttpRequest;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.Channel;
 import io.netty.handler.ssl.SslHandler;
+import org.jspecify.annotations.Nullable;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.core.io.buffer.NettyDataBufferFactory;
 import org.springframework.http.HttpCookie;
@@ -36,7 +37,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.server.reactive.AbstractServerHttpRequest;
 import org.springframework.http.server.reactive.SslInfo;
-import org.springframework.lang.Nullable;
 import org.springframework.util.Assert;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -93,7 +93,7 @@ public class MicronautServerHttpRequest extends AbstractServerHttpRequest {
     }
 
     @Override
-    protected SslInfo initSslInfo() {
+    protected @Nullable SslInfo initSslInfo() {
 
         final Optional<Channel> channel = channelResolver.resolveChannel(request);
         if (channel.isPresent()) {
@@ -149,7 +149,7 @@ public class MicronautServerHttpRequest extends AbstractServerHttpRequest {
         private final String sessionId;
 
         @Nullable
-        private final X509Certificate[] peerCertificates;
+        private final X509Certificate @Nullable [] peerCertificates;
 
         /**
          * Default constructor.
@@ -169,7 +169,7 @@ public class MicronautServerHttpRequest extends AbstractServerHttpRequest {
 
         @Override
         @Nullable
-        public X509Certificate[] getPeerCertificates() {
+        public X509Certificate @Nullable [] getPeerCertificates() {
             return this.peerCertificates;
         }
 
@@ -195,7 +195,7 @@ public class MicronautServerHttpRequest extends AbstractServerHttpRequest {
         }
 
         @Nullable
-        private X509Certificate[] initCertificates(SSLSession session) {
+        private X509Certificate @Nullable [] initCertificates(SSLSession session) {
             Certificate[] certificates;
             try {
                 certificates = session.getPeerCertificates();
@@ -205,8 +205,8 @@ public class MicronautServerHttpRequest extends AbstractServerHttpRequest {
 
             List<X509Certificate> result = new ArrayList<>(certificates.length);
             for (Certificate certificate : certificates) {
-                if (certificate instanceof X509Certificate) {
-                    result.add((X509Certificate) certificate);
+                if (certificate instanceof X509Certificate x509Certificate) {
+                    result.add(x509Certificate);
                 }
             }
             return (!result.isEmpty() ? result.toArray(new X509Certificate[0]) : null);

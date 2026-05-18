@@ -25,6 +25,7 @@ import io.micronaut.core.util.StringUtils;
 import io.micronaut.spring.beans.MicronautContextInternal;
 import jakarta.inject.Singleton;
 import org.springframework.core.convert.support.ConfigurableConversionService;
+import org.springframework.core.convert.support.DefaultConversionService;
 import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.core.env.MissingRequiredPropertiesException;
 import org.springframework.core.env.MutablePropertySources;
@@ -50,15 +51,17 @@ import java.util.Set;
 @Internal
 public class MicronautEnvironment implements ConfigurableEnvironment, MicronautContextInternal {
     private final io.micronaut.context.env.Environment environment;
-    private String[] requiredProperties;
+    private String[] requiredProperties = StringUtils.EMPTY_STRING_ARRAY;
     private ConfigurableConversionService conversionService;
 
     /**
      * Default constructor.
      * @param environment The target environment
      */
-    public MicronautEnvironment(io.micronaut.context.env.Environment environment) {
+    public MicronautEnvironment(io.micronaut.context.env.Environment environment,
+                                @Nullable ConfigurableConversionService conversionService) {
         this.environment = environment;
+        this.conversionService = conversionService == null ? new DefaultConversionService() : conversionService;
     }
 
     @Override
@@ -226,12 +229,12 @@ public class MicronautEnvironment implements ConfigurableEnvironment, MicronautC
     }
 
     @Override
-    public void setValueSeparator(String valueSeparator) {
+    public void setValueSeparator(@Nullable String valueSeparator) {
         throw new UnsupportedOperationException("Method setValueSeparator not supported");
     }
 
     @Override
-    public void setEscapeCharacter(Character escapeCharacter) {
+    public void setEscapeCharacter(@Nullable Character escapeCharacter) {
         throw new UnsupportedOperationException("Method setEscapeCharacter not supported");
     }
 

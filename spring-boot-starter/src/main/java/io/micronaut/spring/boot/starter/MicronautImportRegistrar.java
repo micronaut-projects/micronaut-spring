@@ -78,8 +78,8 @@ import org.springframework.core.type.AnnotationMetadata;
 @Internal
 @AutoConfigureOrder(Ordered.LOWEST_PRECEDENCE)
 public final class MicronautImportRegistrar implements ImportBeanDefinitionRegistrar, EnvironmentAware, BeanFactoryAware {
-    private Environment environment;
-    private BeanFactory beanFactory;
+    private @Nullable Environment environment;
+    private @Nullable BeanFactory beanFactory;
 
     private final List<ExposedBeanData> exposedBeans = new ArrayList<>();
 
@@ -117,10 +117,14 @@ public final class MicronautImportRegistrar implements ImportBeanDefinitionRegis
             List<io.micronaut.context.env.PropertySource> cePropertySources = propertySourcesForConfigurableEnvironment(ce);
             builder.propertySources(cePropertySources.toArray(new io.micronaut.context.env.PropertySource[0]));
         }
-        builder.singletons(
-            environment,
-            beanFactory
-        );
+        List<Object> singletons = new ArrayList<>(2);
+        if (environment != null) {
+            singletons.add(environment);
+        }
+        if (beanFactory != null) {
+            singletons.add(beanFactory);
+        }
+        builder.singletons(singletons.toArray());
         ApplicationContext context = builder
             .banner(false)
             .deduceEnvironment(false)
@@ -242,7 +246,7 @@ public final class MicronautImportRegistrar implements ImportBeanDefinitionRegis
         }
     }
 
-    private static String computeBeanName(BeanDefinitionRegistry registry, BeanDefinition<?> definition, GenericBeanDefinition gbd, Qualifier<?> qualifier) {
+    private static String computeBeanName(BeanDefinitionRegistry registry, BeanDefinition<?> definition, GenericBeanDefinition gbd, @Nullable Qualifier<?> qualifier) {
         String beanName;
         if (qualifier != null) {
             if (qualifier instanceof Named) {

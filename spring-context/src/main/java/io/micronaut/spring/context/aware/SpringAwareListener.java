@@ -58,7 +58,7 @@ public class SpringAwareListener implements BeanInitializedEventListener<Object>
     private final BeanProvider<MicronautEnvironment> environmentProvider;
     private final BeanProvider<MicronautApplicationContext> applicationContextProvider;
 
-    private Collection<BeanPostProcessor> beanPostProcessors;
+    private @Nullable Collection<BeanPostProcessor> beanPostProcessors;
 
     /**
      * Default constructor.
@@ -132,10 +132,7 @@ public class SpringAwareListener implements BeanInitializedEventListener<Object>
     public Object onBeanCreated(@Nullable BeanDefinition<Object> beanDefinition, Object bean, String beanName) {
         wireAwareObjects(bean);
         if (!(bean instanceof BeanPostProcessor)) {
-            // init provider
-            initProcessors();
-            Collection<BeanPostProcessor> processors = beanPostProcessors;
-            for (BeanPostProcessor processor : processors) {
+            for (BeanPostProcessor processor : getBeanPostProcessors()) {
                 Object o = processor.postProcessBeforeInitialization(bean, beanName);
                 if (o == null) {
                     break;
@@ -148,7 +145,7 @@ public class SpringAwareListener implements BeanInitializedEventListener<Object>
             try {
                 ((InitializingBean) bean).afterPropertiesSet();
             } catch (Exception e) {
-                throw new BeanCreationException(e.getMessage(), e);
+                throw new BeanCreationException(Objects.requireNonNullElse(e.getMessage(), e.getClass().getName()), e);
             }
         }
 
@@ -156,8 +153,7 @@ public class SpringAwareListener implements BeanInitializedEventListener<Object>
             int role = beanDefinition != null ? beanDefinition.intValue(Role.class)
                                                               .orElse(ROLE_APPLICATION) : ROLE_APPLICATION;
             if (role == ROLE_APPLICATION) {
-                initProcessors();
-                for (BeanPostProcessor processor : beanPostProcessors) {
+                for (BeanPostProcessor processor : getBeanPostProcessors()) {
                     Object o = processor.postProcessAfterInitialization(bean, beanName);
                     if (o == null) {
                         break;
@@ -171,13 +167,15 @@ public class SpringAwareListener implements BeanInitializedEventListener<Object>
         return bean;
     }
 
-    private void initProcessors() {
-        if (beanPostProcessors == null) {
-            beanPostProcessors = new ArrayList<>();
+    private Collection<BeanPostProcessor> getBeanPostProcessors() {
+        Collection<BeanPostProcessor> processors = beanPostProcessors;
+        if (processors == null) {
+            processors = new ArrayList<>();
+            beanPostProcessors = processors;
             MicronautBeanFactory micronautBeanFactory = beanFactoryProvider.get();
-            Collection<BeanPostProcessor> processors = micronautBeanFactory.getBeanContext().getBeansOfType(BeanPostProcessor.class);
-            beanPostProcessors.addAll(processors);
+            processors.addAll(micronautBeanFactory.getBeanContext().getBeansOfType(BeanPostProcessor.class));
         }
+        return processors;
     }
 
     /**

@@ -59,11 +59,10 @@ public class ModelAndViewServerFilter implements HttpServerFilter {
         return Publishers.map(responsePublisher, mutableHttpResponse -> {
             final Optional<Model> attribute = request.getAttribute(ModelRequestArgumentBinder.ATTRIBUTE, Model.class);
             final Object body = mutableHttpResponse.body();
-            final boolean isCharSeq = body instanceof CharSequence;
-            if (isCharSeq) {
+            if (body instanceof CharSequence charSequence) {
 
                 if (attribute.isPresent()) {
-                    final String view = body.toString();
+                    final String view = charSequence.toString();
                     final Model model = attribute.get();
                     final MutableHttpResponse<Object> res = (MutableHttpResponse<Object>) mutableHttpResponse;
                     res.body(new ModelAndView<>(
@@ -76,7 +75,7 @@ public class ModelAndViewServerFilter implements HttpServerFilter {
                 final Optional<Object> modelMap = request.getAttribute(ModelRequestArgumentBinder.ATTRIBUTE);
 
                 if (modelMap.isPresent()) {
-                    final String view = body.toString();
+                    final String view = charSequence.toString();
                     Object o = modelMap.get();
                     if (o instanceof Model model) {
                         final MutableHttpResponse<Object> res = (MutableHttpResponse<Object>) mutableHttpResponse;

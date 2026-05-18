@@ -41,7 +41,10 @@ public class ResponseStatusAnnotationMapper extends AbstractSpringAnnotationMapp
     protected List<AnnotationValue<?>> mapInternal(AnnotationValue<Annotation> annotation, VisitorContext visitorContext) {
         try {
             final String code = annotation.stringValue().orElse(annotation.stringValue("code").orElse(null));
-            var status = HttpStatus.valueOf(code);
+            if (code == null) {
+                return Collections.emptyList();
+            }
+            HttpStatus status = HttpStatus.valueOf(code);
 
             return Collections.singletonList(
                     AnnotationValue.builder(Status.class).value(status).build()

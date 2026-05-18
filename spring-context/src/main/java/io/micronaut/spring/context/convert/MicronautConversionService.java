@@ -18,6 +18,7 @@ package io.micronaut.spring.context.convert;
 import io.micronaut.spring.beans.MicronautContextInternal;
 import jakarta.inject.Named;
 import jakarta.inject.Singleton;
+import org.jspecify.annotations.Nullable;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.core.convert.TypeDescriptor;
 
@@ -42,22 +43,28 @@ public class MicronautConversionService implements ConversionService, MicronautC
     }
 
     @Override
-    public boolean canConvert(Class<?> sourceType, Class<?> targetType) {
-        return conversionService.canConvert(sourceType, targetType);
+    public boolean canConvert(@Nullable Class<?> sourceType, Class<?> targetType) {
+        return sourceType != null && conversionService.canConvert(sourceType, targetType);
     }
 
     @Override
-    public boolean canConvert(TypeDescriptor sourceType, TypeDescriptor targetType) {
-        return conversionService.canConvert(sourceType.getType(), targetType.getType());
+    public boolean canConvert(@Nullable TypeDescriptor sourceType, TypeDescriptor targetType) {
+        return sourceType != null && conversionService.canConvert(sourceType.getType(), targetType.getType());
     }
 
     @Override
-    public <T> T convert(Object source, Class<T> targetType) {
+    public @Nullable <T> T convert(@Nullable Object source, Class<T> targetType) {
+        if (source == null) {
+            return null;
+        }
         return conversionService.convert(source, targetType).orElse(null);
     }
 
     @Override
-    public Object convert(Object source, TypeDescriptor sourceType, TypeDescriptor targetType) {
-        return conversionService.convert(source.getClass(), targetType.getType()).orElse(null);
+    public @Nullable Object convert(@Nullable Object source, @Nullable TypeDescriptor sourceType, TypeDescriptor targetType) {
+        if (source == null) {
+            return null;
+        }
+        return conversionService.convert(source, targetType.getType()).orElse(null);
     }
 }
