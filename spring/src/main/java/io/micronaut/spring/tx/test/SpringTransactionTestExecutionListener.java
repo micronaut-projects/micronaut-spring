@@ -105,14 +105,18 @@ public class SpringTransactionTestExecutionListener implements TestExecutionList
 
     private void afterTestExecution(boolean rollback) {
         if (counter.decrementAndGet() == 0) {
-            TransactionStatus transactionStatus = tx.getAndSet(null);
+            TransactionStatus transactionStatus = tx.get();
             if (transactionStatus == null) {
                 throw new IllegalStateException("No active transaction");
             }
-            if (rollback) {
-                transactionManager.rollback(transactionStatus);
-            } else {
-                transactionManager.commit(transactionStatus);
+            try {
+                if (rollback) {
+                    transactionManager.rollback(transactionStatus);
+                } else {
+                    transactionManager.commit(transactionStatus);
+                }
+            } finally {
+                tx.set(null);
             }
         }
     }
