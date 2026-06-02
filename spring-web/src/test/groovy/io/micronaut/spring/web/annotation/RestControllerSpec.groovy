@@ -47,6 +47,7 @@ class RestControllerSpec extends Specification {
         response.status() == HttpStatus.NO_CONTENT
         response.header("Foo") == "Bar"
         !response.header("myHeader")
+        response.getBody().isEmpty()
 
         when:
         var myHeaderValue = "myHeaderValue"
@@ -56,6 +57,7 @@ class RestControllerSpec extends Specification {
         response.status() == HttpStatus.NO_CONTENT
         response.header("Foo") == "Bar"
         response.header("myHeader") == myHeaderValue
+        response.getBody().isEmpty()
     }
 
     void "test request controller validation"() {
