@@ -55,10 +55,7 @@ public class ResponseEntityServerFilter implements HttpServerFilter {
                         }
                     }
                 });
-                final Object b = entity.getBody();
-                if (b != null) {
-                    mutableHttpResponse.body(b);
-                }
+                mutableHttpResponse.body(entity.getBody());
             } else if (body instanceof HttpHeaders httpHeaders) {
                 mutableHttpResponse.body(null);
                 httpHeaders.forEach((s, strings) -> {
