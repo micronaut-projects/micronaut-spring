@@ -34,6 +34,7 @@ import io.micronaut.spring.context.MicronautApplicationContext;
 import io.micronaut.spring.context.env.MicronautEnvironment;
 import io.micronaut.spring.context.factory.MicronautBeanFactory;
 import jakarta.inject.Singleton;
+import org.springframework.aop.framework.autoproxy.AbstractAutoProxyCreator;
 import org.springframework.beans.factory.BeanClassLoaderAware;
 import org.springframework.beans.factory.BeanCreationException;
 import org.springframework.beans.factory.BeanFactoryAware;
@@ -88,6 +89,9 @@ public class SpringAwareListener implements BeanInitializedEventListener<Object>
     private void wireAwareObjects(Object bean) {
         if (bean instanceof BeanClassLoaderAware) {
             ((BeanClassLoaderAware) bean).setBeanClassLoader(Objects.requireNonNull(applicationContextProvider.get().getClassLoader()));
+        }
+        if (bean instanceof AbstractAutoProxyCreator) {
+            ((AbstractAutoProxyCreator) bean).setProxyTargetClass(true);
         }
         if (bean instanceof EnvironmentAware) {
             ((EnvironmentAware) bean).setEnvironment(environmentProvider.get());
