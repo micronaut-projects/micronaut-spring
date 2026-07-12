@@ -23,14 +23,14 @@ import io.micronaut.context.BeanResolutionContext;
 import io.micronaut.context.DefaultBeanContext;
 import io.micronaut.context.Qualifier;
 import io.micronaut.core.annotation.Internal;
-import org.jspecify.annotations.NonNull;
-import org.jspecify.annotations.Nullable;
 import io.micronaut.core.reflect.InstantiationUtils;
 import io.micronaut.core.type.Argument;
 import io.micronaut.inject.BeanDefinition;
 import io.micronaut.inject.provider.AbstractProviderDefinition;
 import io.micronaut.inject.qualifiers.AnyQualifier;
 import io.micronaut.inject.qualifiers.Qualifiers;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanCreationException;
 import org.springframework.beans.factory.ObjectProvider;
@@ -44,7 +44,7 @@ import org.springframework.core.OrderComparator;
 @Internal
 public final class ObjectProviderBeanDefinition extends AbstractProviderDefinition<ObjectProvider<Object>> {
     @Override
-    public boolean isEnabled(BeanContext context, BeanResolutionContext resolutionContext) {
+    public boolean isEnabled(BeanContext context, @Nullable BeanResolutionContext resolutionContext) {
         return true;
     }
 
@@ -74,14 +74,14 @@ public final class ObjectProviderBeanDefinition extends AbstractProviderDefiniti
         return true;
     }
 
-    private final class MicronautObjectProvider implements ObjectProvider<Object>, MicronautContextInternal {
-        private final Qualifier<Object> finalQualifier;
-        private final Qualifier<Object> qualifier;
+    private static final class MicronautObjectProvider implements ObjectProvider<Object>, MicronautContextInternal {
+        private final @Nullable Qualifier<Object> finalQualifier;
+        private final @Nullable Qualifier<Object> qualifier;
         private final BeanContext context;
         private final BeanResolutionContext resolutionContext;
         private final Argument<Object> argument;
 
-        public MicronautObjectProvider(Qualifier<Object> qualifier, BeanContext context, BeanResolutionContext resolutionContext, Argument<Object> argument) {
+        MicronautObjectProvider(@Nullable Qualifier<Object> qualifier, BeanContext context, BeanResolutionContext resolutionContext, Argument<Object> argument) {
             this.qualifier = qualifier;
             this.context = context;
             this.resolutionContext = resolutionContext;
@@ -101,7 +101,7 @@ public final class ObjectProviderBeanDefinition extends AbstractProviderDefiniti
         }
 
         @Override
-        public Object getObject(Object... args) throws BeansException {
+        public Object getObject(@Nullable Object... args) throws BeansException {
             try {
                 BeanDefinition<Object> beanDefinition = context.getBeanDefinition(argument, finalQualifier);
                 Class<Object> beanType = beanDefinition.getBeanType();
@@ -111,12 +111,12 @@ public final class ObjectProviderBeanDefinition extends AbstractProviderDefiniti
                     args
                 );
             } catch (Exception e) {
-                throw new BeanCreationException(e.getMessage(), e);
+                throw new BeanCreationException(message(e), e);
             }
         }
 
         @Override
-        public Object getIfAvailable() throws BeansException {
+        public @Nullable Object getIfAvailable() throws BeansException {
             if (context.containsBean(argument, finalQualifier)) {
                 return getObject();
             }
@@ -124,12 +124,12 @@ public final class ObjectProviderBeanDefinition extends AbstractProviderDefiniti
         }
 
         @Override
-        public Object getIfUnique() throws BeansException {
+        public @Nullable Object getIfUnique() throws BeansException {
             if (context.getBeanDefinitions(argument, finalQualifier).size() == 1) {
                 try {
                     return ((DefaultBeanContext) context).getBean(resolutionContext.copy(), argument, qualify(qualifier));
                 } catch (Exception e) {
-                    throw new BeanCreationException(e.getMessage(), e);
+                    throw new BeanCreationException(message(e), e);
                 }
             }
             return null;
@@ -140,11 +140,11 @@ public final class ObjectProviderBeanDefinition extends AbstractProviderDefiniti
             try {
                 return ((DefaultBeanContext) context).getBean(resolutionContext.copy(), argument, finalQualifier);
             } catch (Exception e) {
-                throw new BeanCreationException(e.getMessage(), e);
+                throw new BeanCreationException(message(e), e);
             }
         }
 
-        private Qualifier<Object> qualify(Qualifier<Object> qualifier) {
+        private @Nullable Qualifier<Object> qualify(@Nullable Qualifier<Object> qualifier) {
             if (finalQualifier == null) {
                 return qualifier;
             } else if (qualifier == null) {
@@ -155,5 +155,9 @@ public final class ObjectProviderBeanDefinition extends AbstractProviderDefiniti
             return Qualifiers.byQualifiers(finalQualifier, qualifier);
         }
 
+        private static String message(Exception e) {
+            String message = e.getMessage();
+            return message == null ? e.getClass().getName() : message;
+        }
     }
 }

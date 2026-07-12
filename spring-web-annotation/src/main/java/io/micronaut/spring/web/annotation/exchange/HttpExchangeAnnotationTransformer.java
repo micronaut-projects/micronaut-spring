@@ -39,6 +39,7 @@ import io.micronaut.inject.visitor.VisitorContext;
 import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Maps Spring HttpExchange to Micronaut.
@@ -67,10 +68,10 @@ public class HttpExchangeAnnotationTransformer implements NamedAnnotationTransfo
      * @return The builder
      */
     @NonNull
-    protected AnnotationValueBuilder<?> newBuilder(String method) {
+    protected AnnotationValueBuilder<?> newBuilder(@Nullable String method) {
 
         if (method != null) {
-            return switch (method.toUpperCase()) {
+            return switch (method.toUpperCase(Locale.ROOT)) {
                 case "GET" -> AnnotationValue.builder(Get.class);
                 case "POST" -> AnnotationValue.builder(Post.class);
                 case "PATCH" -> AnnotationValue.builder(Patch.class);

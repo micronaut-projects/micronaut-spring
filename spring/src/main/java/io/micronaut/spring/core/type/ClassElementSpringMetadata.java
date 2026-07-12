@@ -24,6 +24,7 @@ import io.micronaut.inject.ast.ClassElement;
 import io.micronaut.inject.ast.ElementQuery;
 import io.micronaut.inject.ast.MethodElement;
 import io.micronaut.spring.core.annotation.MicronautMergedAnnotations;
+import org.jspecify.annotations.Nullable;
 import org.springframework.core.annotation.MergedAnnotations;
 import org.springframework.core.type.AnnotationMetadata;
 import org.springframework.core.type.MethodMetadata;
@@ -95,12 +96,12 @@ public final class ClassElementSpringMetadata implements AnnotationMetadata {
     }
 
     @Override
-    public String getEnclosingClassName() {
+    public @Nullable String getEnclosingClassName() {
         return classElement.getEnclosingType().map(ClassElement::getName).orElse(null);
     }
 
     @Override
-    public String getSuperClassName() {
+    public @Nullable String getSuperClassName() {
         return classElement.getSuperType().map(ClassElement::getName).orElse(null);
     }
 
@@ -115,7 +116,7 @@ public final class ClassElementSpringMetadata implements AnnotationMetadata {
             .stream().map(ClassElement::getName).toArray(String[]::new);
     }
 
-    private final class MethodMetadataImpl implements MethodMetadata {
+    private static final class MethodMetadataImpl implements MethodMetadata {
         private final MethodElement methodElement;
 
         private MethodMetadataImpl(MethodElement methodElement) {

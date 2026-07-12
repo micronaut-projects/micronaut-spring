@@ -47,6 +47,7 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.core.ResolvableType;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.core.env.ConfigurableEnvironment;
+import org.springframework.core.io.DescriptiveResource;
 import org.springframework.core.io.ProtocolResolver;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -74,14 +75,14 @@ import java.util.Set;
 public class MicronautApplicationContext implements ManagedApplicationContext, ConfigurableApplicationContext, MicronautContextInternal {
 
     private final io.micronaut.context.ApplicationContext micronautContext;
-    private ConfigurableEnvironment environment;
-    private MicronautBeanFactory beanFactory;
-    private MessageSource messageSource;
-    private ApplicationEventPublisher eventPublisher;
+    private @Nullable ConfigurableEnvironment environment;
+    private @Nullable MicronautBeanFactory beanFactory;
+    private @Nullable MessageSource messageSource;
+    private @Nullable ApplicationEventPublisher eventPublisher;
     private long startupDate;
     private String id = ObjectUtils.identityToString(this);
-    private ApplicationContext parent;
-    private ApplicationStartup applicationStartup;
+    private @Nullable ApplicationContext parent;
+    private ApplicationStartup applicationStartup = ApplicationStartup.DEFAULT;
 
     /**
      * Default constructor.
@@ -121,6 +122,30 @@ public class MicronautApplicationContext implements ManagedApplicationContext, C
         this.micronautContext = contextBuilder.build();
     }
 
+    private MicronautBeanFactory requireBeanFactory() {
+        MicronautBeanFactory beanFactory = this.beanFactory;
+        if (beanFactory == null) {
+            throw new IllegalStateException("MicronautApplicationContext has not been started");
+        }
+        return beanFactory;
+    }
+
+    private ConfigurableEnvironment requireEnvironment() {
+        ConfigurableEnvironment environment = this.environment;
+        if (environment == null) {
+            throw new IllegalStateException("MicronautApplicationContext has not been started");
+        }
+        return environment;
+    }
+
+    private ApplicationEventPublisher requireEventPublisher() {
+        ApplicationEventPublisher eventPublisher = this.eventPublisher;
+        if (eventPublisher == null) {
+            throw new IllegalStateException("MicronautApplicationContext has not been started");
+        }
+        return eventPublisher;
+    }
+
     @Override
     public String getId() {
         return id;
@@ -142,17 +167,17 @@ public class MicronautApplicationContext implements ManagedApplicationContext, C
     }
 
     @Override
-    public ApplicationContext getParent() {
+    public @Nullable ApplicationContext getParent() {
         return parent;
     }
 
     @Override
     public AutowireCapableBeanFactory getAutowireCapableBeanFactory() throws IllegalStateException {
-        return beanFactory;
+        return requireBeanFactory();
     }
 
     @Override
-    public BeanFactory getParentBeanFactory() {
+    public @Nullable BeanFactory getParentBeanFactory() {
         if (parent != null) {
             return parent.getAutowireCapableBeanFactory();
         } else {
@@ -162,7 +187,7 @@ public class MicronautApplicationContext implements ManagedApplicationContext, C
 
     @Override
     public boolean containsLocalBean(String name) {
-        return beanFactory.containsLocalBean(name);
+        return requireBeanFactory().containsLocalBean(name);
     }
 
     @Override
@@ -175,191 +200,191 @@ public class MicronautApplicationContext implements ManagedApplicationContext, C
 
     @Override
     public boolean containsBeanDefinition(String beanName) {
-        return beanFactory.containsBeanDefinition(beanName);
+        return requireBeanFactory().containsBeanDefinition(beanName);
     }
 
     @Override
     public int getBeanDefinitionCount() {
-        return beanFactory.getBeanDefinitionCount();
+        return requireBeanFactory().getBeanDefinitionCount();
     }
 
     @Override
     public String[] getBeanDefinitionNames() {
-        return beanFactory.getBeanDefinitionNames();
+        return requireBeanFactory().getBeanDefinitionNames();
     }
 
     @Override
     public <T> ObjectProvider<T> getBeanProvider(Class<T> requiredType, boolean allowEagerInit) {
-        return beanFactory.getBeanProvider(requiredType, allowEagerInit);
+        return requireBeanFactory().getBeanProvider(requiredType, allowEagerInit);
     }
 
     @Override
     public <T> ObjectProvider<T> getBeanProvider(ResolvableType requiredType, boolean allowEagerInit) {
-        return beanFactory.getBeanProvider(requiredType, allowEagerInit);
+        return requireBeanFactory().getBeanProvider(requiredType, allowEagerInit);
     }
 
     @Override
     public <T> ObjectProvider<T> getBeanProvider(ParameterizedTypeReference<T> requiredType) {
-        return beanFactory.getBeanProvider(ResolvableType.forType(requiredType.getType()));
+        return requireBeanFactory().getBeanProvider(ResolvableType.forType(requiredType.getType()));
     }
 
     @Override
     public String[] getBeanNamesForType(ResolvableType type) {
-        return beanFactory.getBeanNamesForType(type);
+        return requireBeanFactory().getBeanNamesForType(type);
     }
 
     @Override
     public String[] getBeanNamesForType(ResolvableType type, boolean includeNonSingletons, boolean allowEagerInit) {
-        return beanFactory.getBeanNamesForType(type, includeNonSingletons, allowEagerInit);
+        return requireBeanFactory().getBeanNamesForType(type, includeNonSingletons, allowEagerInit);
     }
 
     @Override
-    public String[] getBeanNamesForType(Class<?> type) {
-        return beanFactory.getBeanNamesForType(type);
+    public String[] getBeanNamesForType(@Nullable Class<?> type) {
+        return requireBeanFactory().getBeanNamesForType(type);
     }
 
     @Override
-    public String[] getBeanNamesForType(Class<?> type, boolean includeNonSingletons, boolean allowEagerInit) {
-        return beanFactory.getBeanNamesForType(type, includeNonSingletons, allowEagerInit);
+    public String[] getBeanNamesForType(@Nullable Class<?> type, boolean includeNonSingletons, boolean allowEagerInit) {
+        return requireBeanFactory().getBeanNamesForType(type, includeNonSingletons, allowEagerInit);
     }
 
     @Override
-    public <T> Map<String, T> getBeansOfType(Class<T> type) throws BeansException {
-        return beanFactory.getBeansOfType(type);
+    public <T> Map<String, T> getBeansOfType(@Nullable Class<T> type) throws BeansException {
+        return requireBeanFactory().getBeansOfType(type);
     }
 
     @Override
-    public <T> Map<String, T> getBeansOfType(Class<T> type, boolean includeNonSingletons, boolean allowEagerInit) throws BeansException {
-        return beanFactory.getBeansOfType(type, includeNonSingletons, allowEagerInit);
+    public <T> Map<String, T> getBeansOfType(@Nullable Class<T> type, boolean includeNonSingletons, boolean allowEagerInit) throws BeansException {
+        return requireBeanFactory().getBeansOfType(type, includeNonSingletons, allowEagerInit);
     }
 
     @Override
     public String[] getBeanNamesForAnnotation(Class<? extends Annotation> annotationType) {
-        return beanFactory.getBeanNamesForAnnotation(annotationType);
+        return requireBeanFactory().getBeanNamesForAnnotation(annotationType);
     }
 
     @Override
     public Map<String, Object> getBeansWithAnnotation(Class<? extends Annotation> annotationType) throws BeansException {
-        return beanFactory.getBeansWithAnnotation(annotationType);
+        return requireBeanFactory().getBeansWithAnnotation(annotationType);
     }
 
     @Override
-    public <A extends Annotation> A findAnnotationOnBean(String beanName, Class<A> annotationType) throws NoSuchBeanDefinitionException {
-        return beanFactory.findAnnotationOnBean(beanName, annotationType);
+    public @Nullable <A extends Annotation> A findAnnotationOnBean(String beanName, Class<A> annotationType) throws NoSuchBeanDefinitionException {
+        return requireBeanFactory().findAnnotationOnBean(beanName, annotationType);
     }
 
     @Override
-    public <A extends Annotation> A findAnnotationOnBean(String beanName, Class<A> annotationType, boolean allowFactoryBeanInit) throws NoSuchBeanDefinitionException {
-        return beanFactory.findAnnotationOnBean(beanName, annotationType, allowFactoryBeanInit);
+    public @Nullable <A extends Annotation> A findAnnotationOnBean(String beanName, Class<A> annotationType, boolean allowFactoryBeanInit) throws NoSuchBeanDefinitionException {
+        return requireBeanFactory().findAnnotationOnBean(beanName, annotationType, allowFactoryBeanInit);
     }
 
     @Override
     public <A extends Annotation> Set<A> findAllAnnotationsOnBean(String beanName, Class<A> annotationType, boolean allowFactoryBeanInit) throws NoSuchBeanDefinitionException {
-        return beanFactory.findAllAnnotationsOnBean(beanName, annotationType, allowFactoryBeanInit);
+        return requireBeanFactory().findAllAnnotationsOnBean(beanName, annotationType, allowFactoryBeanInit);
     }
 
     @Override
     public Object getBean(String name) throws BeansException {
-        return beanFactory.getBean(name);
+        return requireBeanFactory().getBean(name);
     }
 
     @Override
     public <T> T getBean(String name, Class<T> requiredType) throws BeansException {
-        return beanFactory.getBean(name, requiredType);
+        return requireBeanFactory().getBean(name, requiredType);
     }
 
     @Override
-    public Object getBean(String name, Object... args) throws BeansException {
-        return beanFactory.getBean(name, args);
+    public Object getBean(String name, @Nullable Object @Nullable ... args) throws BeansException {
+        return requireBeanFactory().getBean(name, args);
     }
 
     @Override
     public <T> T getBean(Class<T> requiredType) throws BeansException {
-        return beanFactory.getBean(requiredType);
+        return requireBeanFactory().getBean(requiredType);
     }
 
     @Override
-    public <T> T getBean(Class<T> requiredType, Object... args) throws BeansException {
-        return beanFactory.getBean(requiredType, args);
+    public <T> T getBean(Class<T> requiredType, @Nullable Object @Nullable ... args) throws BeansException {
+        return requireBeanFactory().getBean(requiredType, args);
     }
 
     @Override
     public <T> ObjectProvider<T> getBeanProvider(Class<T> requiredType) {
-        return beanFactory.getBeanProvider(requiredType);
+        return requireBeanFactory().getBeanProvider(requiredType);
     }
 
     @Override
     public <T> ObjectProvider<T> getBeanProvider(ResolvableType requiredType) {
-        return beanFactory.getBeanProvider(requiredType);
+        return requireBeanFactory().getBeanProvider(requiredType);
     }
 
     @Override
     public boolean containsBean(String name) {
-        return beanFactory.containsBean(name);
+        return requireBeanFactory().containsBean(name);
     }
 
     @Override
     public boolean isSingleton(String name) throws NoSuchBeanDefinitionException {
-        return beanFactory.isSingleton(name);
+        return requireBeanFactory().isSingleton(name);
     }
 
     @Override
     public boolean isPrototype(String name) throws NoSuchBeanDefinitionException {
-        return beanFactory.isPrototype(name);
+        return requireBeanFactory().isPrototype(name);
     }
 
     @Override
     public boolean isTypeMatch(String name, ResolvableType typeToMatch) throws NoSuchBeanDefinitionException {
-        return beanFactory.isTypeMatch(name, typeToMatch);
+        return requireBeanFactory().isTypeMatch(name, typeToMatch);
     }
 
     @Override
     public boolean isTypeMatch(String name, Class<?> typeToMatch) throws NoSuchBeanDefinitionException {
-        return beanFactory.isTypeMatch(name, typeToMatch);
+        return requireBeanFactory().isTypeMatch(name, typeToMatch);
     }
 
     @Override
-    public Class<?> getType(String name) throws NoSuchBeanDefinitionException {
-        return beanFactory.getType(name);
+    public @Nullable Class<?> getType(String name) throws NoSuchBeanDefinitionException {
+        return requireBeanFactory().getType(name);
     }
 
     @Override
-    public Class<?> getType(String name, boolean allowFactoryBeanInit) throws NoSuchBeanDefinitionException {
-        return beanFactory.getType(name, allowFactoryBeanInit);
+    public @Nullable Class<?> getType(String name, boolean allowFactoryBeanInit) throws NoSuchBeanDefinitionException {
+        return requireBeanFactory().getType(name, allowFactoryBeanInit);
     }
 
     @Override
     public String[] getAliases(String name) {
-        return beanFactory.getAliases(name);
+        return requireBeanFactory().getAliases(name);
     }
 
     @Override
     public void publishEvent(Object event) {
-        eventPublisher.publishEvent(event);
+        requireEventPublisher().publishEvent(event);
     }
 
     @Override
-    public String getMessage(String code, Object[] args, String defaultMessage, Locale locale) {
+    public @Nullable String getMessage(String code, Object @Nullable [] args, @Nullable String defaultMessage, @Nullable Locale locale) {
         if (messageSource != null) {
             return messageSource.getMessage(code, args, defaultMessage, locale);
         }
-        return null;
+        return defaultMessage;
     }
 
     @Override
-    public String getMessage(String code, Object[] args, Locale locale) throws NoSuchMessageException {
+    public String getMessage(String code, Object @Nullable [] args, @Nullable Locale locale) throws NoSuchMessageException {
         if (messageSource != null) {
             return messageSource.getMessage(code, args, locale);
         }
-        return null;
+        throw new NoSuchMessageException(code, locale == null ? Locale.getDefault() : locale);
     }
 
     @Override
-    public String getMessage(MessageSourceResolvable resolvable, Locale locale) throws NoSuchMessageException {
+    public String getMessage(MessageSourceResolvable resolvable, @Nullable Locale locale) throws NoSuchMessageException {
         if (messageSource != null) {
             return messageSource.getMessage(resolvable, locale);
         }
-        return null;
+        throw new NoSuchMessageException(resolvable.toString(), locale == null ? Locale.getDefault() : locale);
 
     }
 
@@ -369,10 +394,11 @@ public class MicronautApplicationContext implements ManagedApplicationContext, C
     }
 
     @Override
-    public void setParent(ApplicationContext parent) {
+    public void setParent(@Nullable ApplicationContext parent) {
         this.parent = parent;
-        if (parent != null) {
-            this.beanFactory.setParentBeanFactory(parent.getAutowireCapableBeanFactory());
+        MicronautBeanFactory beanFactory = this.beanFactory;
+        if (parent != null && beanFactory != null) {
+            beanFactory.setParentBeanFactory(parent.getAutowireCapableBeanFactory());
         }
     }
 
@@ -383,7 +409,7 @@ public class MicronautApplicationContext implements ManagedApplicationContext, C
 
     @Override
     public ConfigurableEnvironment getEnvironment() {
-        return environment;
+        return requireEnvironment();
     }
 
     @Override
@@ -398,17 +424,17 @@ public class MicronautApplicationContext implements ManagedApplicationContext, C
 
     @Override
     public void addBeanFactoryPostProcessor(BeanFactoryPostProcessor postProcessor) {
-        beanFactory.getBeanContext().registerSingleton(postProcessor);
+        requireBeanFactory().getBeanContext().registerSingleton(postProcessor);
     }
 
     @Override
     public void addApplicationListener(ApplicationListener<?> listener) {
-        beanFactory.getBeanContext().registerSingleton(listener);
+        requireBeanFactory().getBeanContext().registerSingleton(listener);
     }
 
     @Override
     public void removeApplicationListener(ApplicationListener<?> listener) {
-        beanFactory.getBeanContext().destroyBean(listener);
+        requireBeanFactory().getBeanContext().destroyBean(listener);
     }
 
     @Override
@@ -418,7 +444,7 @@ public class MicronautApplicationContext implements ManagedApplicationContext, C
 
     @Override
     public void addProtocolResolver(ProtocolResolver resolver) {
-        beanFactory.getBeanContext().registerSingleton(resolver);
+        requireBeanFactory().getBeanContext().registerSingleton(resolver);
     }
 
     @Override
@@ -434,6 +460,7 @@ public class MicronautApplicationContext implements ManagedApplicationContext, C
 
     @Override
     public Resource[] getResources(String locationPattern) throws IOException {
+        ConfigurableEnvironment environment = this.environment;
         if (environment instanceof MicronautEnvironment) {
             return ((MicronautEnvironment) environment).getEnvironment().getResources(locationPattern).toArray(Resource[]::new);
         }
@@ -442,18 +469,20 @@ public class MicronautApplicationContext implements ManagedApplicationContext, C
 
     @Override
     public Resource getResource(String location) {
+        ConfigurableEnvironment environment = this.environment;
         if (environment instanceof MicronautEnvironment) {
-            return ((MicronautEnvironment) environment).getEnvironment().getResource(location).map(UrlResource::new).orElse(null);
+            return ((MicronautEnvironment) environment).getEnvironment().getResource(location).map(url -> (Resource) new UrlResource(url)).orElseGet(() -> new DescriptiveResource(location));
         }
-        return null;
+        return new DescriptiveResource(location);
     }
 
     @Override
     public ClassLoader getClassLoader() {
+        ConfigurableEnvironment environment = this.environment;
         if (environment instanceof MicronautEnvironment) {
             return ((MicronautEnvironment) environment).getEnvironment().getClassLoader();
         }
-        return null;
+        return MicronautApplicationContext.class.getClassLoader();
     }
 
     @Override
@@ -473,7 +502,7 @@ public class MicronautApplicationContext implements ManagedApplicationContext, C
 
     @Override
     public ConfigurableListableBeanFactory getBeanFactory() throws IllegalStateException {
-        return beanFactory;
+        return requireBeanFactory();
     }
 
     @Override
@@ -482,7 +511,12 @@ public class MicronautApplicationContext implements ManagedApplicationContext, C
             if (!micronautContext.isRunning()) {
                 micronautContext.start();
             }
-            this.beanFactory = micronautContext.getBean(MicronautBeanFactory.class);
+            MicronautBeanFactory beanFactory = micronautContext.getBean(MicronautBeanFactory.class);
+            this.beanFactory = beanFactory;
+            ApplicationContext parent = this.parent;
+            if (parent != null) {
+                beanFactory.setParentBeanFactory(parent.getAutowireCapableBeanFactory());
+            }
             this.environment = micronautContext.getBean(MicronautEnvironment.class);
             this.eventPublisher = micronautContext.getBean(MicronautApplicationEventPublisher.class);
             this.messageSource = micronautContext.findBean(MessageSource.class).orElse(null);

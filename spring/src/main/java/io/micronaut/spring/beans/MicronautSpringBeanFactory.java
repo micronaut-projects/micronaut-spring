@@ -17,6 +17,7 @@ package io.micronaut.spring.beans;
 
 import io.micronaut.context.ApplicationContext;
 import io.micronaut.context.exceptions.BeanInstantiationException;
+import org.jspecify.annotations.Nullable;
 import org.springframework.beans.factory.FactoryBean;
 
 import java.util.Optional;
@@ -28,20 +29,24 @@ import java.util.Optional;
  * @author jeffbrown
  * @since 1.0
  */
-class MicronautSpringBeanFactory implements FactoryBean {
+class MicronautSpringBeanFactory implements FactoryBean<Object> {
 
-    private Class micronautBeanType;
-    private ApplicationContext micronautContext;
+    private @Nullable Class<?> micronautBeanType;
+    private @Nullable ApplicationContext micronautContext;
     private boolean isMicronautSingleton;
 
     /**
+     * Sets the type of bean this factory will create.
+     *
      * @param micronautBeanType The type of bean this factory will create
      */
-    public void setMicronautBeanType(Class micronautBeanType) {
+    public void setMicronautBeanType(Class<?> micronautBeanType) {
         this.micronautBeanType = micronautBeanType;
     }
 
     /**
+     * Sets the Micronaut application context.
+     *
      * @param micronautContext The Micronaut application context
      */
     public void setMicronautContext(ApplicationContext micronautContext) {
@@ -49,6 +54,7 @@ class MicronautSpringBeanFactory implements FactoryBean {
     }
 
     /**
+     * Sets whether the Micronaut bean is a singleton.
      *
      * @param isMicronautSingleton indicates if the Micronaut bean is a singleton
      */
@@ -58,16 +64,21 @@ class MicronautSpringBeanFactory implements FactoryBean {
 
     @Override
     public Object getObject() throws Exception {
-        Optional bean = micronautContext.findBean(micronautBeanType);
+        Class<?> beanType = micronautBeanType;
+        ApplicationContext context = micronautContext;
+        if (beanType == null || context == null) {
+            throw new BeanInstantiationException("Micronaut bean factory is not configured");
+        }
+        Optional<?> bean = context.findBean(beanType);
         if (bean.isPresent()) {
             return bean.get();
         }
 
-        throw new BeanInstantiationException("Could Not Create Bean [" + micronautBeanType + "]");
+        throw new BeanInstantiationException("Could Not Create Bean [" + beanType + "]");
     }
 
     @Override
-    public Class<?> getObjectType() {
+    public @Nullable Class<?> getObjectType() {
         return micronautBeanType;
     }
 

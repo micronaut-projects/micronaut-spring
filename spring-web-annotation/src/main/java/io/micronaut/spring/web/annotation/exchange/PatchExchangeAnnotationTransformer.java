@@ -18,6 +18,7 @@ package io.micronaut.spring.web.annotation.exchange;
 import io.micronaut.core.annotation.AnnotationValue;
 import io.micronaut.core.annotation.AnnotationValueBuilder;
 import io.micronaut.http.annotation.Patch;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Maps Spring PatchExchange to Micronaut.
@@ -32,12 +33,12 @@ public class PatchExchangeAnnotationTransformer extends HttpExchangeAnnotationTr
     }
 
     @Override
-    protected AnnotationValueBuilder<?> newBuilder(String httpMethod) {
+    protected AnnotationValueBuilder<?> newBuilder(@Nullable String httpMethod) {
         return AnnotationValue.builder(Patch.class);
     }
 
     @Override
-    protected boolean isHttpMethodMapping(String method) {
+    protected boolean isHttpMethodMapping(@Nullable String method) {
         return true;
     }
 }

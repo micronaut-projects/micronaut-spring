@@ -27,6 +27,7 @@ import io.micronaut.core.annotation.AnnotationUtil;
 import io.micronaut.core.annotation.Internal;
 import io.micronaut.core.reflect.ReflectionUtils;
 import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import io.micronaut.core.naming.NameResolver;
 import io.micronaut.core.reflect.InstantiationUtils;
 import io.micronaut.core.util.ArgumentUtils;
@@ -245,7 +246,7 @@ public class MicronautBeanFactory extends DefaultListableBeanFactory implements 
             if (containsBeanDefinition(name)) {
                 @SuppressWarnings("unchecked")
                 BeanDefinition<T> beanDefinition = (BeanDefinition<T>) beanDefinitionMap.get(name);
-                if (requiredType.isAssignableFrom(requiredType)) {
+                if (beanDefinition != null && requiredType.isAssignableFrom(beanDefinition.getBeanType())) {
                     return beanContext.getBean(beanDefinition);
                 }
             }
@@ -265,18 +266,18 @@ public class MicronautBeanFactory extends DefaultListableBeanFactory implements 
             }
             return beanContext.getBean(requiredType, Qualifiers.byName(name));
         } catch (NoSuchBeanException e) {
-            throw new NoSuchBeanDefinitionException(requiredType, e.getMessage());
+            throw new NoSuchBeanDefinitionException(requiredType, exceptionMessage(e));
         } catch (Exception e) {
-            throw new BeanCreationException(name, e.getMessage(), e);
+            throw new BeanCreationException(name, exceptionMessage(e), e);
         }
     }
 
     @Override
     public @NonNull
-    Object getBean(@NonNull String name, @NonNull Object... args) throws BeansException {
+    Object getBean(@NonNull String name, @Nullable Object @Nullable ... args) throws BeansException {
         final Class<?> type = getType(name);
         if (type != null) {
-            return beanContext.createBean(type, args);
+            return beanContext.createBean(type, args == null ? new Object[0] : args);
         }
         throw new NoSuchBeanDefinitionException(name);
     }
@@ -297,17 +298,17 @@ public class MicronautBeanFactory extends DefaultListableBeanFactory implements 
                 return beanContext.getBean(requiredType);
             }
         } catch (NoSuchBeanException e) {
-            throw new NoSuchBeanDefinitionException(requiredType, e.getMessage());
+            throw new NoSuchBeanDefinitionException(requiredType, exceptionMessage(e));
         }
     }
 
     @Override
     public @NonNull
-    <T> T getBean(@NonNull Class<T> requiredType, @NonNull Object... args) throws BeansException {
+    <T> T getBean(@NonNull Class<T> requiredType, @Nullable Object @Nullable ... args) throws BeansException {
         try {
-            return beanContext.createBean(requiredType, args);
+            return beanContext.createBean(requiredType, args == null ? new Object[0] : args);
         } catch (NoSuchBeanException e) {
-            throw new NoSuchBeanDefinitionException(requiredType, e.getMessage());
+            throw new NoSuchBeanDefinitionException(requiredType, exceptionMessage(e));
         }
     }
 
@@ -316,12 +317,12 @@ public class MicronautBeanFactory extends DefaultListableBeanFactory implements 
     <T> ObjectProvider<T> getBeanProvider(@NonNull Class<T> requiredType) {
         return new ObjectProvider<T>() {
             @Override
-            public T getObject(Object... args) throws BeansException {
-                return beanContext.createBean(requiredType, args);
+            public T getObject(@Nullable Object @Nullable ... args) throws BeansException {
+                return beanContext.createBean(requiredType, args == null ? new Object[0] : args);
             }
 
             @Override
-            public T getIfAvailable() throws BeansException {
+            public @Nullable T getIfAvailable() throws BeansException {
                 if (beanContext.containsBean(requiredType)) {
                     return beanContext.getBean(requiredType);
                 }
@@ -329,7 +330,7 @@ public class MicronautBeanFactory extends DefaultListableBeanFactory implements 
             }
 
             @Override
-            public T getIfUnique() throws BeansException {
+            public @Nullable T getIfUnique() throws BeansException {
                 final Collection<T> beansOfType = beanContext.getBeansOfType(requiredType);
                 if (beansOfType.size() == 1) {
                     return beansOfType.stream().findFirst().orElse(null);
@@ -358,6 +359,9 @@ public class MicronautBeanFactory extends DefaultListableBeanFactory implements 
     public @NonNull
     <T> ObjectProvider<T> getBeanProvider(@NonNull ResolvableType requiredType) {
         final Class<T> resolved = (Class<T>) requiredType.resolve();
+        if (resolved == null) {
+            throw new NoSuchBeanDefinitionException(requiredType.toString());
+        }
         return getBeanProvider(resolved);
     }
 
@@ -430,75 +434,76 @@ public class MicronautBeanFactory extends DefaultListableBeanFactory implements 
     }
 
     @Override
-    public Class<?> getType(@NonNull String beanName) throws NoSuchBeanDefinitionException {
+    public @Nullable Class<?> getType(@NonNull String beanName) throws NoSuchBeanDefinitionException {
         Optional<Class<?>> opt = beanTypeCache.get(beanName);
-        //noinspection OptionalAssignedToNull
         if (opt == null) {
-            final BeanDefinition<?> definition = beanDefinitionMap.get(beanName);
-            if (definition != null) {
-                opt = Optional.of(definition.getBeanType());
-            } else {
-
-                beanName = transformedBeanName(beanName);
-                // Check manually registered singletons.
-                Object beanInstance = super.getSingleton(beanName, false);
-                if (beanInstance != null && !beanInstance.getClass().getSimpleName().equals("NullBean")) {
-                    if (beanInstance instanceof FactoryBean && !BeanFactoryUtils.isFactoryDereference(beanName)) {
-                        return getTypeForFactoryBean((FactoryBean<?>) beanInstance);
-                    } else {
-                        return beanInstance.getClass();
-                    }
-                }
-                // No singleton instance found -> check bean definition.
-                org.springframework.beans.factory.BeanFactory parentBeanFactory = getParentBeanFactory();
-                if (parentBeanFactory != null && !containsBeanDefinition(beanName)) {
-                    // No bean definition found in this factory -> delegate to parent.
-                    return parentBeanFactory.getType(originalBeanName(beanName));
-                }
-
-                final org.springframework.beans.factory.config.BeanDefinition parentDef;
-                try {
-                    parentDef = super.getBeanDefinition(beanName);
-                } catch (NoSuchBeanDefinitionException e) {
-                    beanTypeCache.put(beanName, Optional.empty());
-                    return null;
-                }
-                if (parentDef instanceof RootBeanDefinition) {
-
-                    RootBeanDefinition mbd = (RootBeanDefinition) parentDef;
-
-                    // Check decorated bean definition, if any: We assume it'll be easier
-                    // to determine the decorated bean's type than the proxy's type.
-                    BeanDefinitionHolder dbd = mbd.getDecoratedDefinition();
-                    if (dbd != null && !BeanFactoryUtils.isFactoryDereference(beanName)) {
-                        RootBeanDefinition tbd = super.getMergedBeanDefinition(dbd.getBeanName(), dbd.getBeanDefinition(), mbd);
-                        Class<?> targetClass = predictBeanType(dbd.getBeanName(), tbd);
-                        if (targetClass != null && !FactoryBean.class.isAssignableFrom(targetClass)) {
-                            return targetClass;
-                        }
-                    }
-
-                    Class<?> beanClass = predictBeanType(beanName, mbd);
-
-                    // Check bean class whether we're dealing with a FactoryBean.
-                    if (beanClass != null && FactoryBean.class.isAssignableFrom(beanClass)) {
-                        if (!BeanFactoryUtils.isFactoryDereference(beanName)) {
-                            // If it's a FactoryBean, we want to look at what it creates, not at the factory class.
-                            boolean allowInit = true; // if allowInit is true a full creation of the FactoryBean is used as fallback (through delegation to the superclass's implementation).
-                            ResolvableType resolvableType = super.getTypeForFactoryBean(beanName, mbd, allowInit);
-                            return resolvableType.getRawClass();
-                        } else {
-                            return beanClass;
-                        }
-                    } else {
-                        return (!BeanFactoryUtils.isFactoryDereference(beanName) ? beanClass : null);
-                    }
-                }
-            }
+            opt = Optional.ofNullable(resolveBeanType(beanName));
             beanTypeCache.put(beanName, opt);
         }
 
         return opt.orElse(null);
+    }
+
+    private @Nullable Class<?> resolveBeanType(String beanName) {
+        final BeanDefinition<?> definition = beanDefinitionMap.get(beanName);
+        if (definition != null) {
+            return definition.getBeanType();
+        }
+
+        String transformedBeanName = transformedBeanName(beanName);
+        // Check manually registered singletons.
+        Object beanInstance = super.getSingleton(transformedBeanName, false);
+        if (beanInstance != null && !beanInstance.getClass().getSimpleName().equals("NullBean")) {
+            if (beanInstance instanceof FactoryBean && !BeanFactoryUtils.isFactoryDereference(transformedBeanName)) {
+                return getTypeForFactoryBean((FactoryBean<?>) beanInstance);
+            } else {
+                return beanInstance.getClass();
+            }
+        }
+        // No singleton instance found -> check bean definition.
+        org.springframework.beans.factory.BeanFactory parentBeanFactory = getParentBeanFactory();
+        if (parentBeanFactory != null && !containsBeanDefinition(transformedBeanName)) {
+            // No bean definition found in this factory -> delegate to parent.
+            return parentBeanFactory.getType(originalBeanName(transformedBeanName));
+        }
+
+        final org.springframework.beans.factory.config.BeanDefinition parentDef;
+        try {
+            parentDef = super.getBeanDefinition(transformedBeanName);
+        } catch (NoSuchBeanDefinitionException e) {
+            return null;
+        }
+        if (parentDef instanceof RootBeanDefinition) {
+            RootBeanDefinition mbd = (RootBeanDefinition) parentDef;
+
+            // Check decorated bean definition, if any: We assume it'll be easier
+            // to determine the decorated bean's type than the proxy's type.
+            BeanDefinitionHolder dbd = mbd.getDecoratedDefinition();
+            if (dbd != null && !BeanFactoryUtils.isFactoryDereference(transformedBeanName)) {
+                RootBeanDefinition tbd = super.getMergedBeanDefinition(dbd.getBeanName(), dbd.getBeanDefinition(), mbd);
+                Class<?> targetClass = predictBeanType(dbd.getBeanName(), tbd);
+                if (targetClass != null && !FactoryBean.class.isAssignableFrom(targetClass)) {
+                    return targetClass;
+                }
+            }
+
+            Class<?> beanClass = predictBeanType(transformedBeanName, mbd);
+
+            // Check bean class whether we're dealing with a FactoryBean.
+            if (beanClass != null && FactoryBean.class.isAssignableFrom(beanClass)) {
+                if (!BeanFactoryUtils.isFactoryDereference(transformedBeanName)) {
+                    // If it's a FactoryBean, we want to look at what it creates, not at the factory class.
+                    boolean allowInit = true; // if allowInit is true a full creation of the FactoryBean is used as fallback (through delegation to the superclass's implementation).
+                    ResolvableType resolvableType = super.getTypeForFactoryBean(transformedBeanName, mbd, allowInit);
+                    return resolvableType.getRawClass();
+                } else {
+                    return beanClass;
+                }
+            } else {
+                return !BeanFactoryUtils.isFactoryDereference(transformedBeanName) ? beanClass : null;
+            }
+        }
+        return null;
     }
 
     @Override
@@ -529,13 +534,13 @@ public class MicronautBeanFactory extends DefaultListableBeanFactory implements 
 
     @Override
     public @NonNull
-    String[] getBeanNamesForType(Class<?> type) {
+    String[] getBeanNamesForType(@Nullable Class<?> type) {
         return getBeanNamesForType(type, true, true);
     }
 
     @Override
     public @NonNull
-    String[] getBeanNamesForType(Class<?> type, boolean includeNonSingletons, boolean allowEagerInit) {
+    String[] getBeanNamesForType(@Nullable Class<?> type, boolean includeNonSingletons, boolean allowEagerInit) {
         // ignore certain common cases
         if (type == null || Object.class == type || List.class == type || beanExcludes.contains(type)) {
             return StringUtils.EMPTY_STRING_ARRAY;
@@ -556,7 +561,7 @@ public class MicronautBeanFactory extends DefaultListableBeanFactory implements 
 
     @Override
     public @NonNull
-    <T> Map<String, T> getBeansOfType(Class<T> type, boolean includeNonSingletons, boolean allowEagerInit) throws BeansException {
+    <T> Map<String, T> getBeansOfType(@Nullable Class<T> type, boolean includeNonSingletons, boolean allowEagerInit) throws BeansException {
         if (type == null || beanExcludes.contains(type)) {
             return Collections.emptyMap();
         }
@@ -583,7 +588,7 @@ public class MicronautBeanFactory extends DefaultListableBeanFactory implements 
     }
 
     @Override
-    public <A extends Annotation> A findAnnotationOnBean(@NonNull String beanName, @NonNull Class<A> annotationType) throws NoSuchBeanDefinitionException {
+    public @Nullable <A extends Annotation> A findAnnotationOnBean(@NonNull String beanName, @NonNull Class<A> annotationType) throws NoSuchBeanDefinitionException {
         if (super.containsSingleton(beanName)) {
             return super.findAnnotationOnBean(beanName, annotationType);
         } else {
@@ -599,6 +604,11 @@ public class MicronautBeanFactory extends DefaultListableBeanFactory implements 
         return beanDefinitions.stream()
                 .filter(bd -> !(bd instanceof ParametrizedInstantiatableBeanDefinition))
                 .map(this::computeBeanName).toArray(String[]::new);
+    }
+
+    private static String exceptionMessage(Exception e) {
+        String message = e.getMessage();
+        return message != null ? message : e.getClass().getName();
     }
 
     @Override
@@ -707,7 +717,7 @@ public class MicronautBeanFactory extends DefaultListableBeanFactory implements 
 
     @SuppressWarnings("unchecked")
     @Override
-    protected <T> T doGetBean(String name, Class<T> requiredType, Object[] args, boolean typeCheckOnly) throws BeansException {
+    protected <T> T doGetBean(String name, @Nullable Class<T> requiredType, @Nullable Object @Nullable [] args, boolean typeCheckOnly) throws BeansException {
 
         if (beanExcludes.contains(requiredType)) {
             throw new NoSuchBeanDefinitionException(name);
@@ -715,7 +725,7 @@ public class MicronautBeanFactory extends DefaultListableBeanFactory implements 
 
         if (super.containsSingleton(name)) {
             final Object o = super.getSingleton(name);
-            if (requiredType == null || requiredType.isInstance(o)) {
+            if (o != null && (requiredType == null || requiredType.isInstance(o))) {
                 return (T) o;
             }
         }
@@ -796,7 +806,7 @@ public class MicronautBeanFactory extends DefaultListableBeanFactory implements 
     }
 
     @Override
-    protected Object getSingleton(String beanName, boolean allowEarlyReference) {
+    protected @Nullable Object getSingleton(String beanName, boolean allowEarlyReference) {
         if (super.containsSingleton(beanName)) {
             return super.getSingleton(beanName, allowEarlyReference);
         } else {
