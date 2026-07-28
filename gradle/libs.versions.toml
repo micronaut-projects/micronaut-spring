@@ -1,11 +1,11 @@
 [versions]
 managed-spring-boot = "4.1.0"
 managed-spring = "7.0.8"
-micronaut = "5.1.5"
-micronaut-views = "6.0.0"
+micronaut = "5.1.10"
+micronaut-views = "6.2.0"
 micronaut-sql = "7.1.0"
 micronaut-cache = "6.1.0"
-micronaut-validation = "5.0.0"
+micronaut-validation = "5.1.0"
 micronaut-servlet = "6.1.0"
 micronaut-shared-settings = "8.0.1"
 
