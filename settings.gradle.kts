@@ -7,7 +7,7 @@ pluginManagement {
 }
 
 plugins {
-    id("io.micronaut.build.shared.settings") version "8.0.1"
+    id("io.micronaut.build.shared.settings") version "8.0.2"
 }
 
 rootProject.name = "spring-parent"
