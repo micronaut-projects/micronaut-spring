@@ -58,11 +58,14 @@ public class MicronautNettyChannelResolver implements ChannelResolver {
     }
 
     /**
-     * {@inheritDoc}
+     * Always returns {@link Optional#empty()}. The Micronaut HTTP server no longer uses
+     * {@link HttpContentProcessor}, so no processor is created here anymore.
      *
-     * <p>Always returns {@link Optional#empty()}. The Micronaut HTTP server no longer uses
-     * {@link HttpContentProcessor}, which is deprecated for removal in Micronaut core, so no
-     * processor is created here anymore.</p>
+     * @param request The request
+     * @return Always {@link Optional#empty()}
+     * @deprecated {@link HttpContentProcessor} is deprecated for removal in Micronaut core and is
+     * no longer used by the Micronaut HTTP server. This method will be removed from
+     * {@link ChannelResolver} in the next major version.
      */
     @Override
     @Deprecated(since = "6.2.0", forRemoval = true)
