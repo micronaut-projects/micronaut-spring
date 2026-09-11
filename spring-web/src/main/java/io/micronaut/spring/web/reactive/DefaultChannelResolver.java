@@ -36,6 +36,7 @@ public class DefaultChannelResolver implements ChannelResolver {
     }
 
     @Override
+    @Deprecated(since = "6.2.0", forRemoval = true)
     public Optional<HttpContentProcessor> resolveContentProcessor(HttpRequest<?> request) {
         return Optional.empty();
     }
