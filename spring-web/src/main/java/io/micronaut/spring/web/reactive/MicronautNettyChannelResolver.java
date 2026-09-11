@@ -69,6 +69,8 @@ public class MicronautNettyChannelResolver implements ChannelResolver {
      */
     @Override
     @Deprecated(since = "6.2.0", forRemoval = true)
+    // java:S1133 - the removal is intentional and tracked; see the @deprecated tag above
+    @SuppressWarnings("java:S1133")
     public Optional<HttpContentProcessor> resolveContentProcessor(HttpRequest<?> request) {
         return Optional.empty();
     }

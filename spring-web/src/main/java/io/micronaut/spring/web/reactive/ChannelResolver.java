@@ -46,5 +46,7 @@ public interface ChannelResolver {
      * will be removed from this interface in the next major version.
      */
     @Deprecated(since = "6.2.0", forRemoval = true)
+    // java:S1133 - the removal is intentional and tracked; see the @deprecated tag above
+    @SuppressWarnings("java:S1133")
     Optional<HttpContentProcessor> resolveContentProcessor(HttpRequest<?> request);
 }
