@@ -35,7 +35,19 @@ public class DefaultChannelResolver implements ChannelResolver {
         return Optional.empty();
     }
 
+    /**
+     * Always returns {@link Optional#empty()}; this implementation resolves no content processor.
+     *
+     * @param request The request
+     * @return Always {@link Optional#empty()}
+     * @deprecated {@link HttpContentProcessor} is deprecated for removal in Micronaut core and is
+     * no longer used by the Micronaut HTTP server. This method will be removed from
+     * {@link ChannelResolver} in the next major version.
+     */
     @Override
+    @Deprecated(since = "6.2.0", forRemoval = true)
+    // java:S1133 - the removal is intentional and tracked; see the @deprecated tag above
+    @SuppressWarnings("java:S1133")
     public Optional<HttpContentProcessor> resolveContentProcessor(HttpRequest<?> request) {
         return Optional.empty();
     }
