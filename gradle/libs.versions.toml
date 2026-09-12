@@ -1,7 +1,7 @@
 [versions]
 managed-spring-boot = "4.1.0"
 managed-spring = "7.0.8"
-micronaut = "5.2.0"
+micronaut = "5.2.1"
 micronaut-views = "6.2.0"
 micronaut-sql = "7.1.2"
 micronaut-cache = "6.1.1"
