@@ -40,6 +40,13 @@ public interface ChannelResolver {
      * Resolve the content processor.
      * @param request The request
      * @return The processor
+     * @deprecated {@link HttpContentProcessor} is deprecated for removal in Micronaut core and is
+     * no longer used by the Micronaut HTTP server. Implementations should return
+     * {@link Optional#empty()}. This method, along with the {@link HttpContentProcessor} type,
+     * will be removed from this interface in the next major version.
      */
+    @Deprecated(since = "6.2.0", forRemoval = true)
+    // java:S1133 - the removal is intentional and tracked; see the @deprecated tag above
+    @SuppressWarnings("java:S1133")
     Optional<HttpContentProcessor> resolveContentProcessor(HttpRequest<?> request);
 }
