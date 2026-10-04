@@ -20,7 +20,6 @@ import io.micronaut.context.annotation.Replaces;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.server.HttpServerConfiguration;
-import io.micronaut.http.server.netty.DefaultHttpContentProcessor;
 import io.micronaut.http.server.netty.HttpContentProcessor;
 import io.micronaut.http.server.netty.NettyHttpRequest;
 import io.netty.channel.Channel;
@@ -41,14 +40,12 @@ import java.util.Optional;
 @Primary
 public class MicronautNettyChannelResolver implements ChannelResolver {
 
-    private final HttpServerConfiguration serverConfiguration;
-
     /**
      * Default constructor.
-     * @param serverConfiguration The server config
+     * @param serverConfiguration The server config, no longer used
      */
     public MicronautNettyChannelResolver(HttpServerConfiguration serverConfiguration) {
-        this.serverConfiguration = serverConfiguration;
+        // the server configuration is no longer required, the parameter is retained for binary compatibility
     }
 
     @Override
@@ -60,17 +57,21 @@ public class MicronautNettyChannelResolver implements ChannelResolver {
         return Optional.empty();
     }
 
+    /**
+     * Always returns {@link Optional#empty()}. The Micronaut HTTP server no longer uses
+     * {@link HttpContentProcessor}, so no processor is created here anymore.
+     *
+     * @param request The request
+     * @return Always {@link Optional#empty()}
+     * @deprecated {@link HttpContentProcessor} is deprecated for removal in Micronaut core and is
+     * no longer used by the Micronaut HTTP server. This method will be removed from
+     * {@link ChannelResolver} in the next major version.
+     */
     @Override
+    @Deprecated(since = "6.2.0", forRemoval = true)
+    // java:S1133 - the removal is intentional and tracked; see the @deprecated tag above
+    @SuppressWarnings("java:S1133")
     public Optional<HttpContentProcessor> resolveContentProcessor(HttpRequest<?> request) {
-        if (request instanceof NettyHttpRequest) {
-            final NettyHttpRequest<?> nettyHttpRequest = (NettyHttpRequest<?>) request;
-            return Optional.of(
-                    new DefaultHttpContentProcessor(
-                            nettyHttpRequest,
-                            serverConfiguration
-                    )
-            );
-        }
         return Optional.empty();
     }
 }
