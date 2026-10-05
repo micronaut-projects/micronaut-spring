@@ -1,13 +1,13 @@
 [versions]
-managed-spring-boot = "4.1.0"
-managed-spring = "7.0.8"
-micronaut = "5.2.2"
-micronaut-views = "6.2.0"
-micronaut-sql = "7.1.2"
+managed-spring-boot = "4.1.1"
+managed-spring = "7.0.9"
+micronaut = "5.2.13"
+micronaut-views = "6.3.1"
+micronaut-sql = "7.2.0"
 micronaut-cache = "6.1.1"
-micronaut-validation = "5.1.0"
-micronaut-servlet = "6.1.0"
-micronaut-shared-settings = "8.0.2"
+micronaut-validation = "5.2.1"
+micronaut-servlet = "6.2.2"
+micronaut-shared-settings = "8.1.4"
 
 [libraries]
 # Micronaut

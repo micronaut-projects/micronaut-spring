@@ -20,7 +20,6 @@ import io.micronaut.context.annotation.Replaces;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.server.HttpServerConfiguration;
-import io.micronaut.http.server.netty.DefaultHttpContentProcessor;
 import io.micronaut.http.server.netty.HttpContentProcessor;
 import io.micronaut.http.server.netty.NettyHttpRequest;
 import io.netty.channel.Channel;
@@ -41,14 +40,12 @@ import java.util.Optional;
 @Primary
 public class MicronautNettyChannelResolver implements ChannelResolver {
 
-    private final HttpServerConfiguration serverConfiguration;
-
     /**
      * Default constructor.
-     * @param serverConfiguration The server config
+     * @param serverConfiguration The server config, no longer used
      */
     public MicronautNettyChannelResolver(HttpServerConfiguration serverConfiguration) {
-        this.serverConfiguration = serverConfiguration;
+        // the server configuration is no longer required, the parameter is retained for binary compatibility
     }
 
     @Override
@@ -62,15 +59,7 @@ public class MicronautNettyChannelResolver implements ChannelResolver {
 
     @Override
     public Optional<HttpContentProcessor> resolveContentProcessor(HttpRequest<?> request) {
-        if (request instanceof NettyHttpRequest) {
-            final NettyHttpRequest<?> nettyHttpRequest = (NettyHttpRequest<?>) request;
-            return Optional.of(
-                    new DefaultHttpContentProcessor(
-                            nettyHttpRequest,
-                            serverConfiguration
-                    )
-            );
-        }
+        // DefaultHttpContentProcessor was removed from Micronaut core and HttpContentProcessor is no longer used by the server
         return Optional.empty();
     }
 }
