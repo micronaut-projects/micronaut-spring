@@ -411,6 +411,15 @@ If an annotation or interface of Spring is not mentioned in this documentation c
 &lt;/annotationProcessorPaths&gt;</code></pre>
 </div>
 </div>
+<div class="listingblock multi-language-sample">
+<div class="title"></div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="pyronaut">[tool.pyronaut.dependencies]
+build = [
+    <span class="hljs-string">"io.micronaut.data:micronaut-data-processor"</span>,
+]</code></pre>
+</div>
+</div>
 </p>
 </div>
 <div class="admonitionblock note">
@@ -1282,6 +1291,15 @@ if you prefer not to import the BOM that is also possible, but note you will hav
 &lt;/annotationProcessorPaths&gt;</code></pre>
 </div>
 </div>
+<div class="listingblock multi-language-sample">
+<div class="title"></div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="pyronaut">[tool.pyronaut.dependencies]
+build = [
+    <span class="hljs-string">"io.micronaut:micronaut-inject-java"</span>,
+]</code></pre>
+</div>
+</div>
 </p>
 </div>
 <div class="paragraph">
@@ -1306,6 +1324,15 @@ if you prefer not to import the BOM that is also possible, but note you will hav
 &lt;/annotationProcessorPaths&gt;</code></pre>
 </div>
 </div>
+<div class="listingblock multi-language-sample">
+<div class="title"></div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="pyronaut">[tool.pyronaut.dependencies]
+build = [
+    <span class="hljs-string">"jakarta.annotation:jakarta.annotation-api:2.1.1"</span>,
+]</code></pre>
+</div>
+</div>
 </p>
 </div>
 <div class="paragraph">
@@ -1322,6 +1349,15 @@ if you prefer not to import the BOM that is also possible, but note you will hav
     &lt;artifactId&gt;jakarta.annotation-api&lt;/artifactId&gt;
     &lt;version&gt;2.1.1&lt;/version&gt;
 &lt;/dependency&gt;</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title"></div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="pyronaut">[tool.pyronaut.dependencies]
+runtime = [
+    <span class="hljs-string">"jakarta.annotation:jakarta.annotation-api:2.1.1"</span>,
+]</code></pre>
 </div>
 </div>
 </p>
@@ -1342,6 +1378,15 @@ if you prefer not to import the BOM that is also possible, but note you will hav
     &lt;groupId&gt;io.micronaut.spring&lt;/groupId&gt;
     &lt;artifactId&gt;micronaut-spring-boot-starter&lt;/artifactId&gt;
 &lt;/dependency&gt;</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title"></div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="pyronaut">[tool.pyronaut.dependencies]
+runtime = [
+    <span class="hljs-string">"io.micronaut.spring:micronaut-spring-boot-starter"</span>,
+]</code></pre>
 </div>
 </div>
 </p>
@@ -1385,6 +1430,15 @@ You can control which beans are exposed to Spring by using the <a href="../api/i
 &lt;/annotationProcessorPaths&gt;</code></pre>
 </div>
 </div>
+<div class="listingblock multi-language-sample">
+<div class="title"></div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="pyronaut">[tool.pyronaut.dependencies]
+build = [
+    <span class="hljs-string">"io.micronaut.data:micronaut-data-processor"</span>,
+]</code></pre>
+</div>
+</div>
 </p>
 </div>
 <div class="paragraph">
@@ -1403,6 +1457,15 @@ You can control which beans are exposed to Spring by using the <a href="../api/i
     &lt;groupId&gt;io.micronaut.data&lt;/groupId&gt;
     &lt;artifactId&gt;micronaut-data-jdbc&lt;/artifactId&gt;
 &lt;/dependency&gt;</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title"></div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="pyronaut">[tool.pyronaut.dependencies]
+runtime = [
+    <span class="hljs-string">"io.micronaut.data:micronaut-data-jdbc"</span>,
+]</code></pre>
 </div>
 </div>
 </p>
@@ -1429,6 +1492,15 @@ You can control which beans are exposed to Spring by using the <a href="../api/i
 &lt;/annotationProcessorPaths&gt;</code></pre>
 </div>
 </div>
+<div class="listingblock multi-language-sample">
+<div class="title"></div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="pyronaut">[tool.pyronaut.dependencies]
+build = [
+    <span class="hljs-string">"jakarta.persistence:jakarta.persistence-api:3.1.0"</span>,
+]</code></pre>
+</div>
+</div>
 </p>
 </div>
 <div class="paragraph">
@@ -1445,6 +1517,15 @@ You can control which beans are exposed to Spring by using the <a href="../api/i
     &lt;artifactId&gt;jakarta.persistence-api&lt;/artifactId&gt;
     &lt;version&gt;3.1.0&lt;/version&gt;
 &lt;/dependency&gt;</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title"></div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="pyronaut">[tool.pyronaut.dependencies]
+runtime = [
+    <span class="hljs-string">"jakarta.persistence:jakarta.persistence-api:3.1.0"</span>,
+]</code></pre>
 </div>
 </div>
 </p>
@@ -1505,6 +1586,15 @@ For Java add annotation processors in annotationProcessor scope, for Kotlin, add
     &lt;groupId&gt;io.micronaut.spring&lt;/groupId&gt;
     &lt;artifactId&gt;micronaut-spring-context&lt;/artifactId&gt;
 &lt;/dependency&gt;</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title"></div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="pyronaut">[tool.pyronaut.dependencies]
+runtime = [
+    <span class="hljs-string">"io.micronaut.spring:micronaut-spring-context"</span>,
+]</code></pre>
 </div>
 </div>
 </p>
